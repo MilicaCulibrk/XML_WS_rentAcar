@@ -1,7 +1,7 @@
 <template>
   <nav>
     <!-- gornji toolbar -->
-    <v-toolbar flat class="mx-12 pt-2" height="50">
+    <v-toolbar flat class="mx-12" height="50">
       <v-toolbar-title>
         <v-icon left large color="primary">directions_car</v-icon>
         <span class="font-italic font-weight-bold">Rent-A-CaR</span>

@@ -5,23 +5,25 @@
         <v-tooltip bottom color="black">
           <template #activator="{ on: tooltip }">
             <v-btn icon v-on="{ ...tooltip, ...dialog }" color="primary">
-              <v-icon>zoom_in</v-icon>
+              <v-icon>star</v-icon>
             </v-btn>
           </template>
-          <span class="primary--text">View Details</span>
+          <span class="primary--text">View ratings</span>
         </v-tooltip>
       </template>
       <v-card>
-        <v-card-title class="headline" primary-title>Car Details</v-card-title>
-        <v-card-text>
-          <div class="primary--text font-weight-bold headline">ana</div>
-        </v-card-text>
+        <v-card-title class="headline grey lighten-2" primary-title>jaa</v-card-title>
       </v-card>
     </v-dialog>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      dialog: false
+    };
+  }
+};
 </script>
-
