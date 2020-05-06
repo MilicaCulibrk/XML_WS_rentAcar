@@ -1,10 +1,10 @@
 <template>
   <nav>
     <!-- gornji toolbar -->
-    <v-toolbar flat class="mx-12">
+    <v-toolbar flat class="mx-12 pt-2" height="50">
       <v-toolbar-title>
         <v-icon left large color="primary">directions_car</v-icon>
-        <span color="orange-text">Rent-A-Car</span>
+        <span class="font-italic font-weight-bold">Rent-A-CaR</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text color="primary">
