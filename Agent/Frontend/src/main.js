@@ -3,13 +3,16 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
+import vuetify from "./plugins/vuetify";
+import "material-design-icons-iconfont/dist/material-design-icons.css";
 
-axios.defaults.baseURL = "http://localhost:8081"
+axios.defaults.baseURL = "http://localhost:8081";
 
 Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
-  render: h => h(App)
+  vuetify,
+  render: (h) => h(App),
 }).$mount("#app");
