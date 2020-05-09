@@ -11,20 +11,23 @@
         <span @click="openCart()">Cart</span>
         <v-icon right>shopping_cart</v-icon>
       </v-btn>
-      <v-btn text color="primary">
-        <span>Login</span>
-        <v-icon right>lock_open</v-icon>
-      </v-btn>
-      <v-btn text color="primary">
-        <span>Register</span>
-        <v-icon right>person_pin</v-icon>
-      </v-btn>
+      <div class="mx-2">
+        <LoginComponent />
+      </div>
+      <div class="mx-2">
+        <RegistrationComponent />
+      </div>
     </v-toolbar>
   </nav>
 </template>
 
 <script>
-export default {
+import LoginComponent from "@/components/LoginComponent.vue";
+import RegistrationComponent from "@/components/RegistrationComponent.vue";
+  components: {
+    LoginComponent,
+    RegistrationComponent
+  },
   methods: {
     openCart() {
       this.$router.push("/cart");
