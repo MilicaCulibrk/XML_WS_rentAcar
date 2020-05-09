@@ -8,6 +8,10 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text color="primary">
+        <span @click="openCodebook()">Codebook</span>
+        <v-icon right>list_alt</v-icon>
+      </v-btn>
+      <v-btn text color="primary">
         <span @click="openCart()">Cart</span>
         <v-icon right>shopping_cart</v-icon>
       </v-btn>
@@ -22,18 +26,21 @@
 </template>
 
 <script>
-import LoginComponent from "@/components/LoginComponent.vue";
-import RegistrationComponent from "@/components/RegistrationComponent.vue";
+import LoginComponent from "@/components/homePage/LoginComponent.vue";
+import RegistrationComponent from "@/components/homePage/RegistrationComponent.vue";
 
 export default {
   components: {
     LoginComponent,
-    RegistrationComponent,
+    RegistrationComponent
   },
   methods: {
     openCart() {
       this.$router.push("/cart");
     },
-  },
+    openCodebook() {
+      this.$router.push("/codebook");
+    }
+  }
 };
 </script>

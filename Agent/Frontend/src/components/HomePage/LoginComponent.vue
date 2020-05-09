@@ -59,7 +59,15 @@ export default {
     login() {
       if (this.$refs.form.validate()) {
         console.log(this.password + " " + this.email);
-        this.close();
+        if (this.email == "admin@gmail.com") {
+          this.$router.push("/admin");
+        } else if (this.email == "user@gmail.com") {
+          this.$router.push("/user");
+        } else if (this.email == "agent@gmail.com") {
+          this.$router.push("/agent");
+        } else {
+          console.log("nije validno");
+        }
       } else {
         console.log("nije validno");
       }

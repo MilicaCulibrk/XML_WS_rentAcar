@@ -113,7 +113,7 @@ export default {
   computed: {
     passwordConfirmationRule() {
       return () =>
-        this.user.password === this.confirmation || "Password must match";
+        this.user.password === this.confirmation || "Passwords must match";
     }
   },
   methods: {
