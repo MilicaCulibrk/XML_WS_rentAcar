@@ -13,8 +13,7 @@
       </template>
       <v-card>
         <div class="detailsBorderColor">
-          <v-card-title class="primary--text font-italic headline" primary-title>Car Details</v-card-title>
-
+          <v-card-title class="primary--text font-italic" primary-title>Car Details</v-card-title>
           <v-responsive class="pt-4 mx-4">images go here</v-responsive>
           <v-card-text class="text-center-left">
             <div class="primary--text title">{{ car.brand }} {{ car.model }}</div>
@@ -26,8 +25,8 @@
             <div>Transmission type:</div>
             <div>Number of child seats:</div>
           </v-card-text>
-          <v-btn icon red @click="exitDetails()">
-            <v-icon>close</v-icon>
+          <v-btn icon color="primary" @click="dialogDetails =  false">
+            <v-icon>cancel</v-icon>
           </v-btn>
         </div>
       </v-card>
@@ -41,6 +40,11 @@ export default {
     car: {
       default: ""
     }
+  },
+  data() {
+    return {
+      dialogDetails: false
+    };
   }
 };
 </script>

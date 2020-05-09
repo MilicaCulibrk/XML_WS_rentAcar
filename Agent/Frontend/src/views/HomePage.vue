@@ -1,9 +1,7 @@
 <template>
   <div>
-    <!-- donji toolbar -->
-    <AppBar />
-
-    <!-- navigation drawer se poziva iz AppBara-->
+    <!-- pretraga -->
+    <SearchPanel />
 
     <!-- cards -->
     <!-- sort -->
@@ -22,7 +20,7 @@
           <span class="caption text-lowercase">by mileage</span>
         </v-btn>
       </v-layout>
-
+      <!-- kartice -->
       <v-layout row wrap>
         <v-flex xs12 sm6 md4 lg4 v-for="car in cars" :key="car.id">
           <v-card hover elevation="2" class="text-center ma-6">
@@ -33,7 +31,6 @@
                 <div class="primary--text font-weight-bold headline">{{ car.brand }} {{ car.model }}</div>
                 <div>Price: {{ car.price }}</div>
               </v-card-text>
-
               <v-card-actions>
                 <!-- komponenta detalji o autu-->
                 <PopupDetails v-bind:car="car"></PopupDetails>
@@ -63,11 +60,11 @@
 import PopupDetails from "@/components/HomePage/PopupDetails";
 import PopupComments from "@/components/HomePage/PopupComments";
 import PopupRatings from "@/components/HomePage/PopupRatings";
-import AppBar from "@/components/HomePage/AppBar";
+import SearchPanel from "@/components/HomePage/SearchPanel";
 //import format from "date-fns/format";
 export default {
   name: "HomePage",
-  components: { PopupRatings, PopupComments, PopupDetails, AppBar },
+  components: { PopupRatings, PopupComments, PopupDetails, SearchPanel },
   data() {
     return {
       dialogDetails: false,
