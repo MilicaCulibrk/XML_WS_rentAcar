@@ -1,123 +1,9 @@
 <template>
   <div>
-    <!-- donji toolbar -->
-    <v-app-bar dark height="70" class="pt-4">
-      <span class="mx-16"></span>
-      <v-tooltip bottom color="black">
-        <template v-slot:activator="{ on }">
-          <v-app-bar-nav-icon
-            class="pb-12"
-            @click="drawerAdvancedSearch = !drawerAdvancedSearch"
-            v-on="on"
-          >
-            <v-icon large color="deep-orange lighten-2">menu_open</v-icon>
-          </v-app-bar-nav-icon>
-        </template>
-        <span class="primary--text">Advanced Search</span>
-      </v-tooltip>
-      <v-container>
-        <v-row justify="space-between">
-          <v-col cols="12" lg="4" md="4" sm="3" xs="3">
-            <v-form ref="form">
-              <v-text-field
-                prepend-icon="place"
-                label="Pickup location"
-                class="ml-n4 mr-12"
-                color="primary"
-              ></v-text-field>
-            </v-form>
-          </v-col>
-          <!-- start date -->
-          <v-col cols="12" lg="3" md="3" sm="3" xs="3">
-            <v-form>
-              <v-layout row wrap>
-                <v-menu
-                  v-model="fromDateMenu"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  lazy
-                  transition="scale-transition"
-                  offset-y
-                  full-width
-                  max-width="290px"
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on }">
-                    <v-text-field
-                      :value="formattedDateFrom"
-                      slot="activator"
-                      prepend-icon="date_range"
-                      label="Start date"
-                      readonly
-                      class="ml-4 mr-12"
-                      color="primary"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    locale="en-in"
-                    @input="fromDateMenu = false"
-                    v-model="due"
-                    color="primary"
-                  ></v-date-picker>
-                </v-menu>
-              </v-layout>
-            </v-form>
-          </v-col>
-          <!--end date -->
-          <v-col cols="12" lg="3" md="3" sm="3" xs="3">
-            <v-form>
-              <v-layout row wrap>
-                <v-menu
-                  v-model="toDateMenu"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  lazy
-                  transition="scale-transition"
-                  offset-y
-                  full-width
-                  max-width="290px"
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on }">
-                    <v-text-field
-                      :value="formattedDateTo"
-                      slot="activator"
-                      prepend-icon="date_range"
-                      label="End date"
-                      readonly
-                      class="ml-12"
-                      color="primary"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    locale="en-in"
-                    @input="toDateMenu = false"
-                    v-model="to"
-                    color="primary"
-                  ></v-date-picker>
-                </v-menu>
-              </v-layout>
-            </v-form>
-          </v-col>
-          <!-- search button  -->
-          <v-spacer></v-spacer>
-          <v-col class="mr-n3">
-            <v-btn rounded class="primary white--text">
-              <v-icon left>search</v-icon>
-              <span>search</span>
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-app-bar>
-
-    <!-- navigation drawer -->
-    <v-navigation-drawer v-model="drawerAdvancedSearch" clipped app floating width="350"></v-navigation-drawer>
+    <!-- pretraga -->
+    <SearchPanel />
 
     <!-- cards -->
-
     <!-- sort -->
     <v-container class="my-5">
       <v-layout row wrap>
@@ -134,7 +20,7 @@
           <span class="caption text-lowercase">by mileage</span>
         </v-btn>
       </v-layout>
-
+      <!-- kartice -->
       <v-layout row wrap>
         <v-flex xs12 sm6 md4 lg4 v-for="car in cars" :key="car.id">
           <v-card hover elevation="2" class="text-center ma-6">
@@ -145,50 +31,13 @@
                 <div class="primary--text font-weight-bold headline">{{ car.brand }} {{ car.model }}</div>
                 <div>Price: {{ car.price }}</div>
               </v-card-text>
-
               <v-card-actions>
-                <!-- komponenta -->
-                <div>
-                  <v-dialog v-model="dialogDetails" max-width="400px">
-                    <template #activator="{ on: dialogDetails }">
-                      <v-tooltip bottom color="black">
-                        <template #activator="{ on: tooltip }">
-                          <v-btn icon v-on="{ ...tooltip, ...dialogDetails }" color="primary">
-                            <v-icon>zoom_in</v-icon>
-                          </v-btn>
-                        </template>
-                        <span class="primary--text">View Details</span>
-                      </v-tooltip>
-                    </template>
-                    <v-card>
-                      <div class="detailsBorderColor">
-                        <v-card-title
-                          class="primary--text font-italic headline"
-                          primary-title
-                        >Car Details</v-card-title>
-
-                        <v-responsive class="pt-4 mx-4">images go here</v-responsive>
-                        <v-card-text class="text-center-left">
-                          <div class="primary--text title">{{ car.brand }} {{ car.model }}</div>
-                          <div>Price: {{ car.price }}</div>
-                          <div>CDW:</div>
-                          <div>Class:</div>
-                          <div>Mileage:</div>
-                          <div>Gas type:</div>
-                          <div>Transmission type:</div>
-                          <div>Number of child seats:</div>
-                        </v-card-text>
-                        <v-btn icon red @click="exitDetails()">
-                          <v-icon>close</v-icon>
-                        </v-btn>
-                      </div>
-                    </v-card>
-                  </v-dialog>
-                </div>
+                <!-- komponenta detalji o autu-->
+                <PopupDetails v-bind:car="car"></PopupDetails>
                 <v-spacer></v-spacer>
-                <!-- komponenta -->
+                <!-- komponenta ocene -->
                 <PopupRatings />
-                <!-- komponenta -->
+                <!-- komponenta komentari -->
                 <PopupComments />
                 <v-tooltip bottom color="black">
                   <template v-slot:activator="{ on }">
@@ -208,21 +57,17 @@
 </template>
 
 <script>
-//import PopupDetails from "@/components/PopupDetails";
-import PopupRatings from "@/components/PopupRatings";
-import PopupComments from "@/components/PopupComments";
+import PopupDetails from "@/components/HomePage/PopupDetails";
+import PopupComments from "@/components/HomePage/PopupComments";
+import PopupRatings from "@/components/HomePage/PopupRatings";
+import SearchPanel from "@/components/HomePage/SearchPanel";
 //import format from "date-fns/format";
 export default {
   name: "HomePage",
-  components: { PopupRatings, PopupComments },
+  components: { PopupRatings, PopupComments, PopupDetails, SearchPanel },
   data() {
     return {
-      drawerAdvancedSearch: false,
       dialogDetails: false,
-      fromDateMenu: false,
-      toDateMenu: false,
-      due: null,
-      to: null,
       cars: [
         { id: "1", brand: "Mercedes", model: "G500", price: "100.000" },
         { id: "2", brand: "Suzuki", model: "Vitara", price: "30.000" },
@@ -246,14 +91,6 @@ export default {
           parseFloat(a[sortProp]) < parseFloat(b[sortProp]) ? -1 : 1
         );
       }
-    }
-  },
-  computed: {
-    formattedDateFrom() {
-      return this.due;
-    },
-    formattedDateTo() {
-      return this.to;
     }
   }
 };
