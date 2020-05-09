@@ -57,10 +57,10 @@
 </template>
 
 <script>
-import PopupDetails from "@/components/HomePage/PopupDetails";
-import PopupComments from "@/components/HomePage/PopupComments";
-import PopupRatings from "@/components/HomePage/PopupRatings";
-import SearchPanel from "@/components/HomePage/SearchPanel";
+import PopupDetails from "@/components/homePage/PopupDetails";
+import PopupComments from "@/components/homePage/PopupComments";
+import PopupRatings from "@/components/homePage/PopupRatings";
+import SearchPanel from "@/components/homePage/SearchPanel";
 //import format from "date-fns/format";
 export default {
   name: "HomePage",

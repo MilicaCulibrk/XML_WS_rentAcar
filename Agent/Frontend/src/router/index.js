@@ -1,7 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomePage from "../views/HomePage.vue";
-import Cart from "../views/Cart.vue";
+import Admin from "../views/admin/Admin.vue";
+import User from "../views/user/User.vue";
+import Agent from "../views/agent/Agent.vue";
+import Cart from "../views/user/Cart.vue";
+import Codebook from "../views/admin/Codebook.vue";
 
 Vue.use(VueRouter);
 
@@ -12,19 +16,30 @@ const routes = [
     component: HomePage,
   },
   {
+    path: "/admin",
+    name: "Admin",
+    component: Admin,
+  },
+  {
+    path: "/user",
+    name: "User",
+    component: User,
+  },
+  {
+    path: "/agent",
+    name: "Agent",
+    component: Agent,
+  },
+  {
     path: "/cart",
     name: "Cart",
     component: Cart,
   },
-  // {
-  //   path: "/about",
-  //   name: "About",
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  // },
+  {
+    path: "/codebook",
+    name: "Codebook",
+    component: Codebook,
+  },
 ];
 
 const router = new VueRouter({

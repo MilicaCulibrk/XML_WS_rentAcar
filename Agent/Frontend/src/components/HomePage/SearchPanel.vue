@@ -220,14 +220,11 @@
           </v-col>
           <!-- planirano da predje -->
           <v-col cols="2">
-            <v-text-field label="Planned to cross(km)" color="primary"></v-text-field>
+            <v-text-field label="Planned to cross(km)" :rules="plannedToCrossRule" color="primary"></v-text-field>
           </v-col>
           <!-- CDW -->
-          <v-col cols="1" class="mt-6 ml-12">
-            <v-label dark>CDW:</v-label>
-          </v-col>
-          <v-col cols="1" class="mt-1 ml-n12">
-            <v-checkbox v-model="cdw" class="ml-n6" color="primary"></v-checkbox>
+          <v-col cols="2">
+            <v-checkbox label="CWD" :v-model="cdw" color="primary"></v-checkbox>
           </v-col>
         </v-row>
       </v-expansion-panel-content>
@@ -260,7 +257,10 @@ export default {
       gasItems: ["gasoline", "gas", "diesel"],
       mileageItems: ["50.000-100.000", "100.000-200.000", "200.000-300.000"],
       priceItems: ["10.000-20.000", "20.000-30.000", "30.000-40.000"],
-      childSeatsItems: ["0", "1", "2", "3", "4", "5"]
+      childSeatsItems: ["0", "1", "2", "3", "4", "5"],
+      plannedToCrossRule: [
+        v => /^[0-9]*$/.test(v) || "Only numbers are allowed"
+      ]
     };
   },
   computed: {
