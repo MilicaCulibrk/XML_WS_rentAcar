@@ -24,14 +24,16 @@
 <script>
 import LoginComponent from "@/components/LoginComponent.vue";
 import RegistrationComponent from "@/components/RegistrationComponent.vue";
+
+export default {
   components: {
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
   },
   methods: {
     openCart() {
       this.$router.push("/cart");
-    }
-  }
+    },
+  },
 };
 </script>
