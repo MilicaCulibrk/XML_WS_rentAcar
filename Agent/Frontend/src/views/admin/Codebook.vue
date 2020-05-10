@@ -38,11 +38,40 @@
                     <v-tooltip bottom color="black">
                       <template v-slot:activator="{ on }">
                         <v-btn icon v-on="on" color="primary">
-                          <v-icon>add_circle</v-icon>
+                          <v-icon>sync</v-icon>
                         </v-btn>
                       </template>
-                      <span class="primary--text">Add new model</span>
+                      <span class="primary--text">Change</span>
                     </v-tooltip>
+                    <v-tooltip bottom color="black">
+                      <template v-slot:activator="{ on }">
+                        <v-btn icon v-on="on" color="primary">
+                          <v-icon>delete</v-icon>
+                        </v-btn>
+                      </template>
+                      <span class="primary--text">Delete</span>
+                    </v-tooltip>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary">
+                      <v-icon>add</v-icon>
+                      <span>add new</span>
+                    </v-btn>
+                  </v-list-item>
+                </v-list>
+              </div>
+            </v-card>
+          </v-expand-x-transition>
+          <!-- Model -->
+          <v-expand-x-transition>
+            <v-card v-show="expandModel" elevation="20">
+              <div class="cardBorderColor shrink">
+                <v-list>
+                  <v-list-item v-for="modelItem in modelItems" :key="modelItem">
+                    <v-list-item-content>
+                      <v-list-item-title class="primary--text" v-text="modelItem"></v-list-item-title>
+                    </v-list-item-content>
                     <v-tooltip bottom color="black">
                       <template v-slot:activator="{ on }">
                         <v-btn icon v-on="on" color="primary">
@@ -196,12 +225,13 @@ export default {
   data() {
     return {
       expandBrand: false,
+      expandModel: false,
       expandClass: false,
       expandTransmission: false,
       expandGas: false,
-      menuItems: ["Brand", "Class", "Transmission type", "Gas type"],
+      menuItems: ["Brand", "Model", "Class", "Transmission type", "Gas type"],
       brandItems: ["BMW", "Audi", "Mercedes", "Tesla"],
-      modelItems: ["M5", "R8", "X6"],
+      modelItems: ["(Citroen) M5", "(Audi) R8", "(BMW) X6"],
       classItems: ["SUV", "oldtimer", "city-car"],
       transmissionItems: ["manual", "automatic", "semi-automatic"],
       gasItems: ["gasoline", "gas", "diesel"]
@@ -212,6 +242,9 @@ export default {
       if (menuItem == "Brand") {
         this.cancelOtherMenus(menuItem);
         this.expandBrand = !this.expandBrand;
+      } else if (menuItem == "Model") {
+        this.cancelOtherMenus(menuItem);
+        this.expandModel = !this.expandModel;
       } else if (menuItem == "Class") {
         this.cancelOtherMenus(menuItem);
         this.expandClass = !this.expandClass;

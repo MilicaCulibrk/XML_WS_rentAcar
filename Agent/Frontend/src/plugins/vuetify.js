@@ -14,6 +14,8 @@ const vuetify = new Vuetify({
       light: {
         primary: "#FF8A65", //svetlo narandzasta
         secondary: "#F5F5F5", //svetlo siva
+        success: "#A5D6A7", //svetlo zelena
+        danger: "#EF9A9A", //svetlo crvena
       },
     },
   },
