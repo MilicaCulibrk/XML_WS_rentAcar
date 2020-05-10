@@ -60,12 +60,15 @@ export default {
       if (this.$refs.form.validate()) {
         console.log(this.password + " " + this.email);
         if (this.email == "admin@gmail.com") {
+          this.close();
+          this.$emit("loggedIn");
           this.$router.push("/admin");
         } else if (this.email == "user@gmail.com") {
           this.$router.push("/user");
         } else if (this.email == "agent@gmail.com") {
           this.$router.push("/agent");
         } else {
+          this.$emit("notLoggedIn");
           console.log("nije validno");
         }
       } else {

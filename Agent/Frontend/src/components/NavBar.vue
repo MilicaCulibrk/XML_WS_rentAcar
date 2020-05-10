@@ -1,5 +1,16 @@
 <template>
   <nav>
+    <!-- snackbar -->
+    <v-snackbar v-model="snackbarSuccess" :timeout="4000" top color="success">
+      <span>{{snackbarSuccessText}}</span>
+      <v-btn text @click="snackbarSuccess = false">Close</v-btn>
+    </v-snackbar>
+
+    <v-snackbar v-model="snackbarDanger" :timeout="4000" top color="danger">
+      <span>{{snackbarDangerText}}</span>
+      <v-btn text @click="snackbarDanger = false">Close</v-btn>
+    </v-snackbar>
+
     <!-- gornji toolbar -->
     <v-toolbar flat class="mx-12" height="50">
       <v-toolbar-title>
@@ -16,7 +27,10 @@
         <v-icon right>shopping_cart</v-icon>
       </v-btn>
       <div class="mx-2">
-        <LoginComponent />
+        <LoginComponent
+          @loggedIn="snackbarSuccess = true; snackbarSuccessText='You are logged in!'"
+          @notLoggedIn="snackbarDanger = true; snackbarDangerText='Can not log in. There is no such user!'"
+        />
       </div>
       <div class="mx-2">
         <RegistrationComponent />
@@ -33,6 +47,14 @@ export default {
   components: {
     LoginComponent,
     RegistrationComponent
+  },
+  data() {
+    return {
+      snackbarSuccess: false,
+      snackbarSuccessText: "",
+      snackbarDanger: false,
+      snackbarDangerText: ""
+    };
   },
   methods: {
     openCart() {
