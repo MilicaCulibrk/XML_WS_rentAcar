@@ -33,7 +33,7 @@
                 </v-flex>
                 <v-card-actions>               
                 </v-card-actions>
-                <v-checkbox class="text-center ma-6"  :label="`Order just in case all of them are available`"></v-checkbox>
+                <v-checkbox :value="agent" v-model="checkList" class="text-center ma-6"  :label="`Order just in case all of them are available`"></v-checkbox>
 
             </div>
           </v-card>
@@ -46,7 +46,7 @@
         <v-card-text>Total price:</v-card-text>
         <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="primary" large="true">Order</v-btn>
+            <v-btn class="primary" large="true" @click="order">Order</v-btn>
         </v-card-actions>
         </div>
         </v-card>
@@ -55,30 +55,68 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
       cars: [
-        { id: "1", brand: "Mercedes", model: "G500", price: "100.000" , agent:"1"},
-        { id: "2", brand: "Suzuki", model: "Vitara", price: "30.000", agent:"3" },
-        { id: "3", brand: "BMW", model: "X6", price: "60.000", agent:"2" },
-        { id: "6", brand: "VW", model: "Polo Mk4", price: "20.000", agent:"2" },
-        { id: "7", brand: "Mercedes", model: "Maybach", price: "150.000", agent:"2" },
-        { id: "8", brand: "Audi", model: "A5 Coupe", price: "50.000", agent:"1" }
+        { id: "1", brand: "Mercedes", model: "G500", price: "100.000" , agent:"1", boundle:"false"},
+        { id: "2", brand: "Suzuki", model: "Vitara", price: "30.000", agent:"3" , boundle:"false"},
+        { id: "3", brand: "BMW", model: "X6", price: "60.000", agent:"2" , boundle:"false"},
+        { id: "6", brand: "VW", model: "Polo Mk4", price: "20.000", agent:"2" , boundle:"false"},
+        { id: "7", brand: "Mercedes", model: "Maybach", price: "150.000", agent:"2" , boundle:"false"},
+        { id: "8", brand: "Audi", model: "A5 Coupe", price: "50.000", agent:"1" , boundle:"false"}
       ],
       agents:[],
+      checkList:[],
+      boundleOrder:[],
+      singleOrders:[],
     };
   },
 
   methods: {
       getAgents(){
-          this.cars.forEach(car => {
-            if(!this.agents.includes(car.agent)){
-                this.agents.push(car.agent);
-            }
-          });
-          return this.agents;
+        this.cars.forEach(car => {
+          if(!this.agents.includes(car.agent)){
+              this.agents.push(car.agent);
+          }
+        });
+        return this.agents;
       },
+      order(){
+        this.agents.forEach(agent => {
+          this.boundleOrder=[];
+          if(this.checkList.includes(agent)){
+            this.cars.forEach(car => {
+              if(car.agent==agent){
+                this.boundleOrder.push(car);
+              }
+            });
+            // sada saljemo zahtev sa listom boundleOrder
+              axios
+            .post("/nesto/boundle", this.boundleOrder)
+            .then()
+            .catch(error => {
+                console.log(error)
+            });
+            console.log(this.boundleOrder);
+          }
+          else{
+            this.cars.forEach(car => {
+              if(car.agent==agent){
+                this.singleOrders.push(car);
+              }
+            });
+          }
+        });
+        //saljemo zahtev sa listom pojedinacnih zahteva
+          axios
+        .post("/nesto/single", this.singleOrders)
+        .then()
+        .catch(
+        );
+        console.log(this.singleOrders);
+      }
 
   },
   mounted(){
