@@ -20,7 +20,7 @@ import com.example.rentService.model.Request;
 @RequestMapping("/request")
 public class RequestController {
 
-    //izlistavanje svih oglasa
+    //izlistavanje svih oglas
     @GetMapping()
     public ResponseEntity<?> getAllRequests ()  {
 
