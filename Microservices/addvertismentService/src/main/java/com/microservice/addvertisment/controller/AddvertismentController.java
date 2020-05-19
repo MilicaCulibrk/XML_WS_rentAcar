@@ -6,7 +6,8 @@ import com.microservice.addvertisment.model.Grade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/addvertisment")
+@RestController
+@RequestMapping("/addvertisment")
 public class AddvertismentController {
 
     //izlistavanje svih oglasa

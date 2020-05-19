@@ -5,7 +5,8 @@ import com.microservice.addvertisment.model.Grade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/addvertisment")
+@RestController
+@RequestMapping("/addvertisment")
 public class GradeController {
 
     //izlistavanje svih ocena za neki oglas(na frontu mozemo da uradimo average)
