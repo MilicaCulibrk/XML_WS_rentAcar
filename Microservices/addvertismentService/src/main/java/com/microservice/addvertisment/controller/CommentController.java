@@ -4,7 +4,9 @@ import com.microservice.addvertisment.model.Comment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/addvertisment")
+
+@RestController
+@RequestMapping("/addvertisment")
 public class CommentController {
 
     //izlistavanje svih komentara

@@ -1,4 +1,4 @@
-package com.service.addvertisment;
+package com.microservice.addvertisment;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

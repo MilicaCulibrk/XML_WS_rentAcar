@@ -1,14 +1,23 @@
-package com.projekat.tim14.RentMS.controller;
+package com.example.rentService.controller;
+
+import java.util.ArrayList;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.rentService.model.Order;
 import com.example.rentService.model.Report;
 import com.example.rentService.model.Request;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-
-@RestController("/request")
+@RestController
+@RequestMapping("/request")
 public class RequestController {
 
     //izlistavanje svih oglasa
@@ -17,8 +26,13 @@ public class RequestController {
 
         return null;
     }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getRequest (@PathVariable Long id)  {
 
-
+        return null;
+    }
+    
     @PostMapping()
     public ResponseEntity<?> createRequest (@RequestBody ArrayList<Order> orders)  {
 
@@ -37,12 +51,6 @@ public class RequestController {
         return null;
     }
 
-    @PostMapping("/{id}/report")
-    public ResponseEntity<?> createReport (@RequestBody Report report, @PathVariable Long id) {
 
-        //pozvati update oglasa da se poveca kilometraza za onoliko koliko smo upisali u izvestaj
-        //(da li rest poziv sa fronta ili odavde da pozovemo servisnu metodu drugog ms)
-        return null;
-    }
 
 }
