@@ -10,7 +10,7 @@ public class PriceListController {
 
     //izlistavanja svih cenovnika jedne firme
     @GetMapping("/agent/{agent_id}")
-    public ResponseEntity<?> statistic (@PathVariable Long id){
+    public ResponseEntity<?> getAllCompaniesPriceLists (@PathVariable Long id){
         return null;
     }
 
