@@ -54,6 +54,7 @@ public class Addvertisment {
     //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<ReservedDate> reservedDates;
 
+
     public Addvertisment(){
         super();
     }
@@ -75,7 +76,6 @@ public class Addvertisment {
         this.comments = comments;
         this.reservedDates = reservedDates;
     }
-
 
     public Long getId() {
         return id;
@@ -185,6 +185,10 @@ public class Addvertisment {
         return comments;
     }
 
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     public List<ReservedDate> getReservedDates() {
         return reservedDates;
     }
@@ -192,10 +196,4 @@ public class Addvertisment {
     public void setReservedDates(List<ReservedDate> reservedDates) {
         this.reservedDates = reservedDates;
     }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-
 }
