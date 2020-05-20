@@ -2,7 +2,7 @@ package addvertisment.model;
 
 import java.util.Date;
 
-//@Entity
+//@Entity(name="reserved_date")
 public class ReservedDate {
 
     //@Id

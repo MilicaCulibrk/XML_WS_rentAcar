@@ -13,14 +13,18 @@ public class Grade {
     //@Column(name = "number", nullable = false)
     private int number;
 
-    //@Column(name = "graded")
-    private boolean graded;
-
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Addvertisment addvertisment;
 
     public Grade(){
         this.number = 0;
+    }
+
+    public Grade(Long id, Long user_id, int number, Addvertisment addvertisment) {
+        this.id = id;
+        this.user_id = user_id;
+        this.number = number;
+        this.addvertisment = addvertisment;
     }
 
     public Long getId() {
@@ -45,14 +49,6 @@ public class Grade {
 
     public void setNumber(int number) {
         this.number = number;
-    }
-
-    public boolean isGraded() {
-        return graded;
-    }
-
-    public void setGraded(boolean graded) {
-        this.graded = graded;
     }
 
     public Addvertisment getAddvertisment() {

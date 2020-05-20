@@ -9,32 +9,30 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/addvertisment")
 public class CommentController {
 
-    //izlistavanje svih komentara
-    @GetMapping("/{id}/comments")
+    @GetMapping("/{add_id}/comment")
     public ResponseEntity<?> getAllComments()  {
         return null;
     }
 
-    //izlististavanje pojedinacnog komentara
-    @GetMapping("/{id}/comments/{id}")
+    @GetMapping("/{add_id}/comments/{comment_id}")
     public ResponseEntity<?> getSingleComment(@PathVariable Long id)  {
         return null;
     }
 
     //objavljivanje novog komentara, prvobitno sa statusom false od strane korisnika
-    @PostMapping("/{id}/comments")
+    @PostMapping("/{add_id}/comment")
     public ResponseEntity<?> createComment (@RequestBody Comment comment)  {
         return null;
     }
 
     //admin menja status komentara
-    @PutMapping("/{id}/comments/{id}")
+    @PutMapping("/{add_id}/comment/{comment_id}")
     public ResponseEntity<?> updateComment (@RequestBody Comment comment, @PathVariable Long id) {
         return null;
     }
 
-    //ako korisnik hoce da obrise komentrar, ili ako admin odbije komentar
-    @DeleteMapping("/{id}/comments/{id}")
+    //ako korisnik hoce da obrise komentar, ili ako admin odbije komentar
+    @DeleteMapping("/{add_id}/comment/{comment_id}")
     public ResponseEntity<?> deleteComment (@PathVariable Long id) {
         return null;
     }

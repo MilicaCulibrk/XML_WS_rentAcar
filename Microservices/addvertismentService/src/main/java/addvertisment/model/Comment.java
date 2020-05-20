@@ -7,8 +7,8 @@ public class Comment {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "user_email", nullable = false)
-    private String user_email;
+    //@Column(name = "user_id", nullable = false)
+    private Long user_id;
 
     //@Column(name = "text", nullable = false)
     private String text;
@@ -23,9 +23,9 @@ public class Comment {
         super();
     }
 
-    public Comment(Long id, String user_email, String text, boolean accepted, Addvertisment addvertisment) {
+    public Comment(Long id, Long user_id, String text, boolean accepted, Addvertisment addvertisment) {
         this.id = id;
-        this.user_email = user_email;
+        this.user_id = user_id;
         this.text = text;
         this.accepted = accepted;
         this.addvertisment = addvertisment;
@@ -39,12 +39,12 @@ public class Comment {
         this.id = id;
     }
 
-    public String getUser_email() {
-        return user_email;
+    public Long getUser_email() {
+        return user_id;
     }
 
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
+    public void setUser_email(Long user_id) {
+        this.user_id = user_id;
     }
 
     public String getText() {

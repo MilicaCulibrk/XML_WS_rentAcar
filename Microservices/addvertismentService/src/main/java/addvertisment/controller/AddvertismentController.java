@@ -10,45 +10,38 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/addvertisment")
 public class AddvertismentController {
 
-    //izlistavanje svih oglasa
-    @GetMapping()
+    @GetMapping("")
     public ResponseEntity<?> getAllAdds()  {
         return null;
     }
 
-    //izlististavanje pojedinacnog oglasa
     @GetMapping("/{id}")
     public ResponseEntity<?> getSingleAdd(@PathVariable Long id)  {
         return null;
     }
 
-    //objavljivanje novog oglasa
-    @PostMapping()
+    @PostMapping("")
     public ResponseEntity<?> createAdd (@RequestBody Addvertisment addvertisment)  {
         return null;
     }
 
-    //ova metoda sluzi i za ocenjivanje(dodaje se ocena u ukupnu sumu i povecava se ukupan broj ocena)
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAdd (@RequestBody Addvertisment addvertisment, @PathVariable Long id) {
         return null;
     }
 
-    //brisanje pojedinacnog oglasa
+    //pri brisanju oglasa treba da se obrisu i sve njegove ocene i komentari
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAdd (@PathVariable Long id) {
         return null;
     }
 
 
-    //izlistavanja svih oglasa od jednog agenta zbog statistike
-    @GetMapping("/agent/{id}")
-        public ResponseEntity<?> statisticAgent (@PathVariable Long id){
+    //izlistavanja svih oglasa jedne firme zbog statistike
+    @GetMapping("/agent/{agent_id}")
+        public ResponseEntity<?> statistic (@PathVariable Long id){
             return null;
         }
-
-
-
 }
 
 

@@ -12,23 +12,31 @@ public class Addvertisment {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "brand", nullable = false)
-    private String brand;
+    //@Column(name = "user_id", nullable = false)
+    //koji user/firma ga kreira
+    private int user_id;
 
-    //@Column(name = "model", nullable = false)
-    private String model;
+    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public Brand brand;
 
-    //@Column(name = "fuel_type", nullable = false)
-    private String fuel_type;
+    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public Model model;
 
-    //@Column(name = "transmission_type", nullable = false)
-    private String transmission_type;
+    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public TransmissionType transmission_type;
 
-    //@Column(name = "vehicle_class", nullable = false)
-    private String vehicle_class;
+    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public FuelType fuel_type;
 
-    //@Column(name = "price", nullable = false)
-    private float price;
+    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public VehicleClass vehicle_class;
+
+    //@Column(name = "daily_price", nullable = false)
+    //dnevna cena ce se povlaciti iz cenovnika
+    private float daily_price;
+
+    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public PriceList price_list;
 
     //@Column(name = "mileage", nullable = false)
     private float mileage;
@@ -59,14 +67,16 @@ public class Addvertisment {
         super();
     }
 
-    public Addvertisment(Long id, String brand, String model, String fuel_type, String transmission_type, String vehicle_class, float price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, List<Grade> grades, List<Comment> comments, List<ReservedDate> reservedDates) {
+    public Addvertisment(Long id, int user_id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float daily_price, PriceList price_list, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, List<Grade> grades, List<Comment> comments, List<ReservedDate> reservedDates) {
         this.id = id;
+        this.user_id = user_id;
         this.brand = brand;
         this.model = model;
-        this.fuel_type = fuel_type;
         this.transmission_type = transmission_type;
+        this.fuel_type = fuel_type;
         this.vehicle_class = vehicle_class;
-        this.price = price;
+        this.daily_price = daily_price;
+        this.price_list = price_list;
         this.mileage = mileage;
         this.mileage_limit = mileage_limit;
         this.cdw = cdw;
@@ -85,52 +95,68 @@ public class Addvertisment {
         this.id = id;
     }
 
-    public String getBrand() {
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 
-    public String getModel() {
+    public Model getModel() {
         return model;
     }
 
-    public void setModel(String model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
-    public String getFuel_type() {
-        return fuel_type;
-    }
-
-    public void setFuel_type(String fuel_type) {
-        this.fuel_type = fuel_type;
-    }
-
-    public String getTransmission_type() {
+    public TransmissionType getTransmission_type() {
         return transmission_type;
     }
 
-    public void setTransmission_type(String transmission_type) {
+    public void setTransmission_type(TransmissionType transmission_type) {
         this.transmission_type = transmission_type;
     }
 
-    public String getVehicle_class() {
+    public FuelType getFuel_type() {
+        return fuel_type;
+    }
+
+    public void setFuel_type(FuelType fuel_type) {
+        this.fuel_type = fuel_type;
+    }
+
+    public VehicleClass getVehicle_class() {
         return vehicle_class;
     }
 
-    public void setVehicle_class(String vehicle_class) {
+    public void setVehicle_class(VehicleClass vehicle_class) {
         this.vehicle_class = vehicle_class;
     }
 
-    public float getPrice() {
-        return price;
+    public float getDaily_price() {
+        return daily_price;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setDaily_price(float daily_price) {
+        this.daily_price = daily_price;
+    }
+
+    public PriceList getPrice_list() {
+        return price_list;
+    }
+
+    public void setPrice_list(PriceList price_list) {
+        this.price_list = price_list;
     }
 
     public float getMileage() {
