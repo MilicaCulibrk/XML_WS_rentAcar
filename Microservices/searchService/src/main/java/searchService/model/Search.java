@@ -2,6 +2,7 @@ package searchService.model;
 
 
 import java.util.Date;
+import java.util.List;
 
 //@Entity
 public class Search {
@@ -9,6 +10,10 @@ public class Search {
     //@Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    //@Column(name = "user_id", nullable = false)
+    //koji user/firma ga kreira
+    private int user_id;
 
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Brand brand;
@@ -25,8 +30,9 @@ public class Search {
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public VehicleClass vehicle_class;
 
-    //@Column(name = "price", nullable = false)
-    private float price;
+    //@Column(name = "daily_price", nullable = false)
+    //dnevna cena ce se povlaciti iz cenovnika
+    private float daily_price;
 
     //@Column(name = "mileage", nullable = false)
     private float mileage;
@@ -43,31 +49,25 @@ public class Search {
     //@Column(name = "location", nullable = false)
     private String location;
 
-    //@Column(name = "dateTo", nullable = false)
-    private Date dateTo;
 
-    //@Column(name = "dateFrom", nullable = false)
-    private Date dateFrom;
+    //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
+    public List<ReservedDate> reservedDates;
 
-    public Search(){
-        super();
-    }
-
-    public Search(Long id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, Date dateTo, Date dateFrom) {
+    public Search(Long id, int user_id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float daily_price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, List<ReservedDate> reservedDates) {
         this.id = id;
+        this.user_id = user_id;
         this.brand = brand;
         this.model = model;
         this.transmission_type = transmission_type;
         this.fuel_type = fuel_type;
         this.vehicle_class = vehicle_class;
-        this.price = price;
+        this.daily_price = daily_price;
         this.mileage = mileage;
         this.mileage_limit = mileage_limit;
         this.cdw = cdw;
         this.child_seats = child_seats;
         this.location = location;
-        this.dateTo = dateTo;
-        this.dateFrom = dateFrom;
+        this.reservedDates = reservedDates;
     }
 
     public Long getId() {
@@ -76,6 +76,14 @@ public class Search {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public Brand getBrand() {
@@ -118,13 +126,14 @@ public class Search {
         this.vehicle_class = vehicle_class;
     }
 
-    public float getPrice() {
-        return price;
+    public float getDaily_price() {
+        return daily_price;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setDaily_price(float daily_price) {
+        this.daily_price = daily_price;
     }
+
 
     public float getMileage() {
         return mileage;
@@ -166,19 +175,11 @@ public class Search {
         this.location = location;
     }
 
-    public Date getDateTo() {
-        return dateTo;
+    public List<ReservedDate> getReservedDates() {
+        return reservedDates;
     }
 
-    public void setDateTo(Date dateTo) {
-        this.dateTo = dateTo;
-    }
-
-    public Date getDateFrom() {
-        return dateFrom;
-    }
-
-    public void setDateFrom(Date dateFrom) {
-        this.dateFrom = dateFrom;
+    public void setReservedDates(List<ReservedDate> reservedDates) {
+        this.reservedDates = reservedDates;
     }
 }

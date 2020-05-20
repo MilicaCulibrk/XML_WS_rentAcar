@@ -1,6 +1,6 @@
-package com.services.user.controller;
+package user.controller;
 
-import com.services.user.model.Agent;
+import user.model.Agent;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

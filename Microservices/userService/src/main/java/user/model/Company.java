@@ -1,4 +1,4 @@
-package com.services.user.model;
+package user.model;
 
 //@Entity
 public class Company {
