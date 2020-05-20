@@ -45,9 +45,6 @@ public class Addvertisment {
     //@Column(name = "location", nullable = false)
     private String location;
 
-    //@Column(name = "advertiserName", nullable = false)
-    private String advertiserName;
-
     //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<Grade> grades;
 
@@ -62,7 +59,7 @@ public class Addvertisment {
         super();
     }
 
-    public Addvertisment(Long id, String brand, String model, String fuel_type, String transmission_type, String vehicle_class, float price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, String advertiserName, List<Grade> grades, List<Comment> comments, List<ReservedDate> reservedDates) {
+    public Addvertisment(Long id, String brand, String model, String fuel_type, String transmission_type, String vehicle_class, float price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, List<com.microservice.addvertisment.model.Grade> grades, List<com.microservice.addvertisment.model.Comment> comments, List<com.microservice.addvertisment.model.ReservedDate> reservedDates) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -75,18 +72,9 @@ public class Addvertisment {
         this.cdw = cdw;
         this.child_seats = child_seats;
         this.location = location;
-        this.advertiserName = advertiserName;
         this.grades = grades;
         this.comments = comments;
         this.reservedDates = reservedDates;
-    }
-
-    public String getAdvertiserName() {
-        return advertiserName;
-    }
-
-    public void setAdvertiserName(String advertiserName) {
-        this.advertiserName = advertiserName;
     }
 
     public Long getId() {

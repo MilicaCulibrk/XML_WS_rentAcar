@@ -46,11 +46,7 @@ public class AddvertismentController {
             return null;
         }
 
-    //izlistavanja svih oglasa jedne firme zbog statistike
-    @GetMapping("/company/{id}")
-    public ResponseEntity<?> statisticCompany (@PathVariable Long id){
-        return null;
-    }
+
 
 }
 

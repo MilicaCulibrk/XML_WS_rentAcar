@@ -10,20 +10,20 @@ public class Search {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "brand", nullable = false)
-    private String brand;
+    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public Brand brand;
 
-    //@Column(name = "model", nullable = false)
-    private String model;
+    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public Model model;
 
-    //@Column(name = "fuel_type", nullable = false)
-    private String fuel_type;
+    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public TransmissionType transmission_type;
 
-    //@Column(name = "transmission_type", nullable = false)
-    private String transmission_type;
+    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public FuelType fuel_type;
 
-    //@Column(name = "vehicle_class", nullable = false)
-    private String vehicle_class;
+    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public VehicleClass vehicle_class;
 
     //@Column(name = "price", nullable = false)
     private float price;
@@ -53,12 +53,12 @@ public class Search {
         super();
     }
 
-    public Search(Long id, String brand, String model, String fuel_type, String transmission_type, String vehicle_class, float price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, Date dateTo, Date dateFrom) {
+    public Search(Long id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, Date dateTo, Date dateFrom) {
         this.id = id;
         this.brand = brand;
         this.model = model;
-        this.fuel_type = fuel_type;
         this.transmission_type = transmission_type;
+        this.fuel_type = fuel_type;
         this.vehicle_class = vehicle_class;
         this.price = price;
         this.mileage = mileage;
@@ -78,43 +78,43 @@ public class Search {
         this.id = id;
     }
 
-    public String getBrand() {
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 
-    public String getModel() {
+    public Model getModel() {
         return model;
     }
 
-    public void setModel(String model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
-    public String getFuel_type() {
-        return fuel_type;
-    }
-
-    public void setFuel_type(String fuel_type) {
-        this.fuel_type = fuel_type;
-    }
-
-    public String getTransmission_type() {
+    public TransmissionType getTransmission_type() {
         return transmission_type;
     }
 
-    public void setTransmission_type(String transmission_type) {
+    public void setTransmission_type(TransmissionType transmission_type) {
         this.transmission_type = transmission_type;
     }
 
-    public String getVehicle_class() {
+    public FuelType getFuel_type() {
+        return fuel_type;
+    }
+
+    public void setFuel_type(FuelType fuel_type) {
+        this.fuel_type = fuel_type;
+    }
+
+    public VehicleClass getVehicle_class() {
         return vehicle_class;
     }
 
-    public void setVehicle_class(String vehicle_class) {
+    public void setVehicle_class(VehicleClass vehicle_class) {
         this.vehicle_class = vehicle_class;
     }
 
