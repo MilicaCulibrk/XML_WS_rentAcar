@@ -4,16 +4,18 @@ package searchService.model;
 import java.util.Date;
 import java.util.List;
 
+
 //@Entity
 public class Search {
+
 
     //@Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "user_id", nullable = false)
+    //@Column(name = "addvertiser_id", nullable = false)
     //koji user/firma ga kreira
-    private int user_id;
+    private Long addvertiser_id;
 
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Brand brand;
@@ -31,8 +33,7 @@ public class Search {
     public VehicleClass vehicle_class;
 
     //@Column(name = "daily_price", nullable = false)
-    //dnevna cena ce se povlaciti iz cenovnika
-    private float daily_price;
+    public float daily_price;
 
     //@Column(name = "mileage", nullable = false)
     private float mileage;
@@ -49,13 +50,12 @@ public class Search {
     //@Column(name = "location", nullable = false)
     private String location;
 
-
-    //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
+    //@OneToMany(mappedBy = "search", fetch = FetchType.LAZY)
     public List<ReservedDate> reservedDates;
 
-    public Search(Long id, int user_id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float daily_price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, List<ReservedDate> reservedDates) {
+    public Search(Long id, Long addvertiser_id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float daily_price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, List<searchService.model.ReservedDate> reservedDates) {
         this.id = id;
-        this.user_id = user_id;
+        this.addvertiser_id = addvertiser_id;
         this.brand = brand;
         this.model = model;
         this.transmission_type = transmission_type;
@@ -78,12 +78,12 @@ public class Search {
         this.id = id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public Long getAddvertiser_id() {
+        return addvertiser_id;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setAddvertiser_id(Long addvertiser_id) {
+        this.addvertiser_id = addvertiser_id;
     }
 
     public Brand getBrand() {
@@ -133,7 +133,6 @@ public class Search {
     public void setDaily_price(float daily_price) {
         this.daily_price = daily_price;
     }
-
 
     public float getMileage() {
         return mileage;

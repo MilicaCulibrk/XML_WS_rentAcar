@@ -1,5 +1,7 @@
 package searchService.model;
 
+import java.util.List;
+
 //@Entity(name="transmission_type")
 public class TransmissionType {
 

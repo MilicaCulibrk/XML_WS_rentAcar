@@ -1,5 +1,7 @@
 package searchService.model;
 
+import java.util.List;
+
 //@Entity(name="fuel_type")
 public class FuelType {
 

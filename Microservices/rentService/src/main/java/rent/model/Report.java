@@ -10,4 +10,7 @@ public class Report {
 
     //@Column(name = "comment", nullable = false)
     private float comment;
+
+    //join table
+    private Order order;
 }

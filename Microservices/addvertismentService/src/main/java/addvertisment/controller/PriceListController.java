@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class PriceListController {
 
     //izlistavanja svih cenovnika jedne firme
-    @GetMapping("/agent/{agent_id}")
+    @GetMapping("/company/{company_id}")
     public ResponseEntity<?> getAllCompaniesPriceLists (@PathVariable Long id){
         return null;
     }
@@ -24,7 +24,6 @@ public class PriceListController {
         return null;
     }
 
-    //kad promenimo cenu po danu, treba da se promene polja cena u svim oglasima??
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePriceList (@RequestBody PriceList  price_list, @PathVariable Long id) {
         return null;

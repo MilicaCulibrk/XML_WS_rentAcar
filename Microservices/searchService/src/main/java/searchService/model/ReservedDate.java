@@ -1,5 +1,7 @@
 package searchService.model;
 
+import java.util.Date;
+
 //@Entity(name="reserved_date")
 public class ReservedDate {
 

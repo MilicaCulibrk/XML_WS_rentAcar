@@ -76,11 +76,7 @@ public class Order {
         this.date_to = date_to;
     }
 
-    public Request getRequest() {
-        return request;
-    }
 
-    public void setRequest(Request request) {
-        this.request = request;
-    }
+
+
 }

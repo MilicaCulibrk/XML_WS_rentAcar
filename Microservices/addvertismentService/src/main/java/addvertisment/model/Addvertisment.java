@@ -12,9 +12,9 @@ public class Addvertisment {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "user_id", nullable = false)
+    //@Column(name = "addvertiser_id", nullable = false)
     //koji user/firma ga kreira
-    private int user_id;
+    private Long addvertiser_id;
 
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Brand brand;
@@ -30,10 +30,6 @@ public class Addvertisment {
 
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public VehicleClass vehicle_class;
-
-    //@Column(name = "daily_price", nullable = false)
-    //dnevna cena ce se povlaciti iz cenovnika
-    private float daily_price;
 
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public PriceList price_list;
@@ -67,15 +63,14 @@ public class Addvertisment {
         super();
     }
 
-    public Addvertisment(Long id, int user_id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float daily_price, PriceList price_list, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, List<Grade> grades, List<Comment> comments, List<ReservedDate> reservedDates) {
+    public Addvertisment(Long id, Long addvertiser_id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, PriceList price_list, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, List<Grade> grades, List<Comment> comments, List<ReservedDate> reservedDates) {
         this.id = id;
-        this.user_id = user_id;
+        this.addvertiser_id = addvertiser_id;
         this.brand = brand;
         this.model = model;
         this.transmission_type = transmission_type;
         this.fuel_type = fuel_type;
         this.vehicle_class = vehicle_class;
-        this.daily_price = daily_price;
         this.price_list = price_list;
         this.mileage = mileage;
         this.mileage_limit = mileage_limit;
@@ -95,12 +90,12 @@ public class Addvertisment {
         this.id = id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public Long getAddvertiser_id() {
+        return addvertiser_id;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setAddvertiser_id(Long addvertiser_id) {
+        this.addvertiser_id = addvertiser_id;
     }
 
     public Brand getBrand() {
@@ -141,14 +136,6 @@ public class Addvertisment {
 
     public void setVehicle_class(VehicleClass vehicle_class) {
         this.vehicle_class = vehicle_class;
-    }
-
-    public float getDaily_price() {
-        return daily_price;
-    }
-
-    public void setDaily_price(float daily_price) {
-        this.daily_price = daily_price;
     }
 
     public PriceList getPrice_list() {

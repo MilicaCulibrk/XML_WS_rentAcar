@@ -1,5 +1,7 @@
 package searchService.model;
 
+import java.util.List;
+
 //@Entity(name="vehicle_class")
 public class VehicleClass {
 

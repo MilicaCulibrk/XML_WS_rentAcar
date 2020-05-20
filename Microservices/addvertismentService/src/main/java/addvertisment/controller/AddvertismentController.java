@@ -20,11 +20,13 @@ public class AddvertismentController {
         return null;
     }
 
+    //kad se kreira oglas treba da se kreira i nova klasa pretraga
     @PostMapping("")
     public ResponseEntity<?> createAdd (@RequestBody Addvertisment addvertisment)  {
         return null;
     }
 
+    //kad se modifikuje oglas treba da se modifikuje i pretraga
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAdd (@RequestBody Addvertisment addvertisment, @PathVariable Long id) {
         return null;
@@ -38,7 +40,7 @@ public class AddvertismentController {
 
 
     //izlistavanja svih oglasa jedne firme zbog statistike
-    @GetMapping("/agent/{agent_id}")
+    @GetMapping("/company/{company_id}")
         public ResponseEntity<?> statistic (@PathVariable Long id){
             return null;
         }

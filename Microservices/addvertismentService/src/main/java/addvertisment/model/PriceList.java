@@ -28,7 +28,10 @@ public class PriceList {
     //@Column(name = "discount", nullable = false)
     private float discount;
 
-    public PriceList(Long id, int user_id, List<Addvertisment> addvertisments, float daily_price, float overlimit_price, float cdw_price, float discount) {
+    //@Column(name = "number_of_days", nullable = false)
+    private float number_of_days;
+
+    public PriceList(Long id, int user_id, List<Addvertisment> addvertisments, float daily_price, float overlimit_price, float cdw_price, float discount, float number_of_days) {
         this.id = id;
         this.user_id = user_id;
         this.addvertisments = addvertisments;
@@ -36,6 +39,7 @@ public class PriceList {
         this.overlimit_price = overlimit_price;
         this.cdw_price = cdw_price;
         this.discount = discount;
+        this.number_of_days = number_of_days;
     }
 
     public Long getId() {
@@ -92,5 +96,13 @@ public class PriceList {
 
     public void setDiscount(float discount) {
         this.discount = discount;
+    }
+
+    public float getNumber_of_days() {
+        return number_of_days;
+    }
+
+    public void setNumber_of_days(float number_of_days) {
+        this.number_of_days = number_of_days;
     }
 }
