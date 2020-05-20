@@ -1,0 +1,53 @@
+version: '3'
+services:
+
+  eureka-service:
+    build: ./eurekaService
+    ports:
+      - "8761:8761"
+    tty: true
+
+  add-service:
+    build: ./addvertismentService
+    ports:
+      - "8083:8083"
+    environment:
+      - REGISTRY_HOST=eureka-service
+
+    tty: true
+    depends_on:
+        - eureka-service
+  user-service:
+    build: ./userService
+    ports:
+      - "8082:8082"
+    environment:
+      - REGISTRY_HOST=eureka-service
+    tty: true
+    depends_on:
+      - eureka-service
+  rent-service:
+    build: ./rentService
+    ports:
+      - "8084:8084"
+    environment:
+      - REGISTRY_HOST=eureka-service
+    tty: true
+    depends_on:
+      - eureka-service
+  zuul:
+    build: ./zuulService/zuul
+    ports:
+      - "8662:8662"
+    environment:
+      - REGISTRY_HOST=eureka-service
+    tty: true
+    depends_on:
+      - eureka-service
+      - add-service
+      - user-service
+      - rent-service
+
+
+
+
