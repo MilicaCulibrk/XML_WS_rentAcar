@@ -1,12 +1,10 @@
-package com.microservice.addvertisment.model;
+package searchService.model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.Date;
 
 //@Entity
-public class Addvertisment {
+public class Search {
 
     //@Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,24 +43,17 @@ public class Addvertisment {
     //@Column(name = "location", nullable = false)
     private String location;
 
-    //@Column(name = "advertiserName", nullable = false)
-    private String advertiserName;
+    //@Column(name = "dateTo", nullable = false)
+    private Date dateTo;
 
-    //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
-    public List<Grade> grades;
+    //@Column(name = "dateFrom", nullable = false)
+    private Date dateFrom;
 
-    //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
-    public List<Comment> comments;
-
-    //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
-    public List<ReservedDate> reservedDates;
-
-
-    public Addvertisment(){
+    public Search(){
         super();
     }
 
-    public Addvertisment(Long id, String brand, String model, String fuel_type, String transmission_type, String vehicle_class, float price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, String advertiserName, List<Grade> grades, List<Comment> comments, List<ReservedDate> reservedDates) {
+    public Search(Long id, String brand, String model, String fuel_type, String transmission_type, String vehicle_class, float price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, Date dateTo, Date dateFrom) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -75,18 +66,8 @@ public class Addvertisment {
         this.cdw = cdw;
         this.child_seats = child_seats;
         this.location = location;
-        this.advertiserName = advertiserName;
-        this.grades = grades;
-        this.comments = comments;
-        this.reservedDates = reservedDates;
-    }
-
-    public String getAdvertiserName() {
-        return advertiserName;
-    }
-
-    public void setAdvertiserName(String advertiserName) {
-        this.advertiserName = advertiserName;
+        this.dateTo = dateTo;
+        this.dateFrom = dateFrom;
     }
 
     public Long getId() {
@@ -185,29 +166,19 @@ public class Addvertisment {
         this.location = location;
     }
 
-    public List<Grade> getGrades() {
-        return grades;
+    public Date getDateTo() {
+        return dateTo;
     }
 
-    public void setGrades(List<Grade> grades) {
-        this.grades = grades;
+    public void setDateTo(Date dateTo) {
+        this.dateTo = dateTo;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public Date getDateFrom() {
+        return dateFrom;
     }
 
-    public List<ReservedDate> getReservedDates() {
-        return reservedDates;
+    public void setDateFrom(Date dateFrom) {
+        this.dateFrom = dateFrom;
     }
-
-    public void setReservedDates(List<ReservedDate> reservedDates) {
-        this.reservedDates = reservedDates;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-
 }
