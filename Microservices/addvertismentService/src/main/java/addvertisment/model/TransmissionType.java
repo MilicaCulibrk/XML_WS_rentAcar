@@ -2,7 +2,7 @@ package addvertisment.model;
 
 import java.util.List;
 
-//@Entity
+//@Entity(name="transmission_type")
 public class TransmissionType {
 
     //@Id

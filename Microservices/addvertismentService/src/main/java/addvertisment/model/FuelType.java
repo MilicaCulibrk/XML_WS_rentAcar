@@ -2,7 +2,7 @@ package addvertisment.model;
 
 import java.util.List;
 
-//@Entity
+//@Entity(name="fuel_type")
 public class FuelType {
 
     //@Id

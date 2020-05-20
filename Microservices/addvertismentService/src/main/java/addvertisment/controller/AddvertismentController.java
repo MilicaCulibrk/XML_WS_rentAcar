@@ -38,7 +38,7 @@ public class AddvertismentController {
 
 
     //izlistavanja svih oglasa jedne firme zbog statistike
-    @GetMapping("/agent/{id}")
+    @GetMapping("/agent/{agent_id}")
         public ResponseEntity<?> statistic (@PathVariable Long id){
             return null;
         }

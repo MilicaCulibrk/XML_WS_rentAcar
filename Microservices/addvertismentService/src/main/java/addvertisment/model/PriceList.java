@@ -2,7 +2,7 @@ package addvertisment.model;
 
 import java.util.List;
 
-//@Entity
+//@Entity(name="price_list")
 public class PriceList {
 
     //@Id
@@ -25,4 +25,72 @@ public class PriceList {
     //@Column(name = "cdw_price", nullable = false)
     private float cdw_price;
 
+    //@Column(name = "discount", nullable = false)
+    private float discount;
+
+    public PriceList(Long id, int user_id, List<Addvertisment> addvertisments, float daily_price, float overlimit_price, float cdw_price, float discount) {
+        this.id = id;
+        this.user_id = user_id;
+        this.addvertisments = addvertisments;
+        this.daily_price = daily_price;
+        this.overlimit_price = overlimit_price;
+        this.cdw_price = cdw_price;
+        this.discount = discount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public List<Addvertisment> getAddvertisments() {
+        return addvertisments;
+    }
+
+    public void setAddvertisments(List<Addvertisment> addvertisments) {
+        this.addvertisments = addvertisments;
+    }
+
+    public float getDaily_price() {
+        return daily_price;
+    }
+
+    public void setDaily_price(float daily_price) {
+        this.daily_price = daily_price;
+    }
+
+    public float getOverlimit_price() {
+        return overlimit_price;
+    }
+
+    public void setOverlimit_price(float overlimit_price) {
+        this.overlimit_price = overlimit_price;
+    }
+
+    public float getCdw_price() {
+        return cdw_price;
+    }
+
+    public void setCdw_price(float cdw_price) {
+        this.cdw_price = cdw_price;
+    }
+
+    public float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(float discount) {
+        this.discount = discount;
+    }
 }
