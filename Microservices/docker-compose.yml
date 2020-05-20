@@ -35,6 +35,24 @@ services:
     tty: true
     depends_on:
       - eureka-service
+  search-service:
+    build: ./searchService
+    ports:
+      - "8085:8085"
+    environment:
+      - REGISTRY_HOST=eureka-service
+    tty: true
+    depends_on:
+      - eureka-service
+  message-service:
+    build: ./messageService
+    ports:
+      - "8086:8086"
+    environment:
+      - REGISTRY_HOST=eureka-service
+    tty: true
+    depends_on:
+      - eureka-service
   zuul:
     build: ./zuulService/zuul
     ports:
