@@ -42,7 +42,6 @@ public class AddvertismentController {
         public ResponseEntity<?> statistic (@PathVariable Long id){
             return null;
         }
-
 }
 
 

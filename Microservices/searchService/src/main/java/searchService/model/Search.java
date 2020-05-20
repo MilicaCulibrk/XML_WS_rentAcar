@@ -1,20 +1,14 @@
-package addvertisment.model;
+package searchService.model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.Date;
 
 //@Entity
-public class Addvertisment {
+public class Search {
 
     //@Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    //@Column(name = "user_id", nullable = false)
-    //koji user/firma ga kreira
-    private int user_id;
 
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Brand brand;
@@ -31,12 +25,8 @@ public class Addvertisment {
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public VehicleClass vehicle_class;
 
-    //@Column(name = "daily_price", nullable = false)
-    //dnevna cena ce se povlaciti iz cenovnika
-    private float daily_price;
-
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public PriceList price_list;
+    //@Column(name = "price", nullable = false)
+    private float price;
 
     //@Column(name = "mileage", nullable = false)
     private float mileage;
@@ -53,38 +43,31 @@ public class Addvertisment {
     //@Column(name = "location", nullable = false)
     private String location;
 
-    //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
-    public List<Grade> grades;
+    //@Column(name = "dateTo", nullable = false)
+    private Date dateTo;
 
-    //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
-    public List<Comment> comments;
+    //@Column(name = "dateFrom", nullable = false)
+    private Date dateFrom;
 
-    //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
-    public List<ReservedDate> reservedDates;
-
-
-    public Addvertisment(){
+    public Search(){
         super();
     }
 
-    public Addvertisment(Long id, int user_id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float daily_price, PriceList price_list, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, List<Grade> grades, List<Comment> comments, List<ReservedDate> reservedDates) {
+    public Search(Long id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, Date dateTo, Date dateFrom) {
         this.id = id;
-        this.user_id = user_id;
         this.brand = brand;
         this.model = model;
         this.transmission_type = transmission_type;
         this.fuel_type = fuel_type;
         this.vehicle_class = vehicle_class;
-        this.daily_price = daily_price;
-        this.price_list = price_list;
+        this.price = price;
         this.mileage = mileage;
         this.mileage_limit = mileage_limit;
         this.cdw = cdw;
         this.child_seats = child_seats;
         this.location = location;
-        this.grades = grades;
-        this.comments = comments;
-        this.reservedDates = reservedDates;
+        this.dateTo = dateTo;
+        this.dateFrom = dateFrom;
     }
 
     public Long getId() {
@@ -93,14 +76,6 @@ public class Addvertisment {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
     }
 
     public Brand getBrand() {
@@ -143,20 +118,12 @@ public class Addvertisment {
         this.vehicle_class = vehicle_class;
     }
 
-    public float getDaily_price() {
-        return daily_price;
+    public float getPrice() {
+        return price;
     }
 
-    public void setDaily_price(float daily_price) {
-        this.daily_price = daily_price;
-    }
-
-    public PriceList getPrice_list() {
-        return price_list;
-    }
-
-    public void setPrice_list(PriceList price_list) {
-        this.price_list = price_list;
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public float getMileage() {
@@ -199,27 +166,19 @@ public class Addvertisment {
         this.location = location;
     }
 
-    public List<Grade> getGrades() {
-        return grades;
+    public Date getDateTo() {
+        return dateTo;
     }
 
-    public void setGrades(List<Grade> grades) {
-        this.grades = grades;
+    public void setDateTo(Date dateTo) {
+        this.dateTo = dateTo;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public Date getDateFrom() {
+        return dateFrom;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public List<ReservedDate> getReservedDates() {
-        return reservedDates;
-    }
-
-    public void setReservedDates(List<ReservedDate> reservedDates) {
-        this.reservedDates = reservedDates;
+    public void setDateFrom(Date dateFrom) {
+        this.dateFrom = dateFrom;
     }
 }
