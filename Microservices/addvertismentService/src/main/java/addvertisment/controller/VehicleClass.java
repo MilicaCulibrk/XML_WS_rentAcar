@@ -1,10 +1,10 @@
 package addvertisment.controller;
 
-import addvertisment.model.FuelType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/vehicle_class")
+@RestController
+@RequestMapping("/vehicle_class")
 public class VehicleClass {
 
     @GetMapping("")

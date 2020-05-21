@@ -6,7 +6,8 @@ import addvertisment.model.Model;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/brand")
+@RestController
+@RequestMapping("/brand")
 public class BrandController {
 
     @GetMapping("")

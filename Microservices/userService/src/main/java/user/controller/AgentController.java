@@ -4,7 +4,8 @@ import user.model.Agent;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/agent")
+@RestController
+@RequestMapping(value = "/agent")
 public class AgentController {
 
     //izlistavanje svih agenata

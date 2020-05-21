@@ -47,9 +47,9 @@ public class Search {
     private Date date_from;
 
     //@Column(name = "location", nullable = false)
-    private Date date_from;
+    private Date date_to;
 
-    public Search(Long id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float daily_price, float mileage, boolean cdw, int child_seats, String location, Date date_from, Date date_from1) {
+    public Search(Long id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float daily_price, float mileage, boolean cdw, int child_seats, String location, Date date_from, Date date_to) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -62,7 +62,7 @@ public class Search {
         this.child_seats = child_seats;
         this.location = location;
         this.date_from = date_from;
-        this.date_from = date_from1;
+        this.date_to = date_to;
     }
 
     public Long getId() {
@@ -159,5 +159,13 @@ public class Search {
 
     public void setDate_from(Date date_from) {
         this.date_from = date_from;
+    }
+
+    public Date getDate_to() {
+        return date_to;
+    }
+
+    public void setDate_to(Date date_to) {
+        this.date_to = date_to;
     }
 }

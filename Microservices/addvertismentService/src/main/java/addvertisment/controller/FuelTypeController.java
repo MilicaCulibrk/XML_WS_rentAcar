@@ -5,7 +5,8 @@ import addvertisment.model.FuelType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/fuel_type")
+@RestController
+@RequestMapping("/fuel_type")
 public class FuelTypeController {
 
     @GetMapping("")

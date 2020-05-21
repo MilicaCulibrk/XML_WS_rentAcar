@@ -1,11 +1,11 @@
 package addvertisment.controller;
 
-import addvertisment.model.FuelType;
 import addvertisment.model.PriceList;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/price_list")
+@RestController
+@RequestMapping("/price_list")
 public class PriceListController {
 
     //izlistavanja svih cenovnika jedne firme

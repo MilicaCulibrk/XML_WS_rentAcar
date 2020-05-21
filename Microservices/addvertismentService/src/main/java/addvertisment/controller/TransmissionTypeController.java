@@ -1,11 +1,11 @@
 package addvertisment.controller;
 
-import addvertisment.model.FuelType;
 import addvertisment.model.TransmissionType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/transmission_type")
+@RestController
+@RequestMapping("/transmission_type")
 public class TransmissionTypeController {
 
     @GetMapping("")

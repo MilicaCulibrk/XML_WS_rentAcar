@@ -12,7 +12,7 @@ public class FuelType {
     //@Column(name = "fuel_type_name", nullable = false)
     private String fuel_type_name;
 
-    //@OneToMany(mappedBy = "fuel_type", fetch = FetchType.LAZY)
+    //@OneToMany(mappedBy = "addvertisments", fetch = FetchType.LAZY)
     public List<Addvertisment> addvertisments;
 
     FuelType(){

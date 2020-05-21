@@ -15,7 +15,7 @@ public class Brand {
     //@OneToMany(mappedBy = "brand", fetch = FetchType.LAZY)
     public List<Addvertisment> addvertisments;
 
-    //@OneToMany(mappedBy = "brand", fetch = FetchType.LAZY)
+    //@OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
     public List<Model> model;
 
     Brand(){
