@@ -9,10 +9,10 @@ public class TransmissionType {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "transmission_type", nullable = false)
-    private String transmission_type;
+    //@Column(name = "transmission_type_name", nullable = false)
+    private String transmission_type_name;
 
-    //@OneToMany(mappedBy = "transmission_type", fetch = FetchType.LAZY)
+    //@OneToMany(mappedBy = "search_list", fetch = FetchType.LAZY)
     public List<Search> search_list;
 
     TransmissionType(){
@@ -29,7 +29,7 @@ public class TransmissionType {
 
     public TransmissionType(Long id, String transmission_type, List<Search> search_list) {
         this.id = id;
-        this.transmission_type = transmission_type;
+        this.transmission_type_name = transmission_type;
         this.search_list = search_list;
     }
 
@@ -41,12 +41,12 @@ public class TransmissionType {
         this.id = id;
     }
 
-    public String getTransmission_type() {
-        return transmission_type;
+    public String getTransmission_type_name() {
+        return transmission_type_name;
     }
 
-    public void setTransmission_type(String transmission_type) {
-        this.transmission_type = transmission_type;
+    public void setTransmission_type_name(String transmission_type_name) {
+        this.transmission_type_name = transmission_type_name;
     }
 
 

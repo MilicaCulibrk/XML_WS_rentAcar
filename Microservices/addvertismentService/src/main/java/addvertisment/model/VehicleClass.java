@@ -9,10 +9,10 @@ public class VehicleClass {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "vehicle_class", nullable = false)
-    private String vehicle_class;
+    //@Column(name = "vehicle_class_name", nullable = false)
+    private String vehicle_class_name;
 
-    //@OneToMany(mappedBy = "vehicle_class", fetch = FetchType.LAZY)
+    //@OneToMany(mappedBy = "addvertisments", fetch = FetchType.LAZY)
     public List<Addvertisment> addvertisments;
 
     VehicleClass(){
@@ -21,7 +21,7 @@ public class VehicleClass {
 
     public VehicleClass(Long id, String vehicle_class, List<Addvertisment> addvertisments) {
         this.id = id;
-        this.vehicle_class = vehicle_class;
+        this.vehicle_class_name = vehicle_class;
         this.addvertisments = addvertisments;
     }
 
@@ -33,12 +33,12 @@ public class VehicleClass {
         this.id = id;
     }
 
-    public String getVehicle_class() {
-        return vehicle_class;
+    public String getVehicle_class_name() {
+        return vehicle_class_name;
     }
 
-    public void setVehicle_class(String vehicle_class) {
-        this.vehicle_class = vehicle_class;
+    public void setVehicle_class_name(String vehicle_class_name) {
+        this.vehicle_class_name = vehicle_class_name;
     }
 
     public List<Addvertisment> getAddvertisments() {

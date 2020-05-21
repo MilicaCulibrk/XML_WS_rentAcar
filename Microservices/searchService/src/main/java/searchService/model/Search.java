@@ -13,10 +13,6 @@ public class Search {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "addvertiser_id", nullable = false)
-    //koji user/firma ga kreira
-    private Long addvertiser_id;
-
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Brand brand;
 
@@ -38,9 +34,6 @@ public class Search {
     //@Column(name = "mileage", nullable = false)
     private float mileage;
 
-    //@Column(name = "mileage_limit", nullable = false)
-    private float mileage_limit;
-
     //@Column(name = "cdw", nullable = false)
     private boolean cdw;
 
@@ -50,12 +43,14 @@ public class Search {
     //@Column(name = "location", nullable = false)
     private String location;
 
-    //@OneToMany(mappedBy = "search", fetch = FetchType.LAZY)
-    public List<ReservedDate> reservedDates;
+    //@Column(name = "location", nullable = false)
+    private Date date_from;
 
-    public Search(Long id, Long addvertiser_id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float daily_price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, List<searchService.model.ReservedDate> reservedDates) {
+    //@Column(name = "location", nullable = false)
+    private Date date_from;
+
+    public Search(Long id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float daily_price, float mileage, boolean cdw, int child_seats, String location, Date date_from, Date date_from1) {
         this.id = id;
-        this.addvertiser_id = addvertiser_id;
         this.brand = brand;
         this.model = model;
         this.transmission_type = transmission_type;
@@ -63,11 +58,11 @@ public class Search {
         this.vehicle_class = vehicle_class;
         this.daily_price = daily_price;
         this.mileage = mileage;
-        this.mileage_limit = mileage_limit;
         this.cdw = cdw;
         this.child_seats = child_seats;
         this.location = location;
-        this.reservedDates = reservedDates;
+        this.date_from = date_from;
+        this.date_from = date_from1;
     }
 
     public Long getId() {
@@ -76,14 +71,6 @@ public class Search {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getAddvertiser_id() {
-        return addvertiser_id;
-    }
-
-    public void setAddvertiser_id(Long addvertiser_id) {
-        this.addvertiser_id = addvertiser_id;
     }
 
     public Brand getBrand() {
@@ -142,14 +129,6 @@ public class Search {
         this.mileage = mileage;
     }
 
-    public float getMileage_limit() {
-        return mileage_limit;
-    }
-
-    public void setMileage_limit(float mileage_limit) {
-        this.mileage_limit = mileage_limit;
-    }
-
     public boolean isCdw() {
         return cdw;
     }
@@ -174,11 +153,11 @@ public class Search {
         this.location = location;
     }
 
-    public List<ReservedDate> getReservedDates() {
-        return reservedDates;
+    public Date getDate_from() {
+        return date_from;
     }
 
-    public void setReservedDates(List<ReservedDate> reservedDates) {
-        this.reservedDates = reservedDates;
+    public void setDate_from(Date date_from) {
+        this.date_from = date_from;
     }
 }

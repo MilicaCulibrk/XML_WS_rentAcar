@@ -9,19 +9,19 @@ public class VehicleClass {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "vehicle_class", nullable = false)
-    private String vehicle_class;
+    //@Column(name = "vehicle_class_name", nullable = false)
+    private String vehicle_class_name;
 
-    //@OneToMany(mappedBy = "vehicle_class", fetch = FetchType.LAZY)
+    //@OneToMany(mappedBy = "search_list", fetch = FetchType.LAZY)
     public List<Search> search_list;
 
     VehicleClass(){
         super();
     }
 
-    public VehicleClass(Long id, String vehicle_class, List<Search> search_list) {
+    public VehicleClass(Long id, String vehicle_class_name, List<Search> search_list) {
         this.id = id;
-        this.vehicle_class = vehicle_class;
+        this.vehicle_class_name = vehicle_class_name;
         this.search_list = search_list;
     }
 
@@ -34,11 +34,11 @@ public class VehicleClass {
     }
 
     public String getVehicle_class() {
-        return vehicle_class;
+        return vehicle_class_name;
     }
 
     public void setVehicle_class(String vehicle_class) {
-        this.vehicle_class = vehicle_class;
+        this.vehicle_class_name = vehicle_class;
     }
 
     public List<Search> getSearch_list() {

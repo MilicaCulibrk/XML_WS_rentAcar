@@ -9,10 +9,10 @@ public class FuelType {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "fuel_type", nullable = false)
-    private String fuel_type;
+    //@Column(name = "fuel_type_name", nullable = false)
+    private String fuel_type_name;
 
-    //@OneToMany(mappedBy = "fuel_type", fetch = FetchType.LAZY)
+    //@OneToMany(mappedBy = "search_list", fetch = FetchType.LAZY)
     public List<Search> search_list;
 
     FuelType(){
@@ -29,7 +29,7 @@ public class FuelType {
 
     public FuelType(Long id, String fuel_type, List<Search> search_list) {
         this.id = id;
-        this.fuel_type = fuel_type;
+        this.fuel_type_name = fuel_type;
         this.search_list = search_list;
     }
 
@@ -41,12 +41,12 @@ public class FuelType {
         this.id = id;
     }
 
-    public String getFuel_type() {
-        return fuel_type;
+    public String getFuel_type_name() {
+        return fuel_type_name;
     }
 
-    public void setFuel_type(String fuel_type) {
-        this.fuel_type = fuel_type;
+    public void setFuel_type_name(String fuel_type_name) {
+        this.fuel_type_name = fuel_type_name;
     }
 
 

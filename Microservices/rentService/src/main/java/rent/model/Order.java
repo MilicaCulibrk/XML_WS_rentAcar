@@ -15,6 +15,9 @@ public class Order {
     //@Column(name = "id_add", nullable = false)
     private Long id_add;
 
+    //@Column(name = "ordered", nullable = false)
+    private Boolean ordered;
+
     //@Column(name = "date_from", nullable = false)
     private Date date_from;
 
@@ -27,10 +30,11 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long id, Long id_user, Long id_add, Date date_from, Date date_to, Request request) {
+    public Order(Long id, Long id_user, Long id_add, Boolean ordered, Date date_from, Date date_to, Request request) {
         this.id = id;
         this.id_user = id_user;
         this.id_add = id_add;
+        this.ordered = ordered;
         this.date_from = date_from;
         this.date_to = date_to;
         this.request = request;
@@ -60,6 +64,14 @@ public class Order {
         this.id_add = id_add;
     }
 
+    public Boolean getOrdered() {
+        return ordered;
+    }
+
+    public void setOrdered(Boolean ordered) {
+        this.ordered = ordered;
+    }
+
     public Date getDate_from() {
         return date_from;
     }
@@ -76,7 +88,11 @@ public class Order {
         this.date_to = date_to;
     }
 
+    public Request getRequest() {
+        return request;
+    }
 
-
-
+    public void setRequest(Request request) {
+        this.request = request;
+    }
 }

@@ -13,7 +13,7 @@ public class PriceList {
     //koji user/firma ga kreira(bila bi ManyToOne veza)
     private int user_id;
 
-    //@OneToMany(mappedBy = "price_list", fetch = FetchType.LAZY)
+    //@OneToMany(mappedBy = "addvertisments", fetch = FetchType.LAZY)
     public List<Addvertisment> addvertisments;
 
     //@Column(name = "daily_price", nullable = false)
