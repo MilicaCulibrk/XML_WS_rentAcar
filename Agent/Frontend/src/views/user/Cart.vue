@@ -42,7 +42,7 @@
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
       <v-card hover elevation="2" class="text-center ma-6">
         <div class="cardBorderColor">
-          <v-card-title class="primary--text font-weight-bold headline">Order summary</v-card-title>
+          <v-card-title class="primary--text font-weight-bold headline">Summary</v-card-title>
           <v-card-text>Total price:</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -51,13 +51,26 @@
         </div>
       </v-card>
     </div>
+      <div> <h1>"nestoo" {{header}}</h1>
+  </div>
   </v-layout>
+  
 </template>
 
 <script>
 export default {
+  components: {
+    
+  },
+    props: {
+    header:{
+        type: String
+    } 
+  },
+
   data() {
     return {
+      evo: "2",
       cars: [
         {
           id: "1",
@@ -96,8 +109,16 @@ export default {
           agent: "1"
         }
       ],
-      agents: []
+      agents: [],
+      nekiID: name,
     };
+  },
+  route:{
+    data(transition){
+      transition.next({
+        name: transition.to.params.name
+      });
+    }
   },
 
   methods: {
@@ -108,7 +129,12 @@ export default {
         }
       });
       return this.agents;
-    }
+    },
+        created (){
+    this.$on('changeIt', (data) => {
+      this.header = data;
+    })
+  },
   },
   mounted() {
     this.getAgents();

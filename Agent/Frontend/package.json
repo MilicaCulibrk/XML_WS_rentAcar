@@ -10,14 +10,14 @@
   "dependencies": {
     "axios": "^0.19.2",
     "b-sidebar": "^1.2.1",
-    "bootstrap-vue": "^2.13.0",
+    "bootstrap-vue": "^2.14.0",
     "core-js": "^3.6.4",
-    "date-fns": "^2.12.0",
+    "date-fns": "^2.14.0",
     "material-design-icons-iconfont": "^5.0.1",
     "vue": "^2.6.11",
-    "vue-router": "^3.1.6",
-    "vuetify": "^2.2.11",
-    "vuex": "^3.3.0"
+    "vue-router": "^3.2.0",
+    "vuetify": "^2.2.29",
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",

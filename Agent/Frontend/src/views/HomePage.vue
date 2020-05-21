@@ -41,7 +41,8 @@
                 <PopupComments />
                 <v-tooltip bottom color="black">
                   <template v-slot:activator="{ on }">
-                    <v-btn icon v-on="on" color="primary">
+                    <v-btn @click="addToBasket()"  icon v-on="on" color="primary">
+                      <router-link  :to="{ name: 'add', params: {name: car.id}}"></router-link>
                       <v-icon>shopping_cart</v-icon>
                     </v-btn>
                   </template>
@@ -53,7 +54,11 @@
         </v-flex>
       </v-layout>
     </v-container>
+        <div>
+      <h1 v-on:click="changeHeader">"nestoo" {{header}}</h1>
   </div>
+  </div>
+
 </template>
 
 <script>
@@ -65,6 +70,11 @@ import SearchPanel from "@/components/homePage/SearchPanel";
 export default {
   name: "HomePage",
   components: { PopupRatings, PopupComments, PopupDetails, SearchPanel },
+  props: {
+    header:{
+        type: String
+    } 
+  },
   data() {
     return {
       dialogDetails: false,
@@ -77,7 +87,7 @@ export default {
         { id: "6", brand: "VW", model: "Polo Mk4", price: "20.000" },
         { id: "7", brand: "Mercedes", model: "Maybach", price: "150.000" },
         { id: "8", brand: "Audi", model: "A5 Coupe", price: "50.000" }
-      ]
+      ],
     };
   },
   methods: {
@@ -91,7 +101,15 @@ export default {
           parseFloat(a[sortProp]) < parseFloat(b[sortProp]) ? -1 : 1
         );
       }
-    }
+    },
+    addToBasket(){
+      this.$router.push("/cart");
+
+    },
+          changeHeader (){
+          this.header = "changed header";
+          this.$emit('changeIt', 'changed header');
+      }
   }
 };
 </script>
