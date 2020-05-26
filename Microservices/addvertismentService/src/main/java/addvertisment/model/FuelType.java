@@ -1,28 +1,29 @@
 package addvertisment.model;
 
+import javax.persistence.*;
 import java.util.List;
 
-//@Entity(name="fuel_type")
+@Entity(name="fuel_type")
 public class FuelType {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "fuel_type_name", nullable = false)
+    @Column(name = "fuel_type_name", nullable = false)
     private String fuel_type_name;
 
     //@OneToMany(mappedBy = "addvertisments", fetch = FetchType.LAZY)
-    public List<Addvertisment> addvertisments;
+   // public List<Addvertisment> addvertisments;
 
-    FuelType(){
+    public FuelType(){
         super();
     }
 
     public FuelType(Long id, String fuel_type,List<Addvertisment> addvertisments) {
         this.id = id;
         this.fuel_type_name = fuel_type;
-        this.addvertisments = addvertisments;
+        //this.addvertisments = addvertisments;
     }
 
     public Long getId() {
@@ -41,11 +42,11 @@ public class FuelType {
         this.fuel_type_name = fuel_type_name;
     }
 
-    public List<Addvertisment> getAddvertisments() {
+    /*public List<Addvertisment> getAddvertisments() {
         return addvertisments;
     }
 
     public void setAddvertisments(List<Addvertisment> addvertisments) {
         this.addvertisments = addvertisments;
-    }
+    } */
 }

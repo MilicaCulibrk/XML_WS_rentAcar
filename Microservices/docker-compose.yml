@@ -3,62 +3,100 @@ services:
 
   eureka-service:
     build: ./eurekaService
+    container_name: eureka-service
+    networks:
+      - application-network
     ports:
       - "8761:8761"
+    tty: true
+
+  postgres:
+    image: 'postgres'
+    container_name: postgres
+    restart: always
+    networks:
+      -  application-network
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=services
+      - REGISTRY_HOST=eureka-service
+    ports:
+      - 5432:5432
     tty: true
 
   add-service:
     build: ./addvertismentService
     ports:
-      - "8083:8083"
-    environment:
-      - REGISTRY_HOST=eureka-service
-
+      - "8087:8087"
     tty: true
+    environment:
+      DATABASE_USERNAME: test
+      DATABASE_PASSWORD: test
+      DATABASE_DOMAIN: postgres
+      REGISTRY_HOST: eureka-service
+      POSTGRES_DB: services
+    networks:
+      -  application-network
     depends_on:
-        - eureka-service
+      - eureka-service
+      - postgres
+
   user-service:
     build: ./userService
     ports:
       - "8082:8082"
     environment:
       - REGISTRY_HOST=eureka-service
+    networks:
+      - application-network
     tty: true
     depends_on:
       - eureka-service
+
   rent-service:
     build: ./rentService
     ports:
       - "8084:8084"
     environment:
       - REGISTRY_HOST=eureka-service
+    networks:
+      - application-network
     tty: true
     depends_on:
       - eureka-service
+
   search-service:
     build: ./searchService
     ports:
       - "8085:8085"
     environment:
       - REGISTRY_HOST=eureka-service
+    networks:
+      - application-network
     tty: true
     depends_on:
       - eureka-service
+
   message-service:
     build: ./messageService
     ports:
       - "8086:8086"
     environment:
       - REGISTRY_HOST=eureka-service
+    networks:
+      - application-network
     tty: true
     depends_on:
       - eureka-service
+
   zuul:
     build: ./zuulService/zuul
+    networks:
+      - application-network
     ports:
       - "8662:8662"
-    environment:
-      - REGISTRY_HOST=eureka-service
     tty: true
     depends_on:
       - eureka-service
@@ -66,6 +104,10 @@ services:
       - user-service
       - rent-service
 
+
+networks:
+  application-network:
+    driver: bridge
 
 
 
