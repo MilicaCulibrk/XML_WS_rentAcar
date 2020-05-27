@@ -41,8 +41,7 @@
                 <PopupComments />
                 <v-tooltip bottom color="black">
                   <template v-slot:activator="{ on }">
-                    <v-btn @click="addToBasket()"  icon v-on="on" color="primary">
-                      <router-link  :to="{ name: 'add', params: {name: car.id}}"></router-link>
+                    <v-btn @click="addToBasket(car)"  icon v-on="on" color="primary">
                       <v-icon>shopping_cart</v-icon>
                     </v-btn>
                   </template>
@@ -54,11 +53,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-        <div>
-      <h1 v-on:click="changeHeader">"nestoo" {{header}}</h1>
   </div>
-  </div>
-
 </template>
 
 <script>
@@ -66,27 +61,32 @@ import PopupDetails from "@/components/homePage/PopupDetails";
 import PopupComments from "@/components/homePage/PopupComments";
 import PopupRatings from "@/components/homePage/PopupRatings";
 import SearchPanel from "@/components/homePage/SearchPanel";
-//import format from "date-fns/format";
+
 export default {
   name: "HomePage",
-  components: { PopupRatings, PopupComments, PopupDetails, SearchPanel },
-  props: {
-    header:{
-        type: String
-    } 
-  },
+  components: { PopupRatings, PopupComments, PopupDetails, SearchPanel},
   data() {
     return {
       dialogDetails: false,
       cars: [
-        { id: "1", brand: "Mercedes", model: "G500", price: "100.000" },
-        { id: "2", brand: "Suzuki", model: "Vitara", price: "30.000" },
-        { id: "3", brand: "BMW", model: "X6", price: "60.000" },
-        { id: "4", brand: "BMW", model: "X4", price: "70.000" },
-        { id: "5", brand: "BMW", model: "X4", price: "70.000" },
-        { id: "6", brand: "VW", model: "Polo Mk4", price: "20.000" },
-        { id: "7", brand: "Mercedes", model: "Maybach", price: "150.000" },
-        { id: "8", brand: "Audi", model: "A5 Coupe", price: "50.000" }
+        { id: "1", brand: "Mercedes", model: "G500", price: "100.000", agent: "1"},
+        { id: "2", brand: "Suzuki", model: "Vitara", price: "30.000", agent: "1" },
+        { id: "3", brand: "BMW", model: "X6", price: "60.000", agent: "1" },
+        { id: "4", brand: "BMW", model: "X4", price: "70.000", agent: "2" },
+        { id: "5", brand: "BMW", model: "X4", price: "70.000", agent: "2" },
+        { id: "6", brand: "VW", model: "Polo Mk4", price: "20.000", agent: "2" },
+        { id: "7", brand: "Mercedes", model: "Maybach", price: "150.000", agent: "1" },
+        { id: "8", brand: "Audi", model: "A5 Coupe", price: "50.000", agent: "1" }
+      ],
+            carss: [
+        { id: "1", brand: "Mercedes", model: "G500", price: "100.000", agent: "1"},
+        { id: "2", brand: "Suzuki", model: "Vitara", price: "30.000", agent: "1" },
+        { id: "3", brand: "BMW", model: "X6", price: "60.000", agent: "1" },
+        { id: "4", brand: "BMW", model: "X4", price: "70.000", agent: "2" },
+        { id: "5", brand: "BMW", model: "X4", price: "70.000", agent: "2" },
+        { id: "6", brand: "VW", model: "Polo Mk4", price: "20.000", agent: "2" },
+        { id: "7", brand: "Mercedes", model: "Maybach", price: "150.000", agent: "1" },
+        { id: "8", brand: "Audi", model: "A5 Coupe", price: "50.000", agent: "1" }
       ],
     };
   },
@@ -102,14 +102,9 @@ export default {
         );
       }
     },
-    addToBasket(){
-      this.$router.push("/cart");
-
+    addToBasket(car){
+      this.$store.commit('addCarInCart', car);
     },
-          changeHeader (){
-          this.header = "changed header";
-          this.$emit('changeIt', 'changed header');
-      }
   }
 };
 </script>

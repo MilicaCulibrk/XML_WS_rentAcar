@@ -14,8 +14,8 @@
     <!-- gornji toolbar -->
     <v-toolbar flat class="mx-12" height="50">
       <v-toolbar-title>
-        <v-icon left large color="primary">directions_car</v-icon>
-        <span class="font-italic font-weight-bold">Rent-A-CaR</span>
+        <v-icon @click="openHomePage()" left large color="primary">directions_car</v-icon>
+        <span @click="openHomePage()" class="font-italic font-weight-bold">Rent-A-CaR</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text color="primary">
@@ -62,7 +62,10 @@ export default {
     },
     openCodebook() {
       this.$router.push("/codebook");
-    }
+    },
+    openHomePage() {
+      this.$router.push("/");
+    },
   }
 };
 </script>
