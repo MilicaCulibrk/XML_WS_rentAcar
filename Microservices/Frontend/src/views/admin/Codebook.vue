@@ -1,5 +1,15 @@
 <template>
   <div>
+    <!-- Snackbar -->
+    <v-snackbar v-model="snackbarSuccess" :timeout="4000" top color="success">
+      <span>{{snackbarSuccessText}}</span>
+      <v-btn text @click="snackbarSuccess = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar v-model="snackbarDanger" :timeout="4000" top color="danger">
+      <span>{{snackbarDangerText}}</span>
+      <v-btn text @click="snackbarDanger = false">Close</v-btn>
+    </v-snackbar>
+
     <v-container class="pt-12 mt-12">
       <v-row>
         <!-- meni  -->
@@ -177,12 +187,15 @@
               </div>
             </v-card>
           </v-expand-x-transition>
-          <!-- Gas -->
+          <!-- FuelType -->
           <v-expand-x-transition>
-            <v-card v-show="expandGas" elevation="20" @click="getFuelTypes()">
+            <v-card v-show="expandFuelType" elevation="20">
               <div class="cardBorderColor">
                 <v-list>
-                  <v-list-item v-for="fuelTypeItem in fuelTypeItems" :key="fuelTypeItem">
+                  <v-list-item
+                    v-for="fuelTypeItem in fuelTypeItems"
+                    :key="fuelTypeItem.fuel_type_name"
+                  >
                     <v-list-item-content>
                       <v-list-item-title class="primary--text" v-text="fuelTypeItem.fuel_type_name"></v-list-item-title>
                     </v-list-item-content>
@@ -205,10 +218,13 @@
                   </v-list-item>
                   <v-list-item>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary">
-                      <v-icon>add</v-icon>
-                      <span>add new</span>
-                    </v-btn>
+                    <!-- Dijalog za dodavanje novog tipa goriva -->
+                    <PopupAddNewItem
+                      v-bind:item="item"
+                      @addedFuelType="snackbarSuccess = true; snackbarSuccessText='You added a new fuel type!'"
+                      @notAddedFuelType="snackbarDanger = true; snackbarDangerText='Fuel type not added, it already exists!'"
+                      @getFuelTypes="getFuelTypes()"
+                    ></PopupAddNewItem>
                   </v-list-item>
                 </v-list>
               </div>
@@ -222,19 +238,22 @@
 
 <script>
 import axios from "axios";
+import PopupAddNewItem from "@/components/codebook/PopupAddNewItem";
 export default {
+  components: { PopupAddNewItem },
   data() {
     return {
+      snackbarSuccess: false,
+      snackbarSuccessText: "",
+      snackbarDanger: false,
+      snackbarDangerText: "",
       expandBrand: false,
       expandModel: false,
       expandClass: false,
       expandTransmission: false,
-      expandGas: false,
-      fuelType: {
-        fuel_type_name: "diesel"
-      },
-      string: "",
-      menuItems: ["Brand", "Model", "Class", "Transmission type", "Gas type"],
+      expandFuelType: false,
+      item: "",
+      menuItems: ["Brand", "Model", "Class", "Transmission type", "Fuel type"],
       brandItems: ["BMW", "Audi", "Mercedes", "Tesla"],
       modelItems: ["(Citroen) M5", "(Audi) R8", "(BMW) X6"],
       classItems: ["SUV", "oldtimer", "city-car"],
@@ -247,18 +266,23 @@ export default {
       if (menuItem == "Brand") {
         this.cancelOtherMenus(menuItem);
         this.expandBrand = !this.expandBrand;
+        this.item = "brand";
       } else if (menuItem == "Model") {
         this.cancelOtherMenus(menuItem);
         this.expandModel = !this.expandModel;
+        this.item = "model";
       } else if (menuItem == "Class") {
         this.cancelOtherMenus(menuItem);
         this.expandClass = !this.expandClass;
+        this.item = "class";
       } else if (menuItem == "Transmission type") {
         this.cancelOtherMenus(menuItem);
         this.expandTransmission = !this.expandTransmission;
-      } else if (menuItem == "Gas type") {
+        this.item = "transmission type";
+      } else if (menuItem == "Fuel type") {
         this.cancelOtherMenus(menuItem);
-        this.expandGas = !this.expandGas;
+        this.expandFuelType = !this.expandFuelType;
+        this.item = "fuel type";
       }
     },
     cancelOtherMenus(menuItem) {
@@ -274,12 +298,11 @@ export default {
       if (menuItem != "Transmission type") {
         this.expandTransmission = false;
       }
-      if (menuItem != "Gas type") {
-        this.expandGas = false;
+      if (menuItem != "Fuel type") {
+        this.expandFuelType = false;
       }
     },
     getFuelTypes() {
-      console.log("usoooooooooooooooo");
       axios
         .get("/addvertisment-service/fuel_type")
         .then(fuelTypeItems => {
@@ -288,21 +311,10 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    },
-    postFuelType() {
-      axios
-        .post("/addvertisment-service/fuel_type", this.fuelType)
-        .then(() => {
-          this.fuelType = "";
-          alert("U added new fuel type!");
-        })
-        .catch(error => {
-          alert("Ne mozete da zakazete pregled u navedenom terminu!");
-          console.log(error);
-        });
     }
   },
   mounted() {
+    //izlistavanje tipova goriva
     axios
       .get("/addvertisment-service/fuel_type")
       .then(fuelTypeItems => {
