@@ -97,12 +97,18 @@ services:
       - application-network
     ports:
       - "8662:8662"
+    environment:
+      DATABASE_USERNAME: test
+      DATABASE_PASSWORD: test
+      DATABASE_DOMAIN: postgres
+      REGISTRY_HOST: eureka-service
     tty: true
     depends_on:
       - eureka-service
       - add-service
       - user-service
       - rent-service
+      - postgres
 
 
 networks:

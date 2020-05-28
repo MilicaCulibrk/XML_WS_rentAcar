@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rent.model.Report;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/request")
 public class ReportController {
