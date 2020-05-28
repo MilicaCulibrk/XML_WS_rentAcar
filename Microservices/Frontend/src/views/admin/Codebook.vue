@@ -179,12 +179,12 @@
           </v-expand-x-transition>
           <!-- Gas -->
           <v-expand-x-transition>
-            <v-card v-show="expandGas" elevation="20">
+            <v-card v-show="expandGas" elevation="20" @click="getFuelTypes()">
               <div class="cardBorderColor">
                 <v-list>
-                  <v-list-item v-for="gasItem in gasItems" :key="gasItem">
+                  <v-list-item v-for="fuelTypeItem in fuelTypeItems" :key="fuelTypeItem">
                     <v-list-item-content>
-                      <v-list-item-title class="primary--text" v-text="gasItem"></v-list-item-title>
+                      <v-list-item-title class="primary--text" v-text="fuelTypeItem.fuel_type_name"></v-list-item-title>
                     </v-list-item-content>
                     <v-tooltip bottom color="black">
                       <template v-slot:activator="{ on }">
@@ -221,6 +221,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -229,12 +230,16 @@ export default {
       expandClass: false,
       expandTransmission: false,
       expandGas: false,
+      fuelType: {
+        fuel_type_name: "diesel"
+      },
+      string: "",
       menuItems: ["Brand", "Model", "Class", "Transmission type", "Gas type"],
       brandItems: ["BMW", "Audi", "Mercedes", "Tesla"],
       modelItems: ["(Citroen) M5", "(Audi) R8", "(BMW) X6"],
       classItems: ["SUV", "oldtimer", "city-car"],
       transmissionItems: ["manual", "automatic", "semi-automatic"],
-      gasItems: ["gasoline", "gas", "diesel"]
+      fuelTypeItems: {}
     };
   },
   methods: {
@@ -272,7 +277,40 @@ export default {
       if (menuItem != "Gas type") {
         this.expandGas = false;
       }
+    },
+    getFuelTypes() {
+      console.log("usoooooooooooooooo");
+      axios
+        .get("/addvertisment-service/fuel_type")
+        .then(fuelTypeItems => {
+          this.fuelTypeItems = fuelTypeItems.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    postFuelType() {
+      axios
+        .post("/addvertisment-service/fuel_type", this.fuelType)
+        .then(() => {
+          this.fuelType = "";
+          alert("U added new fuel type!");
+        })
+        .catch(error => {
+          alert("Ne mozete da zakazete pregled u navedenom terminu!");
+          console.log(error);
+        });
     }
+  },
+  mounted() {
+    axios
+      .get("/addvertisment-service/fuel_type")
+      .then(fuelTypeItems => {
+        this.fuelTypeItems = fuelTypeItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 };
 </script>

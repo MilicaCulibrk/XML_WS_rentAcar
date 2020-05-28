@@ -3,9 +3,10 @@ package addvertisment.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/vehicle_class")
-public class VehicleClass {
+public class VehicleClassController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllVehicleClasses()  { return null; }
@@ -16,12 +17,12 @@ public class VehicleClass {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> createVehicleClass(@RequestBody VehicleClass VehicleClass)  {
+    public ResponseEntity<?> createVehicleClass(@RequestBody VehicleClassController VehicleClass)  {
         return null;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateVehicleClass(@RequestBody VehicleClass  VehicleClass, @PathVariable Long id) {
+    public ResponseEntity<?> updateVehicleClass(@RequestBody VehicleClassController VehicleClass, @PathVariable Long id) {
         return null;
     }
 
