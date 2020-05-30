@@ -18,6 +18,7 @@
         <span class="font-italic font-weight-bold">Rent-A-CaR</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+
       <v-btn text color="primary">
         <span @click="openCodebook()">Codebook</span>
         <v-icon right>list_alt</v-icon>
