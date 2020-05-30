@@ -1,9 +1,11 @@
 package user.model;
 
-//@Entity
+
+
+//@Entity(name="administrator")
 public class Administrator {
     //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     //@Column(name = "name", nullable = false)

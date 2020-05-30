@@ -1,17 +1,43 @@
 package user.model;
 
-public class User {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
+
+import javax.persistence.*;
+
+@Entity(name="user_entity")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(name = "name", nullable = false)
     private String name;
+    
+    @Column(name = "surname", nullable = true)
     private String surname;
+    
+    @Column(name = "email", nullable = true)
     private String email;
-    private String password;
-    private String address;
-    private String city;
-    private String phone_number;
+    
+    @Column(name = "password", nullable = true)
+        private String password;
+    
+    @Column(name = "address", nullable = true)
+        private String address;
+    
+    @Column(name = "city", nullable = true)
+        private String city;
+    
+    @Column(name = "phone_number", nullable = true)
+       private String phone_number;
+    
     //max number of published ads is 3
-    private int number_of_addvertisment;
+    @Column(name = "number_of_addvertisment", nullable = true)
+        private int number_of_addvertisment;
 
     public Long getId() {
         return id;
