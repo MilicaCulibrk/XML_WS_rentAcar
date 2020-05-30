@@ -1,11 +1,11 @@
 <template>
   <div>
     <!-- Snackbar -->
-    <v-snackbar v-model="snackbarSuccess" :timeout="4000" top color="success">
+    <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
       <span>{{snackbarSuccessText}}</span>
       <v-btn text @click="snackbarSuccess = false">Close</v-btn>
     </v-snackbar>
-    <v-snackbar v-model="snackbarDanger" :timeout="4000" top color="danger">
+    <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
       <span>{{snackbarDangerText}}</span>
       <v-btn text @click="snackbarDanger = false">Close</v-btn>
     </v-snackbar>
@@ -199,30 +199,38 @@
                     <v-list-item-content>
                       <v-list-item-title class="primary--text" v-text="fuelTypeItem.fuel_type_name"></v-list-item-title>
                     </v-list-item-content>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>sync</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Change</span>
-                    </v-tooltip>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>delete</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Delete</span>
-                    </v-tooltip>
+                    <!-- Dijalog za promenu tipa goriva -->
+                    <PopupChangeItem
+                      v-bind:item="item"
+                      v-bind:fuelTypeItem="fuelTypeItem"
+                      v-bind:fuelTypeItems="fuelTypeItems"
+                      @changedFuelType="snackbarSuccess = true; snackbarSuccessText='You changed the fuel type!'"
+                      @notChangedFuelType="snackbarDanger = true; snackbarDangerText='Fuel type not changed, something went wrong!'"
+                      @emptyFuelType="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateFuelType="snackbarDanger = true; snackbarDangerText='This fuel type already exists!'"
+                      @getFuelTypes="getFuelTypes()"
+                    ></PopupChangeItem>
+                    <!-- Dijalog za brisanje tipa goriva -->
+                    <PopupDeleteItem
+                      v-bind:item="item"
+                      v-bind:fuelTypeItem="fuelTypeItem"
+                      v-bind:fuelTypeItems="fuelTypeItems"
+                      @deletedFuelType="snackbarSuccess = true; snackbarSuccessText='You deleted the fuel type!'"
+                      @notDeletedFuelType="snackbarDanger = true; snackbarDangerText='Fuel type not deleted, something went wrong!'"
+                      @hasAddsFuelType="snackbarDanger = true; snackbarDangerText='Cars with this fuel type exist. You can not delete it!'"
+                      @getFuelTypes="getFuelTypes()"
+                    ></PopupDeleteItem>
                   </v-list-item>
                   <v-list-item>
                     <v-spacer></v-spacer>
                     <!-- Dijalog za dodavanje novog tipa goriva -->
                     <PopupAddNewItem
                       v-bind:item="item"
+                      v-bind:fuelTypeItems="fuelTypeItems"
                       @addedFuelType="snackbarSuccess = true; snackbarSuccessText='You added a new fuel type!'"
-                      @notAddedFuelType="snackbarDanger = true; snackbarDangerText='Fuel type not added, it already exists!'"
+                      @notAddedFuelType="snackbarDanger = true; snackbarDangerText='Fuel type not added, something went wrong!'"
+                      @emptyFuelType="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateFuelType="snackbarDanger = true; snackbarDangerText='This fuel type already exists!'"
                       @getFuelTypes="getFuelTypes()"
                     ></PopupAddNewItem>
                   </v-list-item>
@@ -239,8 +247,10 @@
 <script>
 import axios from "axios";
 import PopupAddNewItem from "@/components/codebook/PopupAddNewItem";
+import PopupChangeItem from "@/components/codebook/PopupChangeItem";
+import PopupDeleteItem from "@/components/codebook/PopupDeleteItem";
 export default {
-  components: { PopupAddNewItem },
+  components: { PopupAddNewItem, PopupChangeItem, PopupDeleteItem },
   data() {
     return {
       snackbarSuccess: false,

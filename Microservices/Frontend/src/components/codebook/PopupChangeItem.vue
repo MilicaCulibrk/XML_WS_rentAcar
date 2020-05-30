@@ -2,15 +2,19 @@
   <div>
     <v-dialog v-model="dialogDetails" max-width="400px">
       <template #activator="{ on: dialogDetails }">
-        <v-btn con v-on="{ ...dialogDetails }" color="primary">
-          <v-icon>add</v-icon>
-          <span>add new</span>
-        </v-btn>
+        <v-tooltip bottom color="black">
+          <template #activator="{ on: tooltip }">
+            <v-btn icon v-on="{ ...tooltip, ...dialogDetails }" color="primary">
+              <v-icon>sync</v-icon>
+            </v-btn>
+          </template>
+          <span class="primary--text">Change</span>
+        </v-tooltip>
       </template>
       <v-card>
         <div class="detailsBorderColor">
           <v-card-title class="primary--text font-italic" primary-title>
-            Add new {{item}}
+            Change {{item}} "{{fuelTypeItem.fuel_type_name}}"
             <v-spacer></v-spacer>
             <v-btn icon color="primary" @click="dialogDetails =  false">
               <v-icon>cancel</v-icon>
@@ -20,13 +24,13 @@
             <v-text-field
               v-model="fuelType.fuel_type_name"
               color="primary"
-              prepend-inner-icon="add"
+              prepend-inner-icon="sync"
             ></v-text-field>
             <v-row>
               <v-col cols="4"></v-col>
               <v-col cols="4"></v-col>
               <v-col cols="4">
-                <v-btn color="primary" class="ml-8" @click="checkIfDuplicate()">Add</v-btn>
+                <v-btn color="primary" class="ml-2" @click="checkIfDuplicate()">Change</v-btn>
               </v-col>
             </v-row>
           </v-card-text>
@@ -43,32 +47,37 @@ export default {
     item: {
       default: ""
     },
+    fuelTypeItem: {
+      default: ""
+    },
     fuelTypeItems: {}
   },
   data() {
     return {
       dialogDetails: false,
       fuelType: {
+        id: this.fuelTypeItem.id,
         fuel_type_name: ""
       },
       flagDuplicateFuelType: false
     };
   },
   methods: {
-    postFuelType() {
+    changeFuelType() {
       if (this.fuelType.fuel_type_name == "") {
         this.$emit("emptyFuelType");
       } else {
+        console.log(this.fuelType);
         axios
-          .post("/addvertisment-service/fuel_type", this.fuelType)
+          .put("/addvertisment-service/fuel_type", this.fuelType)
           .then(() => {
-            this.$emit("addedFuelType");
+            this.$emit("changedFuelType");
             this.$emit("getFuelTypes");
             this.fuelType.fuel_type_name = "";
             this.dialogDetails = false;
           })
           .catch(error => {
-            this.$emit("notAddedFuelType");
+            this.$emit("notChangedFuelType");
             console.log(error);
           });
       }
@@ -85,7 +94,7 @@ export default {
       }
 
       if (!this.flagDuplicateFuelType) {
-        this.postFuelType();
+        this.changeFuelType();
       } else {
         this.$emit("duplicateFuelType");
         this.flagDuplicateFuelType = false;

@@ -1,17 +1,18 @@
 package addvertisment.model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-//@Entity
+@Entity
 public class Addvertisment {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+/*
     //@Column(name = "addvertiser_id", nullable = false)
     //koji user/firma ga kreira
     private Long addvertiser_id;
@@ -24,10 +25,10 @@ public class Addvertisment {
 
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public TransmissionType transmission_type;
-
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+*/
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public FuelType fuel_type;
-
+/*
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public VehicleClass vehicle_class;
 
@@ -58,11 +59,13 @@ public class Addvertisment {
     //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<ReservedDate> reservedDates;
 
+*/
 
     public Addvertisment(){
         super();
     }
 
+    /*
     public Addvertisment(Long id, Long addvertiser_id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, PriceList price_list, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, List<Grade> grades, List<Comment> comments, List<ReservedDate> reservedDates) {
         this.id = id;
         this.addvertiser_id = addvertiser_id;
@@ -81,7 +84,7 @@ public class Addvertisment {
         this.comments = comments;
         this.reservedDates = reservedDates;
     }
-
+*/
     public Long getId() {
         return id;
     }
@@ -89,7 +92,7 @@ public class Addvertisment {
     public void setId(Long id) {
         this.id = id;
     }
-
+/*
     public Long getAddvertiser_id() {
         return addvertiser_id;
     }
@@ -121,7 +124,7 @@ public class Addvertisment {
     public void setTransmission_type(TransmissionType transmission_type) {
         this.transmission_type = transmission_type;
     }
-
+*/
     public FuelType getFuel_type() {
         return fuel_type;
     }
@@ -129,7 +132,7 @@ public class Addvertisment {
     public void setFuel_type(FuelType fuel_type) {
         this.fuel_type = fuel_type;
     }
-
+/*
     public VehicleClass getVehicle_class() {
         return vehicle_class;
     }
@@ -208,5 +211,10 @@ public class Addvertisment {
 
     public void setReservedDates(List<ReservedDate> reservedDates) {
         this.reservedDates = reservedDates;
-    }
+    } */
+
+
+
+
+
 }
