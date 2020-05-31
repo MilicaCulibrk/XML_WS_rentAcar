@@ -92,9 +92,15 @@
             <v-card v-show="expandClass" elevation="20">
               <div class="cardBorderColor">
                 <v-list>
-                  <v-list-item v-for="classItem in classItems" :key="classItem">
+                  <v-list-item
+                    v-for="vehicleClassItem in vehicleClassItems"
+                    :key="vehicleClassItem.vehicle_class_name"
+                  >
                     <v-list-item-content>
-                      <v-list-item-title class="primary--text" v-text="classItem"></v-list-item-title>
+                      <v-list-item-title
+                        class="primary--text"
+                        v-text="vehicleClassItem.vehicle_class_name"
+                      ></v-list-item-title>
                     </v-list-item-content>
                     <v-tooltip bottom color="black">
                       <template v-slot:activator="{ on }">
@@ -115,10 +121,16 @@
                   </v-list-item>
                   <v-list-item>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary">
-                      <v-icon>add</v-icon>
-                      <span>add new</span>
-                    </v-btn>
+                    <!-- Dijalog za dodavanje nove klase vozila -->
+                    <PopupAddClass
+                      v-bind:item="item"
+                      v-bind:vehicleClassItems="vehicleClassItems"
+                      @addedVehicleClass="snackbarSuccess = true; snackbarSuccessText='You added a new class!'"
+                      @notAddedVehicleClass="snackbarDanger = true; snackbarDangerText='Class not added, something went wrong!'"
+                      @emptyVehicleClass="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateVehicleClass="snackbarDanger = true; snackbarDangerText='This class already exists!'"
+                      @getVehicleClasses="getVehicleClasses()"
+                    ></PopupAddClass>
                   </v-list-item>
                 </v-list>
               </div>
@@ -130,11 +142,14 @@
               <div class="cardBorderColor">
                 <v-list>
                   <v-list-item
-                    v-for="transmissionItem in transmissionItems"
-                    :key="transmissionItem"
+                    v-for="transmissionTypeItem in transmissionTypeItems"
+                    :key="transmissionTypeItem.transmission_type_name"
                   >
                     <v-list-item-content>
-                      <v-list-item-title class="primary--text" v-text="transmissionItem"></v-list-item-title>
+                      <v-list-item-title
+                        class="primary--text"
+                        v-text="transmissionTypeItem.transmission_type_name"
+                      ></v-list-item-title>
                     </v-list-item-content>
                     <v-tooltip bottom color="black">
                       <template v-slot:activator="{ on }">
@@ -155,10 +170,16 @@
                   </v-list-item>
                   <v-list-item>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary">
-                      <v-icon>add</v-icon>
-                      <span>add new</span>
-                    </v-btn>
+                    <!-- Dijalog za dodavanje novog tipa goriva -->
+                    <PopupAddTransmissionType
+                      v-bind:item="item"
+                      v-bind:transmissionTypeItems="transmissionTypeItems"
+                      @addedTransmissionType="snackbarSuccess = true; snackbarSuccessText='You added a new transmission type!'"
+                      @notAddedTransmissionType="snackbarDanger = true; snackbarDangerText='Transmission type not added, something went wrong!'"
+                      @emptyTransmissionType="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateTransmissionType="snackbarDanger = true; snackbarDangerText='This transmission type already exists!'"
+                      @getTransmissionTypes="getTransmissionTypes()"
+                    ></PopupAddTransmissionType>
                   </v-list-item>
                 </v-list>
               </div>
@@ -230,6 +251,8 @@ import PopupAddBrand from "@/components/codebook/brand/PopupAddBrand";
 import PopupChangeBrand from "@/components/codebook/brand/PopupChangeBrand";
 import PopupDeleteBrand from "@/components/codebook/brand/PopupDeleteBrand";
 import PopupViewBrandModels from "@/components/codebook/brand/PopupViewBrandModels";
+import PopupAddClass from "@/components/codebook/class/PopupAddClass";
+import PopupAddTransmissionType from "@/components/codebook/transmissionType/PopupAddTransmissionType";
 export default {
   components: {
     PopupAddFuelType,
@@ -238,7 +261,9 @@ export default {
     PopupAddBrand,
     PopupChangeBrand,
     PopupDeleteBrand,
-    PopupViewBrandModels
+    PopupViewBrandModels,
+    PopupAddClass,
+    PopupAddTransmissionType
   },
   data() {
     return {
@@ -253,8 +278,8 @@ export default {
       item: "",
       menuItems: ["Brand", "Class", "Transmission type", "Fuel type"],
       brandItems: {},
-      classItems: ["SUV", "oldtimer", "city-car"],
-      transmissionItems: ["manual", "automatic", "semi-automatic"],
+      vehicleClassItems: {},
+      transmissionTypeItems: {},
       fuelTypeItems: {}
     };
   },
@@ -302,9 +327,29 @@ export default {
           console.log(error);
         });
     },
+    getVehicleClasses() {
+      axios
+        .get("/vehicle_class")
+        .then(vehicleClassItems => {
+          this.vehicleClassItems = vehicleClassItems.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getTransmissionTypes() {
+      axios
+        .get("/transmission_type")
+        .then(transmissionTypeItems => {
+          this.transmissionTypeItems = transmissionTypeItems.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     getFuelTypes() {
       axios
-        .get("fuel_type")
+        .get("/fuel_type")
         .then(fuelTypeItems => {
           this.fuelTypeItems = fuelTypeItems.data;
         })
@@ -319,6 +364,26 @@ export default {
       .get("/brand")
       .then(brandItems => {
         this.brandItems = brandItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //izlistavanje klasa
+    axios
+      .get("/vehicle_class")
+      .then(vehicleClassItems => {
+        this.vehicleClassItems = vehicleClassItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //izlistavanje tipova goriva
+    axios
+      .get("/transmission_type")
+      .then(transmissionTypeItems => {
+        this.transmissionTypeItems = transmissionTypeItems.data;
       })
       .catch(error => {
         console.log(error);

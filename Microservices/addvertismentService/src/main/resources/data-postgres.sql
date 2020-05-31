@@ -25,7 +25,23 @@ VALUES ('bio-diesel');
 INSERT INTO public.fuel_type(fuel_type_name)
 VALUES ('petroleum');
 
-INSERT INTO public.addvertisment(fuel_type_id, brand_id, vehicle_model_id)
-VALUES ('1', '1', '1');
+INSERT INTO public.vehicle_class(vehicle_class_name)
+VALUES ('A');
+INSERT INTO public.vehicle_class(vehicle_class_name)
+VALUES ('B');
+INSERT INTO public.vehicle_class(vehicle_class_name)
+VALUES ('C');
+INSERT INTO public.vehicle_class(vehicle_class_name)
+VALUES ('D');
+
+INSERT INTO public.transmission_type(transmission_type_name)
+VALUES ('manual');
+INSERT INTO public.transmission_type(transmission_type_name)
+VALUES ('automatic');
+INSERT INTO public.transmission_type(transmission_type_name)
+VALUES ('semi-automatic');
+
+INSERT INTO public.addvertisment(fuel_type_id, brand_id, vehicle_model_id, vehicle_class_id, transmission_type_id)
+VALUES ('1', '1', '1', '1', '1');
 
 
