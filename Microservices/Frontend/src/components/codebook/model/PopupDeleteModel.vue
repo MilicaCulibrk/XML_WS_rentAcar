@@ -14,7 +14,7 @@
       <v-card>
         <div class="detailsBorderColor">
           <v-card-title class="primary--text font-italic" primary-title>
-            Are you sure you want to delete {{item}} "{{fuelTypeItem.fuel_type_name}}" ?
+            Are you sure you want to delete {{item}} "{{modelItem.vehicle_model_name}}" ?
             <v-spacer></v-spacer>
             <v-btn icon color="primary" @click="dialogDetails =  false">
               <v-icon>cancel</v-icon>
@@ -43,34 +43,36 @@ export default {
     item: {
       default: ""
     },
-    fuelTypeItem: {
+    modelItem: {
       default: ""
     },
-    fuelTypeItems: {}
+    brandItem: {
+      default: ""
+    },
+    modelItems: {}
   },
   data() {
     return {
       dialogDetails: false,
-      fuelType: {
-        id: this.fuelTypeItem.id,
-        fuel_type_name: ""
+      model: {
+        id: this.modelItem.id,
+        vehicle_model_name: "",
+        brand_id: this.brandItem.id
       },
-      addvertisments: {},
-      flagHasAdds: false
+      flagDuplicateModel: false
     };
   },
   methods: {
-    deleteFuelType() {
+    deleteModel() {
       axios
-        .delete("/addvertisment-service/fuel_type/" + this.fuelType.id)
+        .delete("/brand/" + this.brandItem.id + "/model/" + this.model.id)
         .then(() => {
-          this.fuelType.fuel_type_name = "";
-          this.$emit("deletedFuelType");
-          this.$emit("getFuelTypes");
-          this.fuelType.fuel_type_name = "";
+          this.$emit("deletedModel");
+          this.$emit("getModels");
+          this.model.vehicle_model_name = "";
         })
         .catch(error => {
-          this.$emit("notDeletedFuelType");
+          this.$emit("notDeletedModel");
           console.log(error);
         });
     },
@@ -78,25 +80,27 @@ export default {
       console.log(this.flagHasAdds);
       var i = 0;
       for (i = 0; i < this.addvertisments.length; i++) {
-        if (this.addvertisments[i].fuelTypeId == this.fuelType.id) {
+        if (this.addvertisments[i].vehicle_model_id == this.model.id) {
           this.flagHasAdds = true;
           break;
         }
       }
 
       if (!this.flagHasAdds) {
-        this.deleteFuelType();
+        this.deleteModel();
       } else {
         console.log(this.flagHasAdds);
-        this.$emit("hasAddsFuelType");
+        this.$emit("hasAddsModel");
         this.flagHasAdds = false;
+        this.dialogDetails = false;
+        this.model.vehicle_model_name = "";
       }
     }
   },
   mounted() {
     //izlistavanje advertismenta
     axios
-      .get("/addvertisment-service/addvertisment")
+      .get("/addvertisment")
       .then(addvertisments => {
         this.addvertisments = addvertisments.data;
       })

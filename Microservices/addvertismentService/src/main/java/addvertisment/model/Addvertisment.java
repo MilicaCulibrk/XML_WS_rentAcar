@@ -1,10 +1,6 @@
 package addvertisment.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Addvertisment {
@@ -16,13 +12,13 @@ public class Addvertisment {
     //@Column(name = "addvertiser_id", nullable = false)
     //koji user/firma ga kreira
     private Long addvertiser_id;
-
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+*/
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Brand brand;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public Model model;
-
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public VehicleModel vehicle_model;
+/*
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public TransmissionType transmission_type;
 */
@@ -100,7 +96,7 @@ public class Addvertisment {
     public void setAddvertiser_id(Long addvertiser_id) {
         this.addvertiser_id = addvertiser_id;
     }
-
+*/
     public Brand getBrand() {
         return brand;
     }
@@ -109,14 +105,14 @@ public class Addvertisment {
         this.brand = brand;
     }
 
-    public Model getModel() {
-        return model;
+    public VehicleModel getVehicle_model() {
+        return vehicle_model;
     }
 
-    public void setModel(Model model) {
-        this.model = model;
+    public void setVehicle_model(VehicleModel model) {
+        this.vehicle_model = model;
     }
-
+ /*
     public TransmissionType getTransmission_type() {
         return transmission_type;
     }

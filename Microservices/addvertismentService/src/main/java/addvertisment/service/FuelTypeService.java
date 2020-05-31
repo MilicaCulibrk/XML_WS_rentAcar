@@ -96,4 +96,6 @@ public class FuelTypeService {
         return false;
     }
 
+
+
 }

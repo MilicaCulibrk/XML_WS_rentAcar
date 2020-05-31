@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/fuel_type")
+@RequestMapping("/fuel_type")
 public class FuelTypeController {
 
 
@@ -60,7 +60,7 @@ public class FuelTypeController {
 
     }
 
-    @DeleteMapping(path="/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteFuelType(@PathVariable Long id) {
         if (id == null) {
             return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);

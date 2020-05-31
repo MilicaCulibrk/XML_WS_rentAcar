@@ -10,7 +10,7 @@
       <v-card>
         <div class="detailsBorderColor">
           <v-card-title class="primary--text font-italic" primary-title>
-            Add new {{item}}
+            Add a new {{ brandItem.brand_name }} model
             <v-spacer></v-spacer>
             <v-btn icon color="primary" @click="dialogDetails =  false">
               <v-icon>cancel</v-icon>
@@ -18,7 +18,7 @@
           </v-card-title>
           <v-card-text class="text-center-left">
             <v-text-field
-              v-model="fuelType.fuel_type_name"
+              v-model="model.vehicle_model_name"
               color="primary"
               prepend-inner-icon="add"
             ></v-text-field>
@@ -43,52 +43,58 @@ export default {
     item: {
       default: ""
     },
-    fuelTypeItems: {}
+    brandItem: {
+      default: ""
+    },
+    modelItems: {}
   },
   data() {
     return {
       dialogDetails: false,
-      fuelType: {
-        fuel_type_name: ""
+      model: {
+        vehicle_model_name: "",
+        brand_id: this.brandItem.id
       },
-      flagDuplicateFuelType: false
+      flagDuplicateModel: false
     };
   },
   methods: {
-    postFuelType() {
-      if (this.fuelType.fuel_type_name == "") {
-        this.$emit("emptyFuelType");
+    postModel() {
+      if (this.model.vehicle_model_name == "") {
+        this.$emit("emptyModel");
       } else {
         axios
-          .post("/addvertisment-service/fuel_type", this.fuelType)
+          .post("/brand/" + this.brandItem.id + "/model", this.model)
           .then(() => {
-            this.$emit("addedFuelType");
-            this.$emit("getFuelTypes");
-            this.fuelType.fuel_type_name = "";
+            this.$emit("addedModel");
+            this.$emit("getModels");
+            this.model.vehicle_model_name = "";
             this.dialogDetails = false;
           })
           .catch(error => {
-            this.$emit("notAddedFuelType");
+            this.$emit("notAddedmodel");
             console.log(error);
           });
       }
     },
     checkIfDuplicate() {
       var i = 0;
-      for (i = 0; i < this.fuelTypeItems.length; i++) {
+      for (i = 0; i < this.modelItems.length; i++) {
         if (
-          this.fuelTypeItems[i].fuel_type_name == this.fuelType.fuel_type_name
+          this.modelItems[i].vehicle_model_name == this.model.vehicle_model_name
         ) {
-          this.flagDuplicateFuelType = true;
+          this.flagDuplicateModel = true;
           break;
         }
       }
 
-      if (!this.flagDuplicateFuelType) {
-        this.postFuelType();
+      if (!this.flagDuplicateModel) {
+        this.postModel();
       } else {
-        this.$emit("duplicateFuelType");
-        this.flagDuplicateFuelType = false;
+        this.$emit("duplicateModel");
+        this.flagDuplicateModel = false;
+        this.model.vehicle_model_name = "";
+        this.dialogDetails = false;
       }
     }
   }
