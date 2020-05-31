@@ -45,6 +45,8 @@
                     <v-list-item-content>
                       <v-list-item-title class="primary--text" v-text="brandItem.brand_name"></v-list-item-title>
                     </v-list-item-content>
+                    <!-- Dijalog za izlistavanje modela -->
+                    <PopupViewBrandModels v-bind:item="item" v-bind:brandItem="brandItem"></PopupViewBrandModels>
                     <!-- Dijalog za promenu brenda -->
                     <PopupChangeBrand
                       v-bind:item="item"
@@ -80,43 +82,6 @@
                       @duplicateBrand="snackbarDanger = true; snackbarDangerText='This brand already exists!'"
                       @getBrands="getBrands()"
                     ></PopupAddBrand>
-                  </v-list-item>
-                </v-list>
-              </div>
-            </v-card>
-          </v-expand-x-transition>
-          <!-- Model -->
-          <v-expand-x-transition>
-            <v-card v-show="expandModel" elevation="20">
-              <div class="cardBorderColor shrink">
-                <v-list>
-                  <v-list-item v-for="modelItem in modelItems" :key="modelItem">
-                    <v-list-item-content>
-                      <v-list-item-title class="primary--text" v-text="modelItem"></v-list-item-title>
-                    </v-list-item-content>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>sync</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Change</span>
-                    </v-tooltip>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>delete</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Delete</span>
-                    </v-tooltip>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary">
-                      <v-icon>add</v-icon>
-                      <span>add new</span>
-                    </v-btn>
                   </v-list-item>
                 </v-list>
               </div>
@@ -264,6 +229,7 @@ import PopupDeleteFuelType from "@/components/codebook/fuelType/PopupDeleteFuelT
 import PopupAddBrand from "@/components/codebook/brand/PopupAddBrand";
 import PopupChangeBrand from "@/components/codebook/brand/PopupChangeBrand";
 import PopupDeleteBrand from "@/components/codebook/brand/PopupDeleteBrand";
+import PopupViewBrandModels from "@/components/codebook/brand/PopupViewBrandModels";
 export default {
   components: {
     PopupAddFuelType,
@@ -271,7 +237,8 @@ export default {
     PopupDeleteFuelType,
     PopupAddBrand,
     PopupChangeBrand,
-    PopupDeleteBrand
+    PopupDeleteBrand,
+    PopupViewBrandModels
   },
   data() {
     return {
@@ -280,14 +247,12 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       expandBrand: false,
-      expandModel: false,
       expandClass: false,
       expandTransmission: false,
       expandFuelType: false,
       item: "",
-      menuItems: ["Brand", "Model", "Class", "Transmission type", "Fuel type"],
+      menuItems: ["Brand", "Class", "Transmission type", "Fuel type"],
       brandItems: {},
-      modelItems: ["(Citroen) M5", "(Audi) R8", "(BMW) X6"],
       classItems: ["SUV", "oldtimer", "city-car"],
       transmissionItems: ["manual", "automatic", "semi-automatic"],
       fuelTypeItems: {}
@@ -299,10 +264,6 @@ export default {
         this.cancelOtherMenus(menuItem);
         this.expandBrand = !this.expandBrand;
         this.item = "brand";
-      } else if (menuItem == "Model") {
-        this.cancelOtherMenus(menuItem);
-        this.expandModel = !this.expandModel;
-        this.item = "model";
       } else if (menuItem == "Class") {
         this.cancelOtherMenus(menuItem);
         this.expandClass = !this.expandClass;
@@ -320,9 +281,6 @@ export default {
     cancelOtherMenus(menuItem) {
       if (menuItem != "Brand") {
         this.expandBrand = false;
-      }
-      if (menuItem != "Model") {
-        this.expandModel = false;
       }
       if (menuItem != "Class") {
         this.expandClass = false;
