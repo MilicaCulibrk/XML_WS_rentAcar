@@ -17,11 +17,7 @@
             </v-btn>
           </v-card-title>
           <v-card-text class="text-center-left">
-            <v-text-field
-              v-model="fuelType.fuel_type_name"
-              color="primary"
-              prepend-inner-icon="add"
-            ></v-text-field>
+            <v-text-field v-model="brand.brand_name" color="primary" prepend-inner-icon="add"></v-text-field>
             <v-row>
               <v-col cols="4"></v-col>
               <v-col cols="4"></v-col>
@@ -43,52 +39,51 @@ export default {
     item: {
       default: ""
     },
-    fuelTypeItems: {}
+    brandItems: {}
   },
   data() {
     return {
       dialogDetails: false,
-      fuelType: {
-        fuel_type_name: ""
+      brand: {
+        brand_name: ""
       },
-      flagDuplicateFuelType: false
+      flagDuplicateBrand: false
     };
   },
   methods: {
-    postFuelType() {
-      if (this.fuelType.fuel_type_name == "") {
-        this.$emit("emptyFuelType");
+    postBrand() {
+      if (this.brand.brand_name == "") {
+        this.$emit("emptyBrand");
       } else {
         axios
-          .post("/addvertisment-service/fuel_type", this.fuelType)
+          .post("/brand", this.brand)
           .then(() => {
-            this.$emit("addedFuelType");
-            this.$emit("getFuelTypes");
-            this.fuelType.fuel_type_name = "";
+            this.$emit("addedBrand");
+            this.$emit("getBrands");
+            this.brand.brand_name = "";
             this.dialogDetails = false;
           })
           .catch(error => {
-            this.$emit("notAddedFuelType");
+            this.$emit("notAddedBrand");
             console.log(error);
           });
       }
     },
     checkIfDuplicate() {
       var i = 0;
-      for (i = 0; i < this.fuelTypeItems.length; i++) {
-        if (
-          this.fuelTypeItems[i].fuel_type_name == this.fuelType.fuel_type_name
-        ) {
-          this.flagDuplicateFuelType = true;
+      for (i = 0; i < this.brandItems.length; i++) {
+        if (this.brandItems[i].brand_name == this.brand.brand_name) {
+          this.flagDuplicateBrand = true;
           break;
         }
       }
 
-      if (!this.flagDuplicateFuelType) {
-        this.postFuelType();
+      if (!this.flagDuplicateBrand) {
+        this.postBrand();
       } else {
-        this.$emit("duplicateFuelType");
-        this.flagDuplicateFuelType = false;
+        this.$emit("duplicateBrand");
+        this.flagDuplicateBrand = false;
+        this.brand.brand_name = "";
       }
     }
   }

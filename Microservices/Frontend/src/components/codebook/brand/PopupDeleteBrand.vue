@@ -4,7 +4,12 @@
       <template #activator="{ on: dialogDetails }">
         <v-tooltip bottom color="black">
           <template #activator="{ on: tooltip }">
-            <v-btn icon v-on="{ ...tooltip, ...dialogDetails }" color="primary">
+            <v-btn
+              icon
+              v-on="{ ...tooltip, ...dialogDetails }"
+              @click="getModels()"
+              color="primary"
+            >
               <v-icon>delete</v-icon>
             </v-btn>
           </template>
@@ -14,7 +19,7 @@
       <v-card>
         <div class="detailsBorderColor">
           <v-card-title class="primary--text font-italic" primary-title>
-            Are you sure you want to delete {{item}} "{{fuelTypeItem.fuel_type_name}}" ?
+            Are you sure you want to delete {{item}} "{{brandItem.brand_name}}" ?
             <v-spacer></v-spacer>
             <v-btn icon color="primary" @click="dialogDetails =  false">
               <v-icon>cancel</v-icon>
@@ -43,60 +48,75 @@ export default {
     item: {
       default: ""
     },
-    fuelTypeItem: {
+    brandItem: {
       default: ""
     },
-    fuelTypeItems: {}
+    brandItems: {}
   },
   data() {
     return {
       dialogDetails: false,
-      fuelType: {
-        id: this.fuelTypeItem.id,
-        fuel_type_name: ""
+      brand: {
+        id: this.brandItem.id,
+        brand_name: ""
       },
       addvertisments: {},
-      flagHasAdds: false
+      models: {},
+      flagHasAdds: false,
+      flagHasModels: false
     };
   },
   methods: {
-    deleteFuelType() {
-      axios
-        .delete("/addvertisment-service/fuel_type/" + this.fuelType.id)
-        .then(() => {
-          this.fuelType.fuel_type_name = "";
-          this.$emit("deletedFuelType");
-          this.$emit("getFuelTypes");
-          this.fuelType.fuel_type_name = "";
-        })
-        .catch(error => {
-          this.$emit("notDeletedFuelType");
-          console.log(error);
-        });
+    deleteBrand() {
+      if (this.models.length == 0) {
+        axios
+          .delete("/brand/" + this.brand.id)
+          .then(() => {
+            this.$emit("deletedBrand");
+            this.$emit("getBrands");
+            this.brand.brand_name = "";
+          })
+          .catch(error => {
+            this.$emit("notDeletedBrand");
+            console.log(error);
+          });
+      } else {
+        this.$emit("hasModelsBrand");
+        this.dialogDetails = false;
+      }
     },
     checkIfHasAdds() {
-      console.log(this.flagHasAdds);
       var i = 0;
       for (i = 0; i < this.addvertisments.length; i++) {
-        if (this.addvertisments[i].fuelTypeId == this.fuelType.id) {
+        if (this.addvertisments[i].brand_id == this.brand.id) {
           this.flagHasAdds = true;
           break;
         }
       }
 
       if (!this.flagHasAdds) {
-        this.deleteFuelType();
+        this.deleteBrand();
       } else {
-        console.log(this.flagHasAdds);
-        this.$emit("hasAddsFuelType");
+        this.$emit("hasAddsBrand");
         this.flagHasAdds = false;
+        this.dialogDetails = false;
       }
+    },
+    getModels() {
+      axios
+        .get("/brand/" + this.brand.id + "/model")
+        .then(models => {
+          this.models = models.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
   mounted() {
     //izlistavanje advertismenta
     axios
-      .get("/addvertisment-service/addvertisment")
+      .get("/addvertisment")
       .then(addvertisments => {
         this.addvertisments = addvertisments.data;
       })

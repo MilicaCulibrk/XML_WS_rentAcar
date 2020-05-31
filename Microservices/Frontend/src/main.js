@@ -6,7 +6,7 @@ import axios from "axios";
 import vuetify from "./plugins/vuetify";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 
-axios.defaults.baseURL = "http://localhost:8662";
+axios.defaults.baseURL = "http://localhost:8080";
 
 Vue.config.productionTip = false;
 

@@ -1,31 +1,32 @@
 package addvertisment.model;
 
+import javax.persistence.*;
 import java.util.List;
 
-//@Entity
-public class Model {
+@Entity(name = "vehicle_model")
+public class VehicleModel {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "model_name", nullable = false)
-    private String model_name;
+    @Column(name = "vehicle_model_name", nullable = false)
+    private String vehicle_model_name;
 
 
-    //@OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     public List<Addvertisment> addvertisments;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Brand brand;
 
-    Model(){
+    public VehicleModel(){
         super();
     }
 
-    public Model(Long id, String model_name, List<Addvertisment> addvertisments, Brand brand) {
+    public VehicleModel(Long id, String vehicle_model_name, List<Addvertisment> addvertisments, Brand brand) {
         this.id = id;
-        this.model_name = model_name;
+        this.vehicle_model_name = vehicle_model_name;
         this.addvertisments = addvertisments;
         this.brand = brand;
     }
@@ -38,12 +39,12 @@ public class Model {
         this.id = id;
     }
 
-    public String getModel_name() {
-        return model_name;
+    public String getVehicle_model_name() {
+        return vehicle_model_name;
     }
 
-    public void setModel_name(String model_name) {
-        this.model_name = model_name;
+    public void setVehicle_model_name(String model_name) {
+        this.vehicle_model_name = model_name;
     }
 
     public List<Addvertisment> getAddvertisments() {
