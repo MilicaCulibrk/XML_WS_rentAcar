@@ -111,7 +111,7 @@ export default {
   methods: {
     getModels() {
       axios
-        .get("/brand/" + this.brandItem.id + "/model")
+        .get("/addvertisment-service/brand/" + this.brandItem.id + "/model")
         .then(modelItems => {
           this.modelItems = modelItems.data;
         })
@@ -122,7 +122,7 @@ export default {
   },
   mounted() {
     axios
-      .get("/brand/" + this.brandItem.id + "/model")
+      .get("/addvertisment-service/brand/" + this.brandItem.id + "/model")
       .then(modelItems => {
         this.modelItems = modelItems.data;
       })

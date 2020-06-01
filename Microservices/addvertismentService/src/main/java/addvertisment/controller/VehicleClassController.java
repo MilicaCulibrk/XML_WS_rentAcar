@@ -1,6 +1,7 @@
 package addvertisment.controller;
 
 import addvertisment.dto.FuelTypeDTO;
+import addvertisment.dto.TransmissionTypeDTO;
 import addvertisment.dto.VehicleClassDTO;
 import addvertisment.service.FuelTypeService;
 import addvertisment.service.VehicleClassService;
@@ -42,14 +43,44 @@ public class VehicleClassController {
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateVehicleClass(@RequestBody VehicleClassController VehicleClass, @PathVariable Long id) {
-        return null;
+    @PutMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity updateFuelType(@RequestBody VehicleClassDTO vehicleClassDTO) {
+
+        if (vehicleClassDTO == null || vehicleClassDTO.getVehicle_class_name().equals("")) {
+            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        System.out.println(vehicleClassDTO.getId());
+
+        try {
+            vehicleClassService.updateVehicleClass(vehicleClassDTO);
+            return new ResponseEntity<>(vehicleClassDTO, HttpStatus.OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteVehicleClass(@PathVariable Long id) {
-        return null;
+    public ResponseEntity deleteVehicleClass(@PathVariable Long id) {
+        if (id == null) {
+            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            boolean hasAdds = vehicleClassService.hasAdds(id);
+
+            if (hasAdds){
+                return new ResponseEntity<>("Cars with this fuel type exist. You can not delete it!", HttpStatus.FORBIDDEN);
+            }
+
+            vehicleClassService.deleteVehicleClass(id);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        return new ResponseEntity<>(id, HttpStatus.OK);
+
     }
 
 }

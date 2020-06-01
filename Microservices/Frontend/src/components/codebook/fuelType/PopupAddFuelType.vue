@@ -58,6 +58,8 @@ export default {
     postFuelType() {
       if (this.fuelType.fuel_type_name == "") {
         this.$emit("emptyFuelType");
+        this.fuelType.fuel_type_name = "";
+        this.dialogDetails = false;
       } else {
         axios
           .post("/addvertisment-service/fuel_type", this.fuelType)
@@ -90,6 +92,7 @@ export default {
         this.$emit("duplicateFuelType");
         this.flagDuplicateFuelType = false;
         this.fuelType.fuel_type_name = "";
+        this.dialogDetails = false;
       }
     }
   }

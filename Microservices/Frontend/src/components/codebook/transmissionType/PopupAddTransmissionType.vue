@@ -58,9 +58,14 @@ export default {
     postTransmissionType() {
       if (this.transmissionType.transmission_type_name == "") {
         this.$emit("emptyTransmissionType");
+        this.transmissionType.transmission_type_name = "";
+        this.dialogDetails = false;
       } else {
         axios
-          .post("/transmission_type", this.transmissionType)
+          .post(
+            "/addvertisment-service/transmission_type",
+            this.transmissionType
+          )
           .then(() => {
             this.$emit("addedTransmissionType");
             this.$emit("getTransmissionTypes");
@@ -88,8 +93,9 @@ export default {
         this.postTransmissionType();
       } else {
         this.$emit("duplicateTransmissionType");
-        this.s = false;
+        this.flagDuplicateTransmissionTypes = false;
         this.transmissionType.transmission_type_name = "";
+        this.dialogDetails = false;
       }
     }
   }

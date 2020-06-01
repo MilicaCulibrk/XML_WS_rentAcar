@@ -4,12 +4,7 @@
       <template #activator="{ on: dialogDetails }">
         <v-tooltip bottom color="black">
           <template #activator="{ on: tooltip }">
-            <v-btn
-              icon
-              v-on="{ ...tooltip, ...dialogDetails }"
-              @click="getModels()"
-              color="primary"
-            >
+            <v-btn icon v-on="{ ...tooltip, ...dialogDetails }" color="primary">
               <v-icon>delete</v-icon>
             </v-btn>
           </template>
@@ -19,7 +14,7 @@
       <v-card>
         <div class="detailsBorderColor">
           <v-card-title class="primary--text font-italic" primary-title>
-            Are you sure you want to delete {{item}} "{{brandItem.brand_name}}" ?
+            Are you sure you want to delete {{item}} "{{transmissionTypeItem.transmission_type_name}}" ?
             <v-spacer></v-spacer>
             <v-btn icon color="primary" @click="dialogDetails =  false">
               <v-icon>cancel</v-icon>
@@ -48,69 +43,60 @@ export default {
     item: {
       default: ""
     },
-    brandItem: {
+    transmissionTypeItem: {
       default: ""
     },
-    brandItems: {}
+    transmissionTypeItems: {}
   },
   data() {
     return {
       dialogDetails: false,
-      brand: {
-        id: this.brandItem.id,
-        brand_name: ""
+      transmissionType: {
+        id: this.transmissionTypeItem.id,
+        transmission_type_name: ""
       },
       addvertisments: {},
-      models: {},
-      flagHasAdds: false,
-      flagHasModels: false
+      flagHasAdds: false
     };
   },
   methods: {
-    deleteBrand() {
-      if (this.models.length == 0) {
-        axios
-          .delete("/addvertisment-service/brand/" + this.brand.id)
-          .then(() => {
-            this.$emit("deletedBrand");
-            this.$emit("getBrands");
-            this.brand.brand_name = "";
-          })
-          .catch(error => {
-            this.$emit("notDeletedBrand");
-            console.log(error);
-          });
-      } else {
-        this.$emit("hasModelsBrand");
-        this.dialogDetails = false;
-      }
+    deleteTransmissionType() {
+      axios
+        .delete(
+          "/addvertisment-service/transmission_type/" + this.transmissionType.id
+        )
+        .then(() => {
+          this.transmissionType.transmission_type_name = "";
+          this.$emit("deletedTransmissionType");
+          this.$emit("getTransmissionTypes");
+          this.transmissionType.transmission_type_name = "";
+          this.dialogDetails = false;
+        })
+        .catch(error => {
+          this.$emit("notDeletedTransmissionType");
+          console.log(error);
+        });
     },
     checkIfHasAdds() {
       var i = 0;
       for (i = 0; i < this.addvertisments.length; i++) {
-        if (this.addvertisments[i].brand_id == this.brand.id) {
+        if (
+          this.addvertisments[i].transmission_type_id ==
+          this.transmissionType.id
+        ) {
           this.flagHasAdds = true;
           break;
         }
       }
 
       if (!this.flagHasAdds) {
-        this.deleteBrand();
+        this.deleteTransmissionType();
       } else {
-        this.$emit("hasAddsBrand");
+        this.$emit("hasAddsTransmissionType");
         this.flagHasAdds = false;
         this.dialogDetails = false;
+        this.transmissionType.transmission_type_name = "";
       }
-    },
-    getModels() {
-      axios
-        .get("/addvertisment-service/brand/" + this.brand.id + "/model")
-        .then(models => {
-          this.models = models.data;
-        })
-        .catch(error => {
-          console.log(error);
-        });
     }
   },
   mounted() {

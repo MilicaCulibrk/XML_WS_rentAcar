@@ -14,7 +14,8 @@
       <v-card>
         <div class="detailsBorderColor">
           <v-card-title class="primary--text font-italic" primary-title>
-            Change model "{{modelItem.vehicle_model_name}}"
+            Change {{item}} "{{vehicleClassItem.vehicle_class_name
+            }}"
             <v-spacer></v-spacer>
             <v-btn icon color="primary" @click="dialogDetails =  false">
               <v-icon>cancel</v-icon>
@@ -22,7 +23,8 @@
           </v-card-title>
           <v-card-text class="text-center-left">
             <v-text-field
-              v-model="model.vehicle_model_name"
+              v-model="vehicleClass.vehicle_class_name
+              "
               color="primary"
               prepend-inner-icon="sync"
             ></v-text-field>
@@ -47,67 +49,61 @@ export default {
     item: {
       default: ""
     },
-    modelItem: {
+    vehicleClassItem: {
       default: ""
     },
-    brandItem: {
-      default: ""
-    },
-    modelItems: {}
+    vehicleClassItems: {}
   },
   data() {
     return {
       dialogDetails: false,
-      model: {
-        id: this.modelItem.id,
-        vehicle_model_name: "",
-        brand_id: this.brandItem.id
+      vehicleClass: {
+        id: this.vehicleClassItem.id,
+        vehicle_class_name: ""
       },
-      flagDuplicateModel: false
+      flagDuplicateVehicleClass: false
     };
   },
   methods: {
-    changeModel() {
-      if (this.model.model_name == "") {
-        this.$emit("emptyModel");
+    changeVehicleClass() {
+      if (this.vehicleClass.vehicle_class_name == "") {
+        this.$emit("emptyVehicleClass");
+        this.vehicleClass.vehicle_class_name = "";
         this.dialogDetails = false;
-        this.model.vehicle_model_name = "";
       } else {
         axios
-          .put(
-            "/addvertisment-service/brand/" + this.brandItem.id + "/model",
-            this.model
-          )
+          .put("/addvertisment-service/vehicle_class", this.vehicleClass)
           .then(() => {
-            this.$emit("changedModel");
-            this.$emit("getModels");
-            this.model.vehicle_model_name = "";
+            this.$emit("changedVehicleClass");
+            this.$emit("getVehicleClasses");
+            this.vehicleClass.vehicle_class_name = "";
             this.dialogDetails = false;
           })
           .catch(error => {
-            this.$emit("notChangedModel");
+            this.$emit("notChangedVehicleClass");
             console.log(error);
           });
       }
     },
     checkIfDuplicate() {
       var i = 0;
-      for (i = 0; i < this.modelItems.length; i++) {
+      for (i = 0; i < this.vehicleClassItems.length; i++) {
         if (
-          this.modelItems[i].vehicle_model_name == this.model.vehicle_model_name
+          this.vehicleClassItems[i].vehicle_class_name ==
+          this.vehicleClass.vehicle_class_name
         ) {
-          this.flagDuplicateModel = true;
+          this.flagDuplicateVehicleClass = true;
           break;
         }
       }
 
-      if (!this.flagDuplicateModel) {
-        this.changeModel();
+      if (!this.flagDuplicateVehicleClass) {
+        this.changeVehicleClass();
       } else {
-        this.$emit("duplicateModel");
-        this.flagDuplicateModel = false;
+        this.$emit("duplicateVehicleClass");
+        this.flagDuplicateVehicleClass = false;
+        this.vehicleClass.vehicle_class_name = "";
         this.dialogDetails = false;
-        this.model.vehicle_model_name = "";
       }
     }
   }

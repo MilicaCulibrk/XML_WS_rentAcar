@@ -102,22 +102,27 @@
                         v-text="vehicleClassItem.vehicle_class_name"
                       ></v-list-item-title>
                     </v-list-item-content>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>sync</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Change</span>
-                    </v-tooltip>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>delete</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Delete</span>
-                    </v-tooltip>
+                    <!-- Dijalog za promenu klase -->
+                    <PopupChangeClass
+                      v-bind:item="item"
+                      v-bind:vehicleClassItem="vehicleClassItem"
+                      v-bind:vehicleClassItems="vehicleClassItems"
+                      @changedVehicleClass="snackbarSuccess = true; snackbarSuccessText='You changed the class!'"
+                      @notChangedVehicleClass="snackbarDanger = true; snackbarDangerText='Class not changed, something went wrong!'"
+                      @emptyVehicleClass="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateVehicleClass="snackbarDanger = true; snackbarDangerText='This class already exists!'"
+                      @getVehicleClasses="getVehicleClasses()"
+                    ></PopupChangeClass>
+                    <!-- Dijalog za brisanje klase -->
+                    <PopupDeleteClass
+                      v-bind:item="item"
+                      v-bind:vehicleClassItem="vehicleClassItem"
+                      v-bind:vehicleClassItems="vehicleClassItems"
+                      @deletedVehicleClass="snackbarSuccess = true; snackbarSuccessText='You deleted  the class!'"
+                      @notDeletedVehicleClass="snackbarDanger = true; snackbarDangerText='Class not deleted, something went wrong!'"
+                      @hasAddsVehicleClass="snackbarDanger = true; snackbarDangerText='Cars with this class exist. You can not delete it!'"
+                      @getVehicleClasses="getVehicleClasses()"
+                    ></PopupDeleteClass>
                   </v-list-item>
                   <v-list-item>
                     <v-spacer></v-spacer>
@@ -151,26 +156,31 @@
                         v-text="transmissionTypeItem.transmission_type_name"
                       ></v-list-item-title>
                     </v-list-item-content>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>sync</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Change</span>
-                    </v-tooltip>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>delete</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Delete</span>
-                    </v-tooltip>
+                    <!-- Dijalog za promenu tipa prenosa -->
+                    <PopupChangeTransmissionType
+                      v-bind:item="item"
+                      v-bind:transmissionTypeItem="transmissionTypeItem"
+                      v-bind:transmissionTypeItems="transmissionTypeItems"
+                      @changedTranmissionType="snackbarSuccess = true; snackbarSuccessText='You changed the transmission type!'"
+                      @notChangedTransmissionType="snackbarDanger = true; snackbarDangerText='Transmission type not changed, something went wrong!'"
+                      @emptyTransmissionType="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateTransmissionType="snackbarDanger = true; snackbarDangerText='This transmission type already exists!'"
+                      @getTransmissionTypes="getTransmissionTypes()"
+                    ></PopupChangeTransmissionType>
+                    <!-- Dijalog za brisanje tipa prenosa -->
+                    <PopupDeleteTransmissionType
+                      v-bind:item="item"
+                      v-bind:transmissionTypeItem="transmissionTypeItem"
+                      v-bind:transmissionTypeItems="transmissionTypeItems"
+                      @deletedTransmissionType="snackbarSuccess = true; snackbarSuccessText='You deleted the transmission type!'"
+                      @notDeletedTransmissionType="snackbarDanger = true; snackbarDangerText='Transmission type not deleted, something went wrong!'"
+                      @hasAddsTransmissionType="snackbarDanger = true; snackbarDangerText='Cars with this transmission type exist. You can not delete it!'"
+                      @getTransmissionTypes="getTransmissionTypes()"
+                    ></PopupDeleteTransmissionType>
                   </v-list-item>
                   <v-list-item>
                     <v-spacer></v-spacer>
-                    <!-- Dijalog za dodavanje novog tipa goriva -->
+                    <!-- Dijalog za dodavanje novog tipa prenosa -->
                     <PopupAddTransmissionType
                       v-bind:item="item"
                       v-bind:transmissionTypeItems="transmissionTypeItems"
@@ -252,7 +262,11 @@ import PopupChangeBrand from "@/components/codebook/brand/PopupChangeBrand";
 import PopupDeleteBrand from "@/components/codebook/brand/PopupDeleteBrand";
 import PopupViewBrandModels from "@/components/codebook/brand/PopupViewBrandModels";
 import PopupAddClass from "@/components/codebook/class/PopupAddClass";
+import PopupChangeClass from "@/components/codebook/class/PopupChangeClass";
+import PopupDeleteClass from "@/components/codebook/class/PopupDeleteClass";
 import PopupAddTransmissionType from "@/components/codebook/transmissionType/PopupAddTransmissionType";
+import PopupChangeTransmissionType from "@/components/codebook/transmissionType/PopupChangeTransmissionType";
+import PopupDeleteTransmissionType from "@/components/codebook/transmissionType/PopupDeleteTransmissionType";
 export default {
   components: {
     PopupAddFuelType,
@@ -263,7 +277,11 @@ export default {
     PopupDeleteBrand,
     PopupViewBrandModels,
     PopupAddClass,
-    PopupAddTransmissionType
+    PopupChangeClass,
+    PopupDeleteClass,
+    PopupAddTransmissionType,
+    PopupChangeTransmissionType,
+    PopupDeleteTransmissionType
   },
   data() {
     return {
@@ -319,7 +337,7 @@ export default {
     },
     getBrands() {
       axios
-        .get("/brand")
+        .get("/addvertisment-service/brand")
         .then(brandItems => {
           this.brandItems = brandItems.data;
         })
@@ -329,7 +347,7 @@ export default {
     },
     getVehicleClasses() {
       axios
-        .get("/vehicle_class")
+        .get("/addvertisment-service/vehicle_class")
         .then(vehicleClassItems => {
           this.vehicleClassItems = vehicleClassItems.data;
         })
@@ -339,7 +357,7 @@ export default {
     },
     getTransmissionTypes() {
       axios
-        .get("/transmission_type")
+        .get("/addvertisment-service/transmission_type")
         .then(transmissionTypeItems => {
           this.transmissionTypeItems = transmissionTypeItems.data;
         })
@@ -349,7 +367,7 @@ export default {
     },
     getFuelTypes() {
       axios
-        .get("/fuel_type")
+        .get("/addvertisment-service/fuel_type")
         .then(fuelTypeItems => {
           this.fuelTypeItems = fuelTypeItems.data;
         })
@@ -361,7 +379,7 @@ export default {
   mounted() {
     //izlistavanje brendova
     axios
-      .get("/brand")
+      .get("/addvertisment-service/brand")
       .then(brandItems => {
         this.brandItems = brandItems.data;
       })
@@ -371,7 +389,7 @@ export default {
 
     //izlistavanje klasa
     axios
-      .get("/vehicle_class")
+      .get("/addvertisment-service/vehicle_class")
       .then(vehicleClassItems => {
         this.vehicleClassItems = vehicleClassItems.data;
       })
@@ -381,7 +399,7 @@ export default {
 
     //izlistavanje tipova goriva
     axios
-      .get("/transmission_type")
+      .get("/addvertisment-service/transmission_type")
       .then(transmissionTypeItems => {
         this.transmissionTypeItems = transmissionTypeItems.data;
       })
@@ -391,7 +409,7 @@ export default {
 
     //izlistavanje tipova goriva
     axios
-      .get("/fuel_type")
+      .get("/addvertisment-service/fuel_type")
       .then(fuelTypeItems => {
         this.fuelTypeItems = fuelTypeItems.data;
       })

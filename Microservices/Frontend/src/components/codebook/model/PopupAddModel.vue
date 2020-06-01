@@ -62,9 +62,14 @@ export default {
     postModel() {
       if (this.model.vehicle_model_name == "") {
         this.$emit("emptyModel");
+        this.model.vehicle_model_name = "";
+        this.dialogDetails = false;
       } else {
         axios
-          .post("/brand/" + this.brandItem.id + "/model", this.model)
+          .post(
+            "/addvertisment-service/brand/" + this.brandItem.id + "/model",
+            this.model
+          )
           .then(() => {
             this.$emit("addedModel");
             this.$emit("getModels");

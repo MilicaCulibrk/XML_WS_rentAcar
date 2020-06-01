@@ -54,9 +54,11 @@ export default {
     postBrand() {
       if (this.brand.brand_name == "") {
         this.$emit("emptyBrand");
+        this.brand.brand_name = "";
+        this.dialogDetails = false;
       } else {
         axios
-          .post("/brand", this.brand)
+          .post("/addvertisment-service/brand", this.brand)
           .then(() => {
             this.$emit("addedBrand");
             this.$emit("getBrands");
@@ -84,6 +86,7 @@ export default {
         this.$emit("duplicateBrand");
         this.flagDuplicateBrand = false;
         this.brand.brand_name = "";
+        this.dialogDetails = false;
       }
     }
   }

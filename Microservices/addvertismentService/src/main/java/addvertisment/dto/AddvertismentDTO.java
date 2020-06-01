@@ -25,7 +25,9 @@ public class AddvertismentDTO {
         this.id = addvertisment.getId();
         this.fuel_type_id = addvertisment.getFuel_type().getId();
         this.brand_id = addvertisment.getBrand().getId();
+        this.transmission_type_id = addvertisment.getTransmission_type().getId();
         this.vehicle_model_id = addvertisment.getVehicle_model().getId();
+        this.vehicle_class_id = addvertisment.getVehicle_class().getId();
     }
 
 

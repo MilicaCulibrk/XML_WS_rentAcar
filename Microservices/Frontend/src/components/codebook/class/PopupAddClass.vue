@@ -58,9 +58,11 @@ export default {
     postVehicleClass() {
       if (this.vehicleClass.vehicle_class_name == "") {
         this.$emit("emptyVehicleClass");
+        this.dialogDetails = false;
+        this.vehicleClass.vehicle_class_name = "";
       } else {
         axios
-          .post("/vehicle_class", this.vehicleClass)
+          .post("/addvertisment-service/vehicle_class", this.vehicleClass)
           .then(() => {
             this.$emit("addedVehicleClass");
             this.$emit("getVehicleClasses");
@@ -90,6 +92,7 @@ export default {
       } else {
         this.$emit("duplicateVehicleClass");
         this.flagDuplicateVehicleClass = false;
+        this.dialogDetails = false;
         this.vehicleClass.vehicle_class_name = "";
       }
     }

@@ -43,13 +43,42 @@ public class TransmissionTypeController {
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateTransmissionType (@RequestBody TransmissionType  transmissionType, @PathVariable Long id) {
-        return null;
+    @PutMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity updateTransmissionType(@RequestBody TransmissionTypeDTO transmissionTypeDTO) {
+
+        if (transmissionTypeDTO == null || transmissionTypeDTO.getTransmission_type_name().equals("")) {
+            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            transmissionTypeService.updateTransmissionType(transmissionTypeDTO);
+            return new ResponseEntity<>(transmissionTypeDTO, HttpStatus.OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTransmissionType (@PathVariable Long id) {
-        return null;
+    public ResponseEntity deleteTransmissionType(@PathVariable Long id) {
+        if (id == null) {
+            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            boolean hasAdds = transmissionTypeService.hasAdds(id);
+
+            if (hasAdds){
+                return new ResponseEntity<>("Cars with this fuel type exist. You can not delete it!", HttpStatus.FORBIDDEN);
+            }
+
+            transmissionTypeService.deleteTransmissionType(id);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        return new ResponseEntity<>(id, HttpStatus.OK);
+
     }
+
 }
