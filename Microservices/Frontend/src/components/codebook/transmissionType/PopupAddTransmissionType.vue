@@ -17,7 +17,11 @@
             </v-btn>
           </v-card-title>
           <v-card-text class="text-center-left">
-            <v-text-field v-model="brand.brand_name" color="primary" prepend-inner-icon="add"></v-text-field>
+            <v-text-field
+              v-model="transmissionType.transmission_type_name"
+              color="primary"
+              prepend-inner-icon="add"
+            ></v-text-field>
             <v-row>
               <v-col cols="4"></v-col>
               <v-col cols="4"></v-col>
@@ -39,53 +43,58 @@ export default {
     item: {
       default: ""
     },
-    brandItems: {}
+    transmissionTypeItems: {}
   },
   data() {
     return {
       dialogDetails: false,
-      brand: {
-        brand_name: ""
+      transmissionType: {
+        transmission_type_name: ""
       },
-      flagDuplicateBrand: false
+      flagDuplicateTransmissionTypes: false
     };
   },
   methods: {
-    postBrand() {
-      if (this.brand.brand_name == "") {
-        this.$emit("emptyBrand");
-        this.brand.brand_name = "";
+    postTransmissionType() {
+      if (this.transmissionType.transmission_type_name == "") {
+        this.$emit("emptyTransmissionType");
+        this.transmissionType.transmission_type_name = "";
         this.dialogDetails = false;
       } else {
         axios
-          .post("/addvertisment-service/brand", this.brand)
+          .post(
+            "/addvertisment-service/transmission_type",
+            this.transmissionType
+          )
           .then(() => {
-            this.$emit("addedBrand");
-            this.$emit("getBrands");
-            this.brand.brand_name = "";
+            this.$emit("addedTransmissionType");
+            this.$emit("getTransmissionTypes");
+            this.transmissionType.transmission_type_name = "";
             this.dialogDetails = false;
           })
           .catch(error => {
-            this.$emit("notAddedBrand");
+            this.$emit("notAddedTransmissionType");
             console.log(error);
           });
       }
     },
     checkIfDuplicate() {
       var i = 0;
-      for (i = 0; i < this.brandItems.length; i++) {
-        if (this.brandItems[i].brand_name == this.brand.brand_name) {
-          this.flagDuplicateBrand = true;
+      for (i = 0; i < this.transmissionTypeItems.length; i++) {
+        if (
+          this.transmissionTypeItems[i].transmission_type_name ==
+          this.transmissionType.transmission_type_name
+        ) {
+          this.s = true;
           break;
         }
       }
-
-      if (!this.flagDuplicateBrand) {
-        this.postBrand();
+      if (!this.s) {
+        this.postTransmissionType();
       } else {
-        this.$emit("duplicateBrand");
-        this.flagDuplicateBrand = false;
-        this.brand.brand_name = "";
+        this.$emit("duplicateTransmissionType");
+        this.flagDuplicateTransmissionTypes = false;
+        this.transmissionType.transmission_type_name = "";
         this.dialogDetails = false;
       }
     }

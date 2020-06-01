@@ -65,7 +65,12 @@ export default {
   methods: {
     deleteModel() {
       axios
-        .delete("/brand/" + this.brandItem.id + "/model/" + this.model.id)
+        .delete(
+          "/addvertisment-service/brand/" +
+            this.brandItem.id +
+            "/model/" +
+            this.model.id
+        )
         .then(() => {
           this.$emit("deletedModel");
           this.$emit("getModels");
@@ -77,7 +82,6 @@ export default {
         });
     },
     checkIfHasAdds() {
-      console.log(this.flagHasAdds);
       var i = 0;
       for (i = 0; i < this.addvertisments.length; i++) {
         if (this.addvertisments[i].vehicle_model_id == this.model.id) {
@@ -89,7 +93,6 @@ export default {
       if (!this.flagHasAdds) {
         this.deleteModel();
       } else {
-        console.log(this.flagHasAdds);
         this.$emit("hasAddsModel");
         this.flagHasAdds = false;
         this.dialogDetails = false;
@@ -100,7 +103,7 @@ export default {
   mounted() {
     //izlistavanje advertismenta
     axios
-      .get("/addvertisment")
+      .get("/addvertisment-service/addvertisment")
       .then(addvertisments => {
         this.addvertisments = addvertisments.data;
       })

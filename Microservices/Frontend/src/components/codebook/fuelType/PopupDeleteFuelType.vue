@@ -68,6 +68,7 @@ export default {
           this.$emit("deletedFuelType");
           this.$emit("getFuelTypes");
           this.fuelType.fuel_type_name = "";
+          this.dialogDetails = false;
         })
         .catch(error => {
           this.$emit("notDeletedFuelType");
@@ -75,10 +76,9 @@ export default {
         });
     },
     checkIfHasAdds() {
-      console.log(this.flagHasAdds);
       var i = 0;
       for (i = 0; i < this.addvertisments.length; i++) {
-        if (this.addvertisments[i].fuelTypeId == this.fuelType.id) {
+        if (this.addvertisments[i].fuel_type_id == this.fuelType.id) {
           this.flagHasAdds = true;
           break;
         }
@@ -87,17 +87,17 @@ export default {
       if (!this.flagHasAdds) {
         this.deleteFuelType();
       } else {
-        console.log(this.flagHasAdds);
         this.$emit("hasAddsFuelType");
         this.flagHasAdds = false;
         this.dialogDetails = false;
+        this.fuelType.fuel_type_name = "";
       }
     }
   },
   mounted() {
     //izlistavanje advertismenta
     axios
-      .get("/addvertisment")
+      .get("/addvertisment-service/addvertisment")
       .then(addvertisments => {
         this.addvertisments = addvertisments.data;
       })

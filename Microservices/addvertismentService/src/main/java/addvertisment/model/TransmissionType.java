@@ -1,21 +1,22 @@
 package addvertisment.model;
 
+import javax.persistence.*;
 import java.util.List;
 
-//@Entity(name="transmission_type")
+@Entity(name="transmission_type")
 public class TransmissionType {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "transmission_type_name", nullable = false)
+    @Column(name = "transmission_type_name", nullable = false)
     private String transmission_type_name;
 
-    //@OneToMany(mappedBy = "addvertisments", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     public List<Addvertisment> addvertisments;
 
-    TransmissionType(){
+    public TransmissionType(){
         super();
     }
 
