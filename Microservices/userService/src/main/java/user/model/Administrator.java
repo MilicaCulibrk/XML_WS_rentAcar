@@ -1,32 +1,33 @@
 package user.model;
 
+import javax.persistence.*;
 
 
-//@Entity(name="administrator")
+@Entity(name="administrator")
 public class Administrator {
-    //@Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    //@Column(name = "surname", nullable = false)
+    @Column(name = "surname", nullable = false)
     private String surname;
 
-    //@Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    //@Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    //@Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false)
     private String address;
 
-    //@Column(name = "city", nullable = false)
+    @Column(name = "city", nullable = false)
     private String city;
 
-    //@Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number", nullable = false)
     private String phone_number;
 
     public Administrator(){

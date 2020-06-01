@@ -17,7 +17,7 @@
               <v-text-field
                 label="Email*"
                 color="black"
-                v-model="email"
+                v-model="user.email"
                 required
                 :rules="emailRules"
               ></v-text-field>
@@ -25,7 +25,7 @@
               <v-text-field
                 color="black"
                 label="Password*"
-                v-model="password"
+                v-model="user.password"
                 type="password"
                 required
                 :rules="passwordRules"
@@ -44,12 +44,16 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data: () => ({
     LoginDialog: false,
-    password: "",
     passwordRules: [v => !!v || "Password is required"],
-    email: "",
+    user:{
+      email: "",
+      password: "",
+    },
+    
     emailRules: [
       v => !!v || "E-mail is required",
       v => /.+@.+\..+/.test(v) || "E-mail must be valid"
@@ -58,14 +62,21 @@ export default {
   methods: {
     login() {
       if (this.$refs.form.validate()) {
-        console.log(this.password + " " + this.email);
-        if (this.email == "admin@gmail.com") {
+        console.log(this.user.password + " " + this.user.email);
+        axios
+        .post("/user-service/login", this.user)
+        .then(response => {       console.log(response)         }) // Kad stigne odgovor od servera preuzmi objekat
+        .catch(error => {
+            console.log(error)
+            alert("Pogresan email ili lozinka!");
+        })
+        if (this.user.email == "admin@gmail.com") {
           this.close();
           this.$emit("loggedIn");
           this.$router.push("/admin");
-        } else if (this.email == "user@gmail.com") {
+        } else if (this.user.email == "user@gmail.com") {
           this.$router.push("/user");
-        } else if (this.email == "agent@gmail.com") {
+        } else if (this.user.email == "agent@gmail.com") {
           this.$router.push("/agent");
         } else {
           this.$emit("notLoggedIn");

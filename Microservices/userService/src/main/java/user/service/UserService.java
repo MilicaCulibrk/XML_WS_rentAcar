@@ -17,7 +17,7 @@ public class UserService {
     
     public boolean verify(String email) throws NotFoundException {
         if (!this.userRepository.existsByEmail(email)) {
-            throw new NotFoundException("Consumer with that id does not exist!");
+            return false;
         }
 
         return true;

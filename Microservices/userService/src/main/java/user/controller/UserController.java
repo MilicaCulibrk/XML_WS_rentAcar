@@ -18,7 +18,7 @@ import user.service.UserService;
 
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -28,30 +28,27 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('SIMPLE_USER')")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("/hello/{id}")
     public ResponseEntity getSingleUser(@PathVariable Long id)  {
         return new ResponseEntity(HttpStatus.OK);
     }
 
     //admin moze da bolira ili odblokira korisnika promenom boolean polja
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("/{id}")
     public ResponseEntity updateUser (@RequestBody User user, @PathVariable  Long id) {
         return new ResponseEntity(HttpStatus.OK);
     }
 
     //brisanje pojedinacnog agenta
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser (@PathVariable Long id) {
 
         return new ResponseEntity(HttpStatus.OK);
     }
     
-    @GetMapping("/verify/{email}")
-    public ResponseEntity<?> verify(@PathVariable("email") String email) throws NotFoundException {
-    	System.out.println("oooooooooooooooooooooo");
-        System.out.println("Verification invoked!");
-      	return new ResponseEntity<>(this.userService.verify(email), HttpStatus.OK);
-    }
+
 
 }

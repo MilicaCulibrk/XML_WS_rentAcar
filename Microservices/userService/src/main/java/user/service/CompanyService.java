@@ -1,7 +1,9 @@
-/*package user.service;
+package user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javassist.NotFoundException;
 import user.repository.CompanyRepository;
 import user.repository.UserRepository;
 
@@ -9,4 +11,11 @@ import user.repository.UserRepository;
 public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
-}*/
+    
+    public boolean verify(String email) throws NotFoundException {
+        if (!this.companyRepository.existsByEmail(email)) {
+            return false;
+        }
+        return true;
+    }
+}

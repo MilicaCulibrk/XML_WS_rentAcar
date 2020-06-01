@@ -1,8 +1,9 @@
 package user.controller;
 
-import user.model.Agent;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import user.model.Company;
 
 @RestController
 @RequestMapping(value = "/company")
@@ -22,13 +23,13 @@ public class CompanyController {
 
     //dodavanje nove firme
     @PostMapping()
-    public ResponseEntity<?> addCompany (@RequestBody Agent agent)  {
+    public ResponseEntity<?> addCompany (@RequestBody Company company)  {
         return null;
     }
 
     //potencijalna izmena profila firme
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCompany (@RequestBody Agent agent, @PathVariable Long id) {
+    public ResponseEntity<?> updateCompany (@RequestBody Company company, @PathVariable Long id) {
         return null;
     }
 

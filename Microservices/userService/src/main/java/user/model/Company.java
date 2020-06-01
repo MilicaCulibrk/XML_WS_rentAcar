@@ -1,31 +1,38 @@
 package user.model;
 
-//@Entity
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
+@Entity(name="company")
 public class Company {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    //@Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    //@Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    //@Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false)
     private String address;
 
-    //@Column(name = "city", nullable = false)
+    @Column(name = "city", nullable = false)
     private String city;
 
-    //@Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number", nullable = false)
     private String phone_number;
 
-    //@Column(name = "company_number", nullable = false)
+    @Column(name = "company_number", nullable = false)
     private String company_number;
 
     public Company(){

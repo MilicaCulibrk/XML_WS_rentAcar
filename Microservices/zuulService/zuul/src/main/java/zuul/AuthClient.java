@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "user-service")
 public interface AuthClient {
 
-    @GetMapping("/verify/{email}")
-    boolean verify(@PathVariable("email") String email);
+    @GetMapping("/verify/{email}/{password}")
+    String verify(@PathVariable("email") String email, @PathVariable("password") String password);
 
 }
