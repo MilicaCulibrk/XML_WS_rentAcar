@@ -50,7 +50,7 @@ const routes = [
 
 const router = new VueRouter({
   //Da li je bolji hash ili history?
-  mode: "hash",
+  mode: "history",
   routes,
 });
 
