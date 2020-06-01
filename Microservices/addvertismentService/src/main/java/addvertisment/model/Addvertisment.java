@@ -1,5 +1,7 @@
 package addvertisment.model;
 
+import javax.persistence.Column;
+import javax.persistence.Lob;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -57,6 +59,10 @@ public class Addvertisment {
 
     //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<ReservedDate> reservedDates;
+
+    //@Lob
+    //@Column(name = "photo", columnDefinition="BLOB")
+    //private byte[] photo;
 
 
     public Addvertisment(){
