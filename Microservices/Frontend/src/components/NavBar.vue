@@ -27,6 +27,10 @@
         <span @click="openCart()">Cart</span>
         <v-icon right>shopping_cart</v-icon>
       </v-btn>
+      <v-btn text color="primary">
+        <span @click="openAddNewAddvertisment()">New Addvertisement</span>
+        <v-icon right>add</v-icon>
+      </v-btn>
       <div class="mx-2">
         <LoginComponent
           @loggedIn="snackbarSuccess = true; snackbarSuccessText='You are logged in!'"
@@ -60,6 +64,9 @@ export default {
   methods: {
     openCart() {
       this.$router.push("/cart");
+    },
+    openAddNewAddvertisment() {
+      this.$router.push("/addNewAddvertisment");
     },
     openCodebook() {
       this.$router.push("/codebook");

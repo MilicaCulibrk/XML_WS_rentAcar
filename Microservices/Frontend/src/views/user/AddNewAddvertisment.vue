@@ -147,24 +147,20 @@
                   <v-row class="mt-n8">
                       <v-col cols="12" >
                       <template>
-                        <div id="app">
-                            <vue-dropzone
-                              ref="imgDropZone"
-                              id="customdropzone"
-                              :options="dropzoneOptions"
-                              @vdropzone-complete="afterComplete"
-                            ></vue-dropzone>
-                            
-                            <div class="form-group d-flex">
-                                <div class="p-1" v-for="(image, index) in images" :key="image.src">
-                                    <div class="img-wrapp">
-                                        <img :src="image.src" alt="" width="80px">
-                                        <span class="delete-img" @click="deleteImage(image,index)">X</span>
-                                    </div>
-                                </div>
-                              </div>
-                           
+                        <div class="form-group">
+                            <label for="addvertisment_image">Upload images for your addvertisement: </label>
+                            <input type="file" @change="uploadImage" class="form-control" style="margin-left: 20px;">
                           </div>
+      
+                          <div class="form-group d-flex">
+                            <div class="p-1" v-for="(image, index) in addvertisment.images" :key="image">
+                                <div class="img-wrapp">
+                                    <img :src="image" alt="" width="80px" >
+                                    <span class="delete-img" @click="deleteImage(image,index)">X</span>
+                                </div>
+                            </div>
+                          </div>
+                         
                      </template>
 
                     </v-col>
@@ -184,29 +180,19 @@
   </template>
   
   <script>
-import firebase from "firebase";
-import vue2Dropzone from "vue2-dropzone";
-import "vue2-dropzone/dist/vue2Dropzone.min.css";
-let uuid = require("uuid");
+
+import {fb, db} from "@/firebase";
+
 
 
   export default {
 
-    components: {
-    vueDropzone: vue2Dropzone
-  },
     data: () => ({
-        dropzoneOptions: {
-        url: "https://httpbin.org/post",
-        thumbnailWidth: 150,
-        thumbnailHeight: 150,
-        addRemoveLinks: false,
-        acceptedFiles: ".jpg, .jpeg, .png",
-        dictDefaultMessage: `<p class='text-default'><i class='fa fa-cloud-upload mr-2'></i> Drag Images or Click Here</p>
-          <p class="form-text">Allowed Files: .jpg, .jpeg, .png</p>
-          `
+        name: "Addvertisments",
+        addvertisments: [],
+      addvertisment: {
+        images: [],
       },
-      images: [],
       selectBrand: [],
       selectModel: [],
       selectClass: [],
@@ -233,39 +219,45 @@ let uuid = require("uuid");
       arrayEvents: [],
     }),
   
-   
+    firestore(){
+      return {
+        addvertisments: db.collection('addvertisments'),
+      }
+  },
  
     methods: {
-
-        async afterComplete(upload) {
-            var imageName = uuid.v1();
-            this.isLoading = true;
-            try {
-                //save image
-                let file = upload;
-                var metadata = {
-                contentType: "image/png"
-                };
-                var storageRef = firebase.storage().ref();
-                var imageRef = storageRef.child(`images/${imageName}.png`);
-                await imageRef.put(file, metadata);
-                var downloadURL = await imageRef.getDownloadURL();
-                this.images.push({ src: downloadURL });
-            } catch (error) {
-                console.log(error);
-            }
-            this.$refs.imgDropZone.removeFile(upload);
-         },
-         deleteImage(img,index){
-             console.log(index);
-      let image = firebase.storage().refFromURL(img);
-      this.images.splice(index,1);
+        deleteImage(img,index){
+      let image = fb.storage().refFromURL(img);
+      this.addvertisment.images.splice(index,1);
       image.delete().then(function() {
         console.log('image deleted');
       }).catch(function() {
         // Uh-oh, an error occurred!
         console.log('an error occurred');
       });
+    },
+    uploadImage(e){
+      if(e.target.files[0]){
+        
+          let file = e.target.files[0];
+    
+          var storageRef = fb.storage().ref('addvertisments/'+ Math.random() + '_'  + file.name);
+    
+          let uploadTask  = storageRef.put(file);
+    
+          uploadTask.on('state_changed', () => {
+            
+          }, () => {
+            // Handle unsuccessful uploads
+          }, () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              this.addvertisment.images.push(downloadURL);
+            });
+          });
+      }
     },
         reserveDate(dates){
 
@@ -348,6 +340,9 @@ let uuid = require("uuid");
 }
 .img-wrapp{
   position: relative;
+  max-width: 100px;
+  max-height: 100px;
+  margin: 10px;
 }
 .img-wrapp span.delete-img{
     position: absolute;
@@ -355,7 +350,6 @@ let uuid = require("uuid");
     left: -2px;
 }
 .img-wrapp span.delete-img:hover{
-    cursor: pointer;
+  cursor: pointer;
 }
-
   </style>
