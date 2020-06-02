@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import user.dto.UserDTO;
+
 import java.util.Collection;
 
 import javax.persistence.*;
@@ -62,6 +64,17 @@ public class User implements UserDetails{
 		this.city = city;
 		this.phone_number = phone_number;
 		this.number_of_addvertisment = number_of_addvertisment;
+	}
+    
+    public User(UserDTO user) {
+		super();
+		this.name = user.getName();
+		this.surname = user.getSurname();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.address = user.getAddress();
+		this.city = user.getCity();
+		this.phone_number = user.getPhone_number();
 	}
 
 	public User() {

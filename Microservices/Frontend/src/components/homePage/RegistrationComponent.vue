@@ -31,7 +31,7 @@
               <v-text-field
                 label="Phone number*"
                 color="black"
-                v-model="user.number"
+                v-model="user.phone_number"
                 required
                 :rules="requiredRules"
               ></v-text-field>
@@ -87,13 +87,15 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data: () => ({
     RegisterDialog: false,
     user: {
       name: "",
       surname: "",
-      number: "",
+      phone_number: "",
       adrress: "",
       city: "",
       email: "",
@@ -119,8 +121,17 @@ export default {
   methods: {
     register() {
       if (this.$refs.form.validate()) {
-        console.log(this.user.name);
-        this.close();
+        console.log(this.user.email);
+       axios
+        .post("/user-service/register", this.user)
+        .then(response => {      
+            alert("Uspesno ste se registrovali!");
+            console.log(response.data)         
+            }) 
+        .catch(error => {
+            console.log(error)
+            alert("Pogresan email ili lozinka!");
+        })        
       } else {
         console.log("nije validno");
       }
