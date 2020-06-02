@@ -58,18 +58,24 @@ services:
     tty: true
     depends_on:
       - eureka-service
+      - postgres
 
   rent-service:
     build: ./rentService
     ports:
       - "8084:8084"
     environment:
-      - REGISTRY_HOST=eureka-service
+      DATABASE_USERNAME: test
+      DATABASE_PASSWORD: test
+      DATABASE_DOMAIN: postgres
+      REGISTRY_HOST: eureka-service
+      POSTGRES_DB: services
     networks:
       - application-network
     tty: true
     depends_on:
       - eureka-service
+      - postgres
 
   search-service:
     build: ./searchService

@@ -7,7 +7,7 @@ import rent.model.Report;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/request")
+@RequestMapping(value = "/request")
 public class ReportController {
 	
     @PostMapping("/{id}/report")
