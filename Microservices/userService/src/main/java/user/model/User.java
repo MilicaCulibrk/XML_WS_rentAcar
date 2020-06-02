@@ -14,7 +14,12 @@ import javax.persistence.*;
 
 @Entity(name="user_entity")
 public class User implements UserDetails{
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
@@ -43,7 +48,28 @@ public class User implements UserDetails{
     @Column(name = "number_of_addvertisment", nullable = true)
         private int number_of_addvertisment;
 
-    public Long getId() {
+    
+    
+    public User(Long id, String name, String surname, String email, String password, String address, String city,
+			String phone_number, int number_of_addvertisment) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.password = password;
+		this.address = address;
+		this.city = city;
+		this.phone_number = phone_number;
+		this.number_of_addvertisment = number_of_addvertisment;
+	}
+
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -130,25 +156,25 @@ public class User implements UserDetails{
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

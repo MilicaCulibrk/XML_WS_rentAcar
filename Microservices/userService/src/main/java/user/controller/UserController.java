@@ -28,21 +28,21 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    //@PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("/hello/{id}")
     public ResponseEntity getSingleUser(@PathVariable Long id)  {
         return new ResponseEntity(HttpStatus.OK);
     }
 
     //admin moze da bolira ili odblokira korisnika promenom boolean polja
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    //@PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("/{id}")
     public ResponseEntity updateUser (@RequestBody User user, @PathVariable  Long id) {
         return new ResponseEntity(HttpStatus.OK);
     }
 
     //brisanje pojedinacnog agenta
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    //@PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser (@PathVariable Long id) {
 

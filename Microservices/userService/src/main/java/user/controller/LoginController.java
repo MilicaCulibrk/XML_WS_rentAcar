@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javassist.NotFoundException;
 import user.dto.AuthenticationDTO;
+import user.model.Administrator;
+import user.model.Company;
+import user.model.User;
+import user.repository.UserRepository;
 import user.service.AdministratorService;
 import user.service.CompanyService;
 import user.service.UserService;
@@ -43,6 +47,8 @@ public class LoginController {
     
     @Autowired
     private CompanyService companyService;
+	@Autowired
+	private UserRepository userRepository;
     
     // u metodi se salje objekat koji ima atribute username i password
     //necemo implementirati za sad, zbog mogucnosti autetifikacije preko getway-a
@@ -55,6 +61,8 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody AuthenticationDTO authenticationDTO, HttpServletResponse response) throws AuthenticationException {
         System.out.println("uslo u login controler");
+        User userr= this.userRepository.findByEmail(authenticationDTO.getEmail());
+        System.out.println("pogeldaj me boze" + userr.getName());
         Authentication authentication = null;
         try {
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationDTO.getEmail(), authenticationDTO.getPassword()));
@@ -73,26 +81,42 @@ public class LoginController {
         String role = null;
         try {
 			if(this.userService.verify(email)) {
-				role="USER";
-			} else if(this.administratorService.verify(email, password)) {
+				User user = (User) nekiKorisnik;
+				authenticationDTO.setId(user.getId());
+				authenticationDTO.setRole("USER");
+				//role="USER";
+		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
+
+			} else if(this.administratorService.verify(email)) {
+				Administrator admin = (Administrator) nekiKorisnik;
+				authenticationDTO.setId(admin.getId());
+				authenticationDTO.setRole("ADMINISTRATOR");
 				role="ADMINISTRATOR";
+		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
+
 			} else if(this.companyService.verify(email)) {
+				Company company = (Company) nekiKorisnik;
+				authenticationDTO.setId(company.getId());
+				authenticationDTO.setRole("COMPANY");
 				role="COMPANY";
+		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
+
 			}
 		} catch (NotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
+      	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 	
     @GetMapping("/verify/{email}/{password}")
-    public ResponseEntity<?> verify(@PathVariable("email") String email, @PathVariable("password") String password) throws NotFoundException {
+    public ResponseEntity<?> verify(@PathVariable("email") String email) throws NotFoundException {
         System.out.println("Verification invoked!");
         String role = null;
         if(this.userService.verify(email)) {
         	role="USER";
-        } else if(this.administratorService.verify(email, password)) {
+        } else if(this.administratorService.verify(email)) {
         	role="ADMINISTRATOR";
         } else if(this.companyService.verify(email)) {
         	role="COMPANY";

@@ -12,13 +12,11 @@ public class AdministratorService {
     @Autowired
     private AdministratorRepository administratorRepository;
     
-    public boolean verify(String email, String password) throws NotFoundException {
+    public boolean verify(String email) throws NotFoundException {
         if (!this.administratorRepository.existsByEmail(email)) {
             return false;
         }
-        if(this.administratorRepository.findByEmail(email).getPassword().equals(password))
-        	return true;
-        else
-        	return false;
+        return true;
+
     }
 }

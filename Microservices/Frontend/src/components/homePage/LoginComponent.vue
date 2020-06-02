@@ -1,8 +1,8 @@
-<template>
-  <v-row justify="center">
-    <v-dialog v-model="LoginDialog" max-width="600px">
-      <template v-slot:activator="{ on }">
-        <v-btn class="mx-1" text color="primary" v-on="on">
+<template  >
+  <v-row justify="center" >
+    <v-dialog v-model="LoginDialog" max-width="600px" v-if="(this.$store.state.user.role)=='NONE'">
+      <template v-slot:activator="{ on }" >
+        <v-btn class="mx-1" text color="primary"  v-on="on">
           <span>Login</span>
           <v-icon right>lock_open</v-icon>
         </v-btn>
@@ -45,6 +45,7 @@
 
 <script>
 import axios from "axios";
+import AppVue from '../../App.vue';
 export default {
   data: () => ({
     LoginDialog: false,
@@ -66,8 +67,14 @@ export default {
         axios
         .post("/user-service/login", this.user)
         .then(response => {      
+            console.log( "nesto i od mene: " + this.$store.state.user.role);
             alert("Uspesno ste se logovali!");
-            console.log(response)         
+            localStorage.setItem("loggedUser", JSON.stringify(response.data));
+            this.$store.state.user = JSON.parse(localStorage.getItem("loggedUser"));
+            console.log( this.$store.state.user.role);
+            this.LoginDialog = false;
+            AppVue.data.logged = true;
+            console.log(response.data)         
             }) 
         .catch(error => {
             console.log(error)
