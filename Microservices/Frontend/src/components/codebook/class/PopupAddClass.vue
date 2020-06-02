@@ -17,7 +17,11 @@
             </v-btn>
           </v-card-title>
           <v-card-text class="text-center-left">
-            <v-text-field v-model="brand.brand_name" color="primary" prepend-inner-icon="add"></v-text-field>
+            <v-text-field
+              v-model="vehicleClass.vehicle_class_name"
+              color="primary"
+              prepend-inner-icon="add"
+            ></v-text-field>
             <v-row>
               <v-col cols="4"></v-col>
               <v-col cols="4"></v-col>
@@ -39,54 +43,57 @@ export default {
     item: {
       default: ""
     },
-    brandItems: {}
+    vehicleClassItems: {}
   },
   data() {
     return {
       dialogDetails: false,
-      brand: {
-        brand_name: ""
+      vehicleClass: {
+        vehicle_class_name: ""
       },
-      flagDuplicateBrand: false
+      flagDuplicateVehicleClass: false
     };
   },
   methods: {
-    postBrand() {
-      if (this.brand.brand_name == "") {
-        this.$emit("emptyBrand");
-        this.brand.brand_name = "";
+    postVehicleClass() {
+      if (this.vehicleClass.vehicle_class_name == "") {
+        this.$emit("emptyVehicleClass");
         this.dialogDetails = false;
+        this.vehicleClass.vehicle_class_name = "";
       } else {
         axios
-          .post("/addvertisment-service/brand", this.brand)
+          .post("/addvertisment-service/vehicle_class", this.vehicleClass)
           .then(() => {
-            this.$emit("addedBrand");
-            this.$emit("getBrands");
-            this.brand.brand_name = "";
+            this.$emit("addedVehicleClass");
+            this.$emit("getVehicleClasses");
+            this.vehicleClass.vehicle_class_name = "";
             this.dialogDetails = false;
           })
           .catch(error => {
-            this.$emit("notAddedBrand");
+            this.$emit("notAddedVehicleClass");
             console.log(error);
           });
       }
     },
     checkIfDuplicate() {
       var i = 0;
-      for (i = 0; i < this.brandItems.length; i++) {
-        if (this.brandItems[i].brand_name == this.brand.brand_name) {
-          this.flagDuplicateBrand = true;
+      for (i = 0; i < this.vehicleClassItems.length; i++) {
+        if (
+          this.vehicleClassItems[i].vehicle_class_name ==
+          this.vehicleClass.vehicle_class_name
+        ) {
+          this.flagDuplicateVehicleClass = true;
           break;
         }
       }
 
-      if (!this.flagDuplicateBrand) {
-        this.postBrand();
+      if (!this.flagDuplicateVehicleClass) {
+        this.postVehicleClass();
       } else {
-        this.$emit("duplicateBrand");
-        this.flagDuplicateBrand = false;
-        this.brand.brand_name = "";
+        this.$emit("duplicateVehicleClass");
+        this.flagDuplicateVehicleClass = false;
         this.dialogDetails = false;
+        this.vehicleClass.vehicle_class_name = "";
       }
     }
   }

@@ -14,7 +14,7 @@
       <v-card>
         <div class="detailsBorderColor">
           <v-card-title class="primary--text font-italic" primary-title>
-            Change model "{{modelItem.vehicle_model_name}}"
+            Change {{item}} "{{transmissionTypeItem.transmission_type_name}}"
             <v-spacer></v-spacer>
             <v-btn icon color="primary" @click="dialogDetails =  false">
               <v-icon>cancel</v-icon>
@@ -22,7 +22,7 @@
           </v-card-title>
           <v-card-text class="text-center-left">
             <v-text-field
-              v-model="model.vehicle_model_name"
+              v-model="tranmissionType.transmission_type_name"
               color="primary"
               prepend-inner-icon="sync"
             ></v-text-field>
@@ -47,67 +47,61 @@ export default {
     item: {
       default: ""
     },
-    modelItem: {
+    transmissionTypeItem: {
       default: ""
     },
-    brandItem: {
-      default: ""
-    },
-    modelItems: {}
+    transmissionTypeItems: {}
   },
   data() {
     return {
       dialogDetails: false,
-      model: {
-        id: this.modelItem.id,
-        vehicle_model_name: "",
-        brand_id: this.brandItem.id
+      tranmissionType: {
+        id: this.transmissionTypeItem.id,
+        transmission_type_name: ""
       },
-      flagDuplicateModel: false
+      flagDuplicateTranmissionType: false
     };
   },
   methods: {
-    changeModel() {
-      if (this.model.model_name == "") {
-        this.$emit("emptyModel");
+    changeTranmissionType() {
+      if (this.tranmissionType.transmission_type_name == "") {
+        this.$emit("emptyTransmissionType");
+        this.tranmissionType.transmission_type_name = "";
         this.dialogDetails = false;
-        this.model.vehicle_model_name = "";
       } else {
         axios
-          .put(
-            "/addvertisment-service/brand/" + this.brandItem.id + "/model",
-            this.model
-          )
+          .put("/addvertisment-service/transmission_type", this.tranmissionType)
           .then(() => {
-            this.$emit("changedModel");
-            this.$emit("getModels");
-            this.model.vehicle_model_name = "";
+            this.$emit("changedTranmissionType");
+            this.$emit("getTransmissionTypes");
+            this.tranmissionType.transmission_type_name = "";
             this.dialogDetails = false;
           })
           .catch(error => {
-            this.$emit("notChangedModel");
+            this.$emit("notChangedTransmissionType");
             console.log(error);
           });
       }
     },
     checkIfDuplicate() {
       var i = 0;
-      for (i = 0; i < this.modelItems.length; i++) {
+      for (i = 0; i < this.transmissionTypeItems.length; i++) {
         if (
-          this.modelItems[i].vehicle_model_name == this.model.vehicle_model_name
+          this.transmissionTypeItems[i].transmission_type_name ==
+          this.tranmissionType.transmission_type_name
         ) {
-          this.flagDuplicateModel = true;
+          this.flagDuplicateTranmissionType = true;
           break;
         }
       }
 
-      if (!this.flagDuplicateModel) {
-        this.changeModel();
+      if (!this.flagDuplicateTranmissionType) {
+        this.changeTranmissionType();
       } else {
-        this.$emit("duplicateModel");
-        this.flagDuplicateModel = false;
+        this.$emit("duplicateTransmissionType");
+        this.flagDuplicateTranmissionType = false;
+        this.tranmissionType.transmission_type_name = "";
         this.dialogDetails = false;
-        this.model.vehicle_model_name = "";
       }
     }
   }

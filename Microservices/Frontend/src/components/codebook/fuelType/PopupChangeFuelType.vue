@@ -66,8 +66,9 @@ export default {
     changeFuelType() {
       if (this.fuelType.fuel_type_name == "") {
         this.$emit("emptyFuelType");
+        this.fuelType.fuel_type_name = "";
+        this.dialogDetails = false;
       } else {
-        console.log(this.fuelType);
         axios
           .put("/addvertisment-service/fuel_type", this.fuelType)
           .then(() => {
@@ -98,6 +99,8 @@ export default {
       } else {
         this.$emit("duplicateFuelType");
         this.flagDuplicateFuelType = false;
+        this.fuelType.fuel_type_name = "";
+        this.dialogDetails = false;
       }
     }
   }

@@ -6,6 +6,7 @@ import User from "../views/user/User.vue";
 import Agent from "../views/agent/Agent.vue";
 import Cart from "../views/user/Cart.vue";
 import Codebook from "../views/admin/Codebook.vue";
+import AddNewAddvertisment from "../views/user/AddNewAddvertisment.vue";
 
 Vue.use(VueRouter);
 
@@ -40,6 +41,11 @@ const routes = [
     name: "Codebook",
     component: Codebook,
   },
+  {
+    path: "/addNewAddvertisment",
+    name: "AddNewAddvertisment",
+    component: AddNewAddvertisment,
+  }
 ];
 
 const router = new VueRouter({

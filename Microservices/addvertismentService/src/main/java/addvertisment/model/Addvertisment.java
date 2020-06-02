@@ -8,26 +8,26 @@ public class Addvertisment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-/*
-    //@Column(name = "addvertiser_id", nullable = false)
-    //koji user/firma ga kreira
-    private Long addvertiser_id;
-*/
+    /*
+        //@Column(name = "addvertiser_id", nullable = false)
+        //koji user/firma ga kreira
+        private Long addvertiser_id;
+    */
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Brand brand;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public VehicleModel vehicle_model;
-/*
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public TransmissionType transmission_type;
-*/
+
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public FuelType fuel_type;
-/*
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public VehicleClass vehicle_class;
 
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public VehicleClass vehicle_class;
+/*
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public PriceList price_list;
 
@@ -88,15 +88,15 @@ public class Addvertisment {
     public void setId(Long id) {
         this.id = id;
     }
-/*
-    public Long getAddvertiser_id() {
-        return addvertiser_id;
-    }
+    /*
+        public Long getAddvertiser_id() {
+            return addvertiser_id;
+        }
 
-    public void setAddvertiser_id(Long addvertiser_id) {
-        this.addvertiser_id = addvertiser_id;
-    }
-*/
+        public void setAddvertiser_id(Long addvertiser_id) {
+            this.addvertiser_id = addvertiser_id;
+        }
+    */
     public Brand getBrand() {
         return brand;
     }
@@ -112,7 +112,7 @@ public class Addvertisment {
     public void setVehicle_model(VehicleModel model) {
         this.vehicle_model = model;
     }
- /*
+
     public TransmissionType getTransmission_type() {
         return transmission_type;
     }
@@ -120,7 +120,7 @@ public class Addvertisment {
     public void setTransmission_type(TransmissionType transmission_type) {
         this.transmission_type = transmission_type;
     }
-*/
+
     public FuelType getFuel_type() {
         return fuel_type;
     }
@@ -128,7 +128,7 @@ public class Addvertisment {
     public void setFuel_type(FuelType fuel_type) {
         this.fuel_type = fuel_type;
     }
-/*
+
     public VehicleClass getVehicle_class() {
         return vehicle_class;
     }
@@ -136,7 +136,7 @@ public class Addvertisment {
     public void setVehicle_class(VehicleClass vehicle_class) {
         this.vehicle_class = vehicle_class;
     }
-
+/*
     public PriceList getPrice_list() {
         return price_list;
     }
@@ -208,9 +208,5 @@ public class Addvertisment {
     public void setReservedDates(List<ReservedDate> reservedDates) {
         this.reservedDates = reservedDates;
     } */
-
-
-
-
 
 }
