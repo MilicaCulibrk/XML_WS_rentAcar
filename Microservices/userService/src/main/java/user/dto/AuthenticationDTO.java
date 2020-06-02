@@ -1,13 +1,14 @@
 package user.dto;
 
-public class Authentication {
+public class AuthenticationDTO {
 	private String email;
 	private String password;
-	public Authentication(String email, String password) {
+	
+	public AuthenticationDTO() {
 		super();
-		this.email = email;
-		this.password = password;
+		// TODO Auto-generated constructor stub
 	}
+
 	public String getEmail() {
 		return email;
 	}

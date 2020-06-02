@@ -65,23 +65,15 @@ export default {
         console.log(this.user.password + " " + this.user.email);
         axios
         .post("/user-service/login", this.user)
-        .then(response => {       console.log(response)         }) // Kad stigne odgovor od servera preuzmi objekat
+        .then(response => {      
+            alert("Uspesno ste se logovali!");
+            console.log(response)         
+            }) 
         .catch(error => {
             console.log(error)
             alert("Pogresan email ili lozinka!");
         })
-        if (this.user.email == "admin@gmail.com") {
-          this.close();
-          this.$emit("loggedIn");
-          this.$router.push("/admin");
-        } else if (this.user.email == "user@gmail.com") {
-          this.$router.push("/user");
-        } else if (this.user.email == "agent@gmail.com") {
-          this.$router.push("/agent");
-        } else {
-          this.$emit("notLoggedIn");
-          console.log("nije validno");
-        }
+ 
       } else {
         console.log("nije validno");
       }
