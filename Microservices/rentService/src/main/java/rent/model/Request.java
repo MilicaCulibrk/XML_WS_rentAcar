@@ -1,25 +1,33 @@
 package rent.model;
 
 
-import java.util.List;
+import javax.persistence.*;
 
+import javax.persistence.Entity;
+
+@Entity(name="request")
 public class Request {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false)
     private String status;
 
     //@OneToMany(mappedBy = "order_list", fetch = FetchType.LAZY)
-    public List<Order> orderList;
+    //public List<Order> orderList;
 
-    public Request(Long id, String status, List<Order> orderList) {
+ /*   public Request(Long id, String status, List<Order> orderList) {
         this.id = id;
         this.status = status;
         this.orderList = orderList;
     }
-
+*/
+    public Request(Long id, String status) {
+        this.id = id;
+        this.status = status;
+        //this.orderList = orderList;
+    }
     public Long getId() {
         return id;
     }
@@ -36,11 +44,11 @@ public class Request {
         this.status = status;
     }
 
-    public List<Order> getOrderList() {
+ /*   public List<Order> getOrderList() {
         return orderList;
     }
 
     public void setOrderList(List<Order> orderList) {
         this.orderList = orderList;
-    }
+    }*/
 }
