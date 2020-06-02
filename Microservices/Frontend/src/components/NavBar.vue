@@ -18,6 +18,7 @@
         <span class="font-italic font-weight-bold">Rent-A-CaR</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+
       <v-btn text color="primary">
         <span @click="openCodebook()">Codebook</span>
         <v-icon right>list_alt</v-icon>
@@ -25,6 +26,10 @@
       <v-btn text color="primary">
         <span @click="openCart()">Cart</span>
         <v-icon right>shopping_cart</v-icon>
+      </v-btn>
+      <v-btn text color="primary">
+        <span @click="openAddNewAddvertisment()">New Addvertisement</span>
+        <v-icon right>add</v-icon>
       </v-btn>
       <div class="mx-2">
         <LoginComponent
@@ -59,6 +64,9 @@ export default {
   methods: {
     openCart() {
       this.$router.push("/cart");
+    },
+    openAddNewAddvertisment() {
+      this.$router.push("/addNewAddvertisment");
     },
     openCodebook() {
       this.$router.push("/codebook");

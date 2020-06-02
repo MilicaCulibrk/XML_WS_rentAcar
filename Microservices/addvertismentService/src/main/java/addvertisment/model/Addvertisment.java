@@ -1,36 +1,33 @@
 package addvertisment.model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.*;
 
-//@Entity
+@Entity
 public class Addvertisment {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    //@Column(name = "addvertiser_id", nullable = false)
-    //koji user/firma ga kreira
-    private Long addvertiser_id;
-
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    /*
+        //@Column(name = "addvertiser_id", nullable = false)
+        //koji user/firma ga kreira
+        private Long addvertiser_id;
+    */
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Brand brand;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public Model model;
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public VehicleModel vehicle_model;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public TransmissionType transmission_type;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public FuelType fuel_type;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public VehicleClass vehicle_class;
-
+/*
     //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public PriceList price_list;
 
@@ -58,11 +55,13 @@ public class Addvertisment {
     //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<ReservedDate> reservedDates;
 
+*/
 
     public Addvertisment(){
         super();
     }
 
+    /*
     public Addvertisment(Long id, Long addvertiser_id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, PriceList price_list, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, List<Grade> grades, List<Comment> comments, List<ReservedDate> reservedDates) {
         this.id = id;
         this.addvertiser_id = addvertiser_id;
@@ -81,7 +80,7 @@ public class Addvertisment {
         this.comments = comments;
         this.reservedDates = reservedDates;
     }
-
+*/
     public Long getId() {
         return id;
     }
@@ -89,15 +88,15 @@ public class Addvertisment {
     public void setId(Long id) {
         this.id = id;
     }
+    /*
+        public Long getAddvertiser_id() {
+            return addvertiser_id;
+        }
 
-    public Long getAddvertiser_id() {
-        return addvertiser_id;
-    }
-
-    public void setAddvertiser_id(Long addvertiser_id) {
-        this.addvertiser_id = addvertiser_id;
-    }
-
+        public void setAddvertiser_id(Long addvertiser_id) {
+            this.addvertiser_id = addvertiser_id;
+        }
+    */
     public Brand getBrand() {
         return brand;
     }
@@ -106,12 +105,12 @@ public class Addvertisment {
         this.brand = brand;
     }
 
-    public Model getModel() {
-        return model;
+    public VehicleModel getVehicle_model() {
+        return vehicle_model;
     }
 
-    public void setModel(Model model) {
-        this.model = model;
+    public void setVehicle_model(VehicleModel model) {
+        this.vehicle_model = model;
     }
 
     public TransmissionType getTransmission_type() {
@@ -137,7 +136,7 @@ public class Addvertisment {
     public void setVehicle_class(VehicleClass vehicle_class) {
         this.vehicle_class = vehicle_class;
     }
-
+/*
     public PriceList getPrice_list() {
         return price_list;
     }
@@ -208,5 +207,6 @@ public class Addvertisment {
 
     public void setReservedDates(List<ReservedDate> reservedDates) {
         this.reservedDates = reservedDates;
-    }
+    } */
+
 }

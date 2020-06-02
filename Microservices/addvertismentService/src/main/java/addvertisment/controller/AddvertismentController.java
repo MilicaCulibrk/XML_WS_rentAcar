@@ -1,18 +1,30 @@
 package addvertisment.controller;
 
+import addvertisment.dto.AddvertismentDTO;
+import addvertisment.dto.FuelTypeDTO;
 import addvertisment.model.Addvertisment;
 import addvertisment.model.Comment;
 import addvertisment.model.Grade;
+import addvertisment.service.AddvertismentService;
+import addvertisment.service.FuelTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin
 @RestController
 @RequestMapping("/addvertisment")
 public class AddvertismentController {
 
-    @GetMapping("")
-    public ResponseEntity<?> getAllAdds()  {
-        return null;
+    @Autowired
+    private AddvertismentService addvertismentService;
+
+    @GetMapping()
+    public ResponseEntity<List<AddvertismentDTO>> getAllAddvertisments()  {
+        return new ResponseEntity<List<AddvertismentDTO>>(addvertismentService.getAllAddvertisments(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

@@ -5,7 +5,6 @@
         <v-card hover elevation="2" class="text-center ma-6">
           <div class="cardBorderColor">
             <v-card-title class="headline">Agent {{agent}}</v-card-title>
-
             <!-- cards in card-->
             <v-flex xs12 sm10 md10 lg10 v-for="car in cars" :key="car.id">
               <v-card hover elevation="2" class="text-center ma-6" v-if="car.agent==agent">
@@ -19,7 +18,7 @@
                     <v-card-actions>
                       <v-tooltip bottom color="black">
                         <template v-slot:activator="{ on }">
-                          <v-btn icon v-on="on" color="primary">
+                          <v-btn @click="deleteCar(car)" icon v-on="on" color="primary">
                             <v-icon>close</v-icon>
                           </v-btn>
                         </template>
@@ -43,84 +42,27 @@
       <v-card hover elevation="2" class="text-center ma-6">
         <div class="cardBorderColor">
           <v-card-title class="primary--text font-weight-bold headline">Summary</v-card-title>
-          <v-card-text>Total price:</v-card-text>
+          <v-card-text>Total price: {{totalPrice}}</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="primary" large="true">Order</v-btn>
+            <v-btn class="primary" >Order</v-btn>
           </v-card-actions>
         </div>
       </v-card>
     </div>
-      <div> <h1>"nestoo" {{header}}</h1>
-  </div>
+
   </v-layout>
   
 </template>
 
 <script>
-export default {
-  components: {
-    
-  },
-    props: {
-    header:{
-        type: String
-    } 
-  },
 
+export default {
   data() {
     return {
-      evo: "2",
-      cars: [
-        {
-          id: "1",
-          brand: "Mercedes",
-          model: "G500",
-          price: "100.000",
-          agent: "1"
-        },
-        {
-          id: "2",
-          brand: "Suzuki",
-          model: "Vitara",
-          price: "30.000",
-          agent: "3"
-        },
-        { id: "3", brand: "BMW", model: "X6", price: "60.000", agent: "2" },
-        {
-          id: "6",
-          brand: "VW",
-          model: "Polo Mk4",
-          price: "20.000",
-          agent: "2"
-        },
-        {
-          id: "7",
-          brand: "Mercedes",
-          model: "Maybach",
-          price: "150.000",
-          agent: "2"
-        },
-        {
-          id: "8",
-          brand: "Audi",
-          model: "A5 Coupe",
-          price: "50.000",
-          agent: "1"
-        }
-      ],
       agents: [],
-      nekiID: name,
     };
   },
-  route:{
-    data(transition){
-      transition.next({
-        name: transition.to.params.name
-      });
-    }
-  },
-
   methods: {
     getAgents() {
       this.cars.forEach(car => {
@@ -130,14 +72,23 @@ export default {
       });
       return this.agents;
     },
-        created (){
-    this.$on('changeIt', (data) => {
-      this.header = data;
-    })
-  },
+    deleteCar(car){
+      this.$store.commit('deleteCar', car);
+    },
+
   },
   mounted() {
     this.getAgents();
+  },
+  computed: {
+    cars(){
+      return this.$store.state.carsInCart;
+    },
+    totalPrice(){
+      this.$store.commit('subtotal');
+      return this.$store.state.subtotal;
+    }
+
   }
 };
 </script>

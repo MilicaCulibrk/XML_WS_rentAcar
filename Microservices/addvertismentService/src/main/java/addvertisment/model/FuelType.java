@@ -13,8 +13,8 @@ public class FuelType {
     @Column(name = "fuel_type_name", nullable = false)
     private String fuel_type_name;
 
-    //@OneToMany(mappedBy = "addvertisments", fetch = FetchType.LAZY)
-   // public List<Addvertisment> addvertisments;
+    @OneToMany(fetch = FetchType.LAZY)
+    public List<Addvertisment> addvertisments;
 
     public FuelType(){
         super();
@@ -23,7 +23,7 @@ public class FuelType {
     public FuelType(Long id, String fuel_type,List<Addvertisment> addvertisments) {
         this.id = id;
         this.fuel_type_name = fuel_type;
-        //this.addvertisments = addvertisments;
+        this.addvertisments = addvertisments;
     }
 
     public Long getId() {
@@ -42,11 +42,11 @@ public class FuelType {
         this.fuel_type_name = fuel_type_name;
     }
 
-    /*public List<Addvertisment> getAddvertisments() {
+    public List<Addvertisment> getAddvertisments() {
         return addvertisments;
     }
 
     public void setAddvertisments(List<Addvertisment> addvertisments) {
         this.addvertisments = addvertisments;
-    } */
+    }
 }

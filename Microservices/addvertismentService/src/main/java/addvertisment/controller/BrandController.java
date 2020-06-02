@@ -1,61 +1,93 @@
 package addvertisment.controller;
 
+import addvertisment.dto.BrandDTO;
+import addvertisment.dto.FuelTypeDTO;
 import addvertisment.model.Brand;
-import addvertisment.model.Comment;
-import addvertisment.model.Model;
+import addvertisment.model.VehicleModel;
+import addvertisment.service.BrandService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.ValidationException;
+import java.util.List;
+
+@CrossOrigin
 @RestController
 @RequestMapping("/brand")
 public class BrandController {
 
-    @GetMapping("")
-    public ResponseEntity<?> getAllBrands()  { return null; }
+    @Autowired
+    private BrandService brandService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getSingleBrand(@PathVariable Long id)  {
-        return null;
+    @Autowired
+    private BrandService vehicleModelService;
+
+    @GetMapping()
+    public ResponseEntity<List<BrandDTO>> getAllBrands() {
+        return new ResponseEntity<List<BrandDTO>>(brandService.getAllBrands(), HttpStatus.OK);
     }
 
-    @PostMapping("")
-    public ResponseEntity<?> createBrand (@RequestBody Brand brand)  {
-        return null;
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
+    public ResponseEntity createBrand(@RequestBody BrandDTO brandDTO) {
+
+        if (brandDTO == null || brandDTO.getBrand_name().equals("")) {
+            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            brandService.createBrand(brandDTO);
+            return new ResponseEntity<>(brandDTO, HttpStatus.OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateBrand (@RequestBody Brand brand, @PathVariable Long id) {
-        return null;
+    @PutMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity updateBrand(@RequestBody BrandDTO brandDTO) {
+
+        if (brandDTO == null || brandDTO.getBrand_name().equals("")) {
+            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        System.out.println(brandDTO.getId());
+
+        try {
+            brandService.updateBrand(brandDTO);
+            return new ResponseEntity<>(brandDTO, HttpStatus.OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+
     }
 
-    //ako se obrise brend treba da se obrisu i svi njegovi modeli
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBrand (@PathVariable Long id) {
-        return null;
-    }
+    public ResponseEntity deleteBrand(@PathVariable Long id) {
+        if (id == null) {
+            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
 
-    @GetMapping("/{brand_id}/model")
-    public ResponseEntity<?> getAllModels()  {
-        return null;
-    }
+        try {
+            boolean hasAdds = brandService.hasAdds(id);
+            boolean hasModels = vehicleModelService.hasModels(id);
 
-    @GetMapping("/{brand_id}/model/{model_id}")
-    public ResponseEntity<?> getSingleModel(@PathVariable Long id)  {
-        return null;
-    }
+            if (hasAdds){
+                return new ResponseEntity<>("Cars with this brand exist. You can not delete it!", HttpStatus.FORBIDDEN);
+            }
 
-    @PostMapping("/{brand_id}/model")
-    public ResponseEntity<?> createModel (@RequestBody Model model)  {
-        return null;
-    }
+            if (hasModels){
+                return new ResponseEntity<>("Modles of this brand exist. You can not delete it!", HttpStatus.FORBIDDEN);
+            }
 
-    @PutMapping("/{brand_id}/model/{model_id}")
-    public ResponseEntity<?> updateModel (@RequestBody Model model, @PathVariable Long id) {
-        return null;
-    }
+            brandService.deleteBrand(id);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
 
-    @DeleteMapping("/{brand_id}/model/{model_id}")
-    public ResponseEntity<?> deleteModel (@PathVariable Long id) {
-        return null;
+        return new ResponseEntity<>(id, HttpStatus.OK);
+
     }
 }

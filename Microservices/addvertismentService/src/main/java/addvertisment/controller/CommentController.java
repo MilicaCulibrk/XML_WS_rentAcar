@@ -4,7 +4,7 @@ import addvertisment.model.Comment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/addvertisment")
 public class CommentController {

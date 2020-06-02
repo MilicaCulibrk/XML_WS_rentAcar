@@ -13,8 +13,8 @@ public class VehicleClass {
     @Column(name = "vehicle_class_name", nullable = false)
     private String vehicle_class_name;
 
-    //@OneToMany(mappedBy = "addvertisments", fetch = FetchType.LAZY)
-    //public List<Addvertisment> addvertisments;
+    @OneToMany(fetch = FetchType.LAZY)
+    public List<Addvertisment> addvertisments;
 
     public VehicleClass(){
         super();
@@ -23,7 +23,7 @@ public class VehicleClass {
     public VehicleClass(Long id, String vehicle_class, List<Addvertisment> addvertisments) {
         this.id = id;
         this.vehicle_class_name = vehicle_class;
-        //this.addvertisments = addvertisments;
+        this.addvertisments = addvertisments;
     }
 
     public Long getId() {
@@ -42,11 +42,11 @@ public class VehicleClass {
         this.vehicle_class_name = vehicle_class_name;
     }
 
-    /*public List<Addvertisment> getAddvertisments() {
+    public List<Addvertisment> getAddvertisments() {
         return addvertisments;
     }
 
     public void setAddvertisments(List<Addvertisment> addvertisments) {
         this.addvertisments = addvertisments;
-    } */
+    }
 }

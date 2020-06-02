@@ -41,7 +41,7 @@
                 <PopupComments />
                 <v-tooltip bottom color="black">
                   <template v-slot:activator="{ on }">
-                    <v-btn @click="addToBasket()" icon v-on="on" color="primary">
+                    <v-btn @click="addToBasket(car)" icon v-on="on" color="primary">
                       <router-link :to="{ name: 'add', params: {name: car.id}}"></router-link>
                       <v-icon>shopping_cart</v-icon>
                     </v-btn>
@@ -98,13 +98,9 @@ export default {
         );
       }
     },
-    addToBasket() {
-      this.$router.push("/cart");
+    addToBasket(car){
+      this.$store.commit('addCarInCart', car);
     },
-    changeHeader() {
-      this.header = "changed header";
-      this.$emit("changeIt", "changed header");
-    }
   }
 };
 </script>
