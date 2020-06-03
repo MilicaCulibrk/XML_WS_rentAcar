@@ -61,8 +61,6 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody AuthenticationDTO authenticationDTO, HttpServletResponse response) throws AuthenticationException {
         System.out.println("uslo u login controler");
-        User userr= this.userRepository.findByEmail(authenticationDTO.getEmail());
-        System.out.println("pogeldaj me boze" + userr.getName());
         Authentication authentication = null;
         try {
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationDTO.getEmail(), authenticationDTO.getPassword()));

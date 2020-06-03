@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
-@RequestMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RegisterController {
     @Autowired
     private UserService userService;
     
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity register (@RequestBody UserDTO userDTO)  {
         if (userDTO.getEmail().equals("")) {
             return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
