@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @CrossOrigin
@@ -34,8 +35,12 @@ public class AddvertismentController {
 
     //kad se kreira oglas treba da se kreira i nova klasa pretraga
     @PostMapping("")
-    public ResponseEntity<?> createAdd (@RequestBody Addvertisment addvertisment)  {
-        return null;
+    public ResponseEntity<?> createAdd (@RequestBody AddvertismentDTO addvertismentDTO)  {
+
+
+           Addvertisment addvertisment = addvertismentService.createAddvertisment(addvertismentDTO );
+            return new ResponseEntity<>(addvertisment, HttpStatus.OK);
+
     }
 
     //kad se modifikuje oglas treba da se modifikuje i pretraga
