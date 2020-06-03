@@ -14,6 +14,7 @@ public class TransmissionType {
     private String transmission_type_name;
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "transmission_type_id")
     public List<Addvertisment> addvertisments;
 
     public TransmissionType(){

@@ -1,3 +1,4 @@
+
 INSERT INTO public.brand(brand_name)
 VALUES ('Mercedes');
 INSERT INTO public.brand(brand_name)
