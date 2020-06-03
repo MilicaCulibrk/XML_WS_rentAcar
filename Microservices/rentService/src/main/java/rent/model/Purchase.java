@@ -1,36 +1,42 @@
 package rent.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
-//@Entity
-public class Order {
+@Entity
+public class Purchase {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "id_user", nullable = false)
+    @Column(name = "id_user",  nullable = false)
     private Long id_user;
 
-    //@Column(name = "id_add", nullable = false)
+    @Column(name = "id_add", nullable = false)
     private Long id_add;
 
-    //@Column(name = "ordered", nullable = false)
+    @Column(name = "id_ovner")
+    private Long id_ovner;
+
+    @Column(name = "ordered",  nullable = false)
     private Boolean ordered;
 
-    //@Column(name = "date_from", nullable = false)
-    private Date date_from;
+    @Column(name = "date_from",  nullable = false)
+    private String date_from;
 
-    //@Column(name = "date_to", nullable = false)
-    private Date date_to;
+    @Column(name = "date_to",  nullable = false)
+    private String date_to;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "request")
     public Request request;
 
-    public Order() {
+
+    public Purchase() {
     }
 
-    public Order(Long id, Long id_user, Long id_add, Boolean ordered, Date date_from, Date date_to, Request request) {
+  /*  public Order(Long id, Long id_user, Long id_add, Boolean ordered, Date date_from, Date date_to, Request request) {
         this.id = id;
         this.id_user = id_user;
         this.id_add = id_add;
@@ -38,7 +44,7 @@ public class Order {
         this.date_from = date_from;
         this.date_to = date_to;
         this.request = request;
-    }
+    }*/
 
     public Long getId() {
         return id;
@@ -72,19 +78,19 @@ public class Order {
         this.ordered = ordered;
     }
 
-    public Date getDate_from() {
+    public String getDate_from() {
         return date_from;
     }
 
-    public void setDate_from(Date date_from) {
+    public void setDate_from(String date_from) {
         this.date_from = date_from;
     }
 
-    public Date getDate_to() {
+    public String getDate_to() {
         return date_to;
     }
 
-    public void setDate_to(Date date_to) {
+    public void setDate_to(String date_to) {
         this.date_to = date_to;
     }
 
@@ -94,5 +100,13 @@ public class Order {
 
     public void setRequest(Request request) {
         this.request = request;
+    }
+
+    public Long getId_ovner() {
+        return id_ovner;
+    }
+
+    public void setId_ovner(Long id_ovner) {
+        this.id_ovner = id_ovner;
     }
 }

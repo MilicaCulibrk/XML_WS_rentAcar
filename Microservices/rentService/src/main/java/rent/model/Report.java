@@ -12,5 +12,5 @@ public class Report {
     private float comment;
 
     //join table
-    private Order order;
+    private Purchase purchase;
 }

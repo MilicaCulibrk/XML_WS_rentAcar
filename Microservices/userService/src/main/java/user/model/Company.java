@@ -1,31 +1,43 @@
 package user.model;
 
-//@Entity
-public class Company {
+import java.util.Collection;
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+
+@Entity(name="company")
+public class Company implements UserDetails{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    //@Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    //@Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    //@Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false)
     private String address;
 
-    //@Column(name = "city", nullable = false)
+    @Column(name = "city", nullable = false)
     private String city;
 
-    //@Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number", nullable = false)
     private String phone_number;
 
-    //@Column(name = "company_number", nullable = false)
+    @Column(name = "company_number", nullable = false)
     private String company_number;
 
     public Company(){
@@ -67,7 +79,7 @@ public class Company {
     public void setEmail(String email) {
         this.email = email;
     }
-
+@Override
     public String getPassword() {
         return password;
     }
@@ -107,6 +119,48 @@ public class Company {
     public void setCompany_number(String company_number) {
         this.company_number = company_number;
     }
+
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.email;
+	}
+
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
 
 }

@@ -15,6 +15,7 @@ public class VehicleModel {
 
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_model_id")
     public List<Addvertisment> addvertisments;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)

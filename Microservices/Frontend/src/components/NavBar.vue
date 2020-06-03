@@ -19,27 +19,33 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn text color="primary">
+      <v-btn text color="primary"  v-if="(this.$store.state.user.role)=='ADMINISTRATOR'">
         <span @click="openCodebook()">Codebook</span>
         <v-icon right>list_alt</v-icon>
       </v-btn>
-      <v-btn text color="primary">
+      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
         <span @click="openCart()">Cart</span>
         <v-icon right>shopping_cart</v-icon>
       </v-btn>
-      <v-btn text color="primary">
+      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
         <span @click="openAddNewAddvertisment()">New Addvertisement</span>
         <v-icon right>add</v-icon>
       </v-btn>
-      <div class="mx-2">
-        <LoginComponent
+      <div class="mx-2" >
+        <LoginComponent 
           @loggedIn="snackbarSuccess = true; snackbarSuccessText='You are logged in!'"
           @notLoggedIn="snackbarDanger = true; snackbarDangerText='Can not log in. There is no such user!'"
         />
       </div>
-      <div class="mx-2">
-        <RegistrationComponent />
+      <div class="mx-2" >
+        <span  >
+        <RegistrationComponent  />
+        </span>
       </div>
+      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
+        <span @click="logout()">Logout</span>
+        <v-icon right>logout</v-icon>
+      </v-btn>
     </v-toolbar>
   </nav>
 </template>
@@ -47,7 +53,7 @@
 <script>
 import LoginComponent from "@/components/homePage/LoginComponent.vue";
 import RegistrationComponent from "@/components/homePage/RegistrationComponent.vue";
-
+//import AppVue from "../App.vue";
 export default {
   components: {
     LoginComponent,
@@ -70,6 +76,14 @@ export default {
     },
     openCodebook() {
       this.$router.push("/codebook");
+    },
+    logout(){
+      localStorage.removeItem("loggedUser");
+      this.$store.state.user = {};
+      this.$store.state.user.role = "NONE";
+      this.$store.state.loggedUser = false;
+      alert("You are logged out!");
+      this.$router.push("/");
     }
   }
 };

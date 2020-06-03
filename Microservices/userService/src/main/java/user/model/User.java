@@ -1,19 +1,88 @@
 package user.model;
 
-public class User {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import user.dto.UserDTO;
+
+import java.util.Collection;
+
+import javax.persistence.*;
+
+@Entity(name="user_entity")
+public class User implements UserDetails{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(name = "name", nullable = false)
     private String name;
+    
+    @Column(name = "surname", nullable = true)
     private String surname;
+    
+    @Column(name = "email", nullable = true)
     private String email;
-    private String password;
-    private String address;
-    private String city;
-    private String phone_number;
+    
+    @Column(name = "password", nullable = true)
+        private String password;
+    
+    @Column(name = "address", nullable = true)
+        private String address;
+    
+    @Column(name = "city", nullable = true)
+        private String city;
+    
+    @Column(name = "phone_number", nullable = true)
+       private String phone_number;
+    
     //max number of published ads is 3
-    private int number_of_addvertisment;
+    @Column(name = "number_of_addvertisment", nullable = true)
+        private int number_of_addvertisment;
 
-    public Long getId() {
+    
+    
+    public User(Long id, String name, String surname, String email, String password, String address, String city,
+			String phone_number, int number_of_addvertisment) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.password = password;
+		this.address = address;
+		this.city = city;
+		this.phone_number = phone_number;
+		this.number_of_addvertisment = number_of_addvertisment;
+	}
+    
+    public User(UserDTO user) {
+		super();
+		this.name = user.getName();
+		this.surname = user.getSurname();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.address = user.getAddress();
+		this.city = user.getCity();
+		this.phone_number = user.getPhone_number();
+	}
+
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -45,9 +114,9 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
+/*    public String getPassword() {
         return password;
-    }
+    }*/
 
     public void setPassword(String password) {
         this.password = password;
@@ -84,4 +153,46 @@ public class User {
     public void setCity(String city) {
         this.city = city;
     }
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return this.password;
+	}
 }

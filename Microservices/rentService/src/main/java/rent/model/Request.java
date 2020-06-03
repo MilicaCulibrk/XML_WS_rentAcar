@@ -1,24 +1,36 @@
 package rent.model;
 
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
+
+import javax.persistence.Entity;
 import java.util.List;
 
+@Entity(name="request")
 public class Request {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false)
     private String status;
 
-    //@OneToMany(mappedBy = "order_list", fetch = FetchType.LAZY)
-    public List<Order> orderList;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
+    public List<Purchase> purchaseList;
 
-    public Request(Long id, String status, List<Order> orderList) {
-        this.id = id;
-        this.status = status;
-        this.orderList = orderList;
+    public Request() {
     }
+
+    /*   public Request(Long id, String status, List<Order> orderList) {
+            this.id = id;
+            this.status = status;
+            this.orderList = orderList;
+        }
+    */
 
     public Long getId() {
         return id;
@@ -36,11 +48,11 @@ public class Request {
         this.status = status;
     }
 
-    public List<Order> getOrderList() {
-        return orderList;
+    public List<Purchase> getPurchaseList() {
+        return purchaseList;
     }
 
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
+    public void setPurchaseList(List<Purchase> purchaseList) {
+        this.purchaseList = purchaseList;
     }
 }
