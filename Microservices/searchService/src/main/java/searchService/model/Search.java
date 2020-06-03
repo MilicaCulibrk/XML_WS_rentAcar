@@ -30,6 +30,9 @@ public class Search {
     @Column(name = "mileage", nullable = false)
     private float mileage;
 
+    @Column(name = "mileage_limit", nullable = false)
+    private float mileage_limit;
+
     @Column(name = "cdw", nullable = false)
     private boolean cdw;
 
@@ -50,21 +53,7 @@ public class Search {
     }
 
 
-    public Search(Long id, Brands brand, VehicleModels vehicleModel, TransmissionTypes transmission_type, FuelTypes fuel_type, VehicleClasses vehicle_class, float daily_price, float mileage, boolean cdw, int child_seats, String location) {
-        this.id = id;
-        this.brand = brand;
-        this.vehicleModel = vehicleModel;
-        this.transmission_type = transmission_type;
-        this.fuel_type = fuel_type;
-        this.vehicle_class = vehicle_class;
-        this.daily_price = daily_price;
-        this.mileage = mileage;
-        this.cdw = cdw;
-        this.child_seats = child_seats;
-        this.location = location;
-        //this.date_from = date_from;
-        //this.date_to = date_to;
-    }
+
 
     public Long getId() {
         return id;
@@ -152,6 +141,14 @@ public class Search {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public float getMileage_limit() {
+        return mileage_limit;
+    }
+
+    public void setMileage_limit(float mileage_limit) {
+        this.mileage_limit = mileage_limit;
     }
 
     /*public Date getDate_from() {
