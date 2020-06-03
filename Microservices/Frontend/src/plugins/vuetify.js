@@ -12,8 +12,8 @@ const vuetify = new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: "#FBC02D", //svetlo narandzasta
-        secondary: "#F5F5F5", //svetlo siva
+        primary: "#FBC02D", //zuta
+        secondary: "#FFF9C4", //svetlo zuta
         success: "#A5D6A7", //svetlo zelena
         danger: "#EF9A9A", //svetlo crvena
       },
