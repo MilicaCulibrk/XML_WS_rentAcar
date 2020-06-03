@@ -42,7 +42,5 @@ VALUES ('automatic');
 INSERT INTO public.transmission_type(transmission_type_name)
 VALUES ('semi-automatic');
 
-INSERT INTO public.addvertisment(fuel_type_id, brand_id, vehicle_model_id, vehicle_class_id, transmission_type_id)
-VALUES ('1', '1', '1', '1', '1');
 
 

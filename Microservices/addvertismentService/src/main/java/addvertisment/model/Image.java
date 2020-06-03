@@ -1,33 +1,19 @@
 package addvertisment.model;
 
-import java.util.Date;
 import javax.persistence.*;
 
-@Entity(name="reserved_date")
-public class ReservedDate {
-
+@Entity(name="image")
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "oneDate", nullable = false)
-    private String oneDate;
-
+    @Column(name = "url", nullable = false)
+    private String url;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name="addvertisment")
     public Addvertisment addvertisment;
-
-    public ReservedDate(){
-        super();
-    }
-
-
-    public ReservedDate(Long id, String oneDate, Addvertisment addvertisment) {
-        this.id = id;
-        this.oneDate = oneDate;
-        this.addvertisment = addvertisment;
-    }
 
     public Long getId() {
         return id;
@@ -37,12 +23,12 @@ public class ReservedDate {
         this.id = id;
     }
 
-    public String getOneDate() {
-        return oneDate;
+    public String getUrl() {
+        return url;
     }
 
-    public void setOneDate(String oneDate) {
-        this.oneDate = oneDate;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Addvertisment getAddvertisment() {
@@ -50,6 +36,16 @@ public class ReservedDate {
     }
 
     public void setAddvertisment(Addvertisment addvertisment) {
+        this.addvertisment = addvertisment;
+    }
+
+    public Image(){
+        super();
+    }
+
+    public Image(Long id, String url, Addvertisment addvertisment) {
+        this.id = id;
+        this.url = url;
         this.addvertisment = addvertisment;
     }
 }
