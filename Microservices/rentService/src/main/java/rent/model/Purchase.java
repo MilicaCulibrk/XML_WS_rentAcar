@@ -2,7 +2,7 @@ package rent.model;
 
 import javax.persistence.*;
 import java.util.Date;
-
+//bad glupi
 @Entity
 public class Purchase {
 
