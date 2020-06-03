@@ -1,30 +1,39 @@
 package user.model;
 
-//@Entity
-public class Administrator {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+import java.util.Collection;
+
+import javax.persistence.*;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+
+@Entity(name="administrator")
+public class Administrator implements UserDetails{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    //@Column(name = "surname", nullable = false)
+    @Column(name = "surname", nullable = false)
     private String surname;
 
-    //@Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    //@Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    //@Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false)
     private String address;
 
-    //@Column(name = "city", nullable = false)
+    @Column(name = "city", nullable = false)
     private String city;
 
-    //@Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number", nullable = false)
     private String phone_number;
 
     public Administrator(){
@@ -74,7 +83,7 @@ public class Administrator {
     public void setEmail(String email) {
         this.email = email;
     }
-
+@Override
     public String getPassword() {
         return password;
     }
@@ -106,4 +115,46 @@ public class Administrator {
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
     }
+
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.email;
+	}
+
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

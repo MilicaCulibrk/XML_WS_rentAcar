@@ -5,6 +5,10 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
+    user:{
+      role: "NONE"
+    },
+    loggedUser: false,
     cars: [
       { id: "1", brand: "Mercedes", model: "G500", price: "100.000", agent: "1"},
       { id: "2", brand: "Suzuki", model: "Vitara", price: "30.000", agent: "1" },
