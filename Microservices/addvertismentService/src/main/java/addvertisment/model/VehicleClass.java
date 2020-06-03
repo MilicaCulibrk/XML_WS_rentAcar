@@ -14,6 +14,7 @@ public class VehicleClass {
     private String vehicle_class_name;
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_class_id")
     public List<Addvertisment> addvertisments;
 
     public VehicleClass(){

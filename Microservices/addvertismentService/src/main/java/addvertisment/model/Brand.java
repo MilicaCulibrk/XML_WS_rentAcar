@@ -14,9 +14,11 @@ public class Brand {
     private String brand_name;
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
     public List<Addvertisment> addvertisments;
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
     public List<VehicleModel> vehicleModels;
 
     public Brand(){

@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/search")
-public class SearchController {
+@RequestMapping("/fuel_types")
+public class FuelTypesController {
 }
