@@ -25,6 +25,9 @@ public class Company implements UserDetails{
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "username", nullable = false)
+    private String username;
+    
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -45,11 +48,12 @@ public class Company implements UserDetails{
     }
 
 
-    public Company(Long id, String name, String email, String password, String address, String city, String phone_number, String company_number) {
+    public Company(Long id, String name, String email, String username, String password, String address, String city, String phone_number, String company_number) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.username = username;
         this.address = address;
         this.city = city;
         this.phone_number = phone_number;
@@ -121,6 +125,11 @@ public class Company implements UserDetails{
     }
 
 
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
@@ -131,7 +140,7 @@ public class Company implements UserDetails{
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return this.email;
+		return this.username;
 	}
 
 

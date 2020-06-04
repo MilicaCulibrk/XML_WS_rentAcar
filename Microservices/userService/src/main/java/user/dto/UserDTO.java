@@ -10,7 +10,8 @@ public class UserDTO {
     private String name;
     
     private String surname;
-    
+    private String username;
+
     private String email;
     
         private String password;
@@ -26,6 +27,8 @@ public class UserDTO {
 		super();
 		this.name = name;
 		this.surname = surname;
+		this.username = username;
+
 		this.email = email;
 		this.password = password;
 		this.address = address;
@@ -92,6 +95,14 @@ public class UserDTO {
 
 	public void setPhone_number(String phone_number) {
 		this.phone_number = phone_number;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
        
        

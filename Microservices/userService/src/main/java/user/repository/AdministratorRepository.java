@@ -5,6 +5,6 @@ import user.model.Administrator;
 
 public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
 
-	boolean existsByEmail(String email);
-	Administrator findByEmail(String email);
+	boolean existsByUsername(String username);
+	Administrator findByUsername(String username);
 }

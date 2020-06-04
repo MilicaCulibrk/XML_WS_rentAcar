@@ -44,17 +44,17 @@ public class AuthFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
 
-        if (request.getHeader("email") == null) {
+        if (request.getHeader("username") == null) {
             return null;
         };
 
-        String email = request.getHeader("email");
-        System.out.println("Samo za perendiju header: " + email);
+        String username = request.getHeader("username");
+        System.out.println("Samo za perendiju header: " + username);
         try {
 
-            ctx.addZuulRequestHeader("username", email);
-            ctx.addZuulRequestHeader("role", authClient.verify(email));
-            System.out.println(authClient.verify(email));
+            ctx.addZuulRequestHeader("username", username);
+            ctx.addZuulRequestHeader("role", authClient.verify(username));
+            System.out.println(authClient.verify(username));
         } catch (FeignException.NotFound e) {
             setFailedRequest("Consumer does not exist!", 403);
         }

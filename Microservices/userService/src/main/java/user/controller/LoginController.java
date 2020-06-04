@@ -63,7 +63,7 @@ public class LoginController {
         System.out.println("uslo u login controler");
         Authentication authentication = null;
         try {
-			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationDTO.getEmail(), authenticationDTO.getPassword()));
+			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationDTO.getUsername(), authenticationDTO.getPassword()));
 		} catch (Exception e) {
 			// TODO: handle exception
 	      	return new ResponseEntity<>("loseeee", HttpStatus.BAD_REQUEST);
@@ -74,25 +74,25 @@ public class LoginController {
         Object nekiKorisnik = authentication.getPrincipal();
         System.out.println(nekiKorisnik);
         System.out.println("Verification invoked! - login");
-        String email = authenticationDTO.getEmail();
+        String username = authenticationDTO.getUsername();
         String password = authenticationDTO.getPassword();
         String role = null;
         try {
-			if(this.userService.verifyL(email)) {
+			if(this.userService.verify(username)) {
 				User user = (User) nekiKorisnik;
 				authenticationDTO.setId(user.getId());
 				authenticationDTO.setRole("USER");
 				//role="USER";
 		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
-			} else if(this.administratorService.verifyL(email)) {
+			} else if(this.administratorService.verify(username)) {
 				Administrator admin = (Administrator) nekiKorisnik;
 				authenticationDTO.setId(admin.getId());
 				authenticationDTO.setRole("ADMINISTRATOR");
 				role="ADMINISTRATOR";
 		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
-			} else if(this.companyService.verifyL(email)) {
+			} else if(this.companyService.verify(username)) {
 				Company company = (Company) nekiKorisnik;
 				authenticationDTO.setId(company.getId());
 				authenticationDTO.setRole("COMPANY");
@@ -108,15 +108,15 @@ public class LoginController {
 
     }
 	
-	@RequestMapping(value = "/verify/{email}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<?> verify(@PathVariable("email") String email) throws NotFoundException {
+	@RequestMapping(value = "/verify/{username}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> verify(@PathVariable("username") String username) throws NotFoundException {
         System.out.println("Verification invoked-verify!");
         String role = null;
-        if(this.userService.verifyL(email)) {
+        if(this.userService.verify(username)) {
         	role="USER";
-        } else if(this.administratorService.verifyL(email)) {
+        } else if(this.administratorService.verify(username)) {
         	role="ADMINISTRATOR";
-        } else if(this.companyService.verifyL(email)) {
+        } else if(this.companyService.verify(username)) {
         	role="COMPANY";
         }
       	return new ResponseEntity<>(role, HttpStatus.OK);

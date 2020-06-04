@@ -20,7 +20,8 @@ public class Administrator implements UserDetails{
 
     @Column(name = "surname", nullable = false)
     private String surname;
-
+    @Column(name = "username", nullable = false)
+    private String username;
     @Column(name = "email", nullable = false)
     private String email;
 
@@ -46,6 +47,7 @@ public class Administrator implements UserDetails{
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.username = username;
         this.password = password;
         this.address = address;
         this.city = city;
@@ -75,7 +77,9 @@ public class Administrator implements UserDetails{
     public void setSurname(String surname) {
         this.surname = surname;
     }
-
+	public void setUsername(String username) {
+		this.username = username;
+	}
     public String getEmail() {
         return email;
     }
@@ -127,7 +131,7 @@ public class Administrator implements UserDetails{
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return this.email;
+		return this.username;
 	}
 
 

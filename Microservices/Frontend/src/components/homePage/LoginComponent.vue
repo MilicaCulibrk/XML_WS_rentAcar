@@ -17,7 +17,7 @@
               <v-text-field
                 label="Username*"
                 color="black"
-                v-model="user.email"
+                v-model="user.username"
                 required
                 :rules="emailRules"
               ></v-text-field>
@@ -50,7 +50,7 @@ export default {
     LoginDialog: false,
     passwordRules: [v => !!v || "Password is required"],
     user:{
-      email: "",
+      username: "",
       password: "",
     },
 
@@ -62,7 +62,7 @@ export default {
   methods: {
     login() {
       if (this.$refs.form.validate()) {
-        console.log(this.user.password + " " + this.user.email);
+        console.log(this.user.password + " " + this.user.username);
         axios
         .post("/user-service/login", this.user)
         .then(response => {      

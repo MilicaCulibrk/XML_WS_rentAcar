@@ -29,6 +29,13 @@
                 :rules="requiredRules"
               ></v-text-field>
               <v-text-field
+                label="Username*"
+                color="black"
+                v-model="user.username"
+                required
+                :rules="requiredRules"
+              ></v-text-field>
+              <v-text-field
                 label="Phone number*"
                 color="black"
                 v-model="user.phone_number"
@@ -95,6 +102,7 @@ export default {
     user: {
       name: "",
       surname: "",
+      username: "",
       phone_number: "",
       adrress: "",
       city: "",
@@ -121,15 +129,16 @@ export default {
   methods: {
     register() {
       if (this.$refs.form.validate()) {
-        console.log(this.user.email);
        axios
         .post("/user-service/register", this.user)
         .then(response => {      
             this.$emit("registered");
+            this.RegisterDialog = false;
+            this.$refs.form.reset();
             console.log(response.data)         
             }) 
         .catch(error => {
-            console.log(error)
+            console.log(error);
             this.$emit("notRegistered");
         })        
       } else {

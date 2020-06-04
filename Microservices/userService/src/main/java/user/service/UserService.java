@@ -21,15 +21,9 @@ public class UserService {
     private UserRepository userRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-    public boolean verify(String email) throws NotFoundException {
-        if (!this.userRepository.existsById(Long.parseLong(email))) {
-            return false;
-        }
 
-        return true;
-    }
-    public boolean verifyL(String email) throws NotFoundException {
-        if (!this.userRepository.existsByEmail(email)) {
+    public boolean verify(String username) throws NotFoundException {
+        if (!this.userRepository.existsByUsername(username)) {
             return false;
         }
         return true;
@@ -40,14 +34,15 @@ public class UserService {
 		// TODO Auto-generated method stub
         List<User> userList = userRepository.findAll();
         for(User u: userList){
-            if(u.getEmail().equals(userDTO.getEmail())){
-                throw new ValidationException("User with this email already exists!");
+            if(u.getUsername().equals(userDTO.getUsername())){
+                throw new ValidationException("User with this username already exists!");
             }
         }
 
         User user = new User(userDTO);
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setNumber_of_addvertisment(0);
+        user.setActive(true);
         userRepository.save(user);
 	}
 	

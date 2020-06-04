@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient(name = "user-service")
 public interface AuthClient {
 
-	@RequestMapping(value = "verify/{email}", method = RequestMethod.GET, produces = "application/json")
-    String verify(@PathVariable("email") String email);
+	@RequestMapping(value = "verify/{username}", method = RequestMethod.GET, produces = "application/json")
+    String verify(@PathVariable("username") String username);
 
 }

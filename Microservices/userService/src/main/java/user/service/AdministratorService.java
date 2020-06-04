@@ -12,18 +12,12 @@ public class AdministratorService {
     @Autowired
     private AdministratorRepository administratorRepository;
     
-    public boolean verify(String email) throws NotFoundException {
-        if (!this.administratorRepository.existsById(Long.parseLong(email))) {
+    public boolean verify(String username) throws NotFoundException {
+        if (!this.administratorRepository.existsByUsername(username)) {
             return false;
         }
         return true;
 
     }
-    public boolean verifyL(String email) throws NotFoundException {
-        if (!this.administratorRepository.existsByEmail(email)) {
-            return false;
-        }
-        return true;
 
-    }
 }

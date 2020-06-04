@@ -30,7 +30,7 @@
         <span >Cart</span>
         <v-icon right>shopping_cart</v-icon>
       </v-btn>
-      <v-btn text color="primary" @click="openAddNewAddvertisment()" v-if="(this.$store.state.user.role)=='USER'&& (this.$store.state.user.role)=='COMPANY'">
+      <v-btn text color="primary" @click="openAddNewAddvertisment()" v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'">
         <span >New Addvertisement</span>
         <v-icon right>add</v-icon>
       </v-btn>

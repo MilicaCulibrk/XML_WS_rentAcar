@@ -31,14 +31,14 @@ public class CustomUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		User user = userRepository.findByEmail(username);
-		Company c = companyRepository.findByEmail(username);
-		Administrator admin = administratorRepository.findByEmail(username);
+		User user = userRepository.findByUsername(username);
+		Company company = companyRepository.findByUsername(username);
+		Administrator admin = administratorRepository.findByUsername(username);
 		
 		if(user!= null) {
 			return user;
-		} else if(c!= null) {
-			return c;
+		} else if(company!= null) {
+			return company;
 		} else if(admin!= null) {
 			return admin;
 		} else

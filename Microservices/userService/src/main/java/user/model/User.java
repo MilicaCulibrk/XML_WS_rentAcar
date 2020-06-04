@@ -30,10 +30,12 @@ public class User implements UserDetails{
     
     @Column(name = "surname", nullable = true)
     private String surname;
-    
+    @Column(name = "username", nullable = false)
+    private String username;
     @Column(name = "email", nullable = true)
     private String email;
-    
+    @Column(name = "active", nullable = true)
+    private boolean active;
     @Column(name = "password", nullable = true)
         private String password;
     
@@ -53,23 +55,26 @@ public class User implements UserDetails{
     
     
     public User(Long id, String name, String surname, String email, String password, String address, String city,
-			String phone_number, int number_of_addvertisment) {
+			String phone_number, int number_of_addvertisment, boolean active) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
-		this.email = email;
+        this.username = username;
+        this.email = email;
 		this.password = password;
 		this.address = address;
 		this.city = city;
 		this.phone_number = phone_number;
 		this.number_of_addvertisment = number_of_addvertisment;
+		this.active = active;
 	}
     
     public User(UserDTO user) {
 		super();
 		this.name = user.getName();
 		this.surname = user.getSurname();
+		this.username = user.getUsername();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.address = user.getAddress();
@@ -81,7 +86,18 @@ public class User implements UserDetails{
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public boolean isActive() {
+		return active;
+	}
 
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public Long getId() {
         return id;
     }
@@ -163,7 +179,7 @@ public class User implements UserDetails{
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return this.email;
+		return this.username;
 	}
 
 	@Override
