@@ -23,7 +23,6 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String role = httpRequest.getHeader("role");
         String username = httpRequest.getHeader("username");
-        String password = httpRequest.getHeader("password");
 
         if (role != null) {
             Set<SimpleGrantedAuthority> authorities = new HashSet<>();
@@ -33,7 +32,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
                 authorities.add(new SimpleGrantedAuthority(token));
             }
 
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, password, authorities);
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
             auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
             SecurityContextHolder.getContext().setAuthentication(auth);
         }

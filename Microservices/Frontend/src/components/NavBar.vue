@@ -13,22 +13,25 @@
 
     <!-- gornji toolbar -->
     <v-toolbar flat class="mx-12" height="50">
-      <v-toolbar-title>
+      <v-toolbar-title @click="openHomePage()">
         <v-icon left large color="primary">directions_car</v-icon>
         <span class="font-italic font-weight-bold">Rent-A-CaR</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-btn text color="primary"  v-if="(this.$store.state.user.role)=='ADMINISTRATOR'">
-        <span @click="openCodebook()">Codebook</span>
+      <v-btn text color="primary" @click="openUsers()" v-if="(this.$store.state.user.role)=='ADMINISTRATOR'">
+        <span >Users</span>
+        <v-icon right>person_pin</v-icon>
+      </v-btn>
+      <v-btn text color="primary" @click="openCodebook()" v-if="(this.$store.state.user.role)=='ADMINISTRATOR'">
+        <span >Codebook</span>
         <v-icon right>list_alt</v-icon>
       </v-btn>
-      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
-        <span @click="openCart()">Cart</span>
+      <v-btn text color="primary" @click="openCart()" v-if="(this.$store.state.user.role)=='USER'">
+        <span >Cart</span>
         <v-icon right>shopping_cart</v-icon>
       </v-btn>
-      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
-        <span @click="openAddNewAddvertisment()">New Addvertisement</span>
+      <v-btn text color="primary" @click="openAddNewAddvertisment()" v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'">
+        <span >New Addvertisement</span>
         <v-icon right>add</v-icon>
       </v-btn>
       <div class="mx-2" >
@@ -38,9 +41,10 @@
         />
       </div>
       <div class="mx-2" >
-        <span  >
-        <RegistrationComponent  />
-        </span>
+        <RegistrationComponent 
+          @registered="snackbarSuccess = true; snackbarSuccessText='You are registered! Please login.'"
+          @notRegistered="snackbarDanger = true; snackbarDangerText='Can not register.'"
+        />
       </div>
       <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
         <span @click="logout()">Logout</span>
@@ -53,7 +57,6 @@
 <script>
 import LoginComponent from "@/components/homePage/LoginComponent.vue";
 import RegistrationComponent from "@/components/homePage/RegistrationComponent.vue";
-//import AppVue from "../App.vue";
 export default {
   components: {
     LoginComponent,
@@ -68,6 +71,12 @@ export default {
     };
   },
   methods: {
+    openHomePage() {
+      this.$router.push("/");
+    },
+    openUsers() {
+      this.$router.push("/admin");
+    },
     openCart() {
       this.$router.push("/cart");
     },
@@ -82,7 +91,8 @@ export default {
       this.$store.state.user = {};
       this.$store.state.user.role = "NONE";
       this.$store.state.loggedUser = false;
-      alert("You are logged out!");
+      this.snackbarSuccess = true;
+      this.snackbarSuccessText = "You are logged out";
       this.$router.push("/");
     }
   }

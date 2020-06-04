@@ -5,9 +5,10 @@ import { store } from "./store/index";
 import axios from "axios";
 import vuetify from "./plugins/vuetify";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
+import interceptorsSetup from './interceptors'
 
 axios.defaults.baseURL = "http://localhost:8662";
-
+interceptorsSetup()
 Vue.config.productionTip = false;
 
 new Vue({

@@ -12,10 +12,11 @@ public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
     
-    public boolean verify(String email) throws NotFoundException {
-        if (!this.companyRepository.existsByEmail(email)) {
+    public boolean verify(String username) throws NotFoundException {
+        if (!this.companyRepository.existsByUsername(username)) {
             return false;
         }
         return true;
+
     }
 }

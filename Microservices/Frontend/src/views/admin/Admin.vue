@@ -60,54 +60,32 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       users: [
-        {
-          id: "1",
-          name: "Milica",
-          surname: "Culibrk",
-          email: "mc@gmail.com",
-          active: true
-        },
-        {
-          id: "2",
-          name: "Masa",
-          surname: "Matovic",
-          email: "mm@gmail.com",
-          active: true
-        },
-        {
-          id: "3",
-          name: "Ana",
-          surname: "Nikolasevic",
-          email: "an@gmail.com",
-          active: false
-        },
-        {
-          id: "4",
-          name: "Stasa",
-          surname: "Skoric",
-          email: "ss@gmail.com",
-          active: true
-        },
-        {
-          id: "5",
-          name: "Stevan",
-          surname: "Matovic",
-          email: "sm@gmail.com",
-          active: false
-        },
-        {
-          id: "6",
-          name: "Milos",
-          surname: "Skoric",
-          email: "ms@gmail.com",
-          active: false
-        }
       ]
     };
+  },
+   methods: {
+    getUsers(){
+      axios
+        .get("/user-service/user/nes")
+        .then(response => {      
+              this.users = response.data;
+              console.log(response);
+                            console.log(response.data);
+
+            }) 
+        .catch(error => {
+            console.log(error)
+        })
+    }
+  },
+  mounted(){
+    this.getUsers();
   }
 };
 </script>
