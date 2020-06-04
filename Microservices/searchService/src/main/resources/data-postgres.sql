@@ -127,7 +127,7 @@ VALUES ('semi-automatic');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
 VALUES ('true', '2', '2000', 'Beograd', '200.000', '100', '3', '1', '1', '1', '1');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '1', '3000', 'Novi Sad', '211.000', '70', '1', '2', '3', '18', '5');
+VALUES ('true', '1', '3000', 'Novi Sad', '211.000', '0', '1', '2', '3', '18', '5');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
 VALUES ('false', '2', '1500', 'Sombor', '300.000', '90', '7', '2', '2', '11', '10');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
@@ -145,13 +145,13 @@ VALUES ('false', '2', '1500', 'Sombor', '323.000', '90', '2', '1', '1', '6', '10
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
 VALUES ('true', '2', '5000', 'Beograd', '440.000', '130', '3', '1', '1', '5', '3');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '4', '3000', 'Beograd', '211.000', '70', '2', '2', '3', '9', '4');
+VALUES ('true', '4', '3000', 'Beograd', '211.000', '0', '2', '2', '3', '9', '4');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
 VALUES ('false', '2', '1500', 'Sombor', '553.000', '90', '2', '2', '2', '3', '2');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
 VALUES ('true', '2', '2000', 'Beograd', '98.000', '130', '1', '1', '1', '22', '1');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '1', '1500', 'Novi Sad', '211.000', '200', '8', '2', '3', '30', '8');
+VALUES ('true', '1', '1500', 'Novi Sad', '211.000', '0', '8', '2', '3', '30', '8');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
 VALUES ('false', '2', '1500', 'Novi Sad', '300.000', '170', '9', '2', '3', '33', '10');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
@@ -159,4 +159,4 @@ VALUES ('true', '3', '2000', 'Beograd', '262.000', '100', '9', '1', '1', '32', '
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
 VALUES ('true', '1', '2500', 'Novi Sad', '333.000', '80', '7', '2', '3', '10', '3');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('false', '2', '1500', 'Sombor', '300.000', '140', '3', '2', '2', '2', '10');
+VALUES ('false', '2', '1500', 'Sombor', '300.000', '0', '3', '2', '2', '2', '10');

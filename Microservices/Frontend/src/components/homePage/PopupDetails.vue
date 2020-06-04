@@ -27,7 +27,7 @@
             <div>CDW option: {{ carCDW }}</div>
             <div class="secondary">Class: {{ car.vehicle_class_name }}</div>
             <div>Mileage: {{ car.mileage }}</div>
-            <div class="secondary">Mileage: {{ car.mileage_limit }}</div>
+            <div class="secondary">Mileage limit: {{ carMileageLimit }}</div>
             <div>Fuel type: {{ car.fuel_type_name }}</div>
             <div class="secondary">Transmission type: {{ car.transmission_type_name }}</div>
             <div>Number of child seats: {{ car.child_seats }}</div>
@@ -48,14 +48,23 @@ export default {
   data() {
     return {
       dialogDetails: false,
-      carCDW: ""
+      carCDW: "",
+      carMileageLimit: ""
     };
   },
   mounted() {
+    //da li ima cdw
     if (this.car.cdw) {
       this.carCDW = "included";
     } else {
       this.carCDW = "not included";
+    }
+
+    //da li ima ogranicenje brzine
+    if (this.car.mileage_limit != 0) {
+      this.carMileageLimit = this.car.mileage_limit.toString();
+    } else {
+      this.carMileageLimit = "no limit";
     }
   }
 };
