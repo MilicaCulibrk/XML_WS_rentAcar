@@ -125,12 +125,12 @@ export default {
        axios
         .post("/user-service/register", this.user)
         .then(response => {      
-            alert("Uspesno ste se registrovali!");
+            this.$emit("registered");
             console.log(response.data)         
             }) 
         .catch(error => {
             console.log(error)
-            alert("Pogresan email ili lozinka!");
+            this.$emit("notRegistered");
         })        
       } else {
         console.log("nije validno");

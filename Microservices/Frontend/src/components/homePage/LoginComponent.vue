@@ -15,7 +15,7 @@
           <v-container>
             <v-form ref="form">
               <v-text-field
-                label="Email*"
+                label="Username*"
                 color="black"
                 v-model="user.email"
                 required
@@ -45,7 +45,6 @@
 
 <script>
 import axios from "axios";
-import AppVue from '../../App.vue';
 export default {
   data: () => ({
     LoginDialog: false,
@@ -54,10 +53,10 @@ export default {
       email: "",
       password: "",
     },
-    
+
     emailRules: [
-      v => !!v || "E-mail is required",
-      //v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      v => !!v || "Username is required",
+      //v => /.+@.+\..+/.test(v) || "Username must be valid"
     ]
   }),
   methods: {
@@ -67,18 +66,14 @@ export default {
         axios
         .post("/user-service/login", this.user)
         .then(response => {      
-            console.log( "nesto i od mene: " + this.$store.state.user.role);
-            alert("Uspesno ste se logovali!");
             localStorage.setItem("loggedUser", JSON.stringify(response.data));
             this.$store.state.user = JSON.parse(localStorage.getItem("loggedUser"));
-            console.log( this.$store.state.user.role);
-            this.LoginDialog = false;
-            AppVue.data.logged = true;
-            console.log(response.data)         
+            console.log( "ROLE: " + this.$store.state.user.role);
+            this.$emit("loggedIn");
             }) 
         .catch(error => {
             console.log(error)
-            alert("Pogresan email ili lozinka!");
+             this.$emit("notLoggedIn");
         })
  
       } else {
