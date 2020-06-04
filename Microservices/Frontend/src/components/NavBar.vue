@@ -18,7 +18,10 @@
         <span class="font-italic font-weight-bold">Rent-A-CaR</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-
+      <v-btn text color="primary"  v-if="(this.$store.state.user.role)=='ADMINISTRATOR'">
+        <span @click="openUsers()">Users</span>
+        <v-icon right>list_alt</v-icon>
+      </v-btn>
       <v-btn text color="primary"  v-if="(this.$store.state.user.role)=='ADMINISTRATOR'">
         <span @click="openCodebook()">Codebook</span>
         <v-icon right>list_alt</v-icon>
@@ -68,6 +71,9 @@ export default {
     };
   },
   methods: {
+        openUsers() {
+      this.$router.push("/admin");
+    },
     openCart() {
       this.$router.push("/cart");
     },

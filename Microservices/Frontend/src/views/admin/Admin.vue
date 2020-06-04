@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -108,6 +110,24 @@ export default {
         }
       ]
     };
+  },
+   methods: {
+    getUsers(){
+      axios
+        .get("/user-service/user/nes")
+        .then(response => {      
+              this.users = response.data;
+              console.log(response);
+                            console.log(response.data);
+
+            }) 
+        .catch(error => {
+            console.log(error)
+        })
+    }
+  },
+  mounted(){
+    this.getUsers();
   }
 };
 </script>

@@ -13,6 +13,13 @@ public class AdministratorService {
     private AdministratorRepository administratorRepository;
     
     public boolean verify(String email) throws NotFoundException {
+        if (!this.administratorRepository.existsById(Long.parseLong(email))) {
+            return false;
+        }
+        return true;
+
+    }
+    public boolean verifyL(String email) throws NotFoundException {
         if (!this.administratorRepository.existsByEmail(email)) {
             return false;
         }

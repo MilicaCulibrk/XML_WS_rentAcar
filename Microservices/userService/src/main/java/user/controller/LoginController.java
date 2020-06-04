@@ -33,7 +33,7 @@ import user.service.UserService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "", produces = "application/json")
 public class LoginController {
 
     @Autowired
@@ -73,26 +73,26 @@ public class LoginController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         Object nekiKorisnik = authentication.getPrincipal();
         System.out.println(nekiKorisnik);
-        System.out.println("Verification invoked!");
+        System.out.println("Verification invoked! - login");
         String email = authenticationDTO.getEmail();
         String password = authenticationDTO.getPassword();
         String role = null;
         try {
-			if(this.userService.verify(email)) {
+			if(this.userService.verifyL(email)) {
 				User user = (User) nekiKorisnik;
 				authenticationDTO.setId(user.getId());
 				authenticationDTO.setRole("USER");
 				//role="USER";
 		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
-			} else if(this.administratorService.verify(email)) {
+			} else if(this.administratorService.verifyL(email)) {
 				Administrator admin = (Administrator) nekiKorisnik;
 				authenticationDTO.setId(admin.getId());
 				authenticationDTO.setRole("ADMINISTRATOR");
 				role="ADMINISTRATOR";
 		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
-			} else if(this.companyService.verify(email)) {
+			} else if(this.companyService.verifyL(email)) {
 				Company company = (Company) nekiKorisnik;
 				authenticationDTO.setId(company.getId());
 				authenticationDTO.setRole("COMPANY");
@@ -108,15 +108,15 @@ public class LoginController {
 
     }
 	
-    @GetMapping("/verify/{email}/{password}")
+	@RequestMapping(value = "/verify/{email}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<?> verify(@PathVariable("email") String email) throws NotFoundException {
-        System.out.println("Verification invoked!");
+        System.out.println("Verification invoked-verify!");
         String role = null;
-        if(this.userService.verify(email)) {
+        if(this.userService.verifyL(email)) {
         	role="USER";
-        } else if(this.administratorService.verify(email)) {
+        } else if(this.administratorService.verifyL(email)) {
         	role="ADMINISTRATOR";
-        } else if(this.companyService.verify(email)) {
+        } else if(this.companyService.verifyL(email)) {
         	role="COMPANY";
         }
       	return new ResponseEntity<>(role, HttpStatus.OK);
