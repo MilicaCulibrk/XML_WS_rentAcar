@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- pretraga -->
-    <SearchPanel />
+    <SearchPanel v-bind:cars="cars"></SearchPanel>
 
     <!-- cards -->
     <!-- sort -->

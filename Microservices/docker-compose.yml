@@ -56,7 +56,6 @@ services:
       POSTGRES_DB: services
     networks:
       - application-network
-    tty: true
     depends_on:
       - eureka-service
       - postgres
