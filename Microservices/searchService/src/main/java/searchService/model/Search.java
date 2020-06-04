@@ -1,69 +1,59 @@
 package searchService.model;
 
+import javax.persistence.*;
 
-import java.util.Date;
-import java.util.List;
-
-
-//@Entity
+@Entity
 public class Search {
 
-
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public Brand brand;
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public Brands brand;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public Model model;
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public VehicleModels vehicleModel;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public TransmissionType transmission_type;
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public TransmissionTypes transmission_type;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public FuelType fuel_type;
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public FuelTypes fuel_type;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public VehicleClass vehicle_class;
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public VehicleClasses vehicle_class;
 
-    //@Column(name = "daily_price", nullable = false)
-    public float daily_price;
+    @Column(name = "daily_price", nullable = false)
+    private float daily_price;
 
-    //@Column(name = "mileage", nullable = false)
+    @Column(name = "mileage", nullable = false)
     private float mileage;
 
-    //@Column(name = "cdw", nullable = false)
+    @Column(name = "mileage_limit", nullable = false)
+    private float mileage_limit;
+
+    @Column(name = "cdw", nullable = false)
     private boolean cdw;
 
-    //@Column(name = "child_seats", nullable = false)
+    @Column(name = "child_seats", nullable = false)
     private int child_seats;
 
-    //@Column(name = "location", nullable = false)
+    @Column(name = "location", nullable = false)
     private String location;
 
     //@Column(name = "location", nullable = false)
-    private Date date_from;
+    //private Date date_from;
 
     //@Column(name = "location", nullable = false)
-    private Date date_to;
+    //private Date date_to;
 
-    public Search(Long id, Brand brand, Model model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, float daily_price, float mileage, boolean cdw, int child_seats, String location, Date date_from, Date date_to) {
-        this.id = id;
-        this.brand = brand;
-        this.model = model;
-        this.transmission_type = transmission_type;
-        this.fuel_type = fuel_type;
-        this.vehicle_class = vehicle_class;
-        this.daily_price = daily_price;
-        this.mileage = mileage;
-        this.cdw = cdw;
-        this.child_seats = child_seats;
-        this.location = location;
-        this.date_from = date_from;
-        this.date_to = date_to;
+    public Search(){
+        super();
     }
+
+
+
 
     public Long getId() {
         return id;
@@ -73,43 +63,43 @@ public class Search {
         this.id = id;
     }
 
-    public Brand getBrand() {
+    public Brands getBrand() {
         return brand;
     }
 
-    public void setBrand(Brand brand) {
+    public void setBrand(Brands brand) {
         this.brand = brand;
     }
 
-    public Model getModel() {
-        return model;
+    public VehicleModels getVehicleModel() {
+        return vehicleModel;
     }
 
-    public void setModel(Model model) {
-        this.model = model;
+    public void setVehicleModel(VehicleModels vehicleModel) {
+        this.vehicleModel = vehicleModel;
     }
 
-    public TransmissionType getTransmission_type() {
+    public TransmissionTypes getTransmission_type() {
         return transmission_type;
     }
 
-    public void setTransmission_type(TransmissionType transmission_type) {
+    public void setTransmission_type(TransmissionTypes transmission_type) {
         this.transmission_type = transmission_type;
     }
 
-    public FuelType getFuel_type() {
+    public FuelTypes getFuel_type() {
         return fuel_type;
     }
 
-    public void setFuel_type(FuelType fuel_type) {
+    public void setFuel_type(FuelTypes fuel_type) {
         this.fuel_type = fuel_type;
     }
 
-    public VehicleClass getVehicle_class() {
+    public VehicleClasses getVehicle_class() {
         return vehicle_class;
     }
 
-    public void setVehicle_class(VehicleClass vehicle_class) {
+    public void setVehicle_class(VehicleClasses vehicle_class) {
         this.vehicle_class = vehicle_class;
     }
 
@@ -153,7 +143,15 @@ public class Search {
         this.location = location;
     }
 
-    public Date getDate_from() {
+    public float getMileage_limit() {
+        return mileage_limit;
+    }
+
+    public void setMileage_limit(float mileage_limit) {
+        this.mileage_limit = mileage_limit;
+    }
+
+    /*public Date getDate_from() {
         return date_from;
     }
 
@@ -167,5 +165,5 @@ public class Search {
 
     public void setDate_to(Date date_to) {
         this.date_to = date_to;
-    }
+    } */
 }

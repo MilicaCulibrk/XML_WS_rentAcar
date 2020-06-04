@@ -1,21 +1,21 @@
 package addvertisment.model;
 
 import java.util.Date;
+import javax.persistence.*;
 
-//@Entity(name="reserved_date")
+@Entity(name="reserved_date")
 public class ReservedDate {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "date_from", nullable = false)
-    private Date date_from;
+    @Column(name = "oneDate", nullable = false)
+    private String oneDate;
 
-    //@Column(name = "date_to", nullable = false)
-    private Date date_to;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name="addvertisment")
     public Addvertisment addvertisment;
 
     public ReservedDate(){
@@ -23,10 +23,9 @@ public class ReservedDate {
     }
 
 
-    public ReservedDate(Long id, Date date_from, Date date_to, Addvertisment addvertisment) {
+    public ReservedDate(Long id, String oneDate, Addvertisment addvertisment) {
         this.id = id;
-        this.date_from = date_from;
-        this.date_to = date_to;
+        this.oneDate = oneDate;
         this.addvertisment = addvertisment;
     }
 
@@ -38,20 +37,12 @@ public class ReservedDate {
         this.id = id;
     }
 
-    public Date getDate_from() {
-        return date_from;
+    public String getOneDate() {
+        return oneDate;
     }
 
-    public void setDate_from(Date date_from) {
-        this.date_from = date_from;
-    }
-
-    public Date getDate_to() {
-        return date_to;
-    }
-
-    public void setDate_to(Date date_to) {
-        this.date_to = date_to;
+    public void setOneDate(String oneDate) {
+        this.oneDate = oneDate;
     }
 
     public Addvertisment getAddvertisment() {
