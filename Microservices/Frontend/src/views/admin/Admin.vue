@@ -1,5 +1,13 @@
 <template>
   <div>
+    <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
+      <span>{{snackbarSuccessText}}</span>
+      <v-btn text @click="snackbarSuccess = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
+      <span>{{snackbarDangerText}}</span>
+      <v-btn text @click="snackbarDanger = false">Close</v-btn>
+    </v-snackbar>
     <v-card max-width="600" class="mx-auto mt-12">
       <!-- toolbar -->
       <v-toolbar color="primary" dark>
@@ -16,38 +24,23 @@
             <v-list-item-title v-text="user.name + user.surname"></v-list-item-title>
             <v-list-item-subtitle v-text="user.email"></v-list-item-subtitle>
           </v-list-item-content>
-          <v-tooltip bottom color="black">
-            <template v-slot:activator="{ on }" v-if="user.active">
-              <v-btn icon v-on="on" color="primary">
-                <v-icon>block</v-icon>
-              </v-btn>
-            </template>
-            <span class="primary--text">Block</span>
-          </v-tooltip>
-          <v-tooltip bottom color="black">
-            <template v-slot:activator="{ on }" v-if="user.active">
-              <v-btn icon v-on="on" color="primary">
-                <v-icon>delete</v-icon>
-              </v-btn>
-            </template>
-            <span class="primary--text">Delete</span>
-          </v-tooltip>
-          <!-- ako je blokiran -->
           <v-list-item-content class="mt-2 danger" v-if="!user.active">
             <v-list-item-title v-text="user.name + user.surname"></v-list-item-title>
             <v-list-item-subtitle v-text="user.email"></v-list-item-subtitle>
           </v-list-item-content>
-          <v-tooltip bottom color="black" v-if="!user.active">
-            <template v-slot:activator="{ on }">
-              <v-btn icon v-on="on" color="primary">
-                <v-icon>toggle_on</v-icon>
+          <v-tooltip bottom color="black" >
+            <template v-slot:activator="{ on }"  >
+              <v-btn icon v-on="on" color="primary" @click="changeStatus(user)">
+                <v-icon v-if="user.active">block</v-icon>
+                <v-icon v-if="!user.active">toggle_on</v-icon>
               </v-btn>
             </template>
-            <span class="primary--text">Activate</span>
+            <span v-if="user.active" class="primary--text">Block</span>
+            <span v-if="!user.active" class="primary--text">Activate</span>
           </v-tooltip>
-          <v-tooltip bottom color="black">
-            <template v-slot:activator="{ on }" v-if="!user.active">
-              <v-btn icon v-on="on" color="primary">
+          <v-tooltip bottom color="black"  >
+            <template v-slot:activator="{ on }" >
+              <v-btn icon v-on="on" color="primary" @click="deleteUser(user)">
                 <v-icon>delete</v-icon>
               </v-btn>
             </template>
@@ -66,7 +59,11 @@ export default {
   data() {
     return {
       users: [
-      ]
+      ],
+      snackbarSuccess: false,
+      snackbarSuccessText: "",
+      snackbarDanger: false,
+      snackbarDangerText: "",
     };
   },
    methods: {
@@ -76,11 +73,41 @@ export default {
         .then(response => {      
               this.users = response.data;
               console.log(response);
-                            console.log(response.data);
+              console.log(response.data);
 
             }) 
         .catch(error => {
             console.log(error)
+        })
+    },
+    changeStatus(user){
+      axios
+        .put("/user-service/user/"  + user.id)
+        .then(response=>{
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText ="User's status is changed!";
+          console.log(response);
+          this.getUsers();
+        })
+        .catch(error => {
+            this.snackbarDanger = true;
+            this.snackbarDangerText ="Error";
+            console.log(error)
+        })
+    },
+    deleteUser(user){
+      axios
+        .delete("/user-service/user/"  + user.id)
+        .then(response=>{
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText ="User succesfully deleted!";
+          console.log(response.data);
+          this.getUsers();
+        })
+        .catch(error => {
+          this.snackbarDanger = true;
+          this.snackbarDangerText ="Error";
+          console.log(error)
         })
     }
   },

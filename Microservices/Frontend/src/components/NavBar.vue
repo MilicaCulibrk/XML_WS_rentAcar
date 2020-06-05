@@ -100,6 +100,7 @@ export default {
       this.$store.state.loggedUser = false;
       this.snackbarSuccess = true;
       this.snackbarSuccessText = "You are logged out";
+      this.LoginDialog = false;
       this.$router.push("/");
     }
   }

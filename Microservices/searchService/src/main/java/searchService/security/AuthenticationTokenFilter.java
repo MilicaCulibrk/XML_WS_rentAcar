@@ -1,4 +1,4 @@
-package user.security;
+package searchService.security;
 
 import java.io.IOException;
 import java.util.HashSet;
