@@ -1,6 +1,7 @@
 package searchService.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Search {
@@ -37,23 +38,22 @@ public class Search {
     private boolean cdw;
 
     @Column(name = "child_seats", nullable = false)
-    private int child_seats;
+    private Integer child_seats;
 
     @Column(name = "location", nullable = false)
     private String location;
 
-    //@Column(name = "location", nullable = false)
-    //private Date date_from;
 
-    //@Column(name = "location", nullable = false)
-    //private Date date_to;
+    @Column(name = "owner", nullable = false)
+    private String owner;
+
+    @OneToMany(mappedBy = "search", fetch = FetchType.LAZY)
+    public List<ReservedDates> reservedDates;
+
 
     public Search(){
         super();
     }
-
-
-
 
     public Long getId() {
         return id;
@@ -127,11 +127,11 @@ public class Search {
         this.cdw = cdw;
     }
 
-    public int getChild_seats() {
+    public Integer getChild_seats() {
         return child_seats;
     }
 
-    public void setChild_seats(int child_seats) {
+    public void setChild_seats(Integer child_seats) {
         this.child_seats = child_seats;
     }
 
@@ -151,19 +151,19 @@ public class Search {
         this.mileage_limit = mileage_limit;
     }
 
-    /*public Date getDate_from() {
-        return date_from;
+    public String getOwner() {
+        return owner;
     }
 
-    public void setDate_from(Date date_from) {
-        this.date_from = date_from;
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
-    public Date getDate_to() {
-        return date_to;
+    public List<ReservedDates> getReservedDates() {
+        return reservedDates;
     }
 
-    public void setDate_to(Date date_to) {
-        this.date_to = date_to;
-    } */
+    public void setReservedDates(List<ReservedDates> reservedDates) {
+        this.reservedDates = reservedDates;
+    }
 }

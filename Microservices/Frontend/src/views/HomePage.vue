@@ -1,7 +1,17 @@
 <template>
   <div>
+    <!-- Snackbar -->
+    <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
+      <span>{{snackbarSuccessText}}</span>
+      <v-btn text @click="snackbarSuccess = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
+      <span>{{snackbarDangerText}}</span>
+      <v-btn text @click="snackbarDanger = false">Close</v-btn>
+    </v-snackbar>
+
     <!-- pretraga -->
-    <SearchPanel v-bind:cars="cars"></SearchPanel>
+    <SearchPanel @search="search" @getCars="getCars()"></SearchPanel>
 
     <!-- cards -->
     <!-- sort -->
@@ -76,13 +86,21 @@ export default {
   },
   data() {
     return {
+      date_from: "",
+      date_to: "",
       dialogDetails: false,
-      cars: {}
+      cars: {},
+      snackbarSuccess: false,
+      snackbarSuccessText: "",
+      snackbarDanger: false,
+      snackbarDangerText: "",
+      dateList: {
+        arrayEvents: []
+      }
     };
   },
   methods: {
     exitDetails() {
-      console.log("uso");
       this.dialogDetails = false;
     },
     sortBy(sortProp) {
@@ -100,19 +118,137 @@ export default {
         price: "",
         agent: "",
         date_from: "",
-        data_to: ""
+        date_to: ""
       };
       carForChart.id = car.id;
-      carForChart.brand = car.brand;
-      carForChart.model = car.model;
-      carForChart.price = car.price;
-      carForChart.agent = car.agent;
-      carForChart.date_from = "24.06.2020";
-      carForChart.date_to = "29.06.2020";
+      carForChart.brand = car.brand_name;
+      carForChart.model = car.vehicle_model_name;
+      carForChart.price = car.daily_price;
+      carForChart.agent = car.owner;
+      carForChart.date_from = this.date_from;
+      carForChart.date_to = this.date_to;
       return carForChart;
     },
     addToBasket(car) {
+      if (this.$store.state.user.role == "NONE") {
+        console.log("usao");
+        this.snackbarDangerText = "You must log in to add the car to the cart";
+        this.snackbarDanger = true;
+        return;
+      }
       this.$store.commit("addCarInCart", this.createCarForChart(car));
+      console.log(this.$store.state.carsInCart);
+    },
+    getCars() {
+      axios
+        .get("/search-service/search")
+        .then(cars => {
+          this.cars = cars.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    search(searchItem, startDate, endDate) {
+      this.date_from = startDate;
+      this.date_to = endDate;
+      this.getDates(startDate, endDate);
+
+      searchItem.dates = this.dateList.arrayEvents;
+
+      if (
+        ((searchItem.selectMinPrice == null &&
+          searchItem.selectMaxPrice == null) ||
+          (searchItem.selectMinPrice != null &&
+            searchItem.selectMaxPrice != null)) &&
+        ((searchItem.selectMinMileage == null &&
+          searchItem.selectMaxMileage == null) ||
+          (searchItem.selectMinMileage != null &&
+            searchItem.selectMaxMileage != null)) &&
+        ((startDate == null && endDate == null) ||
+          (startDate != null && endDate != null))
+      ) {
+        this.doSearch(searchItem);
+      } else {
+        this.errorMessage(searchItem, startDate, endDate);
+      }
+    },
+    doSearch(searchItem) {
+      axios
+        .post("/search-service/search", searchItem)
+        .then(cars => {
+          this.cars = cars.data;
+          console.log(searchItem);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    errorMessage(searchItem, startDate, endDate) {
+      if (
+        (searchItem.selectMinPrice == null ||
+          searchItem.selectMaxPrice == null) &&
+        ((searchItem.selectMinMileage == null &&
+          searchItem.selectMaxMileage == null) ||
+          (searchItem.selectMinMileage != null &&
+            searchItem.selectMaxMileage != null)) &&
+        ((startDate == null && endDate == null) ||
+          (startDate != null && endDate != null))
+      ) {
+        this.snackbarDanger = true;
+        this.snackbarDangerText = "You can't search by only one price!";
+      } else if (
+        (searchItem.selectMinMileage == null ||
+          searchItem.selectMaxMileage == null) &&
+        ((searchItem.selectMinPrice == null &&
+          searchItem.selectMaxPrice == null) ||
+          (searchItem.selectMinPrice != null &&
+            searchItem.selectMaxPrice != null)) &&
+        ((startDate == null && endDate == null) ||
+          (startDate != null && endDate != null))
+      ) {
+        this.snackbarDanger = true;
+        this.snackbarDangerText =
+          "You can't search by only max or only min mileage!";
+      } else if (
+        (startDate == null || endDate == null) &&
+        ((searchItem.selectMinPrice == null &&
+          searchItem.selectMaxPrice == null) ||
+          (searchItem.selectMinPrice != null &&
+            searchItem.selectMaxPrice != null)) &&
+        ((searchItem.selectMinMileage == null &&
+          searchItem.selectMaxMileage == null) ||
+          (searchItem.selectMinMileage != null &&
+            searchItem.selectMaxMileage != null))
+      ) {
+        this.snackbarDanger = true;
+        this.snackbarDangerText = "You can't search by only one date!";
+      } else {
+        this.snackbarDanger = true;
+        this.snackbarDangerText =
+          "You can't search by only one price, date or mileage!!";
+      }
+    },
+    getDates(startDate, endDate) {
+      var arr = new Array();
+      var dt = new Date(startDate);
+      var edt = new Date(endDate);
+      //var date = new Date(dt).toISOString().substr(0, 10);
+
+      if (dt <= edt) {
+        while (dt <= edt) {
+          console.log("uso");
+          arr.push(new Date(dt).toISOString().substr(0, 10));
+          dt.setDate(dt.getDate() + 1);
+        }
+      } else {
+        this.snackbarDanger = true;
+        this.snackbarDangerText = "End date must be greater than start date!";
+      }
+
+      for (const d in arr) {
+        this.dateList.arrayEvents.push(arr[d]);
+      }
     }
   },
   mounted() {
@@ -121,6 +257,7 @@ export default {
       .get("/search-service/search")
       .then(cars => {
         this.cars = cars.data;
+        console.log(cars);
       })
       .catch(error => {
         console.log(error);

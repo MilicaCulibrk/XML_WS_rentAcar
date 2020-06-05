@@ -32,7 +32,7 @@ public class RequestService {
         purchase.setDate_to(p.getDate_to());
         purchase.setId_add(p.getId_add());
         purchase.setOrdered(false);
-        purchase.setId_user(p.getId_user());
+        purchase.setClient(p.getClient());
 
         return purchase;
     }

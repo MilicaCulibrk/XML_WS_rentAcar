@@ -10,14 +10,14 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "id_user",  nullable = false)
-    private Long id_user;
+    @Column(name = "client",  nullable = false)
+    private String client;
 
     @Column(name = "id_add", nullable = false)
     private Long id_add;
 
-    @Column(name = "id_ovner")
-    private Long id_ovner;
+    @Column(name = "owner")
+    private String owner;
 
     @Column(name = "ordered",  nullable = false)
     private Boolean ordered;
@@ -52,14 +52,6 @@ public class Purchase {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(Long id_user) {
-        this.id_user = id_user;
     }
 
     public Long getId_add() {
@@ -102,11 +94,19 @@ public class Purchase {
         this.request = request;
     }
 
-    public Long getId_ovner() {
-        return id_ovner;
+    public String getClient() {
+        return client;
     }
 
-    public void setId_ovner(Long id_ovner) {
-        this.id_ovner = id_ovner;
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }
