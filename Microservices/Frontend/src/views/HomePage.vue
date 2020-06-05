@@ -11,6 +11,10 @@
     </v-snackbar>
 
     <!-- pretraga -->
+    <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
+      <span>{{snackbarDangerText}}</span>
+      <v-btn text @click="snackbarDanger = false">Close</v-btn>
+    </v-snackbar>
     <SearchPanel @search="search" @getCars="getCars()"></SearchPanel>
 
     <!-- cards -->
@@ -86,6 +90,8 @@ export default {
   },
   data() {
     return {
+      snackbarDanger: false,
+      snackbarDangerText: "",
       dialogDetails: false,
       cars: {},
       snackbarSuccess: false,
@@ -116,19 +122,25 @@ export default {
         price: "",
         agent: "",
         date_from: "",
-        data_to: ""
+        date_to: ""
       };
       carForChart.id = car.id;
-      carForChart.brand = car.brand;
-      carForChart.model = car.model;
-      carForChart.price = car.price;
-      carForChart.agent = car.agent;
+      carForChart.brand = car.brand_name;
+      carForChart.model = car.vehicle_model_name;
+      carForChart.price = car.daily_price;
+      carForChart.agent = car.owner;
       carForChart.date_from = "24.06.2020";
       carForChart.date_to = "29.06.2020";
       return carForChart;
     },
     addToBasket(car) {
+      if (this.$store.state.loggedUser == false) {
+        this.snackbarDangerText = "You must log in to add the car to the cart";
+        this.snackbarDanger = true;
+        return;
+      }
       this.$store.commit("addCarInCart", this.createCarForChart(car));
+      console.log(this.$store.state.carsInCart);
     },
     getCars() {
       axios
@@ -246,6 +258,7 @@ export default {
       .get("/search-service/search")
       .then(cars => {
         this.cars = cars.data;
+        console.log(cars);
       })
       .catch(error => {
         console.log(error);

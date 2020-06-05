@@ -43,8 +43,13 @@ public class Search {
     @Column(name = "location", nullable = false)
     private String location;
 
+
+    @Column(name = "owner", nullable = false)
+    private String owner;
+
     @OneToMany(mappedBy = "search", fetch = FetchType.LAZY)
     public List<ReservedDates> reservedDates;
+
 
     public Search(){
         super();
@@ -144,6 +149,14 @@ public class Search {
 
     public void setMileage_limit(float mileage_limit) {
         this.mileage_limit = mileage_limit;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public List<ReservedDates> getReservedDates() {

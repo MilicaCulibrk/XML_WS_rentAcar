@@ -21,6 +21,7 @@ public class SearchDTO {
     private String vehicle_class_name;
     private Long transmission_type_id;
     private String transmission_type_name;
+    private String owner;
 
     public SearchDTO(Search search) {
         this.id = search.getId();
@@ -40,6 +41,7 @@ public class SearchDTO {
         this.vehicle_class_name = search.getVehicle_class().getVehicle_class_name();
         this.transmission_type_id = search.getTransmission_type().getId();
         this.transmission_type_name = search.getTransmission_type().getTransmission_type_name();
+        this.owner = search.getOwner();
     }
 
     public SearchDTO(Long id, float daily_price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, Long fuel_type_id, String fuel_type_name, Long brand_id, String brand_name, Long vehicle_model_id, String vehicle_model_name, Long vehicle_class_id, String vehicle_class_name, Long transmission_type_id, String transmission_type_name) {
@@ -196,5 +198,13 @@ public class SearchDTO {
 
     public void setTransmission_type_name(String transmission_type_name) {
         this.transmission_type_name = transmission_type_name;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }
