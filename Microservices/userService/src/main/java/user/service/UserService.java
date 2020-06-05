@@ -64,4 +64,19 @@ public class UserService {
 
         userRepository.delete(user.get());
 	}
+	
+	public User changeStatus(Long id) throws ValidationException {
+		// TODO Auto-generated method stub
+        Optional<User> user = userRepository.findById(id);
+        if (!user.isPresent()){
+            throw new ValidationException("Fuel type with that id doesn't exist!");
+        }
+        if(user.get().isActive()) {
+        	user.get().setActive(false);
+        } else {
+        	user.get().setActive(true);
+        }
+        userRepository.save(user.get());
+        return user.get();
+	}
 }
