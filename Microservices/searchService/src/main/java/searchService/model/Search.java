@@ -1,6 +1,7 @@
 package searchService.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Search {
@@ -42,18 +43,12 @@ public class Search {
     @Column(name = "location", nullable = false)
     private String location;
 
-    //@Column(name = "location", nullable = false)
-    //private Date date_from;
-
-    //@Column(name = "location", nullable = false)
-    //private Date date_to;
+    @OneToMany(mappedBy = "search", fetch = FetchType.LAZY)
+    public List<ReservedDates> reservedDates;
 
     public Search(){
         super();
     }
-
-
-
 
     public Long getId() {
         return id;
@@ -151,19 +146,11 @@ public class Search {
         this.mileage_limit = mileage_limit;
     }
 
-    /*public Date getDate_from() {
-        return date_from;
+    public List<ReservedDates> getReservedDates() {
+        return reservedDates;
     }
 
-    public void setDate_from(Date date_from) {
-        this.date_from = date_from;
+    public void setReservedDates(List<ReservedDates> reservedDates) {
+        this.reservedDates = reservedDates;
     }
-
-    public Date getDate_to() {
-        return date_to;
-    }
-
-    public void setDate_to(Date date_to) {
-        this.date_to = date_to;
-    } */
 }

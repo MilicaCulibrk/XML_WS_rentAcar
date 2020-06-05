@@ -327,10 +327,11 @@ export default {
         cdw: false,
         mileageLimit: false,
         selectChildSeats: [],
-        selectMinPrice: "",
-        selectMaxPrice: "",
-        selectMinMileage: "",
-        selectMaxMileage: ""
+        selectMinPrice: null,
+        selectMaxPrice: null,
+        selectMinMileage: null,
+        selectMaxMileage: null,
+        dates: []
       },
       minMileageItems: [
         "100000",
@@ -363,14 +364,16 @@ export default {
       this.searchItem.selectClass = [];
       this.searchItem.selectTransmission = [];
       this.searchItem.selectGas = [];
-      this.searchItem.selectMinMileage = "";
-      this.searchItem.selectMaxMileage = "";
-      this.searchItem.selectMinPrice = "";
-      this.searchItem.selectMaxPrice = "";
+      this.searchItem.selectMinMileage = null;
+      this.searchItem.selectMaxMileage = null;
+      this.searchItem.selectMinPrice = null;
+      this.searchItem.selectMaxPrice = null;
       this.searchItem.selectChildSeats = [];
       this.searchItem.selectLocation = [];
       this.searchItem.cdw = false;
       this.searchItem.mileageLimit = false;
+      this.due = null;
+      this.to = null;
       this.$emit("getCars");
     },
     consoleLocation() {
@@ -395,7 +398,7 @@ export default {
         });
     },
     search() {
-      this.$emit("search", this.searchItem);
+      this.$emit("search", this.searchItem, this.due, this.to);
     }
   },
   mounted() {
@@ -464,9 +467,11 @@ export default {
   },
   computed: {
     formattedDateFrom() {
+      console.log(this.due);
       return this.due;
     },
     formattedDateTo() {
+      console.log(this.to);
       return this.to;
     }
   }
