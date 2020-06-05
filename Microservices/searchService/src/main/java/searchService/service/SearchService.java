@@ -33,8 +33,13 @@ public class SearchService {
 
         SearchQueryDTO sDTO = checkIfEmpty(searchQueryDTO);
 
+        int minPrice = parseMinPrice(searchQueryDTO);
+        int maxPrice = parseMaxPrice(searchQueryDTO);
+        int minMileage = parseMinMileage(searchQueryDTO);
+        int maxMileage = parseMaxMileage(searchQueryDTO);
 
-        List<Search> searches = searchRepository.getByQuery(sDTO.getSelectBrand(), sDTO.getSelectModel(), sDTO.getSelectClass(), sDTO.getSelectTransmission(), sDTO.getSelectGas(), sDTO.getSelectLocation(), sDTO.getSelectChildSeats());
+
+        List<Search> searches = searchRepository.getByQuery(sDTO.getSelectBrand(), sDTO.getSelectModel(), sDTO.getSelectClass(), sDTO.getSelectTransmission(), sDTO.getSelectGas(), sDTO.getSelectLocation(), sDTO.getSelectChildSeats(), minPrice, maxPrice, minMileage, maxMileage);
         List<SearchDTO> searchDTOS = new ArrayList<>();
         for(Search search: searches) {
             SearchDTO searchDTO = new SearchDTO(search);
@@ -67,6 +72,43 @@ public class SearchService {
         }
 
         return searchQueryDTO;
+    }
+
+    int parseMinPrice(SearchQueryDTO searchQueryDTO){
+
+        if(!searchQueryDTO.getSelectMinPrice().equals("")){
+            return Integer.parseInt(searchQueryDTO.getSelectMinPrice());
+        }else{
+            return 0;
+        }
+
+    }
+
+    int parseMaxPrice(SearchQueryDTO searchQueryDTO){
+
+        if(!searchQueryDTO.getSelectMaxPrice().equals("")){
+            return Integer.parseInt(searchQueryDTO.getSelectMaxPrice());
+        }else{
+            return 0;
+        }
+    }
+
+    int parseMinMileage(SearchQueryDTO searchQueryDTO){
+
+        if(!searchQueryDTO.getSelectMinMileage().equals("")){
+            return Integer.parseInt(searchQueryDTO.getSelectMinMileage());
+        }else{
+            return 0;
+        }
+    }
+
+    int parseMaxMileage(SearchQueryDTO searchQueryDTO){
+
+        if(!searchQueryDTO.getSelectMaxMileage().equals("")){
+            return Integer.parseInt(searchQueryDTO.getSelectMaxMileage());
+        }else{
+            return 0;
+        }
     }
 
 

@@ -13,12 +13,15 @@ public class SearchQueryDTO {
     private boolean cdw;
     private boolean mileageLimit;
     private List<Integer> selectChildSeats;
-
+    private String selectMinPrice;
+    private String selectMaxPrice;
+    private String selectMinMileage;
+    private String selectMaxMileage;
 
     public SearchQueryDTO(){}
 
 
-    public SearchQueryDTO(List<String> selectBrand, List<String> selectModel, List<String> selectClass, List<String> selectTransmission, List<String> selectGas, List<String> selectLocation, boolean cdw, boolean mileageLimit, List<Integer> selectChildSeats) {
+    public SearchQueryDTO(List<String> selectBrand, List<String> selectModel, List<String> selectClass, List<String> selectTransmission, List<String> selectGas, List<String> selectLocation, boolean cdw, boolean mileageLimit, List<Integer> selectChildSeats, String selectMinPrice, String selectMaxPrice, String selectMinMileage, String selectMaxMileage) {
         this.selectBrand = selectBrand;
         this.selectModel = selectModel;
         this.selectClass = selectClass;
@@ -28,6 +31,10 @@ public class SearchQueryDTO {
         this.cdw = cdw;
         this.mileageLimit = mileageLimit;
         this.selectChildSeats = selectChildSeats;
+        this.selectMinPrice = selectMinPrice;
+        this.selectMaxPrice = selectMaxPrice;
+        this.selectMinMileage = selectMinMileage;
+        this.selectMaxMileage = selectMaxMileage;
     }
 
     public List<String> getSelectBrand() {
@@ -100,5 +107,37 @@ public class SearchQueryDTO {
 
     public void setSelectChildSeats(List<Integer> selectChildSeats) {
         this.selectChildSeats = selectChildSeats;
+    }
+
+    public String getSelectMinPrice() {
+        return selectMinPrice;
+    }
+
+    public void setSelectMinPrice(String selectMinPrice) {
+        this.selectMinPrice = selectMinPrice;
+    }
+
+    public String getSelectMaxPrice() {
+        return selectMaxPrice;
+    }
+
+    public void setSelectMaxPrice(String selectMaxPrice) {
+        this.selectMaxPrice = selectMaxPrice;
+    }
+
+    public String getSelectMinMileage() {
+        return selectMinMileage;
+    }
+
+    public void setSelectMinMileage(String selectMinMileage) {
+        this.selectMinMileage = selectMinMileage;
+    }
+
+    public String getSelectMaxMileage() {
+        return selectMaxMileage;
+    }
+
+    public void setSelectMaxMileage(String selectMaxMileage) {
+        this.selectMaxMileage = selectMaxMileage;
     }
 }

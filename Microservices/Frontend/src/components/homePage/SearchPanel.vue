@@ -157,12 +157,24 @@
             ></v-select>
           </v-col>
           <!-- cena -->
-          <v-col cols="4">
+          <v-col cols="2">
             <v-select
-              v-model="selectPrice"
-              :items="priceItems"
-              label="Daily price (RSD)"
-              multiple
+              v-model="searchItem.selectMinPrice"
+              :items="minPriceItems"
+              label="Min daily price (RSD)"
+              outlined
+              dense
+              clearable
+              rounded
+              class="pt-4"
+              color="primary"
+            ></v-select>
+          </v-col>
+          <v-col cols="2">
+            <v-select
+              v-model="searchItem.selectMaxPrice"
+              :items="minPriceItems"
+              label="Max daily price (RSD)"
               outlined
               dense
               clearable
@@ -195,8 +207,8 @@
               v-model="searchItem.selectGas"
               :items="gasItems"
               label="Gas type"
-              multiple
               outlined
+              multiple
               dense
               clearable
               rounded
@@ -204,17 +216,29 @@
               color="primary"
             ></v-select>
           </v-col>
-          <!-- sedista za decu -->
-          <v-col cols="4">
+          <!-- kilometraza -->
+          <v-col cols="2">
             <v-select
-              v-model="searchItem.selectChildSeats"
-              :items="childSeatsItems"
-              label="Number of child seats"
-              multiple
+              v-model="searchItem.selectMinMileage"
+              :items="minMileageItems"
+              label="Min mileage (km)"
               outlined
               dense
-              clearable
               rounded
+              clearable
+              class="pt-4"
+              color="primary"
+            ></v-select>
+          </v-col>
+          <v-col cols="2">
+            <v-select
+              v-model="searchItem.selectMaxMileage"
+              :items="maxMileageItems"
+              label="Max mileage (km)"
+              outlined
+              dense
+              rounded
+              clearable
               class="pt-4"
               color="primary"
             ></v-select>
@@ -238,16 +262,17 @@
             ></v-select>
           </v-col>
           <!-- kilometraza -->
+          <!-- sedista za decu -->
           <v-col cols="4">
             <v-select
-              v-model="selectMileage"
-              :items="mileageItems"
-              label="Mileage (km)"
+              v-model="searchItem.selectChildSeats"
+              :items="childSeatsItems"
+              label="Number of child seats"
               multiple
               outlined
               dense
-              rounded
               clearable
+              rounded
               class="pt-4"
               color="primary"
             ></v-select>
@@ -285,8 +310,6 @@ export default {
       toDateMenu: false,
       due: null,
       to: null,
-      selectMileage: [],
-      selectPrice: [],
       brandItems: {},
       modelItems: {},
       classItems: {},
@@ -303,23 +326,30 @@ export default {
         selectLocation: [],
         cdw: false,
         mileageLimit: false,
-        selectChildSeats: []
+        selectChildSeats: [],
+        selectMinPrice: "",
+        selectMaxPrice: "",
+        selectMinMileage: "",
+        selectMaxMileage: ""
       },
-      mileageItems: [
-        "< 100000",
-        "100000 - 200000",
-        "200000 - 300000",
-        "300000 - 400000",
-        "> 500000"
+      minMileageItems: [
+        "100000",
+        "200000",
+        "300000",
+        "400000",
+        "500000",
+        "500000"
       ],
-      priceItems: [
-        "< 1000",
-        "1000 - 2000",
-        "2000 - 3000",
-        "3000 - 4000",
-        "3000 - 5000",
-        "> 5000"
+      maxMileageItems: [
+        "100000",
+        "200000",
+        "300000",
+        "400000",
+        "500000",
+        "500000"
       ],
+      minPriceItems: ["1000", "2000", "3000", "4000", "5000", "5000"],
+      maxPriceItems: ["1000", "2000", "3000", "4000", "5000", "5000"],
       childSeatsItems: ["0", "1", "2", "3", "4"],
       plannedToCrossRule: [
         v => /^[0-9]*$/.test(v) || "Only numbers are allowed"
@@ -333,8 +363,10 @@ export default {
       this.searchItem.selectClass = [];
       this.searchItem.selectTransmission = [];
       this.searchItem.selectGas = [];
-      this.selectMileage = [];
-      this.selectPrice = [];
+      this.searchItem.selectMinMileage = "";
+      this.searchItem.selectMaxMileage = "";
+      this.searchItem.selectMinPrice = "";
+      this.searchItem.selectMaxPrice = "";
       this.searchItem.selectChildSeats = [];
       this.searchItem.selectLocation = [];
       this.searchItem.cdw = false;
