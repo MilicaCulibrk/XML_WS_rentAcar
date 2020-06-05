@@ -37,7 +37,7 @@ public class Search {
     private boolean cdw;
 
     @Column(name = "child_seats", nullable = false)
-    private int child_seats;
+    private Integer child_seats;
 
     @Column(name = "location", nullable = false)
     private String location;
@@ -127,11 +127,11 @@ public class Search {
         this.cdw = cdw;
     }
 
-    public int getChild_seats() {
+    public Integer getChild_seats() {
         return child_seats;
     }
 
-    public void setChild_seats(int child_seats) {
+    public void setChild_seats(Integer child_seats) {
         this.child_seats = child_seats;
     }
 
