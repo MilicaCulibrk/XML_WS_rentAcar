@@ -135,9 +135,9 @@ VALUES ('true', '2', '2000', 'Beograd', '400000', '100', '9', '3', '3', '34', '9
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
 VALUES ('false', '3', '3500', 'Beograd', '100000', '70', '8', '2', '3', '31', '7');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('false', '2', '1500', 'Sombor', '115000', '90', '3', '2', '2', '1', '6');
+VALUES ('false', '2', '1500', 'Sombor', '115000', '90', '3', '2', '2', '4', '6');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '2', '4000', 'Beograd', '285000', '100', '3', '1', '2', '1', '1');
+VALUES ('true', '2', '4000', 'Beograd', '285000', '100', '3', '1', '2', '2', '1');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
 VALUES ('false', '1', '1000', 'Beograd', '211000', '50', '1', '1', '3', '21', '5');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
@@ -159,4 +159,75 @@ VALUES ('true', '3', '2000', 'Beograd', '262000', '100', '9', '1', '1', '32', '7
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
 VALUES ('true', '1', '2500', 'Novi Sad', '333000', '80', '7', '2', '3', '10', '3');
 INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('false', '2', '1500', 'Sombor', '300000', '0', '3', '2', '2', '2', '10');
+VALUES ('false', '2', '1500', 'Sombor', '300000', '0', '3', '2', '2', '7', '10');
+
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-13', '1');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-14', '1');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-15', '1');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-10', '3');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-11', '3');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-19', '3');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-20', '3');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-21', '5');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-22', '5');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-23', '5');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-24', '5');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-25', '5');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-26', '5');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-27', '5');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-09', '7');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-10', '7');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-15', '7');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-26', '7');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-27', '7');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-28', '7');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-22', '9');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-11', '9');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-27', '11');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-18', '11');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-29', '11');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-30', '11');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-29', '13');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-30', '13');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-23', '15');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-24', '15');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-25', '15');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-26', '15');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-27', '15');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-08', '17');
+INSERT INTO public.reserved_dates(one_date, search_id)
+VALUES ('2020-06-17', '17');

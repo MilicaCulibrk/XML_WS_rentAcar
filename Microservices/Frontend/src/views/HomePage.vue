@@ -91,7 +91,10 @@ export default {
       snackbarSuccess: false,
       snackbarSuccessText: "",
       snackbarDanger: false,
-      snackbarDangerText: ""
+      snackbarDangerText: "",
+      dateList: {
+        arrayEvents: []
+      }
     };
   },
   methods: {
@@ -137,52 +140,103 @@ export default {
           console.log(error);
         });
     },
-    search(searchItem) {
+    search(searchItem, startDate, endDate) {
+      this.getDates(startDate, endDate);
+
+      searchItem.dates = this.dateList.arrayEvents;
+
       if (
-        ((searchItem.selectMinPrice == "" && searchItem.selectMaxPrice == "") ||
-          (searchItem.selectMinPrice != "" &&
-            searchItem.selectMaxPrice != "")) &&
-        ((searchItem.selectMinMileage == "" &&
-          searchItem.selectMaxMileage == "") ||
-          (searchItem.selectMinMileage != "" &&
-            searchItem.selectMaxMileage != ""))
+        ((searchItem.selectMinPrice == null &&
+          searchItem.selectMaxPrice == null) ||
+          (searchItem.selectMinPrice != null &&
+            searchItem.selectMaxPrice != null)) &&
+        ((searchItem.selectMinMileage == null &&
+          searchItem.selectMaxMileage == null) ||
+          (searchItem.selectMinMileage != null &&
+            searchItem.selectMaxMileage != null)) &&
+        ((startDate == null && endDate == null) ||
+          (startDate != null && endDate != null))
       ) {
-        axios
-          .post("/search-service/search", searchItem)
-          .then(cars => {
-            this.cars = cars.data;
-            console.log(searchItem);
-          })
-          .catch(error => {
-            console.log(error);
-          });
+        this.doSearch(searchItem);
       } else {
-        if (
-          ((searchItem.selectMinPrice == "" ||
-            searchItem.selectMaxPrice == "") &&
-            searchItem.selectMinMileage == "" &&
-            searchItem.selectMaxMileage == "") ||
-          (searchItem.selectMinMileage != "" &&
-            searchItem.selectMaxMileage != "")
-        ) {
-          this.snackbarDanger = true;
-          this.snackbarDangerText = "You can't search by only one price!";
-        } else if (
-          (searchItem.selectMinMileage == "" ||
-            searchItem.selectMaxMileage == "") &&
-          ((searchItem.selectMinPrice == "" &&
-            searchItem.selectMaxPrice == "") ||
-            (searchItem.selectMinPrice != "" &&
-              searchItem.selectMaxPrice != ""))
-        ) {
-          this.snackbarDanger = true;
-          this.snackbarDangerText =
-            "You can't search by only max or only min mileage!";
-        } else {
-          this.snackbarDanger = true;
-          this.snackbarDangerText =
-            "You can't seatch by only one price! You can't search by only max or only min mileage!";
+        this.errorMessage(searchItem, startDate, endDate);
+      }
+    },
+    doSearch(searchItem) {
+      axios
+        .post("/search-service/search", searchItem)
+        .then(cars => {
+          this.cars = cars.data;
+          console.log(searchItem);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    errorMessage(searchItem, startDate, endDate) {
+      if (
+        (searchItem.selectMinPrice == null ||
+          searchItem.selectMaxPrice == null) &&
+        ((searchItem.selectMinMileage == null &&
+          searchItem.selectMaxMileage == null) ||
+          (searchItem.selectMinMileage != null &&
+            searchItem.selectMaxMileage != null)) &&
+        ((startDate == null && endDate == null) ||
+          (startDate != null && endDate != null))
+      ) {
+        this.snackbarDanger = true;
+        this.snackbarDangerText = "You can't search by only one price!";
+      } else if (
+        (searchItem.selectMinMileage == null ||
+          searchItem.selectMaxMileage == null) &&
+        ((searchItem.selectMinPrice == null &&
+          searchItem.selectMaxPrice == null) ||
+          (searchItem.selectMinPrice != null &&
+            searchItem.selectMaxPrice != null)) &&
+        ((startDate == null && endDate == null) ||
+          (startDate != null && endDate != null))
+      ) {
+        this.snackbarDanger = true;
+        this.snackbarDangerText =
+          "You can't search by only max or only min mileage!";
+      } else if (
+        (startDate == null || endDate == null) &&
+        ((searchItem.selectMinPrice == null &&
+          searchItem.selectMaxPrice == null) ||
+          (searchItem.selectMinPrice != null &&
+            searchItem.selectMaxPrice != null)) &&
+        ((searchItem.selectMinMileage == null &&
+          searchItem.selectMaxMileage == null) ||
+          (searchItem.selectMinMileage != null &&
+            searchItem.selectMaxMileage != null))
+      ) {
+        this.snackbarDanger = true;
+        this.snackbarDangerText = "You can't search by only one date!";
+      } else {
+        this.snackbarDanger = true;
+        this.snackbarDangerText =
+          "You can't search by only one price, date or mileage!!";
+      }
+    },
+    getDates(startDate, endDate) {
+      var arr = new Array();
+      var dt = new Date(startDate);
+      var edt = new Date(endDate);
+      //var date = new Date(dt).toISOString().substr(0, 10);
+
+      if (dt <= edt) {
+        while (dt <= edt) {
+          console.log("uso");
+          arr.push(new Date(dt).toISOString().substr(0, 10));
+          dt.setDate(dt.getDate() + 1);
         }
+      } else {
+        this.snackbarDanger = true;
+        this.snackbarDangerText = "End date must be greater than start date!";
+      }
+
+      for (const d in arr) {
+        this.dateList.arrayEvents.push(arr[d]);
       }
     }
   },
