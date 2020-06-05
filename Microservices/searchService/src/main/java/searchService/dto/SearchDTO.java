@@ -1,6 +1,10 @@
 package searchService.dto;
 
+import searchService.model.Images;
 import searchService.model.Search;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchDTO {
 
@@ -22,6 +26,7 @@ public class SearchDTO {
     private Long transmission_type_id;
     private String transmission_type_name;
     private String owner;
+    private ArrayList<ImagesDTO> images;
 
     public SearchDTO(Search search) {
         this.id = search.getId();
@@ -42,9 +47,15 @@ public class SearchDTO {
         this.transmission_type_id = search.getTransmission_type().getId();
         this.transmission_type_name = search.getTransmission_type().getTransmission_type_name();
         this.owner = search.getOwner();
+
+        this.images = new ArrayList<>();
+
+        for(Images i : search.getImages()){
+            images.add(new ImagesDTO(i));
+        }
     }
 
-    public SearchDTO(Long id, float daily_price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, Long fuel_type_id, String fuel_type_name, Long brand_id, String brand_name, Long vehicle_model_id, String vehicle_model_name, Long vehicle_class_id, String vehicle_class_name, Long transmission_type_id, String transmission_type_name) {
+    public SearchDTO(Long id, float daily_price, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, Long fuel_type_id, String fuel_type_name, Long brand_id, String brand_name, Long vehicle_model_id, String vehicle_model_name, Long vehicle_class_id, String vehicle_class_name, Long transmission_type_id, String transmission_type_name, String owner, ArrayList<ImagesDTO> images) {
         this.id = id;
         this.daily_price = daily_price;
         this.mileage = mileage;
@@ -62,6 +73,16 @@ public class SearchDTO {
         this.vehicle_class_name = vehicle_class_name;
         this.transmission_type_id = transmission_type_id;
         this.transmission_type_name = transmission_type_name;
+        this.owner = owner;
+        this.images = images;
+    }
+
+    public ArrayList<ImagesDTO> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<ImagesDTO> images) {
+        this.images = images;
     }
 
     public Long getId() {

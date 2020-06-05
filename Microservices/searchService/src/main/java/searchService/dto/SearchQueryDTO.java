@@ -1,5 +1,6 @@
 package searchService.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchQueryDTO {
@@ -18,11 +19,11 @@ public class SearchQueryDTO {
     private String selectMinMileage;
     private String selectMaxMileage;
     private List<String> dates;
+    private ArrayList<ImagesDTO> images;
 
     public SearchQueryDTO(){}
 
-
-    public SearchQueryDTO(List<String> selectBrand, List<String> selectModel, List<String> selectClass, List<String> selectTransmission, List<String> selectGas, List<String> selectLocation, boolean cdw, boolean mileageLimit, List<Integer> selectChildSeats, String selectMinPrice, String selectMaxPrice, String selectMinMileage, String selectMaxMileage, List<String> dates) {
+    public SearchQueryDTO(List<String> selectBrand, List<String> selectModel, List<String> selectClass, List<String> selectTransmission, List<String> selectGas, List<String> selectLocation, boolean cdw, boolean mileageLimit, List<Integer> selectChildSeats, String selectMinPrice, String selectMaxPrice, String selectMinMileage, String selectMaxMileage, List<String> dates, ArrayList<ImagesDTO> images) {
         this.selectBrand = selectBrand;
         this.selectModel = selectModel;
         this.selectClass = selectClass;
@@ -37,6 +38,15 @@ public class SearchQueryDTO {
         this.selectMinMileage = selectMinMileage;
         this.selectMaxMileage = selectMaxMileage;
         this.dates = dates;
+        this.images = images;
+    }
+
+    public ArrayList<ImagesDTO> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<ImagesDTO> images) {
+        this.images = images;
     }
 
     public List<String> getSelectBrand() {

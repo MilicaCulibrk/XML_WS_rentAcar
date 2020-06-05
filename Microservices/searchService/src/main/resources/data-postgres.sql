@@ -1,4 +1,3 @@
-
 INSERT INTO public.brands(brands_name)
 VALUES ('Mercedes');
 INSERT INTO public.brands(brands_name)
@@ -124,80 +123,43 @@ VALUES ('automatic');
 INSERT INTO public.transmission_types(transmission_types_name)
 VALUES ('semi-automatic');
 
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('true', '2', '2000', 'Beograd', '200000', '100', '3', '1', '1', '1', '1', 'mm');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('true', '1', '3000', 'Novi Sad', '211000', '0', '1', '2', '3', '18', '5', 'mm');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('false', '2', '1500', 'Sombor', '300000', '90', '7', '2', '2', '11', '10', 'sm');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('true', '2', '2000', 'Beograd', '400000', '100', '9', '3', '3', '34', '9', 'bm');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('false', '3', '3500', 'Beograd', '100000', '70', '8', '2', '3', '31', '7', 'bm');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('false', '2', '1500', 'Sombor', '115000', '90', '3', '2', '2', '1', '6', 'bm');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('true', '2', '4000', 'Beograd', '285000', '100', '3', '1', '2', '1', '1', 'vm');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('false', '1', '1000', 'Beograd', '211000', '50', '1', '1', '3', '21', '5', 'vm');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('false', '2', '1500', 'Sombor', '323000', '90', '2', '1', '1', '6', '10', 'ss');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('true', '2', '5000', 'Beograd', '440000', '130', '3', '1', '1', '5', '3', 'ss');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('true', '4', '3000', 'Beograd', '211000', '0', '2', '2', '3', '9', '4', 'ss');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('false', '2', '1500', 'Sombor', '553000', '90', '2', '2', '2', '3', '2', 'ss');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('true', '2', '2000', 'Beograd', '98000', '130', '1', '1', '1', '22', '1', 'vs');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('true', '1', '1500', 'Novi Sad', '211000', '0', '8', '2', '3', '30', '8', 'ms');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('false', '2', '1500', 'Novi Sad', '300000', '170', '9', '2', '3', '33', '10', 'ms');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('true', '3', '2000', 'Beograd', '262000', '100', '9', '1', '1', '32', '7', 'vs');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('true', '1', '2500', 'Novi Sad', '333000', '80', '7', '2', '3', '10', '3', 'vs');
+INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
+VALUES ('false', '2', '1500', 'Sombor', '300000', '0', '3', '2', '2', '2', '10', 'ss');
 
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('true', '2', '2000', 'Beograd', '200.000', '100', '3', '1', '1', '1', '1', 'mm');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('true', '1', '3000', 'Novi Sad', '211.000', '0', '1', '2', '3', '18', '5', 'mm');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('false', '2', '1500', 'Sombor', '300.000', '90', '7', '2', '2', '11', '10', 'sm');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('true', '2', '2000', 'Beograd', '400.000', '100', '9', '3', '3', '34', '9', 'bm');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('false', '3', '3500', 'Beograd', '100.000', '70', '8', '2', '3', '31', '7', 'bm');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('false', '2', '1500', 'Sombor', '115.000', '90', '3', '2', '2', '1', '6', 'bm');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('true', '2', '4000', 'Beograd', '285.000', '100', '3', '1', '2', '1', '1', 'vm');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('false', '1', '1000', 'Beograd', '211.000', '50', '1', '1', '3', '21', '5', 'vm');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('false', '2', '1500', 'Sombor', '323.000', '90', '2', '1', '1', '6', '10', 'ss');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('true', '2', '5000', 'Beograd', '440.000', '130', '3', '1', '1', '5', '3', 'ss');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('true', '4', '3000', 'Beograd', '211.000', '0', '2', '2', '3', '9', '4', 'ss');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('false', '2', '1500', 'Sombor', '553.000', '90', '2', '2', '2', '3', '2', 'ss');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('true', '2', '2000', 'Beograd', '98.000', '130', '1', '1', '1', '22', '1', 'vs');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('true', '1', '1500', 'Novi Sad', '211.000', '0', '8', '2', '3', '30', '8', 'ms');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('false', '2', '1500', 'Novi Sad', '300.000', '170', '9', '2', '3', '33', '10', 'ms');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('true', '3', '2000', 'Beograd', '262.000', '100', '9', '1', '1', '32', '7', 'vs');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('true', '1', '2500', 'Novi Sad', '333.000', '80', '7', '2', '3', '10', '3', 'vs');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, owner)
-VALUES ('false', '2', '1500', 'Sombor', '300.000', '0', '3', '2', '2', '2', '10', 'ss');
-=======
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '2', '2000', 'Beograd', '200000', '100', '3', '1', '1', '1', '1');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '1', '3000', 'Novi Sad', '211000', '0', '1', '2', '3', '18', '5');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('false', '2', '1500', 'Sombor', '300000', '90', '7', '2', '2', '11', '10');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '2', '2000', 'Beograd', '400000', '100', '9', '3', '3', '34', '9');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('false', '3', '3500', 'Beograd', '100000', '70', '8', '2', '3', '31', '7');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('false', '2', '1500', 'Sombor', '115000', '90', '3', '2', '2', '4', '6');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '2', '4000', 'Beograd', '285000', '100', '3', '1', '2', '2', '1');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('false', '1', '1000', 'Beograd', '211000', '50', '1', '1', '3', '21', '5');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('false', '2', '1500', 'Sombor', '323000', '90', '2', '1', '1', '6', '10');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '2', '5000', 'Beograd', '440000', '130', '3', '1', '1', '5', '3');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '4', '3000', 'Beograd', '211000', '0', '2', '2', '3', '9', '4');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('false', '2', '1500', 'Sombor', '553000', '90', '2', '2', '2', '3', '2');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '2', '2000', 'Beograd', '98000', '130', '1', '1', '1', '22', '1');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '1', '1500', 'Novi Sad', '211000', '0', '8', '2', '3', '30', '8');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('false', '2', '1500', 'Novi Sad', '300000', '170', '9', '2', '3', '33', '10');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '3', '2000', 'Beograd', '262000', '100', '9', '1', '1', '32', '7');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('true', '1', '2500', 'Novi Sad', '333000', '80', '7', '2', '3', '10', '3');
-INSERT INTO public.search(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('false', '2', '1500', 'Sombor', '300000', '0', '3', '2', '2', '7', '10');
 
 INSERT INTO public.reserved_dates(one_date, search_id)
 VALUES ('2020-06-13', '1');
@@ -269,4 +231,42 @@ INSERT INTO public.reserved_dates(one_date, search_id)
 VALUES ('2020-06-08', '17');
 INSERT INTO public.reserved_dates(one_date, search_id)
 VALUES ('2020-06-17', '17');
+
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '1');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6491975468328182_images%20(4).jpg?alt=media&token=d9c8efc5-06d5-44e5-bbbb-5b9f3e6f82e4', '2');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '3');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '4');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '5');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '6');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '7');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '8');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '9');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '10');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '11');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '12');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '13');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '14');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '15');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '16');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '17');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '18');
+
 
