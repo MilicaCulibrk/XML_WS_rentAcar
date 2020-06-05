@@ -7,9 +7,9 @@ import javax.persistence.*;
 
 public class PurchaseDTO {
     private Long id;
-    private Long id_user;
+    private String client;
     private Long id_add;
-    private Long id_ovner;
+    private String owner;
     private Boolean ordered;
     private String date_from;
     private String date_to;
@@ -19,9 +19,9 @@ public class PurchaseDTO {
 
     public PurchaseDTO(Purchase purchase) {
         this.id = purchase.getId();
-        this.id_user = purchase.getId_user();
+        this.client = purchase.getClient();
         this.id_add = purchase.getId_add();
-        this.id_ovner = purchase.getId_ovner();
+        this.owner = purchase.getOwner();
         this.ordered = purchase.getOrdered();
         this.date_from = purchase.getDate_from();
         this.date_to = purchase.getDate_to();
@@ -33,14 +33,6 @@ public class PurchaseDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(Long id_user) {
-        this.id_user = id_user;
     }
 
     public Long getId_add() {
@@ -75,11 +67,19 @@ public class PurchaseDTO {
         this.date_to = date_to;
     }
 
-    public Long getId_ovner() {
-        return id_ovner;
+    public String getClient() {
+        return client;
     }
 
-    public void setId_ovner(Long id_ovner) {
-        this.id_ovner = id_ovner;
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

@@ -42,6 +42,9 @@ public class Search {
     @Column(name = "location", nullable = false)
     private String location;
 
+    @Column(name = "owner", nullable = false)
+    private String owner;
+
     //@Column(name = "location", nullable = false)
     //private Date date_from;
 
@@ -151,6 +154,13 @@ public class Search {
         this.mileage_limit = mileage_limit;
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
     /*public Date getDate_from() {
         return date_from;
     }

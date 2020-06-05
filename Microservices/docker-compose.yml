@@ -120,9 +120,6 @@ services:
     tty: true
     depends_on:
       - eureka-service
-      - add-service
-      - user-service
-      - rent-service
       - postgres
 
 
