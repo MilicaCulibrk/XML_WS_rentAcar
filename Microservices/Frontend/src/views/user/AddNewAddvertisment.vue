@@ -257,6 +257,7 @@ import {fb, db} from "@/firebase";
         price: "",
         images: [],
         arrayEvents: [],
+        addvertiser_id: "",
       },
         snackbarSuccess: false,
         snackbarSuccessText: "",
@@ -370,10 +371,8 @@ import {fb, db} from "@/firebase";
           }
           var rex = /^[0-9]*$/;
           if(!rex.test(String(this.selectMileage.trim())) || !rex.test(String(this.selectMileageLimit.trim())) || !rex.test(String(this.selectPrice.trim())) ){
-        
               return
           }
-       
         this.addvertisment.brand_id = this.selectBrand.id;
         this.addvertisment.fuel_type_id = this.selectFuelType.id;
         this.addvertisment.vehicle_model_id = this.selectModel.id;
@@ -385,25 +384,19 @@ import {fb, db} from "@/firebase";
         this.addvertisment.child_seats = this.selectChildSeats;
         this.addvertisment.location = this.selectLocation;
         this.addvertisment.price = this.selectPrice;
-
+        this.addvertisment.addvertiser_id = this.$store.state.user.id;
         this.addvertisment.images=this.createListImages(this.addvertisment.images);
         this.addvertisment.arrayEvents=this.createListDates(this.addvertisment.arrayEvents);
-        console.log(this.addvertisment);
         axios
           .post("/addvertisment-service/addvertisment", this.addvertisment)
-         .then(add => {
-            console.log(add.data);
+         .then(() => {
             this.snackbarSuccess = true;
             this.snackbarSuccessText="You added new addvertisement!";
-            setTimeout(this.reload(), 4000);
-            
+            this.setOnEmptyString();
           })
           .catch(error => {
             console.log(error);
           });
-      },
-      reload(){
-        this.$router.go();
       },
       setOnEmptyString(){
             this.selectBrand="";
@@ -417,8 +410,20 @@ import {fb, db} from "@/firebase";
             this.selectLocation="";
             this.selectPrice="";
             this.selectCdw= false;
-            this.images= [];
-            this.arrayEvents= [];
+            this.addvertisment.images= [];
+            this.addvertisment.arrayEvents= [];
+            this.addvertisment.brand_id ="";
+            this.addvertisment.fuel_type_id = "";
+            this.addvertisment.vehicle_model_id = "";
+            this.addvertisment.vehicle_class_id = "";
+            this.addvertisment.transmission_type_id = "";
+            this.addvertisment.mileage = "";
+            this.addvertisment.mileage_limit = "";
+            this.addvertisment.cdw = false;
+            this.addvertisment.child_seats = "";
+            this.addvertisment.location = "";
+            this.addvertisment.price ="";
+            this.addvertisment.addvertiser_id = "";
       },
       createListImages(images){
           var listImages=[];

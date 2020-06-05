@@ -1,6 +1,7 @@
 package addvertisment.controller;
 
 import addvertisment.dto.AddvertismentDTO;
+import addvertisment.dto.AddvertismentDisplayDTO;
 import addvertisment.dto.FuelTypeDTO;
 import addvertisment.model.Addvertisment;
 import addvertisment.model.Comment;
@@ -28,9 +29,9 @@ public class AddvertismentController {
         return new ResponseEntity<List<AddvertismentDTO>>(addvertismentService.getAllAddvertisments(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getSingleAdd(@PathVariable Long id)  {
-        return null;
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<AddvertismentDisplayDTO>> getAllUsersAddvertisments(@PathVariable Long id)  {
+        return new ResponseEntity<List<AddvertismentDisplayDTO>>(addvertismentService.getAllUsersAddvertisments(id), HttpStatus.OK);
     }
 
     //kad se kreira oglas treba da se kreira i nova klasa pretraga
