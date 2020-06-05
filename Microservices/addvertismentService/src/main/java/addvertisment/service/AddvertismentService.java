@@ -47,6 +47,16 @@ public class AddvertismentService {
         }
         return addvertismentsDTOlist;
     }
+    public List<AddvertismentDisplayDTO> getAllUsersAddvertisments(Long id) {
+        List<AddvertismentDisplayDTO> addvertismentDisplayDTOS = new ArrayList<>();
+        List<Addvertisment> addvertisments = addvertismentRepository.findAll();
+        for (Addvertisment addvertisment : addvertisments) {
+            if(addvertisment.getAddvertiser_id().equals(id)) {
+                addvertismentDisplayDTOS.add(new AddvertismentDisplayDTO(addvertisment));
+            }
+        }
+        return addvertismentDisplayDTOS;
+    }
 
     public Addvertisment createAddvertisment(AddvertismentDTO addvertismentDTO) {
 
@@ -64,6 +74,7 @@ public class AddvertismentService {
         real.setMileage(dto.getMileage());
         real.setMileage_limit(dto.getMileage_limit());
         real.setPrice(dto.getPrice());
+        real.setAddvertiser_id(dto.getAddvertiser_id());
         real.setBrand(brandRepository.findById(dto.getBrand_id()).orElse(null));
         real.setFuel_type(fuelTypeRepository.findById(dto.getFuel_type_id()).orElse(null));
         real.setTransmission_type(transmissionTypeRepository.findById(dto.getTransmission_type_id()).orElse(null));

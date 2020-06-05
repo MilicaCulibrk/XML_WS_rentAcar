@@ -34,6 +34,10 @@
         <span >New Addvertisement</span>
         <v-icon right>add</v-icon>
       </v-btn>
+      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
+        <span @click="openMyAddvertisments()">My Addvertisements</span>
+        <v-icon right>list</v-icon>
+      </v-btn>
       <div class="mx-2" >
         <LoginComponent 
           @loggedIn="snackbarSuccess = true; snackbarSuccessText='You are logged in!'"
@@ -82,6 +86,9 @@ export default {
     },
     openAddNewAddvertisment() {
       this.$router.push("/addNewAddvertisment");
+    },
+    openMyAddvertisments(){
+      this.$router.push("/myAddvertisments");
     },
     openCodebook() {
       this.$router.push("/codebook");
