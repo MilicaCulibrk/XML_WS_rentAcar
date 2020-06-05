@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- pretraga -->
-    <SearchPanel v-bind:cars="cars"></SearchPanel>
+    <SearchPanel @search="search" @getCars="getCars()"></SearchPanel>
 
     <!-- cards -->
     <!-- sort -->
@@ -82,7 +82,6 @@ export default {
   },
   methods: {
     exitDetails() {
-      console.log("uso");
       this.dialogDetails = false;
     },
     sortBy(sortProp) {
@@ -113,6 +112,27 @@ export default {
     },
     addToBasket(car) {
       this.$store.commit("addCarInCart", this.createCarForChart(car));
+    },
+    getCars() {
+      axios
+        .get("/search-service/search")
+        .then(cars => {
+          this.cars = cars.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    search(searchItem) {
+      axios
+        .post("/search-service/search", searchItem)
+        .then(cars => {
+          this.cars = cars.data;
+          console.log(this.cars.length);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
   mounted() {

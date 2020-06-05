@@ -9,7 +9,7 @@
             <v-col cols="12" lg="4" md="4" sm="3" xs="3">
               <v-form ref="form">
                 <v-select
-                  v-model="selectLocation"
+                  v-model="searchItem.selectLocation"
                   :items="locationItems"
                   label="Pickup location"
                   multiple
@@ -113,7 +113,7 @@
             <!-- search button  -->
             <v-spacer></v-spacer>
             <v-col class="mr-n3 mt-3">
-              <v-btn rounded class="primary white--text mt-2" @click.native.stop>
+              <v-btn rounded class="primary white--text mt-2" @click.native.stop @click="search()">
                 <v-icon left>search</v-icon>
                 <span>search</span>
               </v-btn>
@@ -128,7 +128,7 @@
           <!-- brend -->
           <v-col cols="4">
             <v-select
-              v-model="selectBrand"
+              v-model="searchItem.selectBrand"
               :items="brandItems"
               label="Brand"
               multiple
@@ -144,7 +144,7 @@
           <!-- menjac -->
           <v-col cols="4">
             <v-select
-              v-model="selectTransmission"
+              v-model="searchItem.selectTransmission"
               :items="transmissionItems"
               label="Transmission type"
               multiple
@@ -177,7 +177,7 @@
           <!-- model -->
           <v-col cols="4">
             <v-select
-              v-model="selectModel"
+              v-model="searchItem.selectModel"
               :items="modelItems"
               label="Model"
               multiple
@@ -192,7 +192,7 @@
           <!-- gas -->
           <v-col cols="4">
             <v-select
-              v-model="selectGas"
+              v-model="searchItem.selectGas"
               :items="gasItems"
               label="Gas type"
               multiple
@@ -207,7 +207,7 @@
           <!-- sedista za decu -->
           <v-col cols="4">
             <v-select
-              v-model="selectChildSeats"
+              v-model="searchItem.selectChildSeats"
               :items="childSeatsItems"
               label="Number of child seats"
               multiple
@@ -225,7 +225,7 @@
           <!-- klasa -->
           <v-col cols="4">
             <v-select
-              v-model="selectClass"
+              v-model="searchItem.selectClass"
               :items="classItems"
               label="Class"
               multiple
@@ -254,11 +254,16 @@
           </v-col>
           <!-- CDW -->
           <v-col cols="1">
-            <v-checkbox label="CDW" class="mt-6" v-model="cdw" color="primary"></v-checkbox>
+            <v-checkbox label="CDW" class="mt-6" v-model="searchItem.cdw" color="primary"></v-checkbox>
           </v-col>
           <!-- Mileage limit -->
           <v-col cols="1.5">
-            <v-checkbox label="Mileage limit" class="mt-6" v-model="mileageLimit" color="primary"></v-checkbox>
+            <v-checkbox
+              label="Mileage limit"
+              class="mt-6"
+              v-model="searchItem.mileageLimit"
+              color="primary"
+            ></v-checkbox>
           </v-col>
           <!-- Cancel search -->
           <v-col cols="1.5">
@@ -280,17 +285,8 @@ export default {
       toDateMenu: false,
       due: null,
       to: null,
-      selectBrand: [],
-      selectModel: [],
-      selectClass: [],
-      selectTransmission: [],
-      selectGas: [],
       selectMileage: [],
       selectPrice: [],
-      selectChildSeats: [],
-      selectLocation: [],
-      cdw: false,
-      mileageLimit: false,
       brandItems: {},
       modelItems: {},
       classItems: {},
@@ -298,20 +294,31 @@ export default {
       gasItems: {},
       cars: {},
       locationItems: [],
+      searchItem: {
+        selectBrand: [],
+        selectModel: [],
+        selectClass: [],
+        selectTransmission: [],
+        selectGas: [],
+        selectLocation: [],
+        cdw: false,
+        mileageLimit: false,
+        selectChildSeats: []
+      },
       mileageItems: [
-        "< 100.000",
-        "100.000 - 200.000",
-        "200.000 - 300.000",
-        "300.000 - 400.000",
-        "> 500.000"
+        "< 100000",
+        "100000 - 200000",
+        "200000 - 300000",
+        "300000 - 400000",
+        "> 500000"
       ],
       priceItems: [
-        "< 1.000",
-        "1.000 - 2.000",
-        "2.000 - 3.000",
-        "3.000 - 4.000",
-        "3.000 - 5.000",
-        "> 5.000"
+        "< 1000",
+        "1000 - 2000",
+        "2000 - 3000",
+        "3000 - 4000",
+        "3000 - 5000",
+        "> 5000"
       ],
       childSeatsItems: ["0", "1", "2", "3", "4"],
       plannedToCrossRule: [
@@ -321,26 +328,42 @@ export default {
   },
   methods: {
     cancelSearch() {
-      this.selectBrand = [];
-      this.selectModel = [];
-      this.selectClass = [];
-      this.selectTransmission = [];
-      this.selectGas = [];
+      this.searchItem.selectBrand = [];
+      this.searchItem.selectModel = [];
+      this.searchItem.selectClass = [];
+      this.searchItem.selectTransmission = [];
+      this.searchItem.selectGas = [];
       this.selectMileage = [];
       this.selectPrice = [];
-      this.selectChildSeats = [];
-      this.selectLocation = [];
-      this.cdw = false;
-      this.mileageLimit = false;
+      this.searchItem.selectChildSeats = [];
+      this.searchItem.selectLocation = [];
+      this.searchItem.cdw = false;
+      this.searchItem.mileageLimit = false;
+      this.$emit("getCars");
     },
     consoleLocation() {
-      console.log(this.selectLocation.length);
+      console.log(this.searchItem.selectLocation.length);
     },
     getLocations() {
       var i = 0;
       for (i = 0; i < this.cars.length; i++) {
         this.locationItems.push(this.cars[i].location);
       }
+    },
+    getCars() {
+      axios
+        .get("/search-service/search")
+        .then(cars => {
+          console.log("uso");
+          this.cars = cars.data;
+          this.getLocations();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    search() {
+      this.$emit("search", this.searchItem);
     }
   },
   mounted() {
