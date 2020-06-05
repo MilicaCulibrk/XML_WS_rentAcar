@@ -35,7 +35,13 @@
         <v-flex xs12 sm6 md4 lg4 v-for="car in cars" :key="car.id">
           <v-card hover elevation="2" class="text-center ma-6">
             <div class="cardBorderColor">
-              <v-responsive class="pt-4">image goes here</v-responsive>
+              <v-responsive class="pt-4"> 
+
+                <img
+                :src="car.images[0].url"
+                height="130px"
+              >
+              </v-responsive>
               <v-card-title></v-card-title>
               <v-card-text>
                 <div

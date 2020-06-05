@@ -25,6 +25,9 @@ public class Search {
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public VehicleClasses vehicle_class;
 
+    @OneToMany(mappedBy = "search", fetch = FetchType.LAZY)
+    public List<Images> images;
+
     @Column(name = "daily_price", nullable = false)
     private float daily_price;
 
@@ -85,6 +88,14 @@ public class Search {
 
     public void setTransmission_type(TransmissionTypes transmission_type) {
         this.transmission_type = transmission_type;
+    }
+
+    public List<Images> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Images> images) {
+        this.images = images;
     }
 
     public FuelTypes getFuel_type() {
