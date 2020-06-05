@@ -1,5 +1,15 @@
 <template>
   <div>
+    <!-- Snackbar -->
+    <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
+      <span>{{snackbarSuccessText}}</span>
+      <v-btn text @click="snackbarSuccess = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
+      <span>{{snackbarDangerText}}</span>
+      <v-btn text @click="snackbarDanger = false">Close</v-btn>
+    </v-snackbar>
+
     <!-- pretraga -->
     <SearchPanel @search="search" @getCars="getCars()"></SearchPanel>
 
@@ -77,7 +87,11 @@ export default {
   data() {
     return {
       dialogDetails: false,
-      cars: {}
+      cars: {},
+      snackbarSuccess: false,
+      snackbarSuccessText: "",
+      snackbarDanger: false,
+      snackbarDangerText: ""
     };
   },
   methods: {
@@ -124,15 +138,52 @@ export default {
         });
     },
     search(searchItem) {
-      axios
-        .post("/search-service/search", searchItem)
-        .then(cars => {
-          this.cars = cars.data;
-          console.log(this.cars.length);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      if (
+        ((searchItem.selectMinPrice == "" && searchItem.selectMaxPrice == "") ||
+          (searchItem.selectMinPrice != "" &&
+            searchItem.selectMaxPrice != "")) &&
+        ((searchItem.selectMinMileage == "" &&
+          searchItem.selectMaxMileage == "") ||
+          (searchItem.selectMinMileage != "" &&
+            searchItem.selectMaxMileage != ""))
+      ) {
+        axios
+          .post("/search-service/search", searchItem)
+          .then(cars => {
+            this.cars = cars.data;
+            console.log(searchItem);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        if (
+          ((searchItem.selectMinPrice == "" ||
+            searchItem.selectMaxPrice == "") &&
+            searchItem.selectMinMileage == "" &&
+            searchItem.selectMaxMileage == "") ||
+          (searchItem.selectMinMileage != "" &&
+            searchItem.selectMaxMileage != "")
+        ) {
+          this.snackbarDanger = true;
+          this.snackbarDangerText = "You can't search by only one price!";
+        } else if (
+          (searchItem.selectMinMileage == "" ||
+            searchItem.selectMaxMileage == "") &&
+          ((searchItem.selectMinPrice == "" &&
+            searchItem.selectMaxPrice == "") ||
+            (searchItem.selectMinPrice != "" &&
+              searchItem.selectMaxPrice != ""))
+        ) {
+          this.snackbarDanger = true;
+          this.snackbarDangerText =
+            "You can't search by only max or only min mileage!";
+        } else {
+          this.snackbarDanger = true;
+          this.snackbarDangerText =
+            "You can't seatch by only one price! You can't search by only max or only min mileage!";
+        }
+      }
     }
   },
   mounted() {
