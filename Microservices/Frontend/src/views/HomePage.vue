@@ -94,6 +94,7 @@ export default {
       snackbarSuccessText: "",
       snackbarDanger: false,
       snackbarDangerText: "",
+      startDateGreater: false,
       dateList: {
         arrayEvents: []
       }
@@ -165,8 +166,10 @@ export default {
           searchItem.selectMaxMileage == null) ||
           (searchItem.selectMinMileage != null &&
             searchItem.selectMaxMileage != null)) &&
-        ((startDate == null && endDate == null) ||
-          (startDate != null && endDate != null))
+        startDate != null &&
+        endDate != null &&
+        searchItem.selectLocation != "" &&
+        this.startDateGreater == false
       ) {
         this.doSearch(searchItem);
       } else {
@@ -186,47 +189,44 @@ export default {
     },
     errorMessage(searchItem, startDate, endDate) {
       if (
-        (searchItem.selectMinPrice == null ||
-          searchItem.selectMaxPrice == null) &&
-        ((searchItem.selectMinMileage == null &&
-          searchItem.selectMaxMileage == null) ||
-          (searchItem.selectMinMileage != null &&
-            searchItem.selectMaxMileage != null)) &&
-        ((startDate == null && endDate == null) ||
-          (startDate != null && endDate != null))
+        startDate == null ||
+        endDate == null ||
+        searchItem.selectLocation == ""
       ) {
         this.snackbarDanger = true;
-        this.snackbarDangerText = "You can't search by only one price!";
-      } else if (
-        (searchItem.selectMinMileage == null ||
-          searchItem.selectMaxMileage == null) &&
-        ((searchItem.selectMinPrice == null &&
-          searchItem.selectMaxPrice == null) ||
-          (searchItem.selectMinPrice != null &&
-            searchItem.selectMaxPrice != null)) &&
-        ((startDate == null && endDate == null) ||
-          (startDate != null && endDate != null))
-      ) {
-        this.snackbarDanger = true;
-        this.snackbarDangerText =
-          "You can't search by only max or only min mileage!";
-      } else if (
-        (startDate == null || endDate == null) &&
-        ((searchItem.selectMinPrice == null &&
-          searchItem.selectMaxPrice == null) ||
-          (searchItem.selectMinPrice != null &&
-            searchItem.selectMaxPrice != null)) &&
-        ((searchItem.selectMinMileage == null &&
-          searchItem.selectMaxMileage == null) ||
-          (searchItem.selectMinMileage != null &&
-            searchItem.selectMaxMileage != null))
-      ) {
-        this.snackbarDanger = true;
-        this.snackbarDangerText = "You can't search by only one date!";
+        this.snackbarDangerText = "Location and dates musn't be empty!";
       } else {
-        this.snackbarDanger = true;
-        this.snackbarDangerText =
-          "You can't search by only one price, date or mileage!!";
+        if (this.startDateGreater == true) {
+          this.snackbarDanger = true;
+          this.snackbarDangerText = "End date must be greater than start date!";
+        } else {
+          if (
+            (searchItem.selectMinPrice == null ||
+              searchItem.selectMaxPrice == null) &&
+            ((searchItem.selectMinMileage == null &&
+              searchItem.selectMaxMileage == null) ||
+              (searchItem.selectMinMileage != null &&
+                searchItem.selectMaxMileage != null))
+          ) {
+            this.snackbarDanger = true;
+            this.snackbarDangerText = "You can't search by only one price!";
+          } else if (
+            (searchItem.selectMinMileage == null ||
+              searchItem.selectMaxMileage == null) &&
+            ((searchItem.selectMinPrice == null &&
+              searchItem.selectMaxPrice == null) ||
+              (searchItem.selectMinPrice != null &&
+                searchItem.selectMaxPrice != null))
+          ) {
+            this.snackbarDanger = true;
+            this.snackbarDangerText =
+              "You can't search by only max or only min mileage!";
+          } else {
+            this.snackbarDanger = true;
+            this.snackbarDangerText =
+              "You can't search by only one price or mileage!!";
+          }
+        }
       }
     },
     getDates(startDate, endDate) {
@@ -236,6 +236,7 @@ export default {
       //var date = new Date(dt).toISOString().substr(0, 10);
 
       if (dt <= edt) {
+        this.startDateGreater = false;
         while (dt <= edt) {
           console.log("uso");
           arr.push(new Date(dt).toISOString().substr(0, 10));
@@ -244,6 +245,7 @@ export default {
       } else {
         this.snackbarDanger = true;
         this.snackbarDangerText = "End date must be greater than start date!";
+        this.startDateGreater = true;
       }
 
       for (const d in arr) {
