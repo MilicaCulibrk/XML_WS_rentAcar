@@ -29,51 +29,6 @@ public class Order {
    public RentingReport rentingReport;
    
    
-   /** @pdGenerated default parent getter */
-   public RequestForRenting getRequestForRenting() {
-      return requestForRenting;
-   }
-   
-   /** @pdGenerated default parent setter
-     * @param newRequestForRenting */
-   public void setRequestForRenting(RequestForRenting newRequestForRenting) {
-      if (this.requestForRenting == null || !this.requestForRenting.equals(newRequestForRenting))
-      {
-         if (this.requestForRenting != null)
-         {
-            RequestForRenting oldRequestForRenting = this.requestForRenting;
-            this.requestForRenting = null;
-            oldRequestForRenting.removeOrder(this);
-         }
-         if (newRequestForRenting != null)
-         {
-            this.requestForRenting = newRequestForRenting;
-            this.requestForRenting.addOrder(this);
-         }
-      }
-   }
-   /** @pdGenerated default parent getter */
-   public User getUser() {
-      return user;
-   }
-   
-   /** @pdGenerated default parent setter
-     * @param newUser */
-   public void setUser(User newUser) {
-      if (this.user == null || !this.user.equals(newUser))
-      {
-         if (this.user != null)
-         {
-            User oldUser = this.user;
-            this.user = null;
-            oldUser.removeOrder(this);
-         }
-         if (newUser != null)
-         {
-            this.user = newUser;
-            this.user.addOrder(this);
-         }
-      }
-   }
+
 
 }

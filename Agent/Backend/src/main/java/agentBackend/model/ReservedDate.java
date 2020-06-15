@@ -1,46 +1,47 @@
-/***********************************************************************
- * Module:  ReservedDate.java
- * Author:  23nik
- * Purpose: Defines the Class ReservedDate
- ***********************************************************************/
-
 package agentBackend.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
-/** @pdOid 361a829b-37b5-4354-87a1-4b46e2548c1d */
+@Entity(name="reserved_date")
 public class ReservedDate {
-   /** @pdOid 951773b9-75da-4508-babb-3d31a17aac50 */
-   private Date dateFrom;
-   /** @pdOid e4c8225f-b90f-4af4-93b7-44fd80c87f6c */
-   private Date dateTo;
-   
-   /** @pdRoleInfo migr=no name=Addvertisment assc=association8 mult=1..1 side=A */
+
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
+
+   @Column(name = "oneDate", nullable = false)
+   private String oneDate;
+
+
+   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+   @JoinColumn(name="addvertisment_id")
    public Addvertisment addvertisment;
-   
-   
-   /** @pdGenerated default parent getter */
+
+   public ReservedDate() {
+   }
+
+   public Long getId() {
+      return id;
+   }
+
+   public void setId(Long id) {
+      this.id = id;
+   }
+
+   public String getOneDate() {
+      return oneDate;
+   }
+
+   public void setOneDate(String oneDate) {
+      this.oneDate = oneDate;
+   }
+
    public Addvertisment getAddvertisment() {
       return addvertisment;
    }
-   
-   /** @pdGenerated default parent setter
-     * @param newAddvertisment */
-   public void setAddvertisment(Addvertisment newAddvertisment) {
-      if (this.addvertisment == null || !this.addvertisment.equals(newAddvertisment))
-      {
-         if (this.addvertisment != null)
-         {
-            Addvertisment oldAddvertisment = this.addvertisment;
-            this.addvertisment = null;
-            oldAddvertisment.removeReservedDate(this);
-         }
-         if (newAddvertisment != null)
-         {
-            this.addvertisment = newAddvertisment;
-            this.addvertisment.addReservedDate(this);
-         }
-      }
-   }
 
+   public void setAddvertisment(Addvertisment addvertisment) {
+      this.addvertisment = addvertisment;
+   }
 }

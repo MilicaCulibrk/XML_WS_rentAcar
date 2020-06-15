@@ -1,159 +1,167 @@
-/***********************************************************************
- * Module:  Company.java
- * Author:  23nik
- * Purpose: Defines the Class Company
- ***********************************************************************/
-
 package agentBackend.model;
 
-/** @pdOid b5e45fae-1045-46fc-999e-d66d19f55abc */
-public class Company {
-   /** @pdOid 51361c8c-9fc1-47bc-8b1d-2d219d579bae */
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
+
+@Entity(name="company")
+public class Company implements UserDetails {
+
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
-   /** @pdOid 7d95aa1d-f14c-49cc-acc1-1d9128e28ec8 */
+
+   @Column(name = "name", nullable = false)
    private String name;
-   /** @pdOid 45b9f20d-1645-49d1-9362-1f2ebca59a3b */
+
+   @Column(name = "email", nullable = false)
    private String email;
-   /** @pdOid 3c4d4fb3-502e-4093-bff5-ca936522efdb */
+
+   @Column(name = "username", nullable = false)
+   private String username;
+
+   @Column(name = "password", nullable = false)
    private String password;
-   /** @pdOid 2e81fd8e-9fa2-4a4e-a89b-b39e1e3c50a0 */
+
+   @Column(name = "address", nullable = false)
    private String address;
-   /** @pdOid a2412afe-0848-4231-b5b2-651a2dff4929 */
+
+   @Column(name = "city", nullable = false)
    private String city;
-   /** @pdOid 9a8b2d44-aa36-42a2-a8c9-3951c6b5b51d */
-   private String phoneNumber;
-   /** @pdOid f53f6215-97b0-45a8-b17b-afe8d2883c6a */
-   private String companyNumber;
-   
-   /** @pdRoleInfo migr=no name=Addvertisment assc=association1 coll=java.util.List impl=java.util.ArrayList mult=0..* */
-   public java.util.List<Addvertisment> addvertisment;
-   /** @pdRoleInfo migr=no name=PriceList assc=association4 coll=java.util.List impl=java.util.ArrayList mult=0..* */
-   public java.util.List<PriceList> priceList;
-   
-   
-   /** @pdGenerated default getter */
-   public java.util.List<Addvertisment> getAddvertisment() {
-      if (addvertisment == null)
-         addvertisment = new java.util.ArrayList<Addvertisment>();
-      return addvertisment;
-   }
-   
-   /** @pdGenerated default iterator getter */
-   public java.util.Iterator getIteratorAddvertisment() {
-      if (addvertisment == null)
-         addvertisment = new java.util.ArrayList<Addvertisment>();
-      return addvertisment.iterator();
-   }
-   
-   /** @pdGenerated default setter
-     * @param newAddvertisment */
-   public void setAddvertisment(java.util.List<Addvertisment> newAddvertisment) {
-      removeAllAddvertisment();
-      for (java.util.Iterator iter = newAddvertisment.iterator(); iter.hasNext();)
-         addAddvertisment((Addvertisment)iter.next());
-   }
-   
-   /** @pdGenerated default add
-     * @param newAddvertisment */
-   public void addAddvertisment(Addvertisment newAddvertisment) {
-      if (newAddvertisment == null)
-         return;
-      if (this.addvertisment == null)
-         this.addvertisment = new java.util.ArrayList<Addvertisment>();
-      if (!this.addvertisment.contains(newAddvertisment))
-      {
-         this.addvertisment.add(newAddvertisment);
-         newAddvertisment.setCompany(this);      
-      }
-   }
-   
-   /** @pdGenerated default remove
-     * @param oldAddvertisment */
-   public void removeAddvertisment(Addvertisment oldAddvertisment) {
-      if (oldAddvertisment == null)
-         return;
-      if (this.addvertisment != null)
-         if (this.addvertisment.contains(oldAddvertisment))
-         {
-            this.addvertisment.remove(oldAddvertisment);
-            oldAddvertisment.setCompany((Company)null);
-         }
-   }
-   
-   /** @pdGenerated default removeAll */
-   public void removeAllAddvertisment() {
-      if (addvertisment != null)
-      {
-         Addvertisment oldAddvertisment;
-         for (java.util.Iterator iter = getIteratorAddvertisment(); iter.hasNext();)
-         {
-            oldAddvertisment = (Addvertisment)iter.next();
-            iter.remove();
-            oldAddvertisment.setCompany((Company)null);
-         }
-      }
-   }
-   /** @pdGenerated default getter */
-   public java.util.List<PriceList> getPriceList() {
-      if (priceList == null)
-         priceList = new java.util.ArrayList<PriceList>();
-      return priceList;
-   }
-   
-   /** @pdGenerated default iterator getter */
-   public java.util.Iterator getIteratorPriceList() {
-      if (priceList == null)
-         priceList = new java.util.ArrayList<PriceList>();
-      return priceList.iterator();
-   }
-   
-   /** @pdGenerated default setter
-     * @param newPriceList */
-   public void setPriceList(java.util.List<PriceList> newPriceList) {
-      removeAllPriceList();
-      for (java.util.Iterator iter = newPriceList.iterator(); iter.hasNext();)
-         addPriceList((PriceList)iter.next());
-   }
-   
-   /** @pdGenerated default add
-     * @param newPriceList */
-   public void addPriceList(PriceList newPriceList) {
-      if (newPriceList == null)
-         return;
-      if (this.priceList == null)
-         this.priceList = new java.util.ArrayList<PriceList>();
-      if (!this.priceList.contains(newPriceList))
-      {
-         this.priceList.add(newPriceList);
-         newPriceList.setCompany(this);      
-      }
-   }
-   
-   /** @pdGenerated default remove
-     * @param oldPriceList */
-   public void removePriceList(PriceList oldPriceList) {
-      if (oldPriceList == null)
-         return;
-      if (this.priceList != null)
-         if (this.priceList.contains(oldPriceList))
-         {
-            this.priceList.remove(oldPriceList);
-            oldPriceList.setCompany((Company)null);
-         }
-   }
-   
-   /** @pdGenerated default removeAll */
-   public void removeAllPriceList() {
-      if (priceList != null)
-      {
-         PriceList oldPriceList;
-         for (java.util.Iterator iter = getIteratorPriceList(); iter.hasNext();)
-         {
-            oldPriceList = (PriceList)iter.next();
-            iter.remove();
-            oldPriceList.setCompany((Company)null);
-         }
-      }
+
+   @Column(name = "phone_number", nullable = false)
+   private String phone_number;
+
+   @Column(name = "company_number", nullable = false)
+   private String company_number;
+
+   @OneToMany(fetch = FetchType.LAZY)
+   @JoinColumn(name = "addvertisment_id")
+   public List<Addvertisment> addvertisments;
+
+   //public java.util.List<PriceList> priceList;
+
+   public Company() {
    }
 
+   public Long getId() {
+      return id;
+   }
+
+   public void setId(Long id) {
+      this.id = id;
+   }
+
+   public String getName() {
+      return name;
+   }
+
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public String getEmail() {
+      return email;
+   }
+
+   public void setEmail(String email) {
+      this.email = email;
+   }
+
+
+   public void setUsername(String username) {
+      this.username = username;
+   }
+
+   public String getPassword() {
+      return password;
+   }
+
+   public void setPassword(String password) {
+      this.password = password;
+   }
+
+   public String getAddress() {
+      return address;
+   }
+
+   public void setAddress(String address) {
+      this.address = address;
+   }
+
+   public String getCity() {
+      return city;
+   }
+
+   public void setCity(String city) {
+      this.city = city;
+   }
+
+   public String getPhone_number() {
+      return phone_number;
+   }
+
+   public void setPhone_number(String phone_number) {
+      this.phone_number = phone_number;
+   }
+
+   public String getCompany_number() {
+      return company_number;
+   }
+
+   public void setCompany_number(String company_number) {
+      this.company_number = company_number;
+   }
+
+   public List<Addvertisment> getAddvertisments() {
+      return addvertisments;
+   }
+
+   public void setAddvertisments(List<Addvertisment> addvertisments) {
+      this.addvertisments = addvertisments;
+   }
+
+   @Override
+   public Collection<? extends GrantedAuthority> getAuthorities() {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+
+   @Override
+   public String getUsername() {
+      // TODO Auto-generated method stub
+      return this.username;
+   }
+
+
+   @Override
+   public boolean isAccountNonExpired() {
+      // TODO Auto-generated method stub
+      return true;
+   }
+
+
+   @Override
+   public boolean isAccountNonLocked() {
+      // TODO Auto-generated method stub
+      return true;
+   }
+
+
+   @Override
+   public boolean isCredentialsNonExpired() {
+      // TODO Auto-generated method stub
+      return true;
+   }
+
+
+   @Override
+   public boolean isEnabled() {
+      // TODO Auto-generated method stub
+      return true;
+   }
 }
