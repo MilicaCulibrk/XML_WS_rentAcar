@@ -1,5 +1,13 @@
 <template>
   <div>
+    <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
+      <span>{{snackbarSuccessText}}</span>
+      <v-btn text @click="snackbarSuccess = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
+      <span>{{snackbarDangerText}}</span>
+      <v-btn text @click="snackbarDanger = false">Close</v-btn>
+    </v-snackbar>
     <v-container class="pt-12 mt-12">
 
 <v-row align="center">
@@ -59,13 +67,13 @@
                 </v-row>
               </v-expansion-panel-content>
             </v-expansion-panel>
-            <v-container fluid>
+            <v-container fluid v-if="request.status=='PENDING'">
               <v-row>
                 <v-col cols="10"></v-col>
                 <v-col cols="1">
                   <v-tooltip bottom color="white">
                     <template v-slot:activator="{ on }">
-                      <v-btn icon v-on="on" color="green">
+                      <v-btn icon v-on="on" color="green" @click="acceptRequest(request.id)">
                         <v-icon>mdi-check</v-icon>
                       </v-btn>
                     </template>
@@ -75,7 +83,7 @@
                 <v-col cols="1">
                   <v-tooltip bottom color="white">
                     <template v-slot:activator="{ on }">
-                      <v-btn icon v-on="on" color="red">
+                      <v-btn icon v-on="on" color="red" @click="declineRequest(request.id)"> 
                         <v-icon>mdi-close</v-icon>
                       </v-btn>
                     </template>
@@ -100,22 +108,58 @@ export default {
 
   data() {
     return {
-        requests: [],
+      requests: [],
+      snackbarSuccess: false,
+      snackbarSuccessText: "",
+      snackbarDanger: false,
+      snackbarDangerText: "",
     };
   },
   methods: {
-  
+    acceptRequest(id){
+        axios
+      .put("/rent-service/request/" + id)
+      .then(response=>{
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText ="Request is accepted!";
+          console.log(response);
+          this.getRequests();
+        })
+      .catch(error => {
+        this.snackbarDanger = true;
+        this.snackbarDangerText ="Error";
+        console.log(error);
+      });
+    }, 
+    declineRequest(id){
+        axios
+      .put("/rent-service/request/decline/" + id)
+      .then(response=>{
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText ="Request is canceled!";
+          console.log(response);
+          this.getRequests();
+        })
+      .catch(error => {
+        this.snackbarDanger = true;
+        this.snackbarDangerText ="Error";
+        console.log(error);
+      });
+    }, 
+    getRequests(){
+        axios
+      .get("/rent-service/request/from/" + this.$store.state.user.username)
+      .then(requests => {
+        this.requests = requests.data;
+        console.log( this.requests);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
   },
   mounted() {
-      axios
-    .get("/rent-service/request/from/" + this.$store.state.user.username)
-    .then(requests => {
-      this.requests = requests.data;
-      console.log( this.requests);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    this.getRequests();
   }
 };
 </script>

@@ -10,6 +10,8 @@ import rent.dto.RequestDTO;
 import rent.model.Purchase;
 import rent.model.Request;
 import rent.service.RequestService;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -75,8 +77,30 @@ public class RequestController {
 
     //updejtuje se rekvest kad ga admin odobri
     @PutMapping("/{id}")
-    public ResponseEntity updateRequest (@RequestBody Request request, @PathVariable Long id) {
-        return null;
+    public ResponseEntity updateRequest (@PathVariable Long id) throws ParseException {
+        if(id == null) {
+            return new ResponseEntity("You didn't send the request id", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            requestService.updateRequest(id);
+            return new ResponseEntity("Request is updated", HttpStatus.OK);
+        }catch (NoSuchElementException e) {
+            return new ResponseEntity<>("Request with this id doesn't exist", HttpStatus.NOT_FOUND);
+        }    
+    }
+    
+    //updejtuje se rekvest kad ga admin ODBIJE
+    @PutMapping("/decline/{id}")
+    public ResponseEntity updateDeclineRequest (@PathVariable Long id) throws ParseException {
+        if(id == null) {
+            return new ResponseEntity("You didn't send the request id", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            requestService.updateDeclineRequest(id);
+            return new ResponseEntity("Request is updated", HttpStatus.OK);
+        }catch (NoSuchElementException e) {
+            return new ResponseEntity<>("Request with this id doesn't exist", HttpStatus.NOT_FOUND);
+        }    
     }
 
     //brisanje pojedinacnog oglasa
