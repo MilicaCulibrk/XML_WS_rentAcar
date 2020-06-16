@@ -6,7 +6,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
-import javax.persistence.Entity;
 import java.util.List;
 
 @Entity(name="request")

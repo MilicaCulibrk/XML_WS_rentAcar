@@ -54,12 +54,14 @@ public class RequestService {
     public ArrayList<Request> createRequest(List<PurchaseDTO> purchases){
 
         ArrayList<Request> requests = new ArrayList();
-
+        List<Purchase> purchasesForRequest = new ArrayList();
         for (PurchaseDTO p : purchases){
             Request request = new Request();
             request.setStatus("PENDING");
             Purchase purchase = this.createPurchase(p);
             purchase.setRequest(request);
+            purchasesForRequest.add(purchase);
+            //request.setPurchaseList(purchasesForRequest);
             purchaseRepository.save(purchase);
             requestRepository.save(request);
             requests.add(request);

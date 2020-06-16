@@ -10,7 +10,6 @@ import rent.dto.RequestDTO;
 import rent.model.Purchase;
 import rent.model.Request;
 import rent.service.RequestService;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
