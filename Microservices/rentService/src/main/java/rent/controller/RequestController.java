@@ -30,6 +30,14 @@ public class RequestController {
         return new ResponseEntity(requests, HttpStatus.OK);
     }
     
+    @GetMapping(value = "/from/{username}")
+    public ResponseEntity<String> getAllRequestsFrom (@PathVariable String username)  {
+
+        ArrayList<RequestDTO> requests = new ArrayList<>();
+        requests = requestService.getAllRequestsFrom(username);
+        return new ResponseEntity(requests, HttpStatus.OK);
+    }
+    
     @GetMapping("/{id}")
     public ResponseEntity<?> getRequest (@PathVariable Long id)  {
         if(id == null) {

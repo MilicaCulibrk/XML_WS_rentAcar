@@ -98,6 +98,7 @@ export default {
       purchase.id_add = car.id;
       purchase.date_from = car.date_from;
       purchase.date_to = car.date_to;
+      purchase.brand_model = car.brand + " " + car.model;
       return purchase;
     },
     getAgents() {

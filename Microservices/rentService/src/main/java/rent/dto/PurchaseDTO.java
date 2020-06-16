@@ -13,6 +13,7 @@ public class PurchaseDTO {
     private Boolean ordered;
     private String date_from;
     private String date_to;
+    private String brand_model;
 
     public PurchaseDTO() {
     }
@@ -25,9 +26,19 @@ public class PurchaseDTO {
         this.ordered = purchase.getOrdered();
         this.date_from = purchase.getDate_from();
         this.date_to = purchase.getDate_to();
+        this.brand_model = purchase.getBrand_model();
+
     }
 
-    public Long getId() {
+    public String getBrand_model() {
+		return brand_model;
+	}
+
+	public void setBrand_model(String brand_model) {
+		this.brand_model = brand_model;
+	}
+
+	public Long getId() {
         return id;
     }
 

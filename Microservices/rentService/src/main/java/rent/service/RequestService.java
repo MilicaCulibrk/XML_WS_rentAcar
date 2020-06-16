@@ -33,7 +33,8 @@ public class RequestService {
         purchase.setId_add(p.getId_add());
         purchase.setOrdered(false);
         purchase.setClient(p.getClient());
-
+        purchase.setOwner(p.getOwner());
+        purchase.setBrand_model(p.getBrand_model());
         return purchase;
     }
 
@@ -93,4 +94,16 @@ public class RequestService {
         }
         return new RequestDTO(request);
     }
+
+	public ArrayList<RequestDTO> getAllRequestsFrom(String username) {
+		// TODO Auto-generated method stub
+        List<Request> requests = new ArrayList<>();
+        requests = requestRepository.findAll();
+        ArrayList<RequestDTO> requestDTOS = new ArrayList<>();
+        for(Request r : requests){
+        	if(username.equals(r.getPurchaseList().get(0).getOwner())){
+        		requestDTOS.add(new RequestDTO(r));
+        	}
+        }
+        return  requestDTOS;	}
 }
