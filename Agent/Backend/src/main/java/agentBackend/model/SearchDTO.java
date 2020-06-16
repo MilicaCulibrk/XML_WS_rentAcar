@@ -15,7 +15,7 @@ public class SearchDTO {
    /** @pdOid e2bf2a67-f50d-46cb-a50f-566aaf706b72 */
    private Brand Brand;
    /** @pdOid c532b21c-d2f6-418a-8237-c3e1701ebd32 */
-   private Model Model;
+   private VehicleModel VehicleModel;
    /** @pdOid 642edecf-4772-4677-a74d-6414f920de54 */
    private FuelType FuelType;
    /** @pdOid 6353b339-c4ce-4b6b-b733-f1223eca637a */
