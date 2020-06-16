@@ -14,6 +14,10 @@
       <v-card class="cardBorderColor">
         <v-card-title>
           <span class="primary--text font-italic headline" primary-title>Registration</span>
+          <v-spacer></v-spacer>
+          <v-btn icon color="primary" @click="RegisterDialog =  false">
+            <v-icon>cancel</v-icon>
+          </v-btn>
         </v-card-title>
         <v-card-text>
           <v-container>

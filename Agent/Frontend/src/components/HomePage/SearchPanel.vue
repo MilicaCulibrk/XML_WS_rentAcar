@@ -310,12 +310,12 @@ export default {
       toDateMenu: false,
       due: null,
       to: null,
-      brandItems: {},
-      modelItems: {},
-      classItems: {},
-      transmissionItems: {},
-      gasItems: {},
-      cars: {},
+      brandItems: [],
+      modelItems: [],
+      classItems: [],
+      transmissionItems: [],
+      gasItems: [],
+      cars: [],
       locationItems: [],
       searchItem: {
         selectBrand: [],
@@ -389,7 +389,6 @@ export default {
       axios
         .get("/search-service/search")
         .then(cars => {
-          console.log("uso");
           this.cars = cars.data;
           this.getLocations();
         })
@@ -402,7 +401,45 @@ export default {
     }
   },
   mounted() {
-    //sadkl
+    //izlistavanje brendova
+    axios
+      .get("/brand")
+      .then(brandItems => {
+        this.brandItems = brandItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //izlistavanje klasa
+    axios
+      .get("/vehicle_class")
+      .then(classItems => {
+        this.classItems = classItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //izlistavanje tipova goriva
+    axios
+      .get("/fuel_type")
+      .then(gasItems => {
+        this.gasItems = gasItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //izlistavanje tipova prenosa
+    axios
+      .get("/transmission_type")
+      .then(transmissionItems => {
+        this.transmissionItems = transmissionItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
   computed: {
     formattedDateFrom() {

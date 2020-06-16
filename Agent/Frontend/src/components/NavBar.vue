@@ -44,12 +44,12 @@
         text
         color="primary"
         @click="openAddNewAddvertisment()"
-        v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'"
+        v-if="(this.$store.state.user.role)=='COMPANY'"
       >
         <span>New Add</span>
         <v-icon right>add</v-icon>
       </v-btn>
-      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
+      <v-btn text color="primary" v-if="(this.$store.state.user.role)=='COMPANY'">
         <span @click="openMyAddvertisments()">My Adds</span>
         <v-icon right>list</v-icon>
       </v-btn>

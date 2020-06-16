@@ -24,8 +24,28 @@ public class AddvertismentDTO {
     private String vehicle_class_name;
     private Long transmission_type_id;
     private String transmission_type_name;
-    private String owner;
+    private Long owner;
     private ArrayList<ImageDTO> images;
+    private ArrayList<ReservedDateDTO> arrayEvents;
+
+    public AddvertismentDTO(Long id, Long fuel_type_id, Long brand_id, Long vehicle_model_id, Long vehicle_class_id, Long transmission_type_id, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, float price, ArrayList<ImageDTO> images, ArrayList<ReservedDateDTO> arrayEvents, Long addvertiser_id) {
+        this.id = id;
+        this.fuel_type_id = fuel_type_id;
+        this.brand_id = brand_id;
+        this.vehicle_model_id = vehicle_model_id;
+        this.vehicle_class_id = vehicle_class_id;
+        this.transmission_type_id = transmission_type_id;
+        this.mileage = mileage;
+        this.mileage_limit = mileage_limit;
+        this.cdw = cdw;
+        this.child_seats = child_seats;
+        this.location = location;
+        this.daily_price = getDaily_price();
+        this.images = images;
+        this.arrayEvents = arrayEvents;
+        this.owner = addvertiser_id;
+    }
+
 
     public AddvertismentDTO(Addvertisment addvertisment) {
         this.id = addvertisment.getId();
@@ -45,8 +65,8 @@ public class AddvertismentDTO {
         this.vehicle_class_name = addvertisment.getVehicle_class().getVehicle_class_name();
         this.transmission_type_id = addvertisment.getTransmission_type().getId();
         this.transmission_type_name = addvertisment.getTransmission_type().getTransmission_type_name();
-        this.owner = addvertisment.getCompany().getUsername();
-
+        this.owner = addvertisment.getCompany().getId();
+        this.arrayEvents = new ArrayList<>();
         this.images = new ArrayList<>();
 
         for(Image i : addvertisment.getImages()){
@@ -190,11 +210,11 @@ public class AddvertismentDTO {
         this.transmission_type_name = transmission_type_name;
     }
 
-    public String getOwner() {
+    public Long getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(Long owner) {
         this.owner = owner;
     }
 
@@ -204,5 +224,13 @@ public class AddvertismentDTO {
 
     public void setImages(ArrayList<ImageDTO> images) {
         this.images = images;
+    }
+
+    public ArrayList<ReservedDateDTO> getArrayEvents() {
+        return arrayEvents;
+    }
+
+    public void setArrayEvents(ArrayList<ReservedDateDTO> arrayEvents) {
+        this.arrayEvents = arrayEvents;
     }
 }

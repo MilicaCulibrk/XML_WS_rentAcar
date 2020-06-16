@@ -1,8 +1,13 @@
 package agentBackend.service;
 
 import agentBackend.dto.AddvertismentDTO;
+import agentBackend.dto.AddvertismentDisplayDTO;
+import agentBackend.dto.ImageDTO;
+import agentBackend.dto.ReservedDateDTO;
 import agentBackend.model.Addvertisment;
-import agentBackend.repository.AddvertismentRepository;
+import agentBackend.model.Image;
+import agentBackend.model.ReservedDate;
+import agentBackend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +20,31 @@ public class AddvertismentService {
     @Autowired
     private AddvertismentRepository addvertismentRepository;
 
+    @Autowired
+    private BrandRepository brandRepository;
+
+    @Autowired
+    private FuelTypeRepository fuelTypeRepository;
+
+    @Autowired
+    private TransmissionTypeRepository transmissionTypeRepository;
+
+    @Autowired
+    private VehicleClassRepository vehicleClassRepository;
+
+    @Autowired
+    private VehicleModelRepository vehicleModelRepository;
+
+    @Autowired
+    private ImageRepository imageRepository;
+
+    @Autowired
+    private ReservedDateRepository reservedDateRepository;
+
+    @Autowired
+    private CompanyRepository companyRepository;
+
+
     public List<AddvertismentDTO> getAllAdds() {
         List<AddvertismentDTO> addsDTOlist = new ArrayList<>();
         List<Addvertisment> adds = addvertismentRepository.findAll();
@@ -22,5 +52,67 @@ public class AddvertismentService {
             addsDTOlist.add(new AddvertismentDTO(add));
         }
         return addsDTOlist;
+    }
+
+    public List<AddvertismentDisplayDTO> getAllUsersAddvertisments(Long id) {
+        List<AddvertismentDisplayDTO> addvertismentDisplayDTOS = new ArrayList<>();
+        List<Addvertisment> addvertisments = addvertismentRepository.findAll();
+        for (Addvertisment addvertisment : addvertisments) {
+            if(addvertisment.getCompany().getId().equals(id)) {
+                addvertismentDisplayDTOS.add(new AddvertismentDisplayDTO(addvertisment));
+            }
+        }
+        return addvertismentDisplayDTOS;
+    }
+
+    public Addvertisment createAddvertisment(AddvertismentDTO addvertismentDTO) {
+
+        Addvertisment addvertisment = newDTOtoReal(addvertismentDTO);
+        addvertismentRepository.save(addvertisment);
+
+        return addvertisment;
+
+    }
+
+    public Addvertisment newDTOtoReal(AddvertismentDTO dto){
+        Addvertisment real = new Addvertisment();
+        real.setCdw(dto.isCdw());
+        real.setChild_seats(dto.getChild_seats());
+        real.setLocation(dto.getLocation());
+        real.setMileage(dto.getMileage());
+        real.setMileage_limit(dto.getMileage_limit());
+        real.setDaily_price(dto.getDaily_price());
+        real.setCompany(companyRepository.findById(dto.getOwner()).orElse(null));
+        real.setBrand(brandRepository.findById(dto.getBrand_id()).orElse(null));
+        real.setFuel_type(fuelTypeRepository.findById(dto.getFuel_type_id()).orElse(null));
+        real.setTransmission_type(transmissionTypeRepository.findById(dto.getTransmission_type_id()).orElse(null));
+        real.setVehicle_class(vehicleClassRepository.findById(dto.getVehicle_class_id()).orElse(null));
+        real.setVehicle_model(vehicleModelRepository.findById(dto.getVehicle_model_id()).orElse(null));
+
+        for(ImageDTO i: dto.getImages()){
+            Image image = this.createImage(i);
+            image.setAddvertisment(real);
+            imageRepository.save(image);
+        }
+        for(ReservedDateDTO r: dto.getArrayEvents()){
+            ReservedDate reservedDate = this.createReservedDate(r);
+            reservedDate.setAddvertisment(real);
+            reservedDateRepository.save(reservedDate);
+        }
+
+        return real;
+    }
+
+    public Image createImage(ImageDTO i){
+        Image image = new Image();
+        image.setUrl(i.getUrl());
+
+        return image;
+    }
+    public ReservedDate createReservedDate(ReservedDateDTO r){
+        ReservedDate reservedDate = new ReservedDate();
+        reservedDate.setOneDate(r.getOneDate());
+
+        return reservedDate;
     }
 }

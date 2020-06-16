@@ -22,11 +22,11 @@ public class Order {
    /** @pdRoleInfo migr=no name=Addvertisment assc=association6 mult=1..1 */
    public Addvertisment addvertisment;
    /** @pdRoleInfo migr=no name=RequestForRenting assc=association5 mult=1..1 side=A */
-   public RequestForRenting requestForRenting;
+   public Request request;
    /** @pdRoleInfo migr=no name=User assc=association7 mult=1..1 side=A */
    public User user;
    /** @pdRoleInfo migr=no name=RentingReport assc=association9 mult=1..1 side=A */
-   public RentingReport rentingReport;
+   public Report report;
    
    
 

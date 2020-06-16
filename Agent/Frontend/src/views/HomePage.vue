@@ -270,7 +270,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .cardBorderColor {
   border-left: 1px solid #ff8a65;
   border-top: 1px solid #ff8a65;
