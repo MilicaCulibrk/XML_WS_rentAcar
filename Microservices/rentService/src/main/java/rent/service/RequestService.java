@@ -138,7 +138,7 @@ public class RequestService {
     			if(!purchase.getOrdered()) {
 					Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(purchase.getDate_from());
 					Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(purchase.getDate_to());
-					if (!((startDate.before(startDateAccepted) && endDate.before(endDateAccepted)) || (startDate.after(startDateAccepted) && endDate.after(endDateAccepted)))) {
+					if (!((startDate.before(startDateAccepted) && endDate.before(startDateAccepted)) || (startDate.after(endDateAccepted) && endDate.after(endDateAccepted)))) {
 						ids.add(purchase.getRequest().getId());
 					}
     			}
