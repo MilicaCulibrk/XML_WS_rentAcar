@@ -134,7 +134,7 @@ export default {
     },
     getRequests() {
       axios
-        .get("/rent-service/request/from/" + this.$store.state.user.username)
+        .get("/rent-service/request/to/" + this.$store.state.user.username)
         .then(requests => {
           this.requests = requests.data;
           console.log(this.requests);

@@ -45,6 +45,15 @@
         <span>Requests</span>
         <v-icon right>check_box</v-icon>
       </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openPurchases()"
+        v-if="(this.$store.state.user.role)=='USER'"
+      >
+        <span>My purchases</span>
+        <v-icon right>check_box</v-icon>
+      </v-btn>
       <v-btn text color="primary" @click="openCart()" v-if="(this.$store.state.user.role)=='USER'">
         <span>Cart</span>
         <v-icon right>shopping_cart</v-icon>
@@ -123,6 +132,9 @@ export default {
     },
     openRequests() {
       this.$router.push("/requests");
+    },
+    openPurchases() {
+      this.$router.push("/purchases");
     },
     logout() {
       localStorage.removeItem("loggedUser");

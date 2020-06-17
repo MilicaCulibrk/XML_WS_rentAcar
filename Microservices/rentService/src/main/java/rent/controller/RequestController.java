@@ -32,6 +32,14 @@ public class RequestController {
         return new ResponseEntity(requests, HttpStatus.OK);
     }
     
+    @GetMapping(value = "/to/{username}")
+    public ResponseEntity<String> getAllRequestsTo (@PathVariable String username)  {
+
+        ArrayList<RequestDTO> requests = new ArrayList<>();
+        requests = requestService.getAllRequestsTo(username);
+        return new ResponseEntity(requests, HttpStatus.OK);
+    }
+    
     @GetMapping(value = "/from/{username}")
     public ResponseEntity<String> getAllRequestsFrom (@PathVariable String username)  {
 
