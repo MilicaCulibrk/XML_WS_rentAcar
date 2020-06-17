@@ -3,7 +3,7 @@
     <div v-if="emptyBasket" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <v-flex>
         <v-card hover elevation="2" class="text-center ma-6">
-          <div class="cardBorderColor">
+          <div class="detailsBorderColor">
             <v-card-text style="align:center" class="headline">
               <h2>Your basket is empty</h2>
               <br />
@@ -188,4 +188,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.cardBorderColor {
+  border-left: 1px solid #fbc02d;
+  border-top: 1px solid #fbc02d;
+  border-right: 1px solid #fbc02d;
+  border-bottom: 1px solid #fbc02d;
+}
+.detailsBorderColor {
+  border-left: 1.5px solid #fbc02d;
+  border-top: 1.5px solid #fbc02d;
+  border-right: 1.5px solid #fbc02d;
+  border-bottom: 1.5px solid #fbc02d;
+}
+</style>
