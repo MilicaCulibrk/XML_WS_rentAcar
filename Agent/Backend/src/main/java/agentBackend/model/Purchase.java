@@ -1,6 +1,9 @@
 package agentBackend.model;
 
+import agentBackend.model.Request;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Purchase {
@@ -27,6 +30,9 @@ public class Purchase {
     @Column(name = "date_to",  nullable = false)
     private String date_to;
 
+    @Column(name = "brand_model",  nullable = false)
+    private String brand_model;
+
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "request")
     public Request request;
@@ -47,6 +53,14 @@ public class Purchase {
 
     public Long getId() {
         return id;
+    }
+
+    public String getBrand_model() {
+        return brand_model;
+    }
+
+    public void setBrand_model(String brand_model) {
+        this.brand_model = brand_model;
     }
 
     public void setId(Long id) {

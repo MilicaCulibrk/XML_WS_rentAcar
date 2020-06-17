@@ -280,3 +280,20 @@ INSERT INTO public.user_entity(name, surname, password, username, email, address
 VALUES ('Biljana', 'Matovic', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','bm', 'bm@gmail.com', 'Sibinjanin Janka 9', 'Novi Sad', '064585899', '3', true);
 INSERT INTO public.user_entity(name, surname, password, username, email, address, city, phone_number, number_of_addvertisment, active)
 VALUES ('Veljko', 'Matovic', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','vm', 'vm@gmail.com', 'Sibinjanin Janka 9', 'Novi Sad', '0645850578', '2', true);
+
+
+INSERT INTO public.request(status) VALUES ('PENDING');
+INSERT INTO public.request(status) VALUES ('PENDING');
+INSERT INTO public.request(status) VALUES ('PENDING');
+INSERT INTO public.request(status) VALUES ('PENDING');
+
+INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
+VALUES ( '2020-06-21', '2020-06-29', 1, 'ss', 'mm', false, 1, 'BMW X5');
+INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
+VALUES ( '2020-04-21', '2020-05-05', 2, 'ss', 'bm', false, 1, 'Mercedes I5');
+INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
+VALUES ( '2020-06-21', '2020-06-28', 2, 'ss', 'mm', false, 2, 'Mercedes I5');
+INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
+VALUES ( '2020-05-21', '2020-06-03', 2, 'ss', 'mm', false, 4, 'Volkswagen Golf');
+INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
+VALUES ( '2020-06-26', '2020-06-29', 2, 'ss', 'bm', false, 3, 'Mercedes I5');

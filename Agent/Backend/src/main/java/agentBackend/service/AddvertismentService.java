@@ -82,7 +82,7 @@ public class AddvertismentService {
         real.setMileage(dto.getMileage());
         real.setMileage_limit(dto.getMileage_limit());
         real.setDaily_price(dto.getDaily_price());
-        real.setCompany(companyRepository.findById(dto.getOwner()).orElse(null));
+        real.setCompany(companyRepository.findByUsername(dto.getOwner()));
         real.setBrand(brandRepository.findById(dto.getBrand_id()).orElse(null));
         real.setFuel_type(fuelTypeRepository.findById(dto.getFuel_type_id()).orElse(null));
         real.setTransmission_type(transmissionTypeRepository.findById(dto.getTransmission_type_id()).orElse(null));

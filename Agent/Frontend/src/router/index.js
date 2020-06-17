@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import HomePage from "../views/HomePage.vue";
 import Cart from "../views/user/Cart.vue";
 import Codebook from "../views/admin/Codebook.vue";
+import Requests from "../views/agent/Requests.vue";
 import AddNewAddvertisment from "../views/agent/AddNewAddvertisment.vue";
 import MyAddvertisments from "../views/agent/MyAddvertisments.vue";
 
@@ -23,6 +24,11 @@ const routes = [
     path: "/codebook",
     name: "Codebook",
     component: Codebook,
+  },
+  {
+    path: "/requests",
+    name: "Requests",
+    component: Requests,
   },
   {
     path: "/addNewAddvertisment",
