@@ -34,7 +34,7 @@
                             <v-col cols="2">Owner: {{purchase.owner}}</v-col>
                             <v-col cols="3">Start date: {{purchase.date_from}}</v-col>
                             <v-col cols="5">End date: {{purchase.date_to}}</v-col>
-                            <v-col cols="1">
+                            <v-col cols="1" v-if="purchase.pass==true">
                                 <v-dialog v-model="dialogRating" max-width="600px">
                                 <template #activator="{ on: dialogRating }">
                                     <v-tooltip bottom color="black">
@@ -82,7 +82,7 @@
                                 </v-dialog>
 
                             </v-col>
-                            <v-col cols="1">
+                            <v-col cols="1" v-if="purchase.pass==true">
                                 <v-dialog v-model="dialogComment" max-width="600px">
                                 <template #activator="{ on: dialogComment }">
                                     <v-tooltip bottom color="black">
@@ -104,9 +104,14 @@
                                         </v-card-title>
                                         <v-card-text>
                                         Please take a few seconds to leave your comment for this addvertisment.
+                                        <v-text-field
+                                            v-model="comment.title"
+                                            placeholder="Title"
+                                        ></v-text-field> 
                                         <v-textarea
-                                            v-model="comment"
+                                            v-model="comment.text"
                                             solo
+                                            placeholder="Text"
                                             name="input-7-4"
                                         ></v-textarea>  
                                         </v-card-text>
@@ -153,7 +158,14 @@ export default {
       rating: "",
       dialogComment: false,
       dialogRating: false,
-      comment:"",
+      comment: {
+          user_id: "",
+          user_username: "",
+          text: "",
+          title: "",
+          add_id: "",
+          accepted: "",
+      },
     };
   },
   methods: {
@@ -173,12 +185,17 @@ export default {
         });
     },
     commentAdd(id) {
+        console.log(id);
+        this.comment.add_id = id;
+        this.comment.user_id = this.$store.state.user.id;
+        this.comment.user_username = this.$store.state.user.username;
       axios
-        .put("/rent-service/request/decline/" + id)
+        .post("/addvertisment-service/comment", this.comment)
         .then(response => {
           this.snackbarSuccess = true;
-          this.snackbarSuccessText = "Request is canceled!";
+          this.snackbarSuccessText = "Comment is added!";
           console.log(response);
+          this.dialogComment = false;
           this.getRequests();
         })
         .catch(error => {
@@ -191,8 +208,18 @@ export default {
       axios
         .get("/rent-service/request/from/" + this.$store.state.user.username)
         .then(requests => {
-          this.requests = requests.data;
-          console.log(this.requests);
+            this.requests = requests.data;
+            console.log(this.requests);
+            this.requests.forEach(r => {
+                r.purchaseDTOS.forEach(purchase => {
+                    var endDate = new Date(purchase.date_to);
+                    var today = new Date();
+                    if(today>endDate){
+                        purchase.pass = true;
+                    }
+                });
+
+          });
         })
         .catch(error => {
           console.log(error);

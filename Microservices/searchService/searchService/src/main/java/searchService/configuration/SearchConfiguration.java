@@ -1,4 +1,4 @@
-package addvertisment.configuration;
+package searchService.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,12 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
-import addvertisment.security.AuthenticationTokenFilter;
+import searchService.security.AuthenticationTokenFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
-public class AddvertismentConfiguration extends WebSecurityConfigurerAdapter {
+public class SearchConfiguration extends WebSecurityConfigurerAdapter {
 
 	
     @Bean
@@ -62,7 +62,7 @@ public class AddvertismentConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/h2-console/**", "/price_list/**", "/verify/**", "/addvertisment/**", "/brand/**", "/fuel_type/**", "/transmission_type/**", "/vehicle_classe/**", "/model/**", "/comment/**")
+                .antMatchers("/h2-console/**", "/create/**", "/verify/**", "/company/**", "/brands/**", "/fuel_types/**", "/transmission_types/**", "/search/**", "/vehicle_classes/**", "/models/**")
                 .permitAll()
                 .anyRequest().authenticated().and().cors();
         		

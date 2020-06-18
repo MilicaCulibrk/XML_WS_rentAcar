@@ -12,7 +12,7 @@ public class Addvertisment {
 
     @Column(name = "addvertiser_id", nullable = false)
         //koji user/firma ga kreira
-    private Long addvertiser_id;
+    private String addvertiser_id;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Brand brand;
@@ -60,11 +60,10 @@ public class Addvertisment {
 
     //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<Grade> grades;
-
-    //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
+*/
+    @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<Comment> comments;
 
-*/
 
     public Addvertisment(){
         super();
@@ -126,7 +125,7 @@ public class Addvertisment {
         this.location = location;
     }
 
-    public Addvertisment(Long id, Brand brand, VehicleModel vehicle_model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, List<ReservedDate> reservedDates, List<Image> images, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, float price, Long addvertiser_id) {
+    public Addvertisment(Long id, Brand brand, VehicleModel vehicle_model, TransmissionType transmission_type, FuelType fuel_type, VehicleClass vehicle_class, List<ReservedDate> reservedDates, List<Image> images, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, float price, String addvertiser_id) {
         this.id = id;
         this.brand = brand;
         this.vehicle_model = vehicle_model;
@@ -200,13 +199,23 @@ public class Addvertisment {
         this.images = images;
     }
 
-    public Long getAddvertiser_id() {
-        return addvertiser_id;
-    }
+	public String getAddvertiser_id() {
+		return addvertiser_id;
+	}
 
-    public void setAddvertiser_id(Long addvertiser_id) {
-        this.addvertiser_id = addvertiser_id;
-    }
+	public void setAddvertiser_id(String addvertiser_id) {
+		this.addvertiser_id = addvertiser_id;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+
 
     /*
     public PriceList getPrice_list() {

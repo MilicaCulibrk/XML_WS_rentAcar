@@ -21,28 +21,11 @@ public class AddvertismentDTO {
     private int child_seats;
     private String location;
     private float price;
-    private Long addvertiser_id;
+    private String addvertiser_id;
     private ArrayList<ImageDTO> images;
     private ArrayList<ReservedDateDTO> arrayEvents;
 
 
-    public AddvertismentDTO(Long id, Long fuel_type_id, Long brand_id, Long vehicle_model_id, Long vehicle_class_id, Long transmission_type_id, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, float price, ArrayList<ImageDTO> images, ArrayList<ReservedDateDTO> arrayEvents, Long addvertiser_id) {
-        this.id = id;
-        this.fuel_type_id = fuel_type_id;
-        this.brand_id = brand_id;
-        this.vehicle_model_id = vehicle_model_id;
-        this.vehicle_class_id = vehicle_class_id;
-        this.transmission_type_id = transmission_type_id;
-        this.mileage = mileage;
-        this.mileage_limit = mileage_limit;
-        this.cdw = cdw;
-        this.child_seats = child_seats;
-        this.location = location;
-        this.price = price;
-        this.images = images;
-        this.arrayEvents = arrayEvents;
-        this.addvertiser_id = addvertiser_id;
-    }
 
     public AddvertismentDTO(Addvertisment addvertisment) {
         this.id = addvertisment.getId();
@@ -73,11 +56,11 @@ public class AddvertismentDTO {
 
     }
 
-    public Long getAddvertiser_id() {
+    public String getAddvertiser_id() {
         return addvertiser_id;
     }
 
-    public void setAddvertiser_id(Long addvertiser_id) {
+    public void setAddvertiser_id(String addvertiser_id) {
         this.addvertiser_id = addvertiser_id;
     }
 

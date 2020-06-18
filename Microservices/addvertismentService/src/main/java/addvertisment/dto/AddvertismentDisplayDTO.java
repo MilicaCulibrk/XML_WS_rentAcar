@@ -19,28 +19,11 @@ public class AddvertismentDisplayDTO {
     private int child_seats;
     private String location;
     private float price;
-    private Long addvertiser_id;
+    private String addvertiser_id;
     private ArrayList<ImageDTO> images;
     private ArrayList<ReservedDateDTO> arrayEvents;
 
 
-    public AddvertismentDisplayDTO(Long id, String fuel_type_name, String brand_name, String vehicle_model_name, String vehicle_class_name, String transmission_type_name, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, float price, Long addvertiser_id, ArrayList<ImageDTO> images, ArrayList<ReservedDateDTO> arrayEvents) {
-        this.id = id;
-        this.fuel_type_name = fuel_type_name;
-        this.brand_name = brand_name;
-        this.vehicle_model_name = vehicle_model_name;
-        this.vehicle_class_name = vehicle_class_name;
-        this.transmission_type_name = transmission_type_name;
-        this.mileage = mileage;
-        this.mileage_limit = mileage_limit;
-        this.cdw = cdw;
-        this.child_seats = child_seats;
-        this.location = location;
-        this.price = price;
-        this.addvertiser_id = addvertiser_id;
-        this.images = images;
-        this.arrayEvents = arrayEvents;
-    }
     public AddvertismentDisplayDTO(Addvertisment addvertisment) {
         this.id = addvertisment.getId();
         this.fuel_type_name = addvertisment.getFuel_type().getFuel_type_name();
@@ -168,15 +151,17 @@ public class AddvertismentDisplayDTO {
         this.price = price;
     }
 
-    public Long getAddvertiser_id() {
-        return addvertiser_id;
-    }
 
-    public void setAddvertiser_id(Long addvertiser_id) {
-        this.addvertiser_id = addvertiser_id;
-    }
 
-    public ArrayList<ImageDTO> getImages() {
+    public String getAddvertiser_id() {
+		return addvertiser_id;
+	}
+
+	public void setAddvertiser_id(String addvertiser_id) {
+		this.addvertiser_id = addvertiser_id;
+	}
+
+	public ArrayList<ImageDTO> getImages() {
         return images;
     }
 
