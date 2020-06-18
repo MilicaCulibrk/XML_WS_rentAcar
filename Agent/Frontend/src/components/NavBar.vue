@@ -36,6 +36,15 @@
         <span>Codebook</span>
         <v-icon right>list_alt</v-icon>
       </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openRequests()"
+        v-if="(this.$store.state.user.role)=='COMPANY' || (this.$store.state.user.role)=='USER'"
+      >
+        <span>Requests</span>
+        <v-icon right>check_box</v-icon>
+      </v-btn>
       <v-btn text color="primary" @click="openCart()" v-if="(this.$store.state.user.role)=='USER'">
         <span>Cart</span>
         <v-icon right>shopping_cart</v-icon>
@@ -107,6 +116,9 @@ export default {
     },
     openCodebook() {
       this.$router.push("/codebook");
+    },
+    openRequests() {
+      this.$router.push("/requests");
     },
     logout() {
       localStorage.removeItem("loggedUser");

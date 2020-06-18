@@ -98,6 +98,7 @@ export default {
       purchase.id_add = car.id;
       purchase.date_from = car.date_from;
       purchase.date_to = car.date_to;
+      purchase.brand_model = car.brand + " " + car.model;
       return purchase;
     },
     getAgents() {
@@ -140,7 +141,7 @@ export default {
     },
     sendRequest(singleOrders) {
       axios
-        .post("request", singleOrders)
+        .post("/request", singleOrders)
         .then(response => {
           console.log(response.data);
           this.snackbarSuccess = true;
@@ -153,7 +154,7 @@ export default {
     },
     sendBundleRequest(bundleOrder) {
       axios
-        .post("request/bundle", bundleOrder)
+        .post("/request/bundle", bundleOrder)
         .then(response => {
           console.log(response.data);
           this.snackbarSuccess = true;
