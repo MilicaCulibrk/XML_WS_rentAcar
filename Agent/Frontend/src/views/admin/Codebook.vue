@@ -1,5 +1,15 @@
 <template>
   <div>
+    <!-- Snackbar -->
+    <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
+      <span>{{snackbarSuccessText}}</span>
+      <v-btn text @click="snackbarSuccess = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
+      <span>{{snackbarDangerText}}</span>
+      <v-btn text @click="snackbarDanger = false">Close</v-btn>
+    </v-snackbar>
+
     <v-container class="pt-12 mt-12">
       <v-row>
         <!-- meni  -->
@@ -31,70 +41,47 @@
             <v-card v-show="expandBrand" elevation="20">
               <div class="cardBorderColor shrink">
                 <v-list>
-                  <v-list-item v-for="brandItem in brandItems" :key="brandItem">
+                  <v-list-item v-for="brandItem in brandItems" :key="brandItem.brand_name">
                     <v-list-item-content>
-                      <v-list-item-title class="primary--text" v-text="brandItem"></v-list-item-title>
+                      <v-list-item-title class="primary--text" v-text="brandItem.brand_name"></v-list-item-title>
                     </v-list-item-content>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>sync</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Change</span>
-                    </v-tooltip>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>delete</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Delete</span>
-                    </v-tooltip>
+                    <!-- Dijalog za izlistavanje modela -->
+                    <PopupViewBrandModels v-bind:item="item" v-bind:brandItem="brandItem"></PopupViewBrandModels>
+                    <!-- Dijalog za promenu brenda -->
+                    <PopupChangeBrand
+                      v-bind:item="item"
+                      v-bind:brandItem="brandItem"
+                      v-bind:brandItems="brandItems"
+                      @changedBrand="snackbarSuccess = true; snackbarSuccessText='You changed the brand!'"
+                      @notChangedBrand="snackbarDanger = true; snackbarDangerText='Brand not changed, something went wrong!'"
+                      @emptyBrand="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateBrand="snackbarDanger = true; snackbarDangerText='This brand already exists!'"
+                      @getBrands="getBrands()"
+                    ></PopupChangeBrand>
+                    <!-- Dijalog za brisanje brenda -->
+                    <PopupDeleteBrand
+                      v-bind:item="item"
+                      v-bind:brandItem="brandItem"
+                      v-bind:brandItems="brandItems"
+                      @deletedBrand="snackbarSuccess = true; snackbarSuccessText='You deleted the brand!'"
+                      @notDeletedBrand="snackbarDanger = true; snackbarDangerText='Brand not deleted, something went wrong!'"
+                      @hasAddsBrand="snackbarDanger = true; snackbarDangerText='Cars with this brand exist. You can not delete it!'"
+                      @hasModelsBrand="snackbarDanger = true; snackbarDangerText='Models of this brand exist. You can not delete it!'"
+                      @getBrands="getBrands()"
+                    ></PopupDeleteBrand>
                   </v-list-item>
                   <v-list-item>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary">
-                      <v-icon>add</v-icon>
-                      <span>add new</span>
-                    </v-btn>
-                  </v-list-item>
-                </v-list>
-              </div>
-            </v-card>
-          </v-expand-x-transition>
-          <!-- Model -->
-          <v-expand-x-transition>
-            <v-card v-show="expandModel" elevation="20">
-              <div class="cardBorderColor shrink">
-                <v-list>
-                  <v-list-item v-for="modelItem in modelItems" :key="modelItem">
-                    <v-list-item-content>
-                      <v-list-item-title class="primary--text" v-text="modelItem"></v-list-item-title>
-                    </v-list-item-content>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>sync</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Change</span>
-                    </v-tooltip>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>delete</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Delete</span>
-                    </v-tooltip>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary">
-                      <v-icon>add</v-icon>
-                      <span>add new</span>
-                    </v-btn>
+                    <!-- Dijalog za dodavanje novog brenda -->
+                    <PopupAddBrand
+                      v-bind:item="item"
+                      v-bind:brandItems="brandItems"
+                      @addedBrand="snackbarSuccess = true; snackbarSuccessText='You added a new brand!'"
+                      @notAddedBrand="snackbarDanger = true; snackbarDangerText='Brand not added, something went wrong!'"
+                      @emptyBrand="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateBrand="snackbarDanger = true; snackbarDangerText='This brand already exists!'"
+                      @getBrands="getBrands()"
+                    ></PopupAddBrand>
                   </v-list-item>
                 </v-list>
               </div>
@@ -105,33 +92,50 @@
             <v-card v-show="expandClass" elevation="20">
               <div class="cardBorderColor">
                 <v-list>
-                  <v-list-item v-for="classItem in classItems" :key="classItem">
+                  <v-list-item
+                    v-for="vehicleClassItem in vehicleClassItems"
+                    :key="vehicleClassItem.vehicle_class_name"
+                  >
                     <v-list-item-content>
-                      <v-list-item-title class="primary--text" v-text="classItem"></v-list-item-title>
+                      <v-list-item-title
+                        class="primary--text"
+                        v-text="vehicleClassItem.vehicle_class_name"
+                      ></v-list-item-title>
                     </v-list-item-content>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>sync</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Change</span>
-                    </v-tooltip>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>delete</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Delete</span>
-                    </v-tooltip>
+                    <!-- Dijalog za promenu klase -->
+                    <PopupChangeClass
+                      v-bind:item="item"
+                      v-bind:vehicleClassItem="vehicleClassItem"
+                      v-bind:vehicleClassItems="vehicleClassItems"
+                      @changedVehicleClass="snackbarSuccess = true; snackbarSuccessText='You changed the class!'"
+                      @notChangedVehicleClass="snackbarDanger = true; snackbarDangerText='Class not changed, something went wrong!'"
+                      @emptyVehicleClass="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateVehicleClass="snackbarDanger = true; snackbarDangerText='This class already exists!'"
+                      @getVehicleClasses="getVehicleClasses()"
+                    ></PopupChangeClass>
+                    <!-- Dijalog za brisanje klase -->
+                    <PopupDeleteClass
+                      v-bind:item="item"
+                      v-bind:vehicleClassItem="vehicleClassItem"
+                      v-bind:vehicleClassItems="vehicleClassItems"
+                      @deletedVehicleClass="snackbarSuccess = true; snackbarSuccessText='You deleted  the class!'"
+                      @notDeletedVehicleClass="snackbarDanger = true; snackbarDangerText='Class not deleted, something went wrong!'"
+                      @hasAddsVehicleClass="snackbarDanger = true; snackbarDangerText='Cars with this class exist. You can not delete it!'"
+                      @getVehicleClasses="getVehicleClasses()"
+                    ></PopupDeleteClass>
                   </v-list-item>
                   <v-list-item>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary">
-                      <v-icon>add</v-icon>
-                      <span>add new</span>
-                    </v-btn>
+                    <!-- Dijalog za dodavanje nove klase vozila -->
+                    <PopupAddClass
+                      v-bind:item="item"
+                      v-bind:vehicleClassItems="vehicleClassItems"
+                      @addedVehicleClass="snackbarSuccess = true; snackbarSuccessText='You added a new class!'"
+                      @notAddedVehicleClass="snackbarDanger = true; snackbarDangerText='Class not added, something went wrong!'"
+                      @emptyVehicleClass="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateVehicleClass="snackbarDanger = true; snackbarDangerText='This class already exists!'"
+                      @getVehicleClasses="getVehicleClasses()"
+                    ></PopupAddClass>
                   </v-list-item>
                 </v-list>
               </div>
@@ -143,72 +147,100 @@
               <div class="cardBorderColor">
                 <v-list>
                   <v-list-item
-                    v-for="transmissionItem in transmissionItems"
-                    :key="transmissionItem"
+                    v-for="transmissionTypeItem in transmissionTypeItems"
+                    :key="transmissionTypeItem.transmission_type_name"
                   >
                     <v-list-item-content>
-                      <v-list-item-title class="primary--text" v-text="transmissionItem"></v-list-item-title>
+                      <v-list-item-title
+                        class="primary--text"
+                        v-text="transmissionTypeItem.transmission_type_name"
+                      ></v-list-item-title>
                     </v-list-item-content>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>sync</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Change</span>
-                    </v-tooltip>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>delete</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Delete</span>
-                    </v-tooltip>
+                    <!-- Dijalog za promenu tipa prenosa -->
+                    <PopupChangeTransmissionType
+                      v-bind:item="item"
+                      v-bind:transmissionTypeItem="transmissionTypeItem"
+                      v-bind:transmissionTypeItems="transmissionTypeItems"
+                      @changedTranmissionType="snackbarSuccess = true; snackbarSuccessText='You changed the transmission type!'"
+                      @notChangedTransmissionType="snackbarDanger = true; snackbarDangerText='Transmission type not changed, something went wrong!'"
+                      @emptyTransmissionType="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateTransmissionType="snackbarDanger = true; snackbarDangerText='This transmission type already exists!'"
+                      @getTransmissionTypes="getTransmissionTypes()"
+                    ></PopupChangeTransmissionType>
+                    <!-- Dijalog za brisanje tipa prenosa -->
+                    <PopupDeleteTransmissionType
+                      v-bind:item="item"
+                      v-bind:transmissionTypeItem="transmissionTypeItem"
+                      v-bind:transmissionTypeItems="transmissionTypeItems"
+                      @deletedTransmissionType="snackbarSuccess = true; snackbarSuccessText='You deleted the transmission type!'"
+                      @notDeletedTransmissionType="snackbarDanger = true; snackbarDangerText='Transmission type not deleted, something went wrong!'"
+                      @hasAddsTransmissionType="snackbarDanger = true; snackbarDangerText='Cars with this transmission type exist. You can not delete it!'"
+                      @getTransmissionTypes="getTransmissionTypes()"
+                    ></PopupDeleteTransmissionType>
                   </v-list-item>
                   <v-list-item>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary">
-                      <v-icon>add</v-icon>
-                      <span>add new</span>
-                    </v-btn>
+                    <!-- Dijalog za dodavanje novog tipa prenosa -->
+                    <PopupAddTransmissionType
+                      v-bind:item="item"
+                      v-bind:transmissionTypeItems="transmissionTypeItems"
+                      @addedTransmissionType="snackbarSuccess = true; snackbarSuccessText='You added a new transmission type!'"
+                      @notAddedTransmissionType="snackbarDanger = true; snackbarDangerText='Transmission type not added, something went wrong!'"
+                      @emptyTransmissionType="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateTransmissionType="snackbarDanger = true; snackbarDangerText='This transmission type already exists!'"
+                      @getTransmissionTypes="getTransmissionTypes()"
+                    ></PopupAddTransmissionType>
                   </v-list-item>
                 </v-list>
               </div>
             </v-card>
           </v-expand-x-transition>
-          <!-- Gas -->
+          <!-- FuelType -->
           <v-expand-x-transition>
-            <v-card v-show="expandGas" elevation="20">
+            <v-card v-show="expandFuelType" elevation="20">
               <div class="cardBorderColor">
                 <v-list>
-                  <v-list-item v-for="gasItem in gasItems" :key="gasItem">
+                  <v-list-item
+                    v-for="fuelTypeItem in fuelTypeItems"
+                    :key="fuelTypeItem.fuel_type_name"
+                  >
                     <v-list-item-content>
-                      <v-list-item-title class="primary--text" v-text="gasItem"></v-list-item-title>
+                      <v-list-item-title class="primary--text" v-text="fuelTypeItem.fuel_type_name"></v-list-item-title>
                     </v-list-item-content>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>sync</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Change</span>
-                    </v-tooltip>
-                    <v-tooltip bottom color="black">
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on" color="primary">
-                          <v-icon>delete</v-icon>
-                        </v-btn>
-                      </template>
-                      <span class="primary--text">Delete</span>
-                    </v-tooltip>
+                    <!-- Dijalog za promenu tipa goriva -->
+                    <PopupChangeFuelType
+                      v-bind:item="item"
+                      v-bind:fuelTypeItem="fuelTypeItem"
+                      v-bind:fuelTypeItems="fuelTypeItems"
+                      @changedFuelType="snackbarSuccess = true; snackbarSuccessText='You changed the fuel type!'"
+                      @notChangedFuelType="snackbarDanger = true; snackbarDangerText='Fuel type not changed, something went wrong!'"
+                      @emptyFuelType="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateFuelType="snackbarDanger = true; snackbarDangerText='This fuel type already exists!'"
+                      @getFuelTypes="getFuelTypes()"
+                    ></PopupChangeFuelType>
+                    <!-- Dijalog za brisanje tipa goriva -->
+                    <PopupDeleteFuelType
+                      v-bind:item="item"
+                      v-bind:fuelTypeItem="fuelTypeItem"
+                      v-bind:fuelTypeItems="fuelTypeItems"
+                      @deletedFuelType="snackbarSuccess = true; snackbarSuccessText='You deleted the fuel type!'"
+                      @notDeletedFuelType="snackbarDanger = true; snackbarDangerText='Fuel type not deleted, something went wrong!'"
+                      @hasAddsFuelType="snackbarDanger = true; snackbarDangerText='Cars with this fuel type exist. You can not delete it!'"
+                      @getFuelTypes="getFuelTypes()"
+                    ></PopupDeleteFuelType>
                   </v-list-item>
                   <v-list-item>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary">
-                      <v-icon>add</v-icon>
-                      <span>add new</span>
-                    </v-btn>
+                    <!-- Dijalog za dodavanje novog tipa goriva -->
+                    <PopupAddFuelType
+                      v-bind:item="item"
+                      v-bind:fuelTypeItems="fuelTypeItems"
+                      @addedFuelType="snackbarSuccess = true; snackbarSuccessText='You added a new fuel type!'"
+                      @notAddedFuelType="snackbarDanger = true; snackbarDangerText='Fuel type not added, something went wrong!'"
+                      @emptyFuelType="snackbarDanger = true; snackbarDangerText='You can not add an empty string!'"
+                      @duplicateFuelType="snackbarDanger = true; snackbarDangerText='This fuel type already exists!'"
+                      @getFuelTypes="getFuelTypes()"
+                    ></PopupAddFuelType>
                   </v-list-item>
                 </v-list>
               </div>
@@ -221,20 +253,52 @@
 </template>
 
 <script>
+import axios from "axios";
+import PopupAddFuelType from "@/components/codebook/fuelType/PopupAddFuelType";
+import PopupChangeFuelType from "@/components/codebook/fuelType/PopupChangeFuelType";
+import PopupDeleteFuelType from "@/components/codebook/fuelType/PopupDeleteFuelType";
+import PopupAddBrand from "@/components/codebook/brand/PopupAddBrand";
+import PopupChangeBrand from "@/components/codebook/brand/PopupChangeBrand";
+import PopupDeleteBrand from "@/components/codebook/brand/PopupDeleteBrand";
+import PopupViewBrandModels from "@/components/codebook/brand/PopupViewBrandModels";
+import PopupAddClass from "@/components/codebook/class/PopupAddClass";
+import PopupChangeClass from "@/components/codebook/class/PopupChangeClass";
+import PopupDeleteClass from "@/components/codebook/class/PopupDeleteClass";
+import PopupAddTransmissionType from "@/components/codebook/transmissionType/PopupAddTransmissionType";
+import PopupChangeTransmissionType from "@/components/codebook/transmissionType/PopupChangeTransmissionType";
+import PopupDeleteTransmissionType from "@/components/codebook/transmissionType/PopupDeleteTransmissionType";
 export default {
+  components: {
+    PopupAddFuelType,
+    PopupChangeFuelType,
+    PopupDeleteFuelType,
+    PopupAddBrand,
+    PopupChangeBrand,
+    PopupDeleteBrand,
+    PopupViewBrandModels,
+    PopupAddClass,
+    PopupChangeClass,
+    PopupDeleteClass,
+    PopupAddTransmissionType,
+    PopupChangeTransmissionType,
+    PopupDeleteTransmissionType
+  },
   data() {
     return {
+      snackbarSuccess: false,
+      snackbarSuccessText: "",
+      snackbarDanger: false,
+      snackbarDangerText: "",
       expandBrand: false,
-      expandModel: false,
       expandClass: false,
       expandTransmission: false,
-      expandGas: false,
-      menuItems: ["Brand", "Model", "Class", "Transmission type", "Gas type"],
-      brandItems: ["BMW", "Audi", "Mercedes", "Tesla"],
-      modelItems: ["(Citroen) M5", "(Audi) R8", "(BMW) X6"],
-      classItems: ["SUV", "oldtimer", "city-car"],
-      transmissionItems: ["manual", "automatic", "semi-automatic"],
-      gasItems: ["gasoline", "gas", "diesel"]
+      expandFuelType: false,
+      item: "",
+      menuItems: ["Brand", "Class", "Transmission type", "Fuel type"],
+      brandItems: {},
+      vehicleClassItems: {},
+      transmissionTypeItems: {},
+      fuelTypeItems: {}
     };
   },
   methods: {
@@ -242,26 +306,24 @@ export default {
       if (menuItem == "Brand") {
         this.cancelOtherMenus(menuItem);
         this.expandBrand = !this.expandBrand;
-      } else if (menuItem == "Model") {
-        this.cancelOtherMenus(menuItem);
-        this.expandModel = !this.expandModel;
+        this.item = "brand";
       } else if (menuItem == "Class") {
         this.cancelOtherMenus(menuItem);
         this.expandClass = !this.expandClass;
+        this.item = "class";
       } else if (menuItem == "Transmission type") {
         this.cancelOtherMenus(menuItem);
         this.expandTransmission = !this.expandTransmission;
-      } else if (menuItem == "Gas type") {
+        this.item = "transmission type";
+      } else if (menuItem == "Fuel type") {
         this.cancelOtherMenus(menuItem);
-        this.expandGas = !this.expandGas;
+        this.expandFuelType = !this.expandFuelType;
+        this.item = "fuel type";
       }
     },
     cancelOtherMenus(menuItem) {
       if (menuItem != "Brand") {
         this.expandBrand = false;
-      }
-      if (menuItem != "Model") {
-        this.expandModel = false;
       }
       if (menuItem != "Class") {
         this.expandClass = false;
@@ -269,19 +331,100 @@ export default {
       if (menuItem != "Transmission type") {
         this.expandTransmission = false;
       }
-      if (menuItem != "Gas type") {
-        this.expandGas = false;
+      if (menuItem != "Fuel type") {
+        this.expandFuelType = false;
       }
+    },
+    getBrands() {
+      axios
+        .get("/addvertisment-service/brand")
+        .then(brandItems => {
+          this.brandItems = brandItems.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getVehicleClasses() {
+      axios
+        .get("/addvertisment-service/vehicle_class")
+        .then(vehicleClassItems => {
+          this.vehicleClassItems = vehicleClassItems.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getTransmissionTypes() {
+      axios
+        .get("/addvertisment-service/transmission_type")
+        .then(transmissionTypeItems => {
+          this.transmissionTypeItems = transmissionTypeItems.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getFuelTypes() {
+      axios
+        .get("/addvertisment-service/fuel_type")
+        .then(fuelTypeItems => {
+          this.fuelTypeItems = fuelTypeItems.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
+  },
+  mounted() {
+    //izlistavanje brendova
+    axios
+      .get("/addvertisment-service/brand")
+      .then(brandItems => {
+        this.brandItems = brandItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //izlistavanje klasa
+    axios
+      .get("/addvertisment-service/vehicle_class")
+      .then(vehicleClassItems => {
+        this.vehicleClassItems = vehicleClassItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //izlistavanje tipova goriva
+    axios
+      .get("/addvertisment-service/transmission_type")
+      .then(transmissionTypeItems => {
+        this.transmissionTypeItems = transmissionTypeItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //izlistavanje tipova goriva
+    axios
+      .get("/addvertisment-service/fuel_type")
+      .then(fuelTypeItems => {
+        this.fuelTypeItems = fuelTypeItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 };
 </script>
 
 <style>
 .cardBorderColor {
-  border-left: 1px solid #ff8a65;
-  border-top: 1px solid #ff8a65;
-  border-right: 1px solid #ff8a65;
-  border-bottom: 1px solid #ff8a65;
+  border-left: 1px solid #fbc02d;
+  border-top: 1px solid #fbc02d;
+  border-right: 1px solid #fbc02d;
+  border-bottom: 1px solid #fbc02d;
 }
 </style>

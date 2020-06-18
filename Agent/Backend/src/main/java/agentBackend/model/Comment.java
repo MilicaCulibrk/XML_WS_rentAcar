@@ -23,51 +23,6 @@ public class Comment {
    public User user;
    
    
-   /** @pdGenerated default parent getter */
-   public Addvertisment getAddvertisment() {
-      return addvertisment;
-   }
-   
-   /** @pdGenerated default parent setter
-     * @param newAddvertisment */
-   public void setAddvertisment(Addvertisment newAddvertisment) {
-      if (this.addvertisment == null || !this.addvertisment.equals(newAddvertisment))
-      {
-         if (this.addvertisment != null)
-         {
-            Addvertisment oldAddvertisment = this.addvertisment;
-            this.addvertisment = null;
-            oldAddvertisment.removeComment(this);
-         }
-         if (newAddvertisment != null)
-         {
-            this.addvertisment = newAddvertisment;
-            this.addvertisment.addComment(this);
-         }
-      }
-   }
-   /** @pdGenerated default parent getter */
-   public User getUser() {
-      return user;
-   }
-   
-   /** @pdGenerated default parent setter
-     * @param newUser */
-   public void setUser(User newUser) {
-      if (this.user == null || !this.user.equals(newUser))
-      {
-         if (this.user != null)
-         {
-            User oldUser = this.user;
-            this.user = null;
-            oldUser.removeComment(this);
-         }
-         if (newUser != null)
-         {
-            this.user = newUser;
-            this.user.addComment(this);
-         }
-      }
-   }
+
 
 }

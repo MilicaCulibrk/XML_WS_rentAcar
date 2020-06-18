@@ -1,6 +1,10 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="RegisterDialog" max-width="600px">
+    <v-dialog
+      v-model="RegisterDialog"
+      max-width="600px"
+      v-if="(this.$store.state.user.role)=='NONE'"
+    >
       <template v-slot:activator="{ on }">
         <v-btn text color="primary" v-on="on">
           <span>Register</span>
@@ -10,6 +14,10 @@
       <v-card class="cardBorderColor">
         <v-card-title>
           <span class="primary--text font-italic headline" primary-title>Registration</span>
+          <v-spacer></v-spacer>
+          <v-btn icon color="primary" @click="RegisterDialog =  false">
+            <v-icon>cancel</v-icon>
+          </v-btn>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -29,9 +37,16 @@
                 :rules="requiredRules"
               ></v-text-field>
               <v-text-field
+                label="Username*"
+                color="black"
+                v-model="user.username"
+                required
+                :rules="requiredRules"
+              ></v-text-field>
+              <v-text-field
                 label="Phone number*"
                 color="black"
-                v-model="user.number"
+                v-model="user.phone_number"
                 required
                 :rules="requiredRules"
               ></v-text-field>
@@ -87,13 +102,16 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data: () => ({
     RegisterDialog: false,
     user: {
       name: "",
       surname: "",
-      number: "",
+      username: "",
+      phone_number: "",
       adrress: "",
       city: "",
       email: "",
@@ -119,8 +137,18 @@ export default {
   methods: {
     register() {
       if (this.$refs.form.validate()) {
-        console.log(this.user.name);
-        this.close();
+        axios
+          .post("/register", this.user)
+          .then(response => {
+            this.$emit("registered");
+            this.RegisterDialog = false;
+            this.$refs.form.reset();
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+            this.$emit("notRegistered");
+          });
       } else {
         console.log("nije validno");
       }
@@ -135,6 +163,13 @@ export default {
 
 <style scoped>
 .cardBorderColor {
+  border-left: 2px solid #ff8a65;
+  border-top: 2px solid #ff8a65;
+  border-right: 2px solid #ff8a65;
+  border-bottom: 2px solid #ff8a65;
+}
+
+.detailsBorderColor {
   border-left: 1.5px solid #ff8a65;
   border-top: 1.5px solid #ff8a65;
   border-right: 1.5px solid #ff8a65;

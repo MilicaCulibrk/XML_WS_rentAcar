@@ -18,25 +18,45 @@
         <span class="font-italic font-weight-bold">Rent-A-CaR</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text color="primary" @click="openUsers()" v-if="(this.$store.state.user.role)=='ADMINISTRATOR'">
-        <span >Users</span>
+      <v-btn
+        text
+        color="primary"
+        @click="openUsers()"
+        v-if="(this.$store.state.user.role)=='ADMINISTRATOR'"
+      >
+        <span>Users</span>
         <v-icon right>person_pin</v-icon>
       </v-btn>
-      <v-btn text color="primary" @click="openCodebook()" v-if="(this.$store.state.user.role)=='ADMINISTRATOR'">
-        <span >Codebook</span>
+      <v-btn
+        text
+        color="primary"
+        @click="openCodebook()"
+        v-if="(this.$store.state.user.role)=='ADMINISTRATOR'"
+      >
+        <span>Codebook</span>
         <v-icon right>list_alt</v-icon>
       </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openRequests()"
+        v-if="(this.$store.state.user.role)=='COMPANY' || (this.$store.state.user.role)=='USER'"
+      >
+        <span>Requests</span>
+        <v-icon right>check_box</v-icon>
+      </v-btn>
       <v-btn text color="primary" @click="openCart()" v-if="(this.$store.state.user.role)=='USER'">
-        <span >Cart</span>
+        <span>Cart</span>
         <v-icon right>shopping_cart</v-icon>
       </v-btn>
-      <v-btn text color="primary" @click="openAddNewAddvertisment()" v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'">
-        <span >New Addvertisement</span>
+      <v-btn
+        text
+        color="primary"
+        @click="openAddNewAddvertisment()"
+        v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'"
+      >
+        <span>New Adds</span>
         <v-icon right>add</v-icon>
-      </v-btn>
-      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'">
-        <span @click="openMyAddvertisments()">My Addvertisements</span>
-        <v-icon right>list</v-icon>
       </v-btn>
       <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'">
         <span @click="openChat()">Chat</span>
@@ -44,12 +64,22 @@
       </v-btn>
       <div class="mx-2" >
         <LoginComponent 
+      <v-btn
+        text
+        color="primary"
+        v-if="(this.$store.state.user.role)=='USER' || (this.$store.state.user.role)=='COMPANY'"
+      >
+        <span @click="openMyAddvertisments()">My Adds</span>
+        <v-icon right>list</v-icon>
+      </v-btn>
+      <div class="mx-2">
+        <LoginComponent
           @loggedIn="snackbarSuccess = true; snackbarSuccessText='You are logged in!'"
           @notLoggedIn="snackbarDanger = true; snackbarDangerText='Can not log in. There is no such user!'"
         />
       </div>
-      <div class="mx-2" >
-        <RegistrationComponent 
+      <div class="mx-2">
+        <RegistrationComponent
           @registered="snackbarSuccess = true; snackbarSuccessText='You are registered! Please login.'"
           @notRegistered="snackbarDanger = true; snackbarDangerText='Can not register.'"
         />
@@ -91,7 +121,7 @@ export default {
     openAddNewAddvertisment() {
       this.$router.push("/addNewAddvertisment");
     },
-    openMyAddvertisments(){
+    openMyAddvertisments() {
       this.$router.push("/myAddvertisments");
     },
     openChat(){
@@ -100,7 +130,10 @@ export default {
     openCodebook() {
       this.$router.push("/codebook");
     },
-    logout(){
+    openRequests() {
+      this.$router.push("/requests");
+    },
+    logout() {
       localStorage.removeItem("loggedUser");
       this.$store.state.user = {};
       this.$store.state.user.role = "NONE";

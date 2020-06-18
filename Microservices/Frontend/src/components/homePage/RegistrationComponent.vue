@@ -1,6 +1,10 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="RegisterDialog" max-width="600px" v-if="(this.$store.state.user.role)=='NONE'">
+    <v-dialog
+      v-model="RegisterDialog"
+      max-width="600px"
+      v-if="(this.$store.state.user.role)=='NONE'"
+    >
       <template v-slot:activator="{ on }">
         <v-btn text color="primary" v-on="on">
           <span>Register</span>
@@ -10,6 +14,10 @@
       <v-card class="cardBorderColor">
         <v-card-title>
           <span class="primary--text font-italic headline" primary-title>Registration</span>
+          <v-spacer></v-spacer>
+          <v-btn icon color="primary" @click="RegisterDialog =  false">
+            <v-icon>cancel</v-icon>
+          </v-btn>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -129,18 +137,18 @@ export default {
   methods: {
     register() {
       if (this.$refs.form.validate()) {
-       axios
-        .post("/user-service/register", this.user)
-        .then(response => {      
+        axios
+          .post("/user-service/register", this.user)
+          .then(response => {
             this.$emit("registered");
             this.RegisterDialog = false;
             this.$refs.form.reset();
-            console.log(response.data)         
-            }) 
-        .catch(error => {
+            console.log(response.data);
+          })
+          .catch(error => {
             console.log(error);
             this.$emit("notRegistered");
-        })        
+          });
       } else {
         console.log("nije validno");
       }

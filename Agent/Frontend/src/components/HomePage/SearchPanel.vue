@@ -8,13 +8,30 @@
             <!-- lokacija -->
             <v-col cols="12" lg="4" md="4" sm="3" xs="3">
               <v-form ref="form">
-                <v-text-field
+                <v-select
+                  v-model="searchItem.selectLocation"
+                  :items="locationItems"
+                  label="Pickup location"
+                  multiple
+                  outlined
+                  dense
+                  clearable
+                  small-chips
+                  rounded
+                  deletable-chips
+                  prepend-inner-icon="place"
+                  class="pt-4"
+                  color="primary"
+                  @click.native.stop
+                  @click="consoleLocation()"
+                ></v-select>
+                <!-- <v-text-field
                   prepend-icon="place"
                   label="Pickup location"
                   class="ml-n4 mr-12"
                   color="primary"
                   @click.native.stop
-                ></v-text-field>
+                ></v-text-field>-->
               </v-form>
             </v-col>
             <!-- start date -->
@@ -39,7 +56,7 @@
                         prepend-icon="date_range"
                         label="Pickup date"
                         readonly
-                        class="ml-4 mr-12"
+                        class="ml-8 mt-2"
                         color="primary"
                         v-on="on"
                       ></v-text-field>
@@ -77,7 +94,7 @@
                         prepend-icon="date_range"
                         label="Return date"
                         readonly
-                        class="ml-12"
+                        class="ml-12 mt-2"
                         color="primary"
                         v-on="on"
                       ></v-text-field>
@@ -96,7 +113,7 @@
             <!-- search button  -->
             <v-spacer></v-spacer>
             <v-col class="mr-n3 mt-3">
-              <v-btn rounded class="primary white--text" @click.native.stop>
+              <v-btn rounded class="primary white--text mt-2" @click.native.stop @click="search()">
                 <v-icon left>search</v-icon>
                 <span>search</span>
               </v-btn>
@@ -110,121 +127,172 @@
         <v-row>
           <!-- brend -->
           <v-col cols="4">
-            <v-combobox
-              v-model="selectBrand"
+            <v-select
+              v-model="searchItem.selectBrand"
               :items="brandItems"
               label="Brand"
               multiple
               outlined
               dense
+              clearable
+              rounded
+              item-color="primary"
               class="pt-4"
               color="primary"
-            ></v-combobox>
+            ></v-select>
           </v-col>
           <!-- menjac -->
           <v-col cols="4">
-            <v-combobox
-              v-model="selectTransmission"
+            <v-select
+              v-model="searchItem.selectTransmission"
               :items="transmissionItems"
               label="Transmission type"
               multiple
               outlined
               dense
+              clearable
+              rounded
               class="pt-4"
               color="primary"
-            ></v-combobox>
+            ></v-select>
           </v-col>
           <!-- cena -->
-          <v-col cols="4">
-            <v-combobox
-              v-model="selectPrice"
-              :items="priceItems"
-              label="Price"
-              multiple
+          <v-col cols="2">
+            <v-select
+              v-model="searchItem.selectMinPrice"
+              :items="minPriceItems"
+              label="Min daily price (RSD)"
               outlined
               dense
+              clearable
+              rounded
               class="pt-4"
               color="primary"
-            ></v-combobox>
+            ></v-select>
+          </v-col>
+          <v-col cols="2">
+            <v-select
+              v-model="searchItem.selectMaxPrice"
+              :items="minPriceItems"
+              label="Max daily price (RSD)"
+              outlined
+              dense
+              clearable
+              rounded
+              class="pt-4"
+              color="primary"
+            ></v-select>
           </v-col>
         </v-row>
         <!-- drugi red -->
         <v-row class="mt-n8">
           <!-- model -->
           <v-col cols="4">
-            <v-combobox
-              v-model="selectModel"
+            <v-select
+              v-model="searchItem.selectModel"
               :items="modelItems"
               label="Model"
               multiple
               outlined
               dense
+              clearable
+              rounded
               class="pt-4"
               color="primary"
-            ></v-combobox>
+            ></v-select>
           </v-col>
           <!-- gas -->
           <v-col cols="4">
-            <v-combobox
-              v-model="selectGas"
+            <v-select
+              v-model="searchItem.selectGas"
               :items="gasItems"
               label="Gas type"
-              multiple
               outlined
+              multiple
               dense
+              clearable
+              rounded
               class="pt-4"
               color="primary"
-            ></v-combobox>
+            ></v-select>
           </v-col>
-          <!-- gas -->
-          <v-col cols="4">
-            <v-combobox
-              v-model="selectChildSeats"
-              :items="childSeatsItems"
-              label="Number of child seats"
-              multiple
+          <!-- kilometraza -->
+          <v-col cols="2">
+            <v-select
+              v-model="searchItem.selectMinMileage"
+              :items="minMileageItems"
+              label="Min mileage (km)"
               outlined
               dense
+              rounded
+              clearable
               class="pt-4"
               color="primary"
-            ></v-combobox>
+            ></v-select>
+          </v-col>
+          <v-col cols="2">
+            <v-select
+              v-model="searchItem.selectMaxMileage"
+              :items="maxMileageItems"
+              label="Max mileage (km)"
+              outlined
+              dense
+              rounded
+              clearable
+              class="pt-4"
+              color="primary"
+            ></v-select>
           </v-col>
         </v-row>
         <!-- treci red -->
         <v-row class="mt-n8">
           <!-- klasa -->
           <v-col cols="4">
-            <v-combobox
-              v-model="selectClass"
+            <v-select
+              v-model="searchItem.selectClass"
               :items="classItems"
               label="Class"
               multiple
               outlined
               dense
+              clearable
+              rounded
               class="pt-4"
               color="primary"
-            ></v-combobox>
+            ></v-select>
           </v-col>
           <!-- kilometraza -->
+          <!-- sedista za decu -->
           <v-col cols="4">
-            <v-combobox
-              v-model="selectMileage"
-              :items="mileageItems"
-              label="Mileage"
+            <v-select
+              v-model="searchItem.selectChildSeats"
+              :items="childSeatsItems"
+              label="Number of child seats"
               multiple
               outlined
               dense
+              clearable
+              rounded
               class="pt-4"
               color="primary"
-            ></v-combobox>
-          </v-col>
-          <!-- planirano da predje -->
-          <v-col cols="2">
-            <v-text-field label="Planned to cross(km)" :rules="plannedToCrossRule" color="primary"></v-text-field>
+            ></v-select>
           </v-col>
           <!-- CDW -->
-          <v-col cols="2">
-            <v-checkbox label="CWD" :v-model="cdw" color="primary"></v-checkbox>
+          <v-col cols="1">
+            <v-checkbox label="CDW" class="mt-6" v-model="searchItem.cdw" color="primary"></v-checkbox>
+          </v-col>
+          <!-- Mileage limit -->
+          <v-col cols="1.5">
+            <v-checkbox
+              label="Mileage limit"
+              class="mt-6"
+              v-model="searchItem.mileageLimit"
+              color="primary"
+            ></v-checkbox>
+          </v-col>
+          <!-- Cancel search -->
+          <v-col cols="1.5">
+            <v-btn text color="primary" class="mt-6" @click="cancelSearch">cancel search</v-btn>
           </v-col>
         </v-row>
       </v-expansion-panel-content>
@@ -233,6 +301,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -241,33 +310,144 @@ export default {
       toDateMenu: false,
       due: null,
       to: null,
-      selectBrand: [],
-      selectModel: [],
-      selectClass: [],
-      selectTransmission: [],
-      selectGas: [],
-      selectMileage: [],
-      selectPrice: [],
-      selectChildSeats: [],
-      cdw: false,
-      brandItems: ["BMW", "Audi", "Mercedes", "Tesla"],
-      modelItems: ["M5", "R8", "X6"],
-      classItems: ["SUV", "oldtimer", "city-car"],
-      transmissionItems: ["manual", "automatic", "semi-automatic"],
-      gasItems: ["gasoline", "gas", "diesel"],
-      mileageItems: ["50.000-100.000", "100.000-200.000", "200.000-300.000"],
-      priceItems: ["10.000-20.000", "20.000-30.000", "30.000-40.000"],
-      childSeatsItems: ["0", "1", "2", "3", "4", "5"],
+      brandItems: [],
+      modelItems: [],
+      classItems: [],
+      transmissionItems: [],
+      gasItems: [],
+      cars: [],
+      locationItems: [],
+      searchItem: {
+        selectBrand: [],
+        selectModel: [],
+        selectClass: [],
+        selectTransmission: [],
+        selectGas: [],
+        selectLocation: [],
+        cdw: false,
+        mileageLimit: false,
+        selectChildSeats: [],
+        selectMinPrice: null,
+        selectMaxPrice: null,
+        selectMinMileage: null,
+        selectMaxMileage: null,
+        dates: []
+      },
+      minMileageItems: [
+        "100000",
+        "200000",
+        "300000",
+        "400000",
+        "500000",
+        "500000"
+      ],
+      maxMileageItems: [
+        "100000",
+        "200000",
+        "300000",
+        "400000",
+        "500000",
+        "500000"
+      ],
+      minPriceItems: ["1000", "2000", "3000", "4000", "5000", "5000"],
+      maxPriceItems: ["1000", "2000", "3000", "4000", "5000", "5000"],
+      childSeatsItems: ["0", "1", "2", "3", "4"],
       plannedToCrossRule: [
         v => /^[0-9]*$/.test(v) || "Only numbers are allowed"
       ]
     };
   },
+  methods: {
+    cancelSearch() {
+      this.searchItem.selectBrand = [];
+      this.searchItem.selectModel = [];
+      this.searchItem.selectClass = [];
+      this.searchItem.selectTransmission = [];
+      this.searchItem.selectGas = [];
+      this.searchItem.selectMinMileage = null;
+      this.searchItem.selectMaxMileage = null;
+      this.searchItem.selectMinPrice = null;
+      this.searchItem.selectMaxPrice = null;
+      this.searchItem.selectChildSeats = [];
+      this.searchItem.selectLocation = [];
+      this.searchItem.cdw = false;
+      this.searchItem.mileageLimit = false;
+      this.due = null;
+      this.to = null;
+      this.$emit("getCars");
+    },
+    consoleLocation() {
+      console.log(this.searchItem.selectLocation.length);
+    },
+    getLocations() {
+      var i = 0;
+      for (i = 0; i < this.cars.length; i++) {
+        this.locationItems.push(this.cars[i].location);
+      }
+    },
+    getCars() {
+      axios
+        .get("/search-service/search")
+        .then(cars => {
+          this.cars = cars.data;
+          this.getLocations();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    search() {
+      this.$emit("search", this.searchItem, this.due, this.to);
+    }
+  },
+  mounted() {
+    //izlistavanje brendova
+    axios
+      .get("/brand")
+      .then(brandItems => {
+        this.brandItems = brandItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //izlistavanje klasa
+    axios
+      .get("/vehicle_class")
+      .then(classItems => {
+        this.classItems = classItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //izlistavanje tipova goriva
+    axios
+      .get("/fuel_type")
+      .then(gasItems => {
+        this.gasItems = gasItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //izlistavanje tipova prenosa
+    axios
+      .get("/transmission_type")
+      .then(transmissionItems => {
+        this.transmissionItems = transmissionItems.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
   computed: {
     formattedDateFrom() {
+      console.log(this.due);
       return this.due;
     },
     formattedDateTo() {
+      console.log(this.to);
       return this.to;
     }
   }
