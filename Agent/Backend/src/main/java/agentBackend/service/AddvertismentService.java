@@ -6,6 +6,7 @@ import agentBackend.dto.ImageDTO;
 import agentBackend.dto.ReservedDateDTO;
 import agentBackend.model.Addvertisment;
 import agentBackend.model.Image;
+import agentBackend.model.Report;
 import agentBackend.model.ReservedDate;
 import agentBackend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,5 +115,23 @@ public class AddvertismentService {
         reservedDate.setOneDate(r.getOneDate());
 
         return reservedDate;
+    }
+
+    public void updateMileage(float kilometresCrossed, Long id_add){
+
+        Addvertisment addvertisment = addvertismentRepository.getOne(id_add);
+
+        float newMileage = addvertisment.getMileage() + kilometresCrossed;
+        addvertisment.setMileage(newMileage);
+        addvertismentRepository.save(addvertisment);
+    }
+
+    public void changeUpdatedMileage(float kilometresCrossed, Long id_add, float old_kilometres){
+
+        Addvertisment addvertisment = addvertismentRepository.getOne(id_add);
+
+        float newMileage = addvertisment.getMileage() - old_kilometres + kilometresCrossed;
+        addvertisment.setMileage(newMileage);
+        addvertismentRepository.save(addvertisment);
     }
 }
