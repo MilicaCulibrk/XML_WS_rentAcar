@@ -8,6 +8,7 @@ import Cart from "../views/user/Cart.vue";
 import Codebook from "../views/admin/Codebook.vue";
 import AddNewAddvertisment from "../views/user/AddNewAddvertisment.vue";
 import MyAddvertisments from "../views/user/MyAddvertisments.vue";
+import Chat from "../views/user/Chat.vue";
 
 Vue.use(VueRouter);
 
@@ -51,6 +52,11 @@ const routes = [
     path: "/myAddvertisments",
     name: "MyAddvertisments",
     component: MyAddvertisments,
+  },
+  {
+    path: "/chat",
+    name: "Chat",
+    component: Chat,
   }
 ];
 

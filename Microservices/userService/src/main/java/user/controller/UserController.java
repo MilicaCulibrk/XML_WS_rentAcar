@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     private UserService userService;
     
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    //@PreAuthorize("hasAuthority('ADMINISTRATOR') or hasAuthority('USER')")
 	@RequestMapping(value = "/nes", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getAllusers(){
         return new ResponseEntity(userService.getAllUsers(),HttpStatus.OK);

@@ -2,7 +2,8 @@ import firebase from '@firebase/app'
 import 'firebase/firestore'
 import 'firebase/firebase-auth'
 import 'firebase/storage'
-
+// Required for side-effects
+require("firebase/firestore");
 var firebaseConfig = {
     apiKey: "AIzaSyCnAxaLFstsUl0gxsyO-AnUP9iBkpGrb4w",
     authDomain: "xml-ws-rentacar.firebaseapp.com",
@@ -18,5 +19,6 @@ var firebaseConfig = {
 
   const db = firebase.firestore();
 
+  window.db=db;
   
   export {fb, db}

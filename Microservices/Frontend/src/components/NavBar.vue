@@ -34,9 +34,13 @@
         <span >New Addvertisement</span>
         <v-icon right>add</v-icon>
       </v-btn>
-      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
+      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'">
         <span @click="openMyAddvertisments()">My Addvertisements</span>
         <v-icon right>list</v-icon>
+      </v-btn>
+      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'">
+        <span @click="openChat()">Chat</span>
+        <v-icon right>sms</v-icon>
       </v-btn>
       <div class="mx-2" >
         <LoginComponent 
@@ -89,6 +93,9 @@ export default {
     },
     openMyAddvertisments(){
       this.$router.push("/myAddvertisments");
+    },
+    openChat(){
+      this.$router.push("/chat");
     },
     openCodebook() {
       this.$router.push("/codebook");
