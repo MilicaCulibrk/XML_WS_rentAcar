@@ -45,6 +45,24 @@
         <span>Requests</span>
         <v-icon right>check_box</v-icon>
       </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openPurchases()"
+        v-if="(this.$store.state.user.role)=='USER'"
+      >
+        <span>My purchases</span>
+        <v-icon right>list_alt</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openComments()"
+        v-if="(this.$store.state.user.role)=='ADMINISTRATOR'"
+      >
+        <span>Comments</span>
+        <v-icon right>mode_comment</v-icon>
+      </v-btn>
       <v-btn text color="primary" @click="openCart()" v-if="(this.$store.state.user.role)=='USER'">
         <span>Cart</span>
         <v-icon right>shopping_cart</v-icon>
@@ -123,6 +141,12 @@ export default {
     },
     openRequests() {
       this.$router.push("/requests");
+    },
+    openPurchases() {
+      this.$router.push("/purchases");
+    },
+    openComments() {
+      this.$router.push("/comments");
     },
     openChat(){
       this.$router.push("/chat");

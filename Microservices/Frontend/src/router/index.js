@@ -5,8 +5,10 @@ import Admin from "../views/admin/Admin.vue";
 import User from "../views/user/User.vue";
 import Agent from "../views/agent/Agent.vue";
 import Cart from "../views/user/Cart.vue";
+import MyPurchases from "../views/user/MyPurchases.vue";
 import Codebook from "../views/admin/Codebook.vue";
 import Requests from "../views/admin/Requests.vue";
+import Comments from "../views/admin/Comments.vue";
 import AddNewAddvertisment from "../views/user/AddNewAddvertisment.vue";
 import MyAddvertisments from "../views/user/MyAddvertisments.vue";
 import Chat from "../views/user/Chat.vue";
@@ -48,6 +50,16 @@ const routes = [
     path: "/requests",
     name: "Requests",
     component: Requests,
+  },
+  {
+    path: "/comments",
+    name: "Comments",
+    component: Comments,
+  },
+  {
+    path: "/purchases",
+    name: "MyPurchases",
+    component: MyPurchases,
   },
   {
     path: "/addNewAddvertisment",

@@ -100,7 +100,7 @@ public class RequestService {
         return new RequestDTO(request);
     }
 
-	public ArrayList<RequestDTO> getAllRequestsFrom(String username) {
+	public ArrayList<RequestDTO> getAllRequestsTo(String username) {
 		// TODO Auto-generated method stub
         List<Request> requests = new ArrayList<>();
         requests = requestRepository.findAll();
@@ -110,8 +110,23 @@ public class RequestService {
         		requestDTOS.add(new RequestDTO(r));
         	}
         }
-        return  requestDTOS;	}
+        return  requestDTOS;	
+    }
 
+	
+	public ArrayList<RequestDTO> getAllRequestsFrom(String username) {
+		// TODO Auto-generated method stub
+        List<Request> requests = new ArrayList<>();
+        requests = requestRepository.findAll();
+        ArrayList<RequestDTO> requestDTOS = new ArrayList<>();
+        for(Request r : requests){
+        	if(username.equals(r.getPurchaseList().get(0).getClient())){
+        		requestDTOS.add(new RequestDTO(r));
+        	}
+        }
+        return  requestDTOS;
+    }
+	
 	public void updateRequest(Long id) throws ParseException {
 		// TODO Auto-generated method stub
         Request request = requestRepository.findById(id).orElse(null);
@@ -168,4 +183,6 @@ public class RequestService {
 		}
         requestRepository.save(request);
 	}
+
+
 }

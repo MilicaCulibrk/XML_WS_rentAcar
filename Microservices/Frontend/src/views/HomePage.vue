@@ -56,7 +56,7 @@
                 <!-- komponenta ocene -->
                 <PopupRatings />
                 <!-- komponenta komentari -->
-                <PopupComments />
+                <PopupComments v-bind:car="car"></PopupComments>
                 <v-tooltip bottom color="black">
                   <template v-slot:activator="{ on }">
                     <v-btn @click="addToBasket(car)" icon v-on="on" color="primary">
