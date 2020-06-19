@@ -21,7 +21,7 @@ public class CommentDTO {
 	    private String text;
 	    private String title;
 
-	    private boolean accepted;
+	    private Boolean accepted;
 
 	    public Long add_id;
 
@@ -65,11 +65,11 @@ public class CommentDTO {
 			this.text = text;
 		}
 
-		public boolean isAccepted() {
+		public Boolean isAccepted() {
 			return accepted;
 		}
 
-		public void setAccepted(boolean accepted) {
+		public void setAccepted(Boolean accepted) {
 			this.accepted = accepted;
 		}
 

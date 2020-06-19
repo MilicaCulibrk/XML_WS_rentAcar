@@ -40,7 +40,7 @@ public class CommentService {
         comment.setId(c.getId());
         comment.setUser_id(c.getUser_id());
         comment.setUser_username(c.getUser_username());
-        //comment.setAccepted(false);
+        comment.setAccepted(null);
         comment.setText(c.getText());
         comment.setTitle(c.getTitle());
         Addvertisment add = addvertismentRepository.findById(c.getAdd_id()).get();
@@ -79,22 +79,24 @@ public class CommentService {
 
 		if(commentDTO.isAccepted()) {
 	        comment.setAccepted(true);
+	        Addvertisment add = addvertismentRepository.findById(comment.getAddvertisment().getId()).get();
+	        add.getComments().add(comment);
+	        addvertismentRepository.save(add);
 		} else {
 			comment.setAccepted(false);
 		}
         commentRepository.save(comment);
-        Addvertisment add = addvertismentRepository.findById(comment.getAddvertisment().getId()).get();
-        add.getComments().add(comment);
-        addvertismentRepository.save(add);
+
 	}
 
 	public List<CommentDTO> getAllCommentsFromAdd(Long add_id) {
 		// TODO Auto-generated method stub
         List<CommentDTO> CommentsDTOlist = new ArrayList<>();
         List<Comment> Comments = addvertismentRepository.findById(add_id).get().comments;
-        for (Comment Comment : Comments) {
-        	
-            CommentsDTOlist.add(new CommentDTO(Comment));
+        for (Comment comment : Comments) {
+        	if(comment.isAccepted()==true) {
+	            CommentsDTOlist.add(new CommentDTO(comment));
+        	}
         }
         return CommentsDTOlist;
 	}

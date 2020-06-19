@@ -18,8 +18,8 @@
           >
             <v-expansion-panel-header>#{{comment.id}}. Title: {{comment.title}}
                 <template v-slot:actions >
-                    <v-icon color="teal" v-if="comment.accepted">mdi-check</v-icon>
-                    <v-icon color="error" v-if="!comment.accepted">mdi-alert-circle</v-icon>
+                    <v-icon color="teal" v-if="comment.accepted==true">mdi-check</v-icon>
+                    <v-icon color="error" v-if="comment.accepted==false">mdi-alert-circle</v-icon>
                 </template>
 
             </v-expansion-panel-header>
@@ -27,7 +27,7 @@
                     <v-row no-gutters>
                       <v-col cols="10">Text: {{comment.text}}</v-col>
                       <v-col cols="10">Client: {{comment.user_username}}</v-col>
-                   <v-col cols="1">
+                   <v-col cols="1" v-if="comment.accepted==null">
                       <v-tooltip bottom color="white">
                         <template v-slot:activator="{ on }">
                           <v-btn icon v-on="on" color="green" @click="acceptRequest(comment)">
@@ -37,7 +37,7 @@
                         <span class="green--text">Accept</span>
                       </v-tooltip>
                     </v-col>
-                    <v-col cols="1">
+                    <v-col cols="1" v-if="comment.accepted==null">
                       <v-tooltip bottom color="white">
                         <template v-slot:activator="{ on }">
                           <v-btn icon v-on="on" color="red" @click="declineRequest(comment)">

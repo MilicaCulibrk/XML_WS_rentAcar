@@ -52,7 +52,7 @@
         v-if="(this.$store.state.user.role)=='USER'"
       >
         <span>My purchases</span>
-        <v-icon right>check_box</v-icon>
+        <v-icon right>list_alt</v-icon>
       </v-btn>
       <v-btn
         text

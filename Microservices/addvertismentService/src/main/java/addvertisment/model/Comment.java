@@ -31,7 +31,7 @@ public class Comment {
     private String text;
 
     @Column(name = "accepted", nullable = true)
-    private boolean accepted;
+    private Boolean accepted;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Addvertisment addvertisment;
@@ -89,11 +89,11 @@ public class Comment {
         this.text = text;
     }
 
-    public boolean isAccepted() {
+    public Boolean isAccepted() {
         return accepted;
     }
 
-    public void setAccepted(boolean accepted) {
+    public void setAccepted(Boolean accepted) {
         this.accepted = accepted;
     }
 

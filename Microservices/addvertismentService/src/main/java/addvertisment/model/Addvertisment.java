@@ -61,7 +61,7 @@ public class Addvertisment {
     //@OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<Grade> grades;
 */
-    @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
+    @OneToMany( fetch = FetchType.LAZY)
     public List<Comment> comments;
 
 

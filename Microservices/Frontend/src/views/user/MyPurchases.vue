@@ -194,6 +194,8 @@ export default {
         .then(response => {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "Comment is added!";
+          this.comment.title = "";
+          this.comment.text = "";
           console.log(response);
           this.dialogComment = false;
           this.getRequests();

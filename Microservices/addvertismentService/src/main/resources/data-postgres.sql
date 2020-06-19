@@ -160,3 +160,24 @@ VALUES ('true', '1', '2500', 'Novi Sad', '333000', '80', '7', '2', '3', '10', '3
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
 VALUES ('false', '2', '1500', 'Sombor', '300000', '0', '3', '2', '2', '2', '10', 'ss');
 
+INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
+VALUES ('true', 'This car was excellent and my experience was great. Addvertiser was very nice and helpful. I really recommend this car!', 'Great', 1, 'mm', 8);
+INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
+VALUES ('true', 'I was not satisfied with this car', 'Bad', 2, 'sm', 17);
+INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
+VALUES ('true', 'Everything was good', 'Very good', 2, 'sm', 14);
+INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
+VALUES ('true', 'Everything was excellent and my experience was great.  I really recommend this car!', 'Excellent!!!!', 4, 'vm', 8);
+INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
+VALUES ('false', 'Not recommend. I was not satisfied with this car', 'Very bad', 4, 'vm', 17);
+INSERT INTO public.comment(text, title, user_id, user_username, addvertisment_id)
+VALUES ('Great, everything was good. Addvertiser was very nice and helpful.', 'Very good', 4, 'vm', 14);
+
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('8','1');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('17','2');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('14','3');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('8','4');
