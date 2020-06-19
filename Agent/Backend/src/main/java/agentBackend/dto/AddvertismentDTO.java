@@ -24,11 +24,11 @@ public class AddvertismentDTO {
     private String vehicle_class_name;
     private Long transmission_type_id;
     private String transmission_type_name;
-    private Long owner;
+    private String owner;
     private ArrayList<ImageDTO> images;
     private ArrayList<ReservedDateDTO> arrayEvents;
 
-    public AddvertismentDTO(Long id, Long fuel_type_id, Long brand_id, Long vehicle_model_id, Long vehicle_class_id, Long transmission_type_id, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, float price, ArrayList<ImageDTO> images, ArrayList<ReservedDateDTO> arrayEvents, Long addvertiser_id) {
+    public AddvertismentDTO(Long id, Long fuel_type_id, Long brand_id, Long vehicle_model_id, Long vehicle_class_id, Long transmission_type_id, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, float price, ArrayList<ImageDTO> images, ArrayList<ReservedDateDTO> arrayEvents, String username) {
         this.id = id;
         this.fuel_type_id = fuel_type_id;
         this.brand_id = brand_id;
@@ -43,7 +43,7 @@ public class AddvertismentDTO {
         this.daily_price = getDaily_price();
         this.images = images;
         this.arrayEvents = arrayEvents;
-        this.owner = addvertiser_id;
+        this.owner = username;
     }
 
 
@@ -65,7 +65,7 @@ public class AddvertismentDTO {
         this.vehicle_class_name = addvertisment.getVehicle_class().getVehicle_class_name();
         this.transmission_type_id = addvertisment.getTransmission_type().getId();
         this.transmission_type_name = addvertisment.getTransmission_type().getTransmission_type_name();
-        this.owner = addvertisment.getCompany().getId();
+        this.owner = addvertisment.getCompany().getUsername();
         this.arrayEvents = new ArrayList<>();
         this.images = new ArrayList<>();
 
@@ -210,11 +210,11 @@ public class AddvertismentDTO {
         this.transmission_type_name = transmission_type_name;
     }
 
-    public Long getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(Long owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
