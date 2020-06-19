@@ -54,7 +54,7 @@
                 <PopupDetails v-bind:car="car"></PopupDetails>
                 <v-spacer></v-spacer>
                 <!-- komponenta ocene -->
-                <PopupRatings />
+                <PopupRatings v-bind:car="car"></PopupRatings>
                 <!-- komponenta komentari -->
                 <PopupComments v-bind:car="car"></PopupComments>
                 <v-tooltip bottom color="black">
