@@ -36,6 +36,7 @@ export default {
   },
   methods: {
       viewRating() {
+        console.log(this.car.id);
         axios
           .get("/addvertisment-service/grade/" + this.car.id)
           .then(grades => {

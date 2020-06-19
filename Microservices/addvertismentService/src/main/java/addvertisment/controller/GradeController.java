@@ -30,8 +30,8 @@ public class GradeController {
 	
     //izlistavanje svih ocena za neki oglas(na frontu mozemo da uradimo average)
     @GetMapping("/{add_id}")
-    public ResponseEntity<?> getAllGrades (@PathVariable Long id)  {
-        return new ResponseEntity<List<GradeDTO>>(gradeService.getAllGradesFromAdd(id), HttpStatus.OK);
+    public ResponseEntity<?> getAllGrades (@PathVariable Long add_id)  {
+        return new ResponseEntity<List<GradeDTO>>(gradeService.getAllGradesFromAdd(add_id), HttpStatus.OK);
 
 	}
 

@@ -184,6 +184,7 @@ export default {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "Addvertisment is rated!";
           console.log(response);
+          this.dialogRating = false;
           this.getRequests();
         })
         .catch(error => {
