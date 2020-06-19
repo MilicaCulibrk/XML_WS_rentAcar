@@ -59,7 +59,7 @@
 
                                         <div class="text-center mt-12">
                                             <v-rating
-                                            v-model="rating"
+                                            v-model="grade.number"
                                             color="yellow darken-3"
                                             background-color="grey darken-1"
                                             empty-icon="$ratingFull"
@@ -155,7 +155,7 @@ export default {
       snackbarSuccessText: "",
       snackbarDanger: false,
       snackbarDangerText: "",
-      rating: "",
+ 
       dialogComment: false,
       dialogRating: false,
       comment: {
@@ -166,16 +166,25 @@ export default {
           add_id: "",
           accepted: "",
       },
+      grade: {
+          user_id: "",
+          add_id: "",
+          number: "",
+
+      },
     };
   },
   methods: {
     rate(id) {
+      this.grade.user_id = this.$store.state.user.id;
+      this.grade.add_id = id;
       axios
-        .put("/add-service/request/" + id)
+        .post("/addvertisment-service/grade" , this.grade)
         .then(response => {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "Addvertisment is rated!";
           console.log(response);
+          this.dialogRating = false;
           this.getRequests();
         })
         .catch(error => {

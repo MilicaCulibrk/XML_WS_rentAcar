@@ -1,23 +1,23 @@
 package addvertisment.model;
+import javax.persistence.*;
 
-//@Entity
+@Entity
 public class Grade {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private Long user_id;
 
-    //@Column(name = "number", nullable = false)
-    private int number;
+    @Column(name = "number", nullable = false)
+    private Integer number;
 
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Addvertisment addvertisment;
 
     public Grade(){
-        this.number = 0;
     }
 
     public Grade(Long id, Long user_id, int number, Addvertisment addvertisment) {
@@ -43,11 +43,11 @@ public class Grade {
         this.user_id = user_id;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

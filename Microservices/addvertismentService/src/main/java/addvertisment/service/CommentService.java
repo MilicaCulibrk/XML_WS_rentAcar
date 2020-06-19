@@ -47,22 +47,6 @@ public class CommentService {
 		comment.setAddvertisment(add);
         commentRepository.save(comment);
     }
-/*
-    public void updateComment(CommentDTO CommentDTO) throws ValidationException {
-
-        //ako vec postoji fuel type sa istim imenomd
-        List<Comment> CommentList = commentRepository.findAll();
-        for(Comment ft: CommentList){
-            if(ft.getFuel_type_name().equals(CommentDTO.getFuel_type_name())){
-                throw new ValidationException("Fuel type with this name already exists!");
-            }
-        }
-
-        Comment Comment = commentRepository.getOne(CommentDTO.getId());
-        existingDTOtoReal(Comment, CommentDTO);
-
-        commentRepository.save(Comment);
-    }*/
 
     public void deleteComment(Long id) throws ValidationException {
         Optional<Comment> Comment = commentRepository.findById(id);

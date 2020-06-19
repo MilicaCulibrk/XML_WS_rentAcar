@@ -4,7 +4,7 @@
       <template #activator="{ on: dialog }">
         <v-tooltip bottom color="black">
           <template #activator="{ on: tooltip }">
-            <v-btn icon v-on="{ ...tooltip, ...dialog }" color="primary">
+            <v-btn icon v-on="{ ...tooltip, ...dialog }" @click="viewRating()" color="primary">
               <v-icon>star</v-icon>
             </v-btn>
           </template>
@@ -12,18 +12,46 @@
         </v-tooltip>
       </template>
       <v-card>
-        <v-card-title class="headline grey lighten-2" primary-title>jaa</v-card-title>
+        <v-card-title class="headline grey lighten-2" primary-title>{{average}}</v-card-title>
       </v-card>
     </v-dialog>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
+  props: {
+    car: {
+      default: ""
+    }
+  },
   data() {
     return {
-      dialog: false
+      dialog: false,
+      grades: "",
+      average: "",
     };
-  }
+  },
+  methods: {
+      viewRating() {
+        console.log(this.car.id);
+        axios
+          .get("/addvertisment-service/grade/" + this.car.id)
+          .then(grades => {
+            this.grades = grades.data;
+            var total=0;
+            for(var i = 0; i<this.grades.length; i++){
+              total += this.grades[i].number;
+            }
+            var avg = total/this.grades.length;
+            this.average = avg;
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+  },
 };
 </script>
