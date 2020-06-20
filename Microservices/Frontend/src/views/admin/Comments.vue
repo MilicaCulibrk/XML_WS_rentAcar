@@ -20,6 +20,7 @@
                 <template v-slot:actions >
                     <v-icon color="teal" v-if="comment.accepted==true">mdi-check</v-icon>
                     <v-icon color="error" v-if="comment.accepted==false">mdi-alert-circle</v-icon>
+                    <v-icon v-if="comment.accepted==null">mdi-dots-horizontal</v-icon>
                 </template>
 
             </v-expansion-panel-header>

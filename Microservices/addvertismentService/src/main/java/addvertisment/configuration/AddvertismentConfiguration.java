@@ -62,7 +62,7 @@ public class AddvertismentConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/h2-console/**", "/price_list/**", "/verify/**", "/addvertisment/**", "/brand/**", "/fuel_type/**", "/transmission_type/**", "/vehicle_classe/**", "/model/**", "/comment/**")
+                .antMatchers("/h2-console/**", "/price_list/**", "/verify/**", "/addvertisment/**", "/brand/**", "/fuel_type/**", "/transmission_type/**", "/vehicle_classe/**", "/model/**", "/grade/**", "/comment/**")
                 .permitAll()
                 .anyRequest().authenticated().and().cors();
         		

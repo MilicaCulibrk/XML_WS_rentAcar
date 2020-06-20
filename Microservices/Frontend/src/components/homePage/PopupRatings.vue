@@ -12,8 +12,26 @@
         </v-tooltip>
       </template>
       <v-card>
-        <v-card-title class="headline grey lighten-2" primary-title>{{average}}</v-card-title>
-      </v-card>
+        <v-card-title
+        class="headline"
+        primary-title
+        >
+        Grade - {{average}}
+        </v-card-title>
+        <v-card-text>
+
+        <div class="text-center mt-12">
+            <v-rating
+            v-model="average"
+            color="yellow darken-3"
+            background-color="grey darken-1"
+            empty-icon="$ratingFull"
+            half-increments
+            hover
+            ></v-rating>
+        </div>
+        </v-card-text>
+        </v-card>
     </v-dialog>
   </div>
 </template>
@@ -30,8 +48,8 @@ export default {
   data() {
     return {
       dialog: false,
-      grades: "",
-      average: "",
+      grades: 0,
+      average: 0,
     };
   },
   methods: {

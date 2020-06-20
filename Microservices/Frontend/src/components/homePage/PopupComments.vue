@@ -13,13 +13,14 @@
       </template>
       <v-card>
         <v-list two-line>
-          <template v-for="(item, index) in comments">
-            <v-subheader v-if="item.header" :key="item.header">Comments</v-subheader>
-            <v-divider :key="index" :inset="item.inset"></v-divider>
+          <v-subheader  class="primary--text font-weight-bold headline">Comments</v-subheader>
+          <template v-for="item in comments">
+            <v-divider :key="item.header"></v-divider>
             <v-list-item :key="item.title" >
               <v-list-item-content>
-                <v-list-item-title>{{item.title}} - {{item.user_username}}</v-list-item-title>
-                <v-list-item-subtitle v-html="item.text"></v-list-item-subtitle>
+                <v-list-item-title> {{item.title}} </v-list-item-title>
+                <v-list-item-subtitle> {{item.text}} </v-list-item-subtitle>
+                <v-list-item-subtitle style="text-align:right;"><span class='font-weight-bold' >by {{item.user_username}}</span></v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </template>
