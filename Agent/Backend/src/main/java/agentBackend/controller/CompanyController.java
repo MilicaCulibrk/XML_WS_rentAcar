@@ -1,6 +1,9 @@
 package agentBackend.controller;
 
 import agentBackend.model.Company;
+import agentBackend.service.CompanyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,10 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/company")
 public class CompanyController {
 
+    @Autowired
+    private CompanyService companyService;
+
     //izlistavanje svih firmi
-    @GetMapping()
+    @GetMapping(value = "")
     public ResponseEntity<?> getAllCompanies()  {
-        return null;
+        return new ResponseEntity(companyService.getAllCompanies(), HttpStatus.OK);
     }
 
     //izlististavanje pojedinacne firme

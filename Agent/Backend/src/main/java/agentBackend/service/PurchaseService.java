@@ -26,4 +26,17 @@ public class PurchaseService {
         }
         return purchasesDTOlist;
     }
+
+    public ArrayList<PurchaseDTO> getAllOrderedPurchases(String username){
+
+        List<Purchase> purchases = new ArrayList<>();
+        purchases = purchaseRepository.findAll();
+        ArrayList<PurchaseDTO> purchaseDTOS = new ArrayList<>();
+        for(Purchase p : purchases) {
+            if (p.getOrdered()==true && (p.getClient().equals(username) || p.getOwner().equals(username))) {
+                purchaseDTOS.add(new PurchaseDTO(p));
+            }
+        }
+        return  purchaseDTOS;
+    }
 }
