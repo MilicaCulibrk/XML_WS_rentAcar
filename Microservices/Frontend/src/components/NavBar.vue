@@ -39,6 +39,15 @@
       <v-btn
         text
         color="primary"
+        @click="openStatistics()"
+        v-if="(this.$store.state.user.role)=='COMPANY'"
+      >
+        <span>Statistics</span>
+        <v-icon right>bar_chart</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
         @click="openRequests()"
         v-if="(this.$store.state.user.role)=='COMPANY' || (this.$store.state.user.role)=='USER'"
       >
@@ -76,11 +85,19 @@
         <span>New Add</span>
         <v-icon right>add</v-icon>
       </v-btn>
-      <v-btn text color="primary"  v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'">
+      <v-btn
+        text
+        color="primary"
+        v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'"
+      >
         <span @click="openMyAddvertisments()">My Adds</span>
         <v-icon right>list</v-icon>
       </v-btn>
-      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'">
+      <v-btn
+        text
+        color="primary"
+        v-if="(this.$store.state.user.role)!='NONE' && (this.$store.state.user.role)!='ADMINISTRATOR'"
+      >
         <span @click="openChat()">Chat</span>
         <v-icon right>sms</v-icon>
       </v-btn>
@@ -148,8 +165,11 @@ export default {
     openComments() {
       this.$router.push("/comments");
     },
-    openChat(){
+    openChat() {
       this.$router.push("/chat");
+    },
+    openStatistics() {
+      this.$router.push("/statistics");
     },
     logout() {
       localStorage.removeItem("loggedUser");

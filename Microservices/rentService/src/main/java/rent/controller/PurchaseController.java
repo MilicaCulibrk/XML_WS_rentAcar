@@ -8,6 +8,7 @@ import rent.dto.PurchaseDTO;
 import rent.service.PurchaseService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -23,6 +24,11 @@ public class PurchaseController {
         ArrayList<PurchaseDTO> purchases = new ArrayList<>();
         purchases = purchaseService.getAllOrderedPurchases(username);
         return new ResponseEntity(purchases, HttpStatus.OK);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<PurchaseDTO>> getAllPurchases() {
+        return new ResponseEntity<List<PurchaseDTO>>(purchaseService.getAllPurchases(), HttpStatus.OK);
     }
 
 }

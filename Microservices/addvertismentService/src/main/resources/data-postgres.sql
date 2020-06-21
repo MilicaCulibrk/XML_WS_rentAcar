@@ -146,7 +146,7 @@ VALUES ('true', '2', '5000', 'Beograd', '440000', '130', '3', '1', '1', '5', '3'
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
 VALUES ('true', '4', '3000', 'Beograd', '211000', '0', '2', '2', '3', '9', '4', 'ss');
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('false', '2', '1500', 'Sombor', '553000', '90', '2', '2', '2', '3', '2', 'ss');
+VALUES ('false', '2', '1500', 'Sombor', '553000', '90', '2', '1', '2', '2', '3', '2');
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
 VALUES ('true', '2', '2000', 'Beograd', '98000', '130', '1', '1', '1', '22', '1', 'vs');
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
@@ -161,23 +161,76 @@ INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mil
 VALUES ('false', '2', '1500', 'Sombor', '300000', '0', '3', '2', '2', '2', '10', 'ss');
 
 INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
-VALUES ('true', 'This car was excellent and my experience was great. Addvertiser was very nice and helpful. I really recommend this car!', 'Great', 1, 'mm', 8);
+VALUES ('true', 'This car was excellent and my experience was great. Addvertiser was very nice and helpful. I really recommend this car!', 'Great', 1, 'mm', 9);
 INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
-VALUES ('true', 'I was not satisfied with this car', 'Bad', 2, 'sm', 17);
+VALUES ('true', 'I was not satisfied with this car', 'Bad', 2, 'sm', 10);
 INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
-VALUES ('true', 'Everything was good', 'Very good', 2, 'sm', 14);
+VALUES ('true', 'Everything was good', 'Very good', 2, 'sm', 11);
 INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
-VALUES ('true', 'Everything was excellent and my experience was great.  I really recommend this car!', 'Excellent!!!!', 4, 'vm', 8);
+VALUES ('true', 'Everything was excellent and my experience was great.  I really recommend this car!', 'Excellent!!!!', 4, 'vm', 18);
 INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
-VALUES ('false', 'Not recommend. I was not satisfied with this car', 'Very bad', 4, 'vm', 17);
+VALUES ('false', 'Not recommend. I was not satisfied with this car', 'Very bad', 4, 'vm', 18);
 INSERT INTO public.comment(text, title, user_id, user_username, addvertisment_id)
 VALUES ('Great, everything was good. Addvertiser was very nice and helpful.', 'Very good', 4, 'vm', 14);
 
+INSERT INTO public.grade(number, user_id, addvertisment_id)
+VALUES ('5', '2', '10');
+INSERT INTO public.grade(number, user_id, addvertisment_id)
+VALUES ('3', '2', '10');
+INSERT INTO public.grade(number, user_id, addvertisment_id)
+VALUES ('4', '2', '10');
+INSERT INTO public.grade(number, user_id, addvertisment_id)
+VALUES ('3', '2', '18');
+INSERT INTO public.grade(number, user_id, addvertisment_id)
+VALUES ('4', '2', '9');
+INSERT INTO public.grade(number, user_id, addvertisment_id)
+VALUES ('5', '2', '9');
+
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('8','1');
+VALUES ('18','1');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('17','2');
+VALUES ('18','2');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('14','3');
+VALUES ('9','3');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('8','4');
+VALUES ('10','4');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('11','5');
+
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '1');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6491975468328182_images%20(4).jpg?alt=media&token=d9c8efc5-06d5-44e5-bbbb-5b9f3e6f82e4', '2');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '3');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '4');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '5');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '6');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '7');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '8');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '9');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '10');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '11');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '12');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '13');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '14');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '15');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '16');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '17');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '18');
+
