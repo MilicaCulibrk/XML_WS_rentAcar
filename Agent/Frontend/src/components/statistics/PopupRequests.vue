@@ -99,7 +99,7 @@ export default {
   methods: {
     getRequests() {
       axios
-        .get("/request/from/" + this.$store.state.user.username)
+        .get("/request")
         .then(requests => {
           this.requests = requests.data;
           this.getCompanyRequests();

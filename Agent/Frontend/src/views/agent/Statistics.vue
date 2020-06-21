@@ -41,7 +41,7 @@
           <v-expand-x-transition>
             <div v-show="expandKilometres" elevation="20">
               <v-layout row wrap>
-                <v-flex xs12 sm12 md12 lg12 v-for="car in cars" :key="car.id">
+                <v-flex xs12 sm12 md12 lg12 v-for="car in cars" :key="car.id-300">
                   <v-card hover elevation="2" class="ma-1">
                     <div class="cardBorderColor">
                       <v-row>
@@ -55,7 +55,7 @@
                             <div
                               class="primary--text"
                             >{{ car.brand_name }} {{ car.vehicle_model_name }}</div>
-                            <div>Price: {{ car.daily_price }}</div>
+                            <div>Price: {{ car.price }}</div>
                           </v-card-text>
                           <v-card-actions class="mt-n4">
                             <!-- komponenta detalji o autu-->
@@ -84,25 +84,113 @@
           </v-expand-x-transition>
           <!-- Komentari -->
           <v-expand-x-transition>
-            <v-card v-show="expandComments" elevation="20">
-              <div class="cardBorderColor">
-                <v-list></v-list>
-              </div>
-            </v-card>
+            <div v-show="expandComments" elevation="20">
+              <v-layout row wrap>
+                <v-flex xs12 sm12 md12 lg12 v-for="car in cars" :key="car.id-200">
+                  <v-card hover elevation="2" class="ma-1">
+                    <div class="cardBorderColor">
+                      <v-row>
+                        <v-col cols="4">
+                          <v-responsive class="pt-1 ml-2">
+                            <img :src="car.images[0].url" height="100px" />
+                          </v-responsive>
+                        </v-col>
+                        <v-col cols="4">
+                          <v-card-text>
+                            <div
+                              class="primary--text"
+                            >{{ car.brand_name }} {{ car.vehicle_model_name }}</div>
+                            <div>Price: {{ car.price }}</div>
+                          </v-card-text>
+                          <v-card-actions class="mt-n4">
+                            <!-- komponenta detalji o autu-->
+                            <PopupDetails v-bind:car="car"></PopupDetails>
+                            <!-- komponenta ocene -->
+                            <PopupRatings />
+                            <!-- komponenta komentari -->
+                            <PopupComments />
+                            <!-- komponenta zahtevi -->
+                            <PopupRequests v-bind:car="car"></PopupRequests>
+                          </v-card-actions>
+                        </v-col>
+                        <v-col cols="4">
+                          <v-card-text>
+                            <div v-if="car.number_of_comments != 1">
+                              <div
+                                class="primary--text font-weight-bold headline mt-4"
+                              >{{ car.number_of_comments }} comments</div>
+                            </div>
+                            <div v-if="car.number_of_comments == 1">
+                              <div
+                                class="primary--text font-weight-bold headline mt-4"
+                              >{{ car.number_of_comments }} comment</div>
+                            </div>
+                          </v-card-text>
+                        </v-col>
+                      </v-row>
+                    </div>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </div>
           </v-expand-x-transition>
           <!-- Ocene -->
           <v-expand-x-transition>
-            <v-card v-show="expandGrades" elevation="20">
-              <div class="cardBorderColor">
-                <v-list></v-list>
-              </div>
-            </v-card>
+            <div v-show="expandGrades" elevation="20">
+              <v-layout row wrap>
+                <v-flex xs12 sm12 md12 lg12 v-for="car in cars" :key="car.id-400">
+                  <v-card hover elevation="2" class="ma-1">
+                    <div class="cardBorderColor">
+                      <v-row>
+                        <v-col cols="4">
+                          <v-responsive class="pt-1 ml-2">
+                            <img :src="car.images[0].url" height="100px" />
+                          </v-responsive>
+                        </v-col>
+                        <v-col cols="4">
+                          <v-card-text>
+                            <div
+                              class="primary--text"
+                            >{{ car.brand_name }} {{ car.vehicle_model_name }}</div>
+                            <div>Price: {{ car.price }}</div>
+                          </v-card-text>
+                          <v-card-actions class="mt-n4">
+                            <!-- komponenta detalji o autu-->
+                            <PopupDetails v-bind:car="car"></PopupDetails>
+                            <!-- komponenta ocene -->
+                            <PopupRatings />
+                            <!-- komponenta komentari -->
+                            <PopupComments />
+                            <!-- komponenta zahtevi -->
+                            <PopupRequests v-bind:car="car"></PopupRequests>
+                          </v-card-actions>
+                        </v-col>
+                        <v-col cols="4">
+                          <v-card-text>
+                            <div v-if="car.average_grade != 0">
+                              <div class="primary--text font-weight-bold headline mt-4">
+                                {{ car.average_grade }}
+                                <v-icon color="primary">star</v-icon>
+                              </div>
+                            </div>
+                            <div v-if="car.average_grade == 0">
+                              <div class="primary--text font-weight-bold headline mt-4">Not graded</div>
+                            </div>
+                          </v-card-text>
+                        </v-col>
+                      </v-row>
+                    </div>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </div>
           </v-expand-x-transition>
+
           <!-- Zahtevi -->
           <v-expand-x-transition>
             <div v-show="expandRequests" elevation="20">
               <v-layout row wrap>
-                <v-flex xs12 sm12 md12 lg12 v-for="car in cars" :key="car.id">
+                <v-flex xs12 sm12 md12 lg12 v-for="car in cars" :key="car.id-100">
                   <v-card hover elevation="2" class="ma-1">
                     <div class="cardBorderColor">
                       <v-row>
@@ -180,7 +268,7 @@ export default {
       companyRequests: {},
       menuItems: [
         "Most kilometres crossed",
-        "Most Comments",
+        "Most comments",
         "Best grades",
         "Most requests"
       ],
@@ -195,7 +283,7 @@ export default {
       if (menuItem == "Most kilometres crossed") {
         this.cancelOtherMenus(menuItem);
         this.expandKilometres = !this.expandKilometres;
-      } else if (menuItem == "Most Comments") {
+      } else if (menuItem == "Most comments") {
         this.cancelOtherMenus(menuItem);
         this.expandComments = !this.expandComments;
       } else if (menuItem == "Best grades") {
@@ -225,12 +313,23 @@ export default {
         this.cars.sort((a, b) =>
           parseFloat(a["mileage"]) > parseFloat(b["mileage"]) ? -1 : 1
         );
-
         this.expandMenuItem(item);
       }
       if (item == "Most requests") {
         this.cars.sort((a, b) =>
           a["number_of_purchases"] > b["number_of_purchases"] ? -1 : 1
+        );
+        this.expandMenuItem(item);
+      }
+      if (item == "Most comments") {
+        this.cars.sort((a, b) =>
+          a["number_of_comments"] > b["number_of_comments"] ? -1 : 1
+        );
+        this.expandMenuItem(item);
+      }
+      if (item == "Best grades") {
+        this.cars.sort((a, b) =>
+          a["average_grade"] > b["average_grade"] ? -1 : 1
         );
         this.expandMenuItem(item);
       }
@@ -258,10 +357,9 @@ export default {
         }
       }
     },
-
     getCars() {
       axios
-        .get("/addvertisment")
+        .get("/addvertisment/user/" + this.$store.state.user.username)
         .then(cars => {
           this.cars = cars.data;
           this.getPurchases();
@@ -271,25 +369,23 @@ export default {
         });
     }
   },
-
   mounted() {
     this.getCars();
   }
 };
 </script>
 
-<style scoped>
+<style>
 .cardBorderColor {
-  border-left: 1px solid #ff8a65;
-  border-top: 1px solid #ff8a65;
-  border-right: 1px solid #ff8a65;
-  border-bottom: 1px solid #ff8a65;
+  border-left: 1px solid #fbc02d;
+  border-top: 1px solid #fbc02d;
+  border-right: 1px solid #fbc02d;
+  border-bottom: 1px solid #fbc02d;
 }
 .detailsBorderColor {
-  border-left: 1.5px solid #ff8a65;
-  border-top: 1.5px solid #ff8a65;
-  border-right: 1.5px solid #ff8a65;
-  border-bottom: 1.5px solid #ff8a65;
+  border-left: 1.5px solid #fbc02d;
+  border-top: 1.5px solid #fbc02d;
+  border-right: 1.5px solid #fbc02d;
+  border-bottom: 1.5px solid #fbc02d;
 }
-</style>
-
+</style> 

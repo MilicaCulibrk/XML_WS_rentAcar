@@ -43,7 +43,8 @@ const routes = [
     path: "/purchases",
     name: "MyPurchases",
     component: MyPurchases,
-
+  },
+  {
     path: "/statistics",
     name: "Statistics",
     component: Statistics,
@@ -62,7 +63,7 @@ const routes = [
     path: "/chat",
     name: "Chat",
     component: Chat,
-  }
+  },
 ];
 
 const router = new VueRouter({
