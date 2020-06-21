@@ -6,19 +6,63 @@
 
 package agentBackend.model;
 
-/** @pdOid 927bc4c5-c234-4451-9666-ad932dfafe46 */
+import javax.persistence.*;
+
+@Entity
 public class Grade {
-   /** @pdOid e3e56a53-be4a-4a34-8c76-98c03989b1bb */
-   private long id;
-   /** @pdOid 41a3369f-b44e-414e-bed9-793763aeec4d */
-   private int number;
-   
-   /** @pdRoleInfo migr=no name=User assc=association17 mult=1..1 side=A */
-   public User user;
-   /** @pdRoleInfo migr=no name=Addvertisment assc=association18 mult=1..1 side=A */
-   public Addvertisment addvertisment;
-   
-   
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = "user_id", nullable = false)
+    private Long user_id;
+
+    @Column(name = "number", nullable = false)
+    private Integer number;
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public Addvertisment addvertisment;
+
+    public Grade(){
+    }
+
+    public Grade(Long id, Long user_id, int number, Addvertisment addvertisment) {
+        this.id = id;
+        this.user_id = user_id;
+        this.number = number;
+        this.addvertisment = addvertisment;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Addvertisment getAddvertisment() {
+        return addvertisment;
+    }
+
+    public void setAddvertisment(Addvertisment addvertisment) {
+        this.addvertisment = addvertisment;
+    }
 }

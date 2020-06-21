@@ -64,12 +64,32 @@ public class Addvertisment {
    //public java.util.Collection<Grade> grade;
    //public PriceList priceList;
    //public Order order;
+   @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
+   public List<Grade> grades;
 
+   @OneToMany( fetch = FetchType.LAZY)
+   public List<Comment> comments;
 
    public Addvertisment() {
    }
 
-   public Long getId() {
+   public List<Grade> getGrades() {
+	return grades;
+}
+
+public void setGrades(List<Grade> grades) {
+	this.grades = grades;
+}
+
+public List<Comment> getComments() {
+	return comments;
+}
+
+public void setComments(List<Comment> comments) {
+	this.comments = comments;
+}
+
+public Long getId() {
       return id;
    }
 

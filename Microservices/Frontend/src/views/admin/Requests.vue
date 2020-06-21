@@ -16,7 +16,13 @@
             :key="request.id"
             class="detailsBorderColor"
           >
-            <v-expansion-panel-header>Request {{request.id}} - {{request.status}}</v-expansion-panel-header>
+            <v-expansion-panel-header>Request {{request.id}} - {{request.status}}
+                <template v-slot:actions >
+                    <v-icon color="teal" v-if="request.status=='PAID'">mdi-check</v-icon>
+                    <v-icon color="error" v-if="request.status=='CANCELED'">mdi-alert-circle</v-icon>
+                    <v-icon v-if="request.status=='PENDING'">mdi-dots-horizontal</v-icon>
+                </template>
+            </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-expansion-panels>
                 <v-expansion-panel
