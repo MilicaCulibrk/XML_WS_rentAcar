@@ -24,8 +24,7 @@ public class AddvertismentDTO {
     private String addvertiser_id;
     private ArrayList<ImageDTO> images;
     private ArrayList<ReservedDateDTO> arrayEvents;
-
-
+    private int number_of_purchases;
 
     public AddvertismentDTO(Addvertisment addvertisment) {
         this.id = addvertisment.getId();
@@ -53,6 +52,7 @@ public class AddvertismentDTO {
             arrayEvents.add(new ReservedDateDTO(r));
         }
 
+        this.number_of_purchases = 0;
 
     }
 
@@ -178,5 +178,13 @@ public class AddvertismentDTO {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public int getNumber_of_purchases() {
+        return number_of_purchases;
+    }
+
+    public void setNumber_of_purchases(int number_of_purchases) {
+        this.number_of_purchases = number_of_purchases;
     }
 }

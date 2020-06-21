@@ -48,11 +48,11 @@ public class AddvertismentService {
         }
         return addvertismentsDTOlist;
     }
-    public List<AddvertismentDisplayDTO> getAllUsersAddvertisments(Long id) {
+    public List<AddvertismentDisplayDTO> getAllUsersAddvertisments(String username) {
         List<AddvertismentDisplayDTO> addvertismentDisplayDTOS = new ArrayList<>();
         List<Addvertisment> addvertisments = addvertismentRepository.findAll();
         for (Addvertisment addvertisment : addvertisments) {
-            if(addvertisment.getAddvertiser_id().equals(id)) {
+            if(addvertisment.getAddvertiser_id().equals(username)) {
                 addvertismentDisplayDTOS.add(new AddvertismentDisplayDTO(addvertisment));
             }
         }

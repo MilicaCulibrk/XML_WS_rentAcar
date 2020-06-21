@@ -9,6 +9,7 @@ import MyPurchases from "../views/user/MyPurchases.vue";
 import Codebook from "../views/admin/Codebook.vue";
 import Requests from "../views/admin/Requests.vue";
 import Comments from "../views/admin/Comments.vue";
+import Statistics from "../views/agent/Statistics.vue";
 import AddNewAddvertisment from "../views/user/AddNewAddvertisment.vue";
 import MyAddvertisments from "../views/user/MyAddvertisments.vue";
 import Chat from "../views/user/Chat.vue";
@@ -62,6 +63,11 @@ const routes = [
     component: MyPurchases,
   },
   {
+    path: "/statistics",
+    name: "Statistics",
+    component: Statistics,
+  },
+  {
     path: "/addNewAddvertisment",
     name: "AddNewAddvertisment",
     component: AddNewAddvertisment,
@@ -75,7 +81,7 @@ const routes = [
     path: "/chat",
     name: "Chat",
     component: Chat,
-  }
+  },
 ];
 
 const router = new VueRouter({

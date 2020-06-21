@@ -23,7 +23,7 @@
           <v-responsive class="pt-4 mx-4">images go here</v-responsive>
           <v-card-text class="text-center-left">
             <div>{{ car.brand }} {{ car.model }}</div>
-            <div class="secondary">Price: {{ car.daily_price }}</div>
+            <div class="secondary">Price: {{ car.price }}</div>
             <div>CDW option: {{ carCDW }}</div>
             <div class="secondary">Class: {{ car.vehicle_class_name }}</div>
             <div>Mileage: {{ car.mileage }}</div>
