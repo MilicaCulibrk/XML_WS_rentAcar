@@ -149,7 +149,7 @@ VALUES ('true', '2', '5000', 'Beograd', '440000', '130', '3', '1', '1', '1', '5'
 INSERT INTO public.addvertisment(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, company_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
 VALUES ('true', '4', '3000', 'Beograd', '211000', '0', '2', '1', '2', '3', '9', '4');
 INSERT INTO public.addvertisment(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, company_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
-VALUES ('false', '2', '1500', 'Sombor', '553000', '90', '3', '1', '2', '2', '3', '2');
+VALUES ('false', '2', '1500', 'Sombor', '553000', '90', '2', '1', '2', '2', '3', '2');
 INSERT INTO public.addvertisment(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, company_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
 VALUES ('true', '2', '2000', 'Beograd', '98000', '130', '1', '1', '1', '1', '22', '1');
 INSERT INTO public.addvertisment(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, company_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id)
@@ -294,6 +294,6 @@ VALUES ( '2020-04-21', '2020-05-05', 2, 'ss', 'bm', false, 1, 'Mercedes Vision')
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 VALUES ( '2020-02-21', '2020-03-28', 2, 'ss', 'mm', false, 2, 'Mercedes Vision');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
-VALUES ( '2020-05-21', '2020-06-03', 2, 'ss', 'mm', false, 4, 'Volkswagen Golf');
+VALUES ( '2020-05-21', '2020-06-03', 12, 'ss', 'mm', false, 4, 'BMW Vitara');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 VALUES ( '2020-06-26', '2020-06-29', 2, 'ss', 'bm', false, 3, 'Mercedes Vision');

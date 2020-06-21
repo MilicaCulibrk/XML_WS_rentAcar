@@ -21,6 +21,7 @@ public class AddvertismentController {
 
     @GetMapping()
     public ResponseEntity<List<AddvertismentDTO>> getAllAdds()  {
+        System.out.println("rebeldeeeeeeeeeee");
         return new ResponseEntity<List<AddvertismentDTO>>(addvertismentService.getAllAdds(), HttpStatus.OK);
     }
 

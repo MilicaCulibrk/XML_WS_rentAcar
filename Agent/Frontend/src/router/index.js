@@ -4,6 +4,7 @@ import HomePage from "../views/HomePage.vue";
 import Cart from "../views/user/Cart.vue";
 import Codebook from "../views/admin/Codebook.vue";
 import Requests from "../views/agent/Requests.vue";
+import Statistics from "../views/agent/Statistics.vue";
 import AddNewAddvertisment from "../views/agent/AddNewAddvertisment.vue";
 import MyAddvertisments from "../views/agent/MyAddvertisments.vue";
 
@@ -29,6 +30,11 @@ const routes = [
     path: "/requests",
     name: "Requests",
     component: Requests,
+  },
+  {
+    path: "/statistics",
+    name: "Statistics",
+    component: Statistics,
   },
   {
     path: "/addNewAddvertisment",

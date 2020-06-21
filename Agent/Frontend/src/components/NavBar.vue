@@ -39,8 +39,17 @@
       <v-btn
         text
         color="primary"
+        @click="openStatistics()"
+        v-if="(this.$store.state.user.role)=='COMPANY'"
+      >
+        <span>Statistics</span>
+        <v-icon right>bar_chart</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
         @click="openRequests()"
-        v-if="(this.$store.state.user.role)=='COMPANY' || (this.$store.state.user.role)=='USER'"
+        v-if="(this.$store.state.user.role)=='COMPANY'"
       >
         <span>Requests</span>
         <v-icon right>check_box</v-icon>
@@ -119,6 +128,9 @@ export default {
     },
     openRequests() {
       this.$router.push("/requests");
+    },
+    openStatistics() {
+      this.$router.push("/statistics");
     },
     logout() {
       localStorage.removeItem("loggedUser");
