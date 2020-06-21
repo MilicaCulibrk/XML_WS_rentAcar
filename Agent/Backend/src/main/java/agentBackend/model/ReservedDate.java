@@ -13,7 +13,6 @@ public class ReservedDate {
    @Column(name = "oneDate", nullable = false)
    private String oneDate;
 
-
    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
    @JoinColumn(name="addvertisment_id")
    public Addvertisment addvertisment;

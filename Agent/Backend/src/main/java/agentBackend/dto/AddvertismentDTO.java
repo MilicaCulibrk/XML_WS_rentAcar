@@ -27,8 +27,9 @@ public class AddvertismentDTO {
     private String owner;
     private ArrayList<ImageDTO> images;
     private ArrayList<ReservedDateDTO> arrayEvents;
+    private int number_of_purchases;
 
-    public AddvertismentDTO(Long id, Long fuel_type_id, Long brand_id, Long vehicle_model_id, Long vehicle_class_id, Long transmission_type_id, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, float price, ArrayList<ImageDTO> images, ArrayList<ReservedDateDTO> arrayEvents, String username) {
+    public AddvertismentDTO(Long id, Long fuel_type_id, Long brand_id, Long vehicle_model_id, Long vehicle_class_id, Long transmission_type_id, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, float price, ArrayList<ImageDTO> images, ArrayList<ReservedDateDTO> arrayEvents, String username, int number_of_purchases) {
         this.id = id;
         this.fuel_type_id = fuel_type_id;
         this.brand_id = brand_id;
@@ -44,6 +45,7 @@ public class AddvertismentDTO {
         this.images = images;
         this.arrayEvents = arrayEvents;
         this.owner = username;
+        this.number_of_purchases = number_of_purchases;
     }
 
 
@@ -72,6 +74,8 @@ public class AddvertismentDTO {
         for(Image i : addvertisment.getImages()){
             images.add(new ImageDTO(i));
         }
+
+        this.number_of_purchases = 0;
     }
 
     public Long getId() {
@@ -232,5 +236,13 @@ public class AddvertismentDTO {
 
     public void setArrayEvents(ArrayList<ReservedDateDTO> arrayEvents) {
         this.arrayEvents = arrayEvents;
+    }
+
+    public int getNumber_of_purchases() {
+        return number_of_purchases;
+    }
+
+    public void setNumber_of_purchases(int number_of_purchases) {
+        this.number_of_purchases = number_of_purchases;
     }
 }

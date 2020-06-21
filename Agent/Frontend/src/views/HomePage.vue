@@ -261,7 +261,6 @@ export default {
       .get("/addvertisment")
       .then(cars => {
         this.cars = cars.data;
-        console.log(cars);
       })
       .catch(error => {
         console.log(error);

@@ -3,6 +3,7 @@ package agentBackend.model;
 import javax.persistence.*;
 import java.util.List;
 
+
 @Entity
 public class Addvertisment {
 
@@ -179,8 +180,5 @@ public class Addvertisment {
    public void setLocation(String location) {
       this.location = location;
    }
-
-
-
 
 }
