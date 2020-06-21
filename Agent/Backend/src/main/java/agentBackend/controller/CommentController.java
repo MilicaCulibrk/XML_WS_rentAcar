@@ -1,4 +1,5 @@
-package addvertisment.controller;
+package agentBackend.controller;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,6 @@ import javax.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import addvertisment.dto.CommentDTO;
-import addvertisment.dto.CommentDTO;
-import addvertisment.model.Brand;
-import addvertisment.model.Comment;
-import addvertisment.service.CommentService;
+import agentBackend.dto.CommentDTO;
+import agentBackend.dto.CommentDTO;
+import agentBackend.model.Brand;
+import agentBackend.model.Comment;
+import agentBackend.service.CommentService;
 
 @CrossOrigin
 @RestController
@@ -33,7 +33,6 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 	
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("")
     public ResponseEntity<?> getAllComments()  {
         List<CommentDTO> comment = new ArrayList<>();
@@ -54,7 +53,6 @@ public class CommentController {
     }
 
     //objavljivanje novog komentara, prvobitno sa statusom false od strane korisnika
-    @PreAuthorize("hasAuthority('USER')")
     @PostMapping("")
     public ResponseEntity<?> createComment (@RequestBody CommentDTO commentDTO)  {
         if (commentDTO == null || commentDTO.getText().equals("")) {
@@ -69,7 +67,6 @@ public class CommentController {
         }    }
 
     //admin menja status komentara
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("")
     public ResponseEntity<?> updateComment (@RequestBody CommentDTO comment) {
         if (comment == null) {
@@ -88,3 +85,4 @@ public class CommentController {
         return null;
     }
 }
+

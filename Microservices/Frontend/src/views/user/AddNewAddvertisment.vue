@@ -352,6 +352,7 @@ export default {
           arr.push(new Date(endDate).toISOString().substr(0, 10));
           endDate.setDate(endDate.getDate() + 1);
         }
+
       }
       for (const d in arr) {
         this.addvertisment.arrayEvents.push(arr[d]);
@@ -367,6 +368,45 @@ export default {
         while (dt <= endDate) {
           arr.push(new Date(dt).toISOString().substr(0, 10));
           dt.setDate(dt.getDate() + 1);
+
+        },
+      quit() {
+        this.$router.push("/");
+      },
+      setOnEmptyString(){
+            this.selectBrand="";
+            this.selectFuelType=""; 
+            this.selectModel="";
+            this.selectClass=""; 
+            this.selectTransmission="";
+            this.selectMileage="";
+            this.selectMileageLimit="";
+            this.selectChildSeats="";
+            this.selectLocation="";
+            this.selectPrice="";
+            this.selectCdw= false;
+            this.addvertisment.images= [];
+            this.addvertisment.arrayEvents= [];
+            this.addvertisment.brand_id ="";
+            this.addvertisment.fuel_type_id = "";
+            this.addvertisment.vehicle_model_id = "";
+            this.addvertisment.vehicle_class_id = "";
+            this.addvertisment.transmission_type_id = "";
+            this.addvertisment.mileage = "";
+            this.addvertisment.mileage_limit = "";
+            this.addvertisment.cdw = false;
+            this.addvertisment.child_seats = "";
+            this.addvertisment.location = "";
+            this.addvertisment.price ="";
+            this.addvertisment.addvertiser_id = "";
+      },
+      createListImages(images){
+          var listImages=[];
+        for(const i in images){
+            var image={ id:"", url:"" };
+            image.url=images[i];
+            listImages.push(image);
+
         }
       } else {
         while (endDate <= dt) {

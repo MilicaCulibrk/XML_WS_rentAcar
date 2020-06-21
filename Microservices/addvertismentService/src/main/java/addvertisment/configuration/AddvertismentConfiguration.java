@@ -62,7 +62,7 @@ public class AddvertismentConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/h2-console/**", "/price_list/**", "/verify/**", "/addvertisment/**", "/brand/**", "/fuel_type/**", "/transmission_type/**", "/vehicle_classe/**", "/model/**", "/grade/**", "/comment/**")
+                .antMatchers("/h2-console/**", "/price_list/**", "/addvertisment/**", "/brand/**", "/fuel_type/**", "/transmission_type/**", "/vehicle_classe/**", "/model/**", "/comment/{add_id}/**")
                 .permitAll()
                 .anyRequest().authenticated().and().cors();
         		
@@ -74,7 +74,7 @@ public class AddvertismentConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
         web.ignoring().antMatchers(HttpMethod.POST, "/login", "/register");
-        web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
+        web.ignoring().antMatchers(HttpMethod.GET, "/", "/grade/**", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
                 "/**/*.css", "/**/*.js");
     }
 }

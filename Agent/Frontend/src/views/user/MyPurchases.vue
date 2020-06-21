@@ -172,7 +172,7 @@ export default {
       this.grade.user_id = this.$store.state.user.id;
       this.grade.add_id = id;
       axios
-        .post("/addvertisment-service/grade" , this.grade)
+        .post("/grade" , this.grade)
         .then(response => {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "Addvertisment is " + response.data;
@@ -193,7 +193,7 @@ export default {
         this.comment.user_id = this.$store.state.user.id;
         this.comment.user_username = this.$store.state.user.username;
       axios
-        .post("/addvertisment-service/comment", this.comment)
+        .post("/comment", this.comment)
         .then(response => {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "Comment is added!";
@@ -211,7 +211,7 @@ export default {
     },
     getRequests() {
       axios
-        .get("/rent-service/request/from/" + this.$store.state.user.username)
+        .get("/request/from/" + this.$store.state.user.username)
         .then(requests => {
             this.requests = requests.data;
             console.log(this.requests);
@@ -220,7 +220,9 @@ export default {
                     var endDate = new Date(purchase.date_to);
                     var today = new Date();
                     if(today>endDate){
+                      if(r.status=="PAID"){
                         purchase.pass = true;
+                      }
                     }
                 });
 

@@ -3,6 +3,7 @@ package user.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import user.model.Company;
@@ -16,6 +17,7 @@ public class CompanyController {
     private CompanyService companyService;
 
     //izlistavanje svih firmi
+    @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('COMPANY')")
     @GetMapping(value = "")
     public ResponseEntity<?> getAllCompanies()  {
         return new ResponseEntity(companyService.getAllCompanies(), HttpStatus.OK);
