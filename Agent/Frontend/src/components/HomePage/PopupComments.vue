@@ -4,7 +4,7 @@
       <template #activator="{ on: dialog1 }">
         <v-tooltip bottom color="black">
           <template #activator="{ on: tooltip }">
-            <v-btn icon v-on="{ ...tooltip, ...dialog1 }" color="primary">
+            <v-btn icon v-on="{ ...tooltip, ...dialog1 }" color="primary" @click="getComments()">
               <v-icon>mode_comment</v-icon>
             </v-btn>
           </template>
@@ -12,18 +12,55 @@
         </v-tooltip>
       </template>
       <v-card>
-        <v-card-title class="headline grey lighten-2" primary-title>jaa</v-card-title>
+        <v-list two-line>
+          <v-subheader  class="primary--text font-weight-bold headline">Comments</v-subheader>
+          <template v-for="item in comments">
+            <v-divider :key="item.header"></v-divider>
+            <v-list-item :key="item.title" >
+              <v-list-item-content>
+                <v-list-item-title> {{item.title}} </v-list-item-title>
+                <v-list-item-subtitle> {{item.text}} </v-list-item-subtitle>
+                <v-list-item-subtitle style="text-align:right;"><span class='font-weight-bold' >by {{item.user_username}}</span></v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+        </v-list>
       </v-card>
     </v-dialog>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
+  props: {
+    car: {
+      default: ""
+    }
+  },
   data() {
     return {
-      dialog1: false
+      dialog1: false,
+      comments: "",
+
     };
+  },
+    methods: {
+      getComments() {
+        console.log(this.car.id);
+        axios
+          .get("/comment/" + this.car.id + "/comments")
+          .then(comments => {
+            this.comments = comments.data;
+            console.log(this.comments);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+  },
+  mounted() {
   }
 };
 </script>

@@ -46,13 +46,13 @@
                 <div>Price: {{ car.daily_price }}</div>
               </v-card-text>
               <v-card-actions>
-                <!-- komponenta detalji o autu-->
+                <!-- komponenta detalji o autu -->
                 <PopupDetails v-bind:car="car"></PopupDetails>
                 <v-spacer></v-spacer>
                 <!-- komponenta ocene -->
-                <PopupRatings />
+                <PopupRatings v-bind:car="car"></PopupRatings>
                 <!-- komponenta komentari -->
-                <PopupComments />
+                <PopupComments v-bind:car="car"></PopupComments>
                 <v-tooltip bottom color="black">
                   <template v-slot:activator="{ on }">
                     <v-btn @click="addToBasket(car)" icon v-on="on" color="primary">
@@ -261,7 +261,6 @@ export default {
       .get("/addvertisment")
       .then(cars => {
         this.cars = cars.data;
-        console.log(cars);
       })
       .catch(error => {
         console.log(error);

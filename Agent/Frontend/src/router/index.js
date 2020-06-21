@@ -4,8 +4,12 @@ import HomePage from "../views/HomePage.vue";
 import Cart from "../views/user/Cart.vue";
 import Codebook from "../views/admin/Codebook.vue";
 import Requests from "../views/agent/Requests.vue";
+import Statistics from "../views/agent/Statistics.vue";
 import AddNewAddvertisment from "../views/agent/AddNewAddvertisment.vue";
 import MyAddvertisments from "../views/agent/MyAddvertisments.vue";
+import Chat from "../views/user/Chat.vue";
+import MyPurchases from "../views/user/MyPurchases.vue";
+import Comments from "../views/admin/Comments.vue";
 
 Vue.use(VueRouter);
 
@@ -31,6 +35,20 @@ const routes = [
     component: Requests,
   },
   {
+    path: "/comments",
+    name: "Comments",
+    component: Comments,
+  },
+  {
+    path: "/purchases",
+    name: "MyPurchases",
+    component: MyPurchases,
+
+    path: "/statistics",
+    name: "Statistics",
+    component: Statistics,
+  },
+  {
     path: "/addNewAddvertisment",
     name: "AddNewAddvertisment",
     component: AddNewAddvertisment,
@@ -40,6 +58,11 @@ const routes = [
     name: "MyAddvertisments",
     component: MyAddvertisments,
   },
+  {
+    path: "/chat",
+    name: "Chat",
+    component: Chat,
+  }
 ];
 
 const router = new VueRouter({

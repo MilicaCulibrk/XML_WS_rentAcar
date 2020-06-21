@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import agentBackend.dto.PurchaseDTO;
 import agentBackend.dto.RequestDTO;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@CrossOrigin
+
 @RestController
 @RequestMapping(value = "/request")
 public class RequestController {
@@ -31,10 +32,18 @@ public class RequestController {
         requests = requestService.getAllRequests();
         return new ResponseEntity(requests, HttpStatus.OK);
     }
+    //@PreAuthorize("hasAuthority('USER')")
+    @GetMapping(value = "/to/{username}")
+    public ResponseEntity<String> getAllRequestsTo (@PathVariable String username)  {
 
+        ArrayList<RequestDTO> requests = new ArrayList<>();
+        requests = requestService.getAllRequestsTo(username);
+        return new ResponseEntity(requests, HttpStatus.OK);
+    }
+    //@PreAuthorize("hasAuthority('USER')")
     @GetMapping(value = "/from/{username}")
     public ResponseEntity<String> getAllRequestsFrom (@PathVariable String username)  {
-        System.out.println("uso");
+
         ArrayList<RequestDTO> requests = new ArrayList<>();
         requests = requestService.getAllRequestsFrom(username);
         return new ResponseEntity(requests, HttpStatus.OK);

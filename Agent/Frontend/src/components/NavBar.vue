@@ -36,11 +36,38 @@
         <span>Codebook</span>
         <v-icon right>list_alt</v-icon>
       </v-btn>
+            <v-btn
+        text
+        color="primary"
+        @click="openPurchases()"
+        v-if="(this.$store.state.user.role)=='USER'"
+      >
+        <span>My purchases</span>
+        <v-icon right>list_alt</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openComments()"
+        v-if="(this.$store.state.user.role)=='ADMINISTRATOR'"
+      >
+        <span>Comments</span>
+        <v-icon right>mode_comment</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openStatistics()"
+        v-if="(this.$store.state.user.role)=='COMPANY'"
+      >
+        <span>Statistics</span>
+        <v-icon right>bar_chart</v-icon>
+      </v-btn>
       <v-btn
         text
         color="primary"
         @click="openRequests()"
-        v-if="(this.$store.state.user.role)=='COMPANY' || (this.$store.state.user.role)=='USER'"
+        v-if="(this.$store.state.user.role)=='COMPANY'"
       >
         <span>Requests</span>
         <v-icon right>check_box</v-icon>
@@ -61,6 +88,10 @@
       <v-btn text color="primary" v-if="(this.$store.state.user.role)=='COMPANY'">
         <span @click="openMyAddvertisments()">My Adds</span>
         <v-icon right>list</v-icon>
+      </v-btn>
+      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
+        <span @click="openChat()">Chat</span>
+        <v-icon right>sms</v-icon>
       </v-btn>
       <div class="mx-2">
         <LoginComponent
@@ -108,6 +139,9 @@ export default {
     openCart() {
       this.$router.push("/cart");
     },
+       openPurchases() {
+      this.$router.push("/purchases");
+    },
     openAddNewAddvertisment() {
       this.$router.push("/addNewAddvertisment");
     },
@@ -119,6 +153,12 @@ export default {
     },
     openRequests() {
       this.$router.push("/requests");
+    },
+    openStatistics() {
+      this.$router.push("/statistics");
+    },
+    openChat(){
+      this.$router.push("/chat");
     },
     logout() {
       localStorage.removeItem("loggedUser");
