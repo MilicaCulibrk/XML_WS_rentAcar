@@ -1,4 +1,4 @@
-package addvertisment.configuration;
+package rent.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,12 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
-import addvertisment.security.AuthenticationTokenFilter;
+import rent.security.AuthenticationTokenFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
-public class AddvertismentConfiguration extends WebSecurityConfigurerAdapter {
+public class RentConfiguration extends WebSecurityConfigurerAdapter {
 
 	
     @Bean
@@ -62,7 +62,7 @@ public class AddvertismentConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/h2-console/**", "/price_list/**", "/addvertisment/**", "/brand/**", "/fuel_type/**", "/transmission_type/**", "/vehicle_classe/**", "/model/**", "/comment/{add_id}/**")
+                .antMatchers("/h2-console/**")
                 .permitAll()
                 .anyRequest().authenticated().and().cors();
         		
@@ -74,7 +74,7 @@ public class AddvertismentConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
         web.ignoring().antMatchers(HttpMethod.POST, "/login", "/register");
-        web.ignoring().antMatchers(HttpMethod.GET, "/", "/grade/**", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
+        web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
                 "/**/*.css", "/**/*.js");
     }
 }
