@@ -286,6 +286,8 @@ INSERT INTO public.request(status) VALUES ('PENDING');
 INSERT INTO public.request(status) VALUES ('PENDING');
 INSERT INTO public.request(status) VALUES ('PENDING');
 INSERT INTO public.request(status) VALUES ('PENDING');
+INSERT INTO public.request(status) VALUES ('PAID');
+
 
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 VALUES ( '2020-06-21', '2020-06-29', 1, 'ss', 'mm', false, 1, 'BMW X5');
@@ -297,3 +299,6 @@ INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, 
 VALUES ( '2020-05-21', '2020-06-03', 12, 'ss', 'mm', false, 4, 'BMW Vitara');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 VALUES ( '2020-06-26', '2020-06-29', 2, 'ss', 'bm', false, 3, 'Mercedes Vision');
+INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
+VALUES ( '2020-06-21', '2020-06-23', 12, 'ss', 'mm', true, 5, 'BMW Vitara');
+

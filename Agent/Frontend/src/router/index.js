@@ -7,6 +7,7 @@ import Requests from "../views/agent/Requests.vue";
 import Statistics from "../views/agent/Statistics.vue";
 import AddNewAddvertisment from "../views/agent/AddNewAddvertisment.vue";
 import MyAddvertisments from "../views/agent/MyAddvertisments.vue";
+import Chat from "../views/user/Chat.vue";
 
 Vue.use(VueRouter);
 
@@ -46,6 +47,11 @@ const routes = [
     name: "MyAddvertisments",
     component: MyAddvertisments,
   },
+  {
+    path: "/chat",
+    name: "Chat",
+    component: Chat,
+  }
 ];
 
 const router = new VueRouter({
