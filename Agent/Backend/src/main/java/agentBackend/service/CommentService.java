@@ -40,12 +40,14 @@ public class CommentService {
         comment.setId(c.getId());
         comment.setUser_id(c.getUser_id());
         comment.setUser_username(c.getUser_username());
-        comment.setAccepted(null);
+        comment.setAccepted(true);
         comment.setText(c.getText());
         comment.setTitle(c.getTitle());
         Addvertisment add = addvertismentRepository.findById(c.getAdd_id()).get();
 		comment.setAddvertisment(add);
         commentRepository.save(comment);
+		add.getComments().add(comment);
+		addvertismentRepository.save(add);
     }
 
     public void deleteComment(Long id) throws ValidationException {

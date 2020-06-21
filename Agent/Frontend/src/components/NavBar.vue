@@ -139,6 +139,9 @@ export default {
     openCart() {
       this.$router.push("/cart");
     },
+       openPurchases() {
+      this.$router.push("/purchases");
+    },
     openAddNewAddvertisment() {
       this.$router.push("/addNewAddvertisment");
     },
