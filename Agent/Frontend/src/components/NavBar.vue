@@ -36,6 +36,24 @@
         <span>Codebook</span>
         <v-icon right>list_alt</v-icon>
       </v-btn>
+            <v-btn
+        text
+        color="primary"
+        @click="openPurchases()"
+        v-if="(this.$store.state.user.role)=='USER'"
+      >
+        <span>My purchases</span>
+        <v-icon right>list_alt</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="openComments()"
+        v-if="(this.$store.state.user.role)=='ADMINISTRATOR'"
+      >
+        <span>Comments</span>
+        <v-icon right>mode_comment</v-icon>
+      </v-btn>
       <v-btn
         text
         color="primary"
