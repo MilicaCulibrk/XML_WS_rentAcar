@@ -89,6 +89,10 @@
         <span @click="openMyAddvertisments()">My Adds</span>
         <v-icon right>list</v-icon>
       </v-btn>
+      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
+        <span @click="openChat()">Chat</span>
+        <v-icon right>sms</v-icon>
+      </v-btn>
       <div class="mx-2">
         <LoginComponent
           @loggedIn="snackbarSuccess = true; snackbarSuccessText='You are logged in!'"
@@ -149,6 +153,9 @@ export default {
     },
     openStatistics() {
       this.$router.push("/statistics");
+    },
+    openChat(){
+      this.$router.push("/chat");
     },
     logout() {
       localStorage.removeItem("loggedUser");

@@ -384,7 +384,7 @@ import {fb, db} from "@/firebase";
         this.addvertisment.child_seats = this.selectChildSeats;
         this.addvertisment.location = this.selectLocation;
         this.addvertisment.price = this.selectPrice;
-        this.addvertisment.addvertiser_id = this.$store.state.user.id;
+        this.addvertisment.addvertiser_id = this.$store.state.user.username;
         this.addvertisment.images=this.createListImages(this.addvertisment.images);
         this.addvertisment.arrayEvents=this.createListDates(this.addvertisment.arrayEvents);
         axios
