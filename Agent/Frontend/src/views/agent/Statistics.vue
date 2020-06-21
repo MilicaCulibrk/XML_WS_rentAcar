@@ -26,6 +26,7 @@
                   <v-list-item-content>
                     <v-list-item-title class="primary--text" v-text="menuItem"></v-list-item-title>
                   </v-list-item-content>
+
                   <v-list-item-icon>
                     <v-icon color="primary">play_arrow</v-icon>
                   </v-list-item-icon>
@@ -130,9 +131,16 @@
                         </v-col>
                         <v-col cols="4">
                           <v-card-text>
-                            <div
-                              class="primary--text font-weight-bold headline mt-4"
-                            >{{ car.mileage }} (km)</div>
+                            <div v-if="car.number_of_purchases != 1">
+                              <div
+                                class="primary--text font-weight-bold headline mt-4"
+                              >{{ car.number_of_purchases }} requests</div>
+                            </div>
+                            <div v-else>
+                              <div
+                                class="primary--text font-weight-bold headline mt-4"
+                              >{{ car.number_of_purchases }} request</div>
+                            </div>
                           </v-card-text>
                         </v-col>
                       </v-row>
@@ -166,7 +174,7 @@ export default {
       expandComments: false,
       expandGrades: false,
       expandRequests: false,
-      cars: {},
+      cars: [],
       carRequests: [],
       purchases: {},
       companyRequests: {},
@@ -221,7 +229,6 @@ export default {
         this.expandMenuItem(item);
       }
       if (item == "Most requests") {
-        this.getPurchases();
         this.cars.sort((a, b) =>
           a["number_of_purchases"] > b["number_of_purchases"] ? -1 : 1
         );
@@ -257,7 +264,7 @@ export default {
         .get("/addvertisment")
         .then(cars => {
           this.cars = cars.data;
-          console.log(this.cars.length());
+          this.getPurchases();
         })
         .catch(error => {
           console.log(error);
