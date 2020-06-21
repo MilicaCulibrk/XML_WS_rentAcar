@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javassist.NotFoundException;
+import user.model.Company;
 import user.repository.CompanyRepository;
-import user.repository.UserRepository;
+
+
+import java.util.List;
 
 @Service
 public class CompanyService {
@@ -18,5 +21,10 @@ public class CompanyService {
         }
         return true;
 
+    }
+
+    public List<Company> getAllCompanies() {
+        List<Company> companies = companyRepository.findAll();
+        return companies;
     }
 }

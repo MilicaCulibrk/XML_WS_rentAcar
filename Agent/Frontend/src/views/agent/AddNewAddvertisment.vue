@@ -419,7 +419,7 @@ export default {
       this.addvertisment.child_seats = this.selectChildSeats;
       this.addvertisment.location = this.selectLocation;
       this.addvertisment.price = this.selectPrice;
-      this.addvertisment.addvertiser_id = this.$store.state.user.id;
+      this.addvertisment.owner = this.$store.state.user.username;
       this.addvertisment.images = this.createListImages(
         this.addvertisment.images
       );
