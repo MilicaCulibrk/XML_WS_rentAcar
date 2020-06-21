@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rent.dto.PurchaseDTO;
 import rent.dto.RequestDTO;
@@ -32,6 +33,7 @@ public class RequestController {
         return new ResponseEntity(requests, HttpStatus.OK);
     }
     
+    @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('COMPANY')")
     @GetMapping(value = "/to/{username}")
     public ResponseEntity<String> getAllRequestsTo (@PathVariable String username)  {
 
@@ -40,6 +42,7 @@ public class RequestController {
         return new ResponseEntity(requests, HttpStatus.OK);
     }
     
+    @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('COMPANY')")
     @GetMapping(value = "/from/{username}")
     public ResponseEntity<String> getAllRequestsFrom (@PathVariable String username)  {
 
@@ -48,6 +51,7 @@ public class RequestController {
         return new ResponseEntity(requests, HttpStatus.OK);
     }
     
+    @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('COMPANY')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getRequest (@PathVariable Long id)  {
         if(id == null) {
@@ -62,6 +66,7 @@ public class RequestController {
     }
 
     //kreira se sa statusom false
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createRequest (@RequestBody List<PurchaseDTO> purchases)  {
 
@@ -72,6 +77,8 @@ public class RequestController {
         ArrayList<Request> requests = requestService.createRequest(purchases);
         return new ResponseEntity(requests, HttpStatus.OK);
     }
+    
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping(value = "/bundle", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createBundleRequest (@RequestBody List<PurchaseDTO> purchases)  {
 
@@ -84,6 +91,7 @@ public class RequestController {
     }
 
     //updejtuje se rekvest kad ga admin odobri
+    @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('COMPANY')")
     @PutMapping("/{id}")
     public ResponseEntity updateRequest (@PathVariable Long id) throws ParseException {
         if(id == null) {
@@ -98,6 +106,7 @@ public class RequestController {
     }
     
     //updejtuje se rekvest kad ga admin ODBIJE
+    @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('COMPANY')")
     @PutMapping("/decline/{id}")
     public ResponseEntity updateDeclineRequest (@PathVariable Long id) throws ParseException {
         if(id == null) {

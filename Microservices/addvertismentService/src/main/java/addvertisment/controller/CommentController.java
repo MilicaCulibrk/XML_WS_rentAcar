@@ -8,6 +8,7 @@ import javax.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 	
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @GetMapping("")
     public ResponseEntity<?> getAllComments()  {
         List<CommentDTO> comment = new ArrayList<>();
@@ -52,6 +54,7 @@ public class CommentController {
     }
 
     //objavljivanje novog komentara, prvobitno sa statusom false od strane korisnika
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping("")
     public ResponseEntity<?> createComment (@RequestBody CommentDTO commentDTO)  {
         if (commentDTO == null || commentDTO.getText().equals("")) {
@@ -66,6 +69,7 @@ public class CommentController {
         }    }
 
     //admin menja status komentara
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("")
     public ResponseEntity<?> updateComment (@RequestBody CommentDTO comment) {
         if (comment == null) {
