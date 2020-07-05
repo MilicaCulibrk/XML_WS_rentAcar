@@ -123,7 +123,7 @@ export default {
         brand: "",
         model: "",
         price: "",
-        agent: "",
+        owner: "",
         date_from: "",
         date_to: ""
       };
@@ -131,7 +131,7 @@ export default {
       carForChart.brand = car.brand_name;
       carForChart.model = car.vehicle_model_name;
       carForChart.price = car.daily_price;
-      carForChart.agent = car.owner;
+      carForChart.owner = car.owner;
       carForChart.date_from = this.date_from;
       carForChart.date_to = this.date_to;
       return carForChart;

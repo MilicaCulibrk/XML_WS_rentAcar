@@ -33,7 +33,7 @@ public class FuelTypeService {
         return fuelTypesDTOlist;
     }
 
-    public void createFuelType(FuelTypeDTO fuelTypeDTO) throws ValidationException {
+    public FuelType createFuelType(FuelTypeDTO fuelTypeDTO) throws ValidationException {
 
         //ako vec postoji fuel type sa istim imenomd
         List<FuelType> fuelTypeList = fuelTypeRepository.findAll();
@@ -46,6 +46,7 @@ public class FuelTypeService {
         FuelType fuelType = newDTOtoReal(fuelTypeDTO);
 
         fuelTypeRepository.save(fuelType);
+        return fuelType;
     }
 
     public void updateFuelType(FuelTypeDTO fuelTypeDTO) throws ValidationException {

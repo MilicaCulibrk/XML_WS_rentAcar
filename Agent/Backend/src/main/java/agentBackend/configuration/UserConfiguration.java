@@ -17,9 +17,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebMvc
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class UserConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -27,7 +28,6 @@ public class UserConfiguration extends WebSecurityConfigurerAdapter {
     private CustomUserDetailsService c;
 
     @Bean
-
     public PasswordEncoder passwordEncoder() {
 
         return new BCryptPasswordEncoder();
@@ -65,7 +65,7 @@ public class UserConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/h2-console/**", "/create/**", "/verify/**", "/company/**", "/request/**", "/auth/**", "/login", "/addvertisment/**", "/reservedDate/**",  "/brand/**", "/purchase/**", "/model/**", "/vehicle_class", "/fuel_type", "/transmission_type", "/login/**", "/register", "/register/**")
+                .antMatchers("/h2-console/**", "/create/**", "/verify/**", "/company/**", "/request/**", "/auth/**", "/login", "/addvertisment/**", "/reservedDate/**",  "/brand/**", "/purchase/**", "/model/**", "/vehicle_class", "/fuel_type", "/transmission_type", "/login/**", "/register", "/register/**", "/ws/**")
                 .permitAll()
                 .anyRequest().authenticated().and().cors();
 
@@ -78,7 +78,8 @@ public class UserConfiguration extends WebSecurityConfigurerAdapter {
         // TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
         web.ignoring().antMatchers(HttpMethod.POST, "/login", "/register");
         web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
-                "/**/*.css", "/**/*.js");
+               "/**/*.css", "/**/*.js");
     }
+
 }
 

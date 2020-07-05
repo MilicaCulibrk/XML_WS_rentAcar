@@ -317,6 +317,7 @@ export default {
       gasItems: [],
       cars: [],
       locationItems: [],
+
       searchItem: {
         selectBrand: [],
         selectModel: [],
@@ -426,6 +427,7 @@ export default {
       .get("/fuel_type")
       .then(gasItems => {
         this.gasItems = gasItems.data;
+
       })
       .catch(error => {
         console.log(error);

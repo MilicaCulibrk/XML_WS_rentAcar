@@ -297,3 +297,4 @@ INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, 
 VALUES ( '2020-05-21', '2020-06-03', 2, 'ss', 'mm', false, 4, 'Volkswagen Golf');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 VALUES ( '2020-06-26', '2020-06-29', 2, 'ss', 'bm', false, 3, 'Mercedes Vision');
+

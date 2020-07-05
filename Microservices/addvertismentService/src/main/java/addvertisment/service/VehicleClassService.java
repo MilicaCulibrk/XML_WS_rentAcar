@@ -34,7 +34,7 @@ public class VehicleClassService {
         return classDTOlist;
     }
 
-    public void createVehicleClass(VehicleClassDTO vehicleClassDTO) throws ValidationException {
+    public VehicleClass createVehicleClass(VehicleClassDTO vehicleClassDTO) throws ValidationException {
 
         //ako vec postoji klasa sa istim imenomd
         List<VehicleClass> vehicleClassList = vehicleClassRepository.findAll();
@@ -47,6 +47,7 @@ public class VehicleClassService {
         VehicleClass vehicleClass = newDTOtoReal(vehicleClassDTO);
 
         vehicleClassRepository.save(vehicleClass);
+        return vehicleClass;
     }
 
     public void updateVehicleClass(VehicleClassDTO vehicleClassDTO) throws ValidationException {

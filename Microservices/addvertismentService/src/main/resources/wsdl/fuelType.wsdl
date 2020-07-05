@@ -1,0 +1,57 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://localhost:8081/fuelType-schema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://localhost:8081/fuelType-schema" targetNamespace="http://localhost:8081/fuelType-schema">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://localhost:8081/fuelType-schema">
+            <xs:element name="FuelTypeRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
+                        <xs:element name="fuel_type_name" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="FuelTypeResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
+                        <xs:element name="fuel_type_name" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="FuelType">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                    <xs:element name="fuel_type_name" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="FuelTypeRequest">
+        <wsdl:part element="tns:FuelTypeRequest" name="FuelTypeRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="FuelTypeResponse">
+        <wsdl:part element="tns:FuelTypeResponse" name="FuelTypeResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="fuelTypeSchemaPort">
+        <wsdl:operation name="FuelType">
+            <wsdl:input message="tns:FuelTypeRequest" name="FuelTypeRequest"> </wsdl:input>
+            <wsdl:output message="tns:FuelTypeResponse" name="FuelTypeResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="fuelTypeSchemaPortSoap11" type="tns:fuelTypeSchemaPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="FuelType">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="FuelTypeRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="FuelTypeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="fuelTypeSchemaPortService">
+        <wsdl:port binding="tns:fuelTypeSchemaPortSoap11" name="fuelTypeSchemaPortSoap11">
+            <soap:address location="http://localhost:8081/ws"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

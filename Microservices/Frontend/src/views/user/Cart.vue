@@ -94,7 +94,7 @@ export default {
         owner: ""
       };
       purchase.client = this.$store.state.user.username;
-      purchase.owner = car.agent;
+      purchase.owner = car.owner;
       purchase.id_add = car.id;
       purchase.date_from = car.date_from;
       purchase.date_to = car.date_to;

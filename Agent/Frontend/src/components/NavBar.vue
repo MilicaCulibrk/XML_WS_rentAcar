@@ -83,8 +83,8 @@
 </template>
 
 <script>
-import LoginComponent from "@/components/homePage/LoginComponent.vue";
-import RegistrationComponent from "@/components/homePage/RegistrationComponent.vue";
+import LoginComponent from "@/components/HomePage/LoginComponent.vue";
+import RegistrationComponent from "@/components/HomePage/RegistrationComponent.vue";
 export default {
   components: {
     LoginComponent,

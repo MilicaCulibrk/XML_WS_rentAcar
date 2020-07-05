@@ -8,6 +8,9 @@ public class VehicleModelDTO {
     private String vehicle_model_name;
     private Long brand_id;
 
+    public VehicleModelDTO() {
+    }
+
     public VehicleModelDTO(Long id, String vehicle_model_name, Long brand_id) {
         this.id = id;
         this.vehicle_model_name = vehicle_model_name;
