@@ -138,7 +138,7 @@ export default {
   mounted() {
     //izlistavanje oglasa
     axios
-      .get("/addvertisment/user/" + this.$store.state.user.id)
+      .get("/addvertisment/user/" + this.$store.state.user.username)
       .then(addvertisments => {
         this.addvertisments = addvertisments.data;
       })

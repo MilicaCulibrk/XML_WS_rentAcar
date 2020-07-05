@@ -1,8 +1,6 @@
 package addvertisment.dto;
 
-import addvertisment.model.Addvertisment;
-import addvertisment.model.Image;
-import addvertisment.model.ReservedDate;
+import addvertisment.model.*;
 
 import java.util.ArrayList;
 
@@ -21,7 +19,10 @@ public class AddvertismentDisplayDTO {
     private float price;
     private String addvertiser_id;
     private ArrayList<ImageDTO> images;
+    private int number_of_comments;
+    private float average_grade;
     private ArrayList<ReservedDateDTO> arrayEvents;
+    private int number_of_purchases;
 
 
     public AddvertismentDisplayDTO(Addvertisment addvertisment) {
@@ -42,12 +43,29 @@ public class AddvertismentDisplayDTO {
         this.arrayEvents = new ArrayList<>();
         this.images = new ArrayList<>();
 
+
         for(Image i : addvertisment.getImages()){
             images.add(new ImageDTO(i));
         }
         for(ReservedDate r : addvertisment.getReservedDates()){
             arrayEvents.add(new ReservedDateDTO(r));
         }
+
+        this.number_of_comments = addvertisment.getComments().size();
+
+        float sumGrades = 0;
+        if(addvertisment.getGrades().size() != 0){
+            for(Grade g: addvertisment.getGrades()){
+                sumGrades = sumGrades + g.getNumber();
+            }
+            this.average_grade = sumGrades/(float) addvertisment.getGrades().size();
+        }else{
+            this.average_grade = 0;
+        }
+
+
+
+        this.number_of_purchases = 0;
 
     }
 
@@ -175,5 +193,29 @@ public class AddvertismentDisplayDTO {
 
     public void setArrayEvents(ArrayList<ReservedDateDTO> arrayEvents) {
         this.arrayEvents = arrayEvents;
+    }
+
+    public int getNumber_of_purchases() {
+        return number_of_purchases;
+    }
+
+    public void setNumber_of_purchases(int number_of_purchases) {
+        this.number_of_purchases = number_of_purchases;
+    }
+
+    public int getNumber_of_comments() {
+        return number_of_comments;
+    }
+
+    public void setNumber_of_comments(int number_of_comments) {
+        this.number_of_comments = number_of_comments;
+    }
+
+    public float getAverage_grade() {
+        return average_grade;
+    }
+
+    public void setAverage_grade(float average_grade) {
+        this.average_grade = average_grade;
     }
 }

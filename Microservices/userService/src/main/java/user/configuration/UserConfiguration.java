@@ -67,7 +67,7 @@ public class UserConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/h2-console/**", "/create/**", "/verify/**", "/company/**", "/auth/**", "/login", "/nes", "/login/**", "/register", "/register/**")
+                .antMatchers("/h2-console/**", "/create/**", "/verify/**", "/auth/**", "/login", "/login/**", "/register", "/register/**")
                 .permitAll()
                 .anyRequest().authenticated().and().cors();
         		

@@ -12,6 +12,7 @@ import agentBackend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,11 +56,11 @@ public class AddvertismentService {
         return addsDTOlist;
     }
 
-    public List<AddvertismentDisplayDTO> getAllUsersAddvertisments(Long id) {
+    public List<AddvertismentDisplayDTO> getAllUsersAddvertisments(String username) {
         List<AddvertismentDisplayDTO> addvertismentDisplayDTOS = new ArrayList<>();
         List<Addvertisment> addvertisments = addvertismentRepository.findAll();
         for (Addvertisment addvertisment : addvertisments) {
-            if(addvertisment.getCompany().getId().equals(id)) {
+            if(addvertisment.getCompany().getUsername().equals(username)) {
                 addvertismentDisplayDTOS.add(new AddvertismentDisplayDTO(addvertisment));
             }
         }
@@ -76,6 +77,7 @@ public class AddvertismentService {
     }
 
     public Addvertisment newDTOtoReal(AddvertismentDTO dto){
+        System.out.println(dto.getOwner());
         Addvertisment real = new Addvertisment();
         real.setCdw(dto.isCdw());
         real.setChild_seats(dto.getChild_seats());

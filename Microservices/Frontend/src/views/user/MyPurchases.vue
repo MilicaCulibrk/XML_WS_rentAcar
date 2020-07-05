@@ -17,12 +17,8 @@
             class="detailsBorderColor"
           >
             <v-expansion-panel-header>Request {{request.id}} - {{request.status}}</v-expansion-panel-header>
-            <v-expansion-panel-content>
-                <v-panel
-                  v-for="purchase in request.purchaseDTOS"
-                  :key="purchase.id"
-                >
-                  <v-panel-header>
+            <v-expansion-panel-content v-for="purchase in request.purchaseDTOS"
+                  :key="purchase.id">
                     <v-row >
                       <v-col
                         cols="3"
@@ -132,10 +128,7 @@
                         </v-row>
                         </v-fade-transition>
                       </v-col>
-                    </v-row>
-                  </v-panel-header>
-                </v-panel>
- 
+                    </v-row> 
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -169,7 +162,7 @@ export default {
       grade: {
           user_id: "",
           add_id: "",
-          number: "",
+          number: 0,
 
       },
     };
@@ -182,9 +175,10 @@ export default {
         .post("/addvertisment-service/grade" , this.grade)
         .then(response => {
           this.snackbarSuccess = true;
-          this.snackbarSuccessText = "Addvertisment is rated!";
+          this.snackbarSuccessText = "Addvertisment is " + response.data;
           console.log(response);
           this.dialogRating = false;
+          this.grade.number = 0;
           this.getRequests();
         })
         .catch(error => {

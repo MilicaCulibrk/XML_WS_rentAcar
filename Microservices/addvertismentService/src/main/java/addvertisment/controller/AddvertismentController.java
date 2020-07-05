@@ -29,9 +29,9 @@ public class AddvertismentController {
         return new ResponseEntity<List<AddvertismentDTO>>(addvertismentService.getAllAddvertisments(), HttpStatus.OK);
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<List<AddvertismentDisplayDTO>> getAllUsersAddvertisments(@PathVariable Long id)  {
-        return new ResponseEntity<List<AddvertismentDisplayDTO>>(addvertismentService.getAllUsersAddvertisments(id), HttpStatus.OK);
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<AddvertismentDisplayDTO>> getAllUsersAddvertisments(@PathVariable String username)  {
+        return new ResponseEntity<List<AddvertismentDisplayDTO>>(addvertismentService.getAllUsersAddvertisments(username), HttpStatus.OK);
     }
 
     //kad se kreira oglas treba da se kreira i nova klasa pretraga

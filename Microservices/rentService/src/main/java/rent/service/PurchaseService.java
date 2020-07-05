@@ -29,5 +29,14 @@ public class PurchaseService {
         return  purchaseDTOS;
     }
 
+    public List<PurchaseDTO> getAllPurchases() {
+        List<PurchaseDTO> purchasesDTOlist = new ArrayList<>();
+        List<Purchase> purchases = purchaseRepository.findAll();
+        for (Purchase  purchase : purchases) {
+            purchasesDTOlist.add(new PurchaseDTO(purchase));
+        }
+        return purchasesDTOlist;
+    }
+
 
 }

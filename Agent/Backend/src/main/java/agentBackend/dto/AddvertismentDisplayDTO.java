@@ -1,6 +1,7 @@
 package agentBackend.dto;
 
 import agentBackend.model.Addvertisment;
+import agentBackend.model.Grade;
 import agentBackend.model.Image;
 import agentBackend.model.ReservedDate;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,25 +26,10 @@ public class AddvertismentDisplayDTO {
     private Long addvertiser_id;
     private ArrayList<ImageDTO> images;
     private ArrayList<ReservedDateDTO> arrayEvents;
+    private int number_of_comments;
+    private float average_grade;
+    private int number_of_purchases;
 
-
-    public AddvertismentDisplayDTO(Long id, String fuel_type_name, String brand_name, String vehicle_model_name, String vehicle_class_name, String transmission_type_name, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, float price, Long addvertiser_id, ArrayList<ImageDTO> images, ArrayList<ReservedDateDTO> arrayEvents) {
-        this.id = id;
-        this.fuel_type_name = fuel_type_name;
-        this.brand_name = brand_name;
-        this.vehicle_model_name = vehicle_model_name;
-        this.vehicle_class_name = vehicle_class_name;
-        this.transmission_type_name = transmission_type_name;
-        this.mileage = mileage;
-        this.mileage_limit = mileage_limit;
-        this.cdw = cdw;
-        this.child_seats = child_seats;
-        this.location = location;
-        this.price = price;
-        this.addvertiser_id = addvertiser_id;
-        this.images = images;
-        this.arrayEvents = arrayEvents;
-    }
     public AddvertismentDisplayDTO(Addvertisment addvertisment) {
         this.id = addvertisment.getId();
         this.fuel_type_name = addvertisment.getFuel_type().getFuel_type_name();
@@ -68,6 +54,20 @@ public class AddvertismentDisplayDTO {
         for(ReservedDate r : addvertisment.getReservedDates()){
             arrayEvents.add(new ReservedDateDTO(r));
         }
+
+        this.number_of_comments = addvertisment.getComments().size();
+
+        float sumGrades = 0;
+        if(addvertisment.getGrades().size() != 0){
+            for(Grade g: addvertisment.getGrades()){
+                sumGrades = sumGrades + g.getNumber();
+            }
+            this.average_grade = sumGrades/(float) addvertisment.getGrades().size();
+        }else {
+            this.average_grade = 0;
+        }
+
+        this.number_of_purchases = 0;
 
     }
 
@@ -195,4 +195,27 @@ public class AddvertismentDisplayDTO {
         this.arrayEvents = arrayEvents;
     }
 
+    public int getNumber_of_comments() {
+        return number_of_comments;
+    }
+
+    public void setNumber_of_comments(int number_of_comments) {
+        this.number_of_comments = number_of_comments;
+    }
+
+    public float getAverage_grade() {
+        return average_grade;
+    }
+
+    public void setAverage_grade(float average_grade) {
+        this.average_grade = average_grade;
+    }
+
+    public int getNumber_of_purchases() {
+        return number_of_purchases;
+    }
+
+    public void setNumber_of_purchases(int number_of_purchases) {
+        this.number_of_purchases = number_of_purchases;
+    }
 }

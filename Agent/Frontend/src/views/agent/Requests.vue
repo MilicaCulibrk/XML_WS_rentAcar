@@ -244,7 +244,7 @@ export default {
     },
     getRequests() {
       axios
-        .get("/request/from/" + this.$store.state.user.username)
+        .get("/request/to/" + this.$store.state.user.username)
         .then((requests) => {
           this.requests = requests.data;
           console.log(this.requests);

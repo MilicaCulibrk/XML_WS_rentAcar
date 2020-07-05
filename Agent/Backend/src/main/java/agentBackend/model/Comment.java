@@ -6,23 +6,113 @@
 
 package agentBackend.model;
 
-import java.util.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-/** @pdOid 1572204e-5d17-476e-b36c-b1dddbfaaa70 */
+import agentBackend.dto.AddvertismentDTO;
+import agentBackend.dto.CommentDTO;
+
+@Entity
 public class Comment {
-   /** @pdOid 195cac59-559b-4458-9271-f7c04c8095ce */
-   private String text;
-   /** @pdOid 10bd50a0-4c18-4178-8052-eed88f88ae99 */
-   private boolean accepted;
-   /** @pdOid 3589a0a1-efbd-48c4-b3ff-e083cb1ef959 */
-   private long id;
-   
-   /** @pdRoleInfo migr=no name=Addvertisment assc=association10 mult=1..1 side=A */
-   public Addvertisment addvertisment;
-   /** @pdRoleInfo migr=no name=User assc=association19 mult=1..1 side=A */
-   public User user;
-   
-   
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "user_id", nullable = false)
+    private Long user_id;
+    
+    @Column(name = "user_username", nullable = false)
+    private String user_username;
+    
+    @Column(name = "title", nullable = false)
+    private String title;
+    
+    @Column(name = "text", nullable = false)
+    private String text;
+
+    @Column(name = "accepted", nullable = true)
+    private Boolean accepted;
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public Addvertisment addvertisment;
+
+    public Comment(){
+        super();
+    }
+
+    public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Long getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
+	}
+	
+
+	public String getUser_username() {
+		return user_username;
+	}
+
+	public void setUser_username(String user_username) {
+		this.user_username = user_username;
+	}
+
+	public Comment(Long id, Long user_id, String text, boolean accepted, Addvertisment addvertisment) {
+        this.id = id;
+        this.user_id = user_id;
+        this.text = text;
+        this.accepted = accepted;
+        this.addvertisment = addvertisment;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(Boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public Addvertisment getAddvertisment() {
+        return addvertisment;
+    }
+
+    public void setAddvertisment(Addvertisment addvertisment) {
+        this.addvertisment = addvertisment;
+    }
+
+
 
 
 }
