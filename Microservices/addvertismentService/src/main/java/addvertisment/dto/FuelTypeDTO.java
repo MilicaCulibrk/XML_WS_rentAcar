@@ -12,6 +12,10 @@ public class FuelTypeDTO{
     private Long id;
     private String fuel_type_name;
 
+    public FuelTypeDTO() {
+
+    }
+
     public FuelTypeDTO(Long id, String fuel_type_name) {
         this.id = id;
         this.fuel_type_name = fuel_type_name;

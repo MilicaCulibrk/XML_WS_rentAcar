@@ -18,6 +18,10 @@ public class BrandDTO {
         this.brand_name = brand.getBrand_name();
     }
 
+    public BrandDTO() {
+
+    }
+
     public Long getId() {
         return id;
     }

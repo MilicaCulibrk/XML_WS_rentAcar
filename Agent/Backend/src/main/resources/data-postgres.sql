@@ -321,6 +321,7 @@ INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, 
 VALUES ( '2020-05-21', '2020-06-03', 12, 'ss', 'mm', false, 4, 'BMW Vitara');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 VALUES ( '2020-06-26', '2020-06-29', 2, 'ss', 'bm', false, 3, 'Mercedes Vision');
+
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 VALUES ( '2020-06-21', '2020-06-23', 12, 'ss', 'mm', true, 5, 'BMW Vitara');
 
@@ -336,3 +337,4 @@ INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('4', '2', '9');
 INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '9');
+

@@ -61,6 +61,7 @@ export default {
         this.dialogDetails = false;
         this.vehicleClass.vehicle_class_name = "";
       } else {
+        console.log(this.vehicleClass);
         axios
           .post("/addvertisment-service/vehicle_class", this.vehicleClass)
           .then(() => {

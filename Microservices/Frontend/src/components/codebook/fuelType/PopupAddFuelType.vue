@@ -64,12 +64,14 @@ export default {
         axios
           .post("/addvertisment-service/fuel_type", this.fuelType)
           .then(() => {
+            console.log("usao je u dodavanje");
             this.$emit("addedFuelType");
             this.$emit("getFuelTypes");
             this.fuelType.fuel_type_name = "";
             this.dialogDetails = false;
           })
           .catch(error => {
+            console.log("usao je u greskuuu");
             this.$emit("notAddedFuelType");
             console.log(error);
           });

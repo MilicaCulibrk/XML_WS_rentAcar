@@ -7,6 +7,8 @@ public class VehicleClassDTO {
     private Long id;
     private String vehicle_class_name;
 
+    public VehicleClassDTO(){}
+
     public VehicleClassDTO(Long id, String vehicle_class_name) {
         this.id = id;
         this.vehicle_class_name = vehicle_class_name;
