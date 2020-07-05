@@ -359,95 +359,39 @@ export default {
       }
     },
 
-    enableDate(dates) {
-      var startDate = new Date(dates[0]);
-      var endDate = new Date(dates[1]);
-      var arr = new Array();
-      var dt = new Date(startDate);
-      if (dt < endDate) {
-        while (dt <= endDate) {
-          arr.push(new Date(dt).toISOString().substr(0, 10));
-          dt.setDate(dt.getDate() + 1);
-
+    enableDate(dates){
+            var startDate = new Date(dates[0]);
+            var endDate = new Date(dates[1]);
+            var  arr = new Array();
+            var  dt = new Date(startDate);
+            if(dt<endDate){
+            while (dt <= endDate) {
+                arr.push(new Date(dt).toISOString().substr(0, 10));
+                dt.setDate(dt.getDate() + 1);
+            }
+            }else{
+                while (endDate <= dt) {
+                arr.push(new Date(endDate).toISOString().substr(0, 10));
+                endDate.setDate(endDate.getDate() + 1);
+            }
+            }
+            for(const d in arr){
+            this.addvertisment.arrayEvents = this.addvertisment.arrayEvents.filter(word => word != arr[d]);
+        }
         },
-      quit() {
-        this.$router.push("/");
-      },
-      setOnEmptyString(){
-            this.selectBrand="";
-            this.selectFuelType=""; 
-            this.selectModel="";
-            this.selectClass=""; 
-            this.selectTransmission="";
-            this.selectMileage="";
-            this.selectMileageLimit="";
-            this.selectChildSeats="";
-            this.selectLocation="";
-            this.selectPrice="";
-            this.selectCdw= false;
-            this.addvertisment.images= [];
-            this.addvertisment.arrayEvents= [];
-            this.addvertisment.brand_id ="";
-            this.addvertisment.fuel_type_id = "";
-            this.addvertisment.vehicle_model_id = "";
-            this.addvertisment.vehicle_class_id = "";
-            this.addvertisment.transmission_type_id = "";
-            this.addvertisment.mileage = "";
-            this.addvertisment.mileage_limit = "";
-            this.addvertisment.cdw = false;
-            this.addvertisment.child_seats = "";
-            this.addvertisment.location = "";
-            this.addvertisment.price ="";
-            this.addvertisment.addvertiser_id = "";
-      },
-      createListImages(images){
-          var listImages=[];
-        for(const i in images){
-            var image={ id:"", url:"" };
-            image.url=images[i];
-            listImages.push(image);
-
-        }
-      } else {
-        while (endDate <= dt) {
-          arr.push(new Date(endDate).toISOString().substr(0, 10));
-          endDate.setDate(endDate.getDate() + 1);
-        }
-      }
-      for (const d in arr) {
-        this.addvertisment.arrayEvents = this.addvertisment.arrayEvents.filter(
-          word => word != arr[d]
-        );
-      }
-    },
     quit() {
       this.$router.push("/");
     },
-    addNewAddvertisment() {
-      if (
-        this.selectBrand == "" ||
-        this.selectFuelType == "" ||
-        this.selectModel == "" ||
-        this.selectClass == "" ||
-        this.selectTransmission == "" ||
-        this.selectMileage == "" ||
-        this.selectMileageLimit == "" ||
-        this.selectChildSeats == "" ||
-        this.selectLocation == "" ||
-        this.selectPrice == ""
-      ) {
-        this.snackbarDanger = true;
-        this.snackbarDangerText = "You need to fill all fileds!";
-        return;
-      }
-      var rex = /^[0-9]*$/;
-      if (
-        !rex.test(String(this.selectMileage.trim())) ||
-        !rex.test(String(this.selectMileageLimit.trim())) ||
-        !rex.test(String(this.selectPrice.trim()))
-      ) {
-        return;
-      }
+    addNewAddvertisment(){
+          if(this.selectBrand=="" || this.selectFuelType=="" || this.selectModel=="" || this.selectClass==""  || this.selectTransmission=="" || this.selectMileage=="" || this.selectMileageLimit=="" || this.selectChildSeats=="" || this.selectLocation=="" || this.selectPrice==""){
+            this.snackbarDanger = true;
+            this.snackbarDangerText="You need to fill all fileds!";
+            return;
+          }
+          var rex = /^[0-9]*$/;
+          if(!rex.test(String(this.selectMileage.trim())) || !rex.test(String(this.selectMileageLimit.trim())) || !rex.test(String(this.selectPrice.trim())) ){
+              return;
+          }
       this.addvertisment.brand_id = this.selectBrand.id;
       this.addvertisment.fuel_type_id = this.selectFuelType.id;
       this.addvertisment.vehicle_model_id = this.selectModel.id;
@@ -459,7 +403,7 @@ export default {
       this.addvertisment.child_seats = this.selectChildSeats;
       this.addvertisment.location = this.selectLocation;
       this.addvertisment.price = this.selectPrice;
-      this.addvertisment.addvertiser_id = this.$store.state.user.id;
+      this.addvertisment.addvertiser_id = this.$store.state.user.username;
       this.addvertisment.images = this.createListImages(
         this.addvertisment.images
       );
@@ -513,16 +457,16 @@ export default {
       }
       return listImages;
     },
-    createListDates(arrayEvents) {
-      var listDates = [];
-      for (const i in arrayEvents) {
-        var arrayEvent = { id: "", oneDate: "" };
-        arrayEvent.oneDate = arrayEvents[i];
-        listDates.push(arrayEvent);
-      }
-      return listDates;
-    }
-  },
+    createListDates(arrayEvents){
+          var listDates=[];
+        for(const i in arrayEvents){
+            var arrayEvent={ id:"", oneDate:"" };
+            arrayEvent.oneDate=arrayEvents[i];
+            listDates.push(arrayEvent);
+        }
+        return listDates;
+      },
+    },
   computed: {
     dateRangeText() {
       return this.dates.join(" ~ ");
@@ -539,32 +483,32 @@ export default {
       .catch(error => {
         console.log(error);
       });
-
     //izlistavanje klasa
     axios
       .get("/addvertisment-service/vehicle_class")
       .then(vehicleClassItems => {
         this.vehicleClassItems = vehicleClassItems.data;
+       
       })
       .catch(error => {
         console.log(error);
       });
-
     //izlistavanje tipova menjaca
     axios
       .get("/addvertisment-service/transmission_type")
       .then(transmissionTypeItems => {
         this.transmissionTypeItems = transmissionTypeItems.data;
+       
       })
       .catch(error => {
         console.log(error);
       });
-
     //izlistavanje tipova goriva
     axios
       .get("/addvertisment-service/fuel_type")
       .then(fuelTypeItems => {
         this.fuelTypeItems = fuelTypeItems.data;
+       
       })
       .catch(error => {
         console.log(error);
