@@ -15,8 +15,8 @@ public class FuelTypeClient extends WebServiceGatewaySupport {
         request.setId(fuelTypeDTO.getId());
         request.setFuelTypeName(fuelTypeDTO.getFuel_type_name());
         FuelTypeResponse response = (FuelTypeResponse) getWebServiceTemplate()
-                .marshalSendAndReceive("http://localhost:8081/ws/fuelType-schema", request,
-                        new SoapActionCallback("http://localhost:8081/ws/fuelType-schema/FuelTypeRequest"));
+                .marshalSendAndReceive("http://agent:8081/ws/fuelType-schema", request,
+                        new SoapActionCallback("http://agent:8081/ws/fuelType-schema/FuelTypeRequest"));
 
         return response;
     }

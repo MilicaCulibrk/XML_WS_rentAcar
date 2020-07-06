@@ -22,7 +22,7 @@ public class SoapCofinguration {
     @Bean
     public FuelTypeClient adClient(Jaxb2Marshaller marshaller) {
         FuelTypeClient client = new FuelTypeClient();
-        client.setDefaultUri("http://localhost:8081/fuelType-schema/ws");
+        client.setDefaultUri("http://agent:8081/fuelType-schema/ws");
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
         return client;
