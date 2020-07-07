@@ -25,7 +25,6 @@
                     :items="brandItems"
                     item-value="brandItems"
                     item-text="brand_name"
-                    :rules="requiredRules"
                     label="Brand"
                     outlined
                     dense
@@ -40,7 +39,6 @@
                       :items="modelItems"
                       item-value="modelItems"
                       item-text="vehicle_model_name"
-                      :rules="requiredRules"
                       label="Model"
                       outlined
                       dense
@@ -57,7 +55,6 @@
                     :items="transmissionTypeItems"
                     item-value="transmissionTypeItems"
                     item-text="transmission_type_name"
-                    :rules="requiredRules"
                     label="Transmission type"
                     outlined
                     dense
@@ -71,7 +68,6 @@
                     :items="fuelTypeItems"
                     item-value="fuelTypeItems"
                     item-text="fuel_type_name"
-                    :rules="requiredRules"
                     label="Gas type"
                     outlined
                     dense
@@ -84,7 +80,6 @@
                     v-model="selectChildSeats"
                     :items="childSeatsItems"
                     label="Number of child seats"
-                    :rules="requiredRules"
                     outlined
                     dense
                     class="pt-4"
@@ -100,7 +95,6 @@
                     item-value="vehicleClassItems"
                     item-text="vehicle_class_name"
                     label="Class"
-                    :rules="requiredRules"
                     outlined
                     dense
                     class="pt-4"
@@ -113,23 +107,13 @@
                     color="black"
                     v-model="selectLocation"
                     required
-                    :rules="requiredRules"
                   ></v-text-field>
-               <!--   <v-text-field
-                    label="Price*"
-                    color="black"
-                    v-model="selectPrice"
-                    required
-                    :rules="[() => !!selectPrice || 'This field is required',
-                        () => /^[0-9]*$/.test(selectPrice) || 'Only numbers are allowed']"
-                    suffix="DIN"
-                  ></v-text-field>-->
                 </v-col>
                 <v-col cols="4">
                   <v-checkbox
                     label="Do you want to include CWD option?"
                     :v-model="selectCdw"
-                    @change="selectCdw=!selectCdw"
+                    
                     color="primary"
                   ></v-checkbox>
                 </v-col>
@@ -177,8 +161,6 @@
                     color="black"
                     v-model="selectMileage"
                     required
-                    :rules="[() => !!selectMileage || 'This field is required',
-                                 () => /^[0-9]*$/.test(selectMileage) || 'Only numbers are allowed']"
                     suffix="KM"
                   ></v-text-field>
                 </v-col>
@@ -188,8 +170,6 @@
                     color="black"
                     v-model="selectMileageLimit"
                     required
-                    :rules="[() => !!selectMileageLimit || 'This field is required',
-                                 () => /^[0-9]*$/.test(selectMileageLimit) || 'Only numbers are allowed']"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -283,7 +263,6 @@ export default {
       transmissionTypeItems: [],
       fuelTypeItems: [],
       childSeatsItems: ["0", "1", "2", "3", "4", "5"],
-      requiredRules: [v => !!v || "This field is required"],
       plannedToCrossRule: [
         v => /^[0-9]*$/.test(v) || "Only numbers are allowed"
       ],
@@ -399,7 +378,8 @@ export default {
         this.selectMileage == "" ||
         this.selectMileageLimit == "" ||
         this.selectChildSeats == "" ||
-        this.selectLocation == "" 
+        this.selectLocation == "" ||
+        this.addvertisment.pricelist == ""
         
       ) {
         this.snackbarDanger = true;
@@ -454,19 +434,11 @@ export default {
       this.selectLocation = "";
       this.selectPrice = "";
       this.selectCdw = false;
+      this.addvertisment = "";
+      this.addvertisment.cdw = false;
+      this.addvertisment.pricelist = '';
       this.addvertisment.images = [];
       this.addvertisment.arrayEvents = [];
-      this.addvertisment.brand_id = "";
-      this.addvertisment.fuel_type_id = "";
-      this.addvertisment.vehicle_model_id = "";
-      this.addvertisment.vehicle_class_id = "";
-      this.addvertisment.transmission_type_id = "";
-      this.addvertisment.mileage = "";
-      this.addvertisment.mileage_limit = "";
-      this.addvertisment.cdw = false;
-      this.addvertisment.child_seats = "";
-      this.addvertisment.location = "";
-      this.addvertisment.daily_price = "";
     },
     createListImages(images) {
       var listImages = [];

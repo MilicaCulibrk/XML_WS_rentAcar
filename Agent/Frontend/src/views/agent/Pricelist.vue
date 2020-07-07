@@ -2,11 +2,14 @@
   <div class="text-center">
     <v-dialog v-model="dialog" height="700px" max-width="800" >
       <template #activator="{ on: dialog }">
-            <v-btn  outlined color="grey"
+            <v-btn v-if="addvertisment.pricelist==''" outlined color="grey"
                       style="width: 255px; height: 45px;"
-                      class="text-capitalize" v-on="{ ...dialog }" >Pricelist {{selected.id}}
+                      class="text-capitalize" v-on="{ ...dialog }" >Pick a pricelist 
             </v-btn>
-
+            <v-btn v-else outlined color="green"
+                      style="width: 255px; height: 45px;"
+                      class="text-capitalize" v-on="{ ...dialog }" >Pricelist choosen
+            </v-btn>
       </template>
    <v-card height="600px" width="780">
     <v-card-title class="primary white--text headline">
@@ -21,11 +24,11 @@
       justify="space-between"
     >
       <v-col cols="4">
-        <v-list-item-group style="height: 90%; position: relative" color="primary">
+        <v-list-item-group style="height: 400px; position: relative" color="primary">
 
           <v-list-item
-            v-for="(pricelist, i) in pricelists"
-            :key="i"
+            v-for="pricelist in pricelists"
+            :key="pricelist.id"
             activatable
             open-on-click
             @click="select(pricelist)"
@@ -59,7 +62,7 @@
             hide-on-leave
           >
           <div
-            v-if="(this.selected)=='NONE'"
+            v-if="selected=='NONE'"
             class="title grey--text text--lighten-1 font-weight-light"
             style="align-self: center;"
           >
@@ -73,7 +76,7 @@
           >
             <v-card-text>
               <h3 class="headline mb-2">
-                Pricelist number {{selected.id}}
+                Pricelist number {{pricelist.id}}
               </h3>
             </v-card-text>
             <v-divider></v-divider>
@@ -86,7 +89,7 @@
                 <input 
                     type="text"
                     class="form-control"
-                    v-model=selected.dailyPrice
+                    v-model="pricelist.dailyPrice"
                     :disabled=!editable
                     placeholder="enter daily price"
                 >
@@ -96,7 +99,7 @@
                 <input 
                     type="text"
                     class="form-control"
-                    v-model=selected.overlimitPrice
+                    v-model="pricelist.overlimitPrice"
                     :disabled=!editable
                     placeholder="enter overlimit price"
                 >
@@ -104,7 +107,9 @@
                 <v-col class="text-right mr-4 mb-2" tag="strong" cols="6">Cdw price:</v-col>
                 <v-col  cols="5">
                 <input 
-                    v-model=selected.cdwPrice
+                    type="text"
+                    class="form-control"
+                    v-model="pricelist.cdwPrice"
                     :disabled=!editable
                     placeholder="enter cdw price"
                 >
@@ -112,7 +117,9 @@
                 <v-col class="text-right mr-4 mb-2" tag="strong" cols="6">Discount:</v-col>
                 <v-col  cols="5">
                 <input 
-                    v-model=selected.discount
+                    type="text"
+                    class="form-control"
+                    v-model="pricelist.discount"
                     :disabled=!editable
                     placeholder="enter discount"
                 >
@@ -120,7 +127,9 @@
                 <v-col class="text-right mr-4 mb-2" tag="strong" cols="6">Number of days for discount:</v-col>
                 <v-col  cols="5">
                 <input 
-                    v-model=selected.numberOfDays
+                    type="text"
+                    class="form-control"
+                    v-model="pricelist.numberOfDays"
                     :disabled=!editable
                     placeholder="enter number of days"
                     outlined color="grey"
@@ -164,11 +173,13 @@ export default {
       dialog: false,
       open: [],
       selected: 'NONE',
+      pricelist: { },
       editable: false,
     };
   },
   methods: {
       select(selected){
+          this.pricelist = selected;
           this.selected = selected;
           this.editable = false;
       },
@@ -179,10 +190,21 @@ export default {
       },
       newPricelist(){
           this.selected = '';
+          this.pricelist = {};
           this.editable = true;
       }, 
       save(){
-
+        this.pricelist.username = this.$store.state.user.username;
+            axios
+        .post("/pricelist", this.pricelist)
+        .then(response => {
+          this.pricelists = response.data;
+          this.editable = false;
+          this.selected = this.pricelist;
+        })
+        .catch(error => {
+          console.log(error);
+        });
       },
       cancel(){
           this.selected = 'NONE';

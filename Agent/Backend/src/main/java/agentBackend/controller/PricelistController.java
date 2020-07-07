@@ -37,8 +37,8 @@ public class PricelistController {
 //	            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
 //	        }
 
-        Pricelist p = pricelistService.createPricelist(pricelist);
-		return new ResponseEntity<Pricelist>(p, HttpStatus.OK); 
+        List<Pricelist> p = pricelistService.createPricelist(pricelist);
+		return new ResponseEntity<List<Pricelist>>(p, HttpStatus.OK); 
 	}
 
 }

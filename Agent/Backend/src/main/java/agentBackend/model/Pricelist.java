@@ -31,6 +31,16 @@ public class Pricelist {
    @Column(name = "username", nullable = false)
    public String username;
 
+public Pricelist(float dailyPrice, float overlimitPrice, float cdwPrice, float discount, int numberOfDays,
+		String username) {
+	super();
+	this.dailyPrice = dailyPrice;
+	this.overlimitPrice = overlimitPrice;
+	this.cdwPrice = cdwPrice;
+	this.discount = discount;
+	this.numberOfDays = numberOfDays;
+	this.username = username;
+}
 public Long getId() {
 	return id;
 }

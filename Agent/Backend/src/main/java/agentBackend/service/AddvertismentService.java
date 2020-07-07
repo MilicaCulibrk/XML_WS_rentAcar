@@ -60,6 +60,8 @@ public class AddvertismentService {
         List<AddvertismentDisplayDTO> addvertismentDisplayDTOS = new ArrayList<>();
         List<Addvertisment> addvertisments = addvertismentRepository.findAll();
         for (Addvertisment addvertisment : addvertisments) {
+        	System.out.println(username);
+        	System.out.println(addvertisment.getCompany().getUsername());
             if(addvertisment.getCompany().getUsername().equals(username)) {
                 addvertismentDisplayDTOS.add(new AddvertismentDisplayDTO(addvertisment));
             }
