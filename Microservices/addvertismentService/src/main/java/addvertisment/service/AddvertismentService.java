@@ -2,6 +2,10 @@ package addvertisment.service;
 
 import addvertisment.dto.*;
 import addvertisment.model.*;
+import addvertisment.mq.dto.AddDTO;
+import addvertisment.mq.enums.EntityEnum;
+import addvertisment.mq.enums.OperationEnum;
+import addvertisment.mq.producer.AddvertismentProducer;
 import addvertisment.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +42,11 @@ public class AddvertismentService {
     @Autowired
     private ReservedDateRepository reservedDateRepository;
 
+    private final AddvertismentProducer addvertismentProducer;
 
+    public AddvertismentService(AddvertismentProducer addvertismentProducer) {
+        this.addvertismentProducer = addvertismentProducer;
+    }
 
     public List<AddvertismentDTO> getAllAddvertisments() {
         List<AddvertismentDTO> addvertismentsDTOlist = new ArrayList<>();
@@ -59,6 +67,7 @@ public class AddvertismentService {
         return addvertismentDisplayDTOS;
     }
 
+    //poziva se producer poruke za search da bi se ovaj oglas dodao i u tom servisu
     public Addvertisment createAddvertisment(AddvertismentDTO addvertismentDTO) {
 
         Addvertisment addvertisment = newDTOtoReal(addvertismentDTO);
@@ -72,6 +81,17 @@ public class AddvertismentService {
             ReservedDate reservedDate = this.createReservedDate(r);
             reservedDate.setAddvertisment(real);
             reservedDateRepository.save(reservedDate);
+        }
+
+        try {
+            AddDTO dto = new AddDTO(addvertisment);
+            dto.setOperation(OperationEnum.CREATE);
+            dto.setEntity(EntityEnum.ADD);
+            dto.setImages(addvertismentDTO.getImages());
+            dto.setDates(addvertismentDTO.getArrayEvents());
+            this.addvertismentProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
         }
 
         return addvertisment;

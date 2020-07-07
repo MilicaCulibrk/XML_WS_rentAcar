@@ -2,13 +2,16 @@ package searchService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import searchService.dto.ImagesDTO;
+import searchService.dto.ReservedDatesDTO;
 import searchService.dto.SearchDTO;
 import searchService.dto.SearchQueryDTO;
+import searchService.model.Images;
 import searchService.model.ReservedDates;
 import searchService.model.Search;
-import searchService.repository.BrandsRepository;
-import searchService.repository.ReservedDatesRepository;
-import searchService.repository.SearchRepository;
+import searchService.model.TransmissionTypes;
+import searchService.mq.dto.AddDTO;
+import searchService.repository.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +24,26 @@ public class SearchService {
     private SearchRepository searchRepository;
 
     @Autowired
+    private BrandsRepository brandsRepository;
+
+    @Autowired
+    private VehicleModelsRepository vehicleModelsRepository;
+
+    @Autowired
+    private VehicleClassesRepository vehicleClassesRepository;
+
+    @Autowired
+    private FuelTypesRepository fuelTypesRepository;
+
+    @Autowired
+    private TransmissionTypesRepository transmissionTypesRepository;
+
+
+    @Autowired
     private ReservedDatesRepository reservedDatesRepository;
+
+    @Autowired
+    private ImagesRepository imagesRepository;
 
     public List<SearchDTO> getAllSearches() {
         List<SearchDTO> searchesDTOlist = new ArrayList<>();
@@ -143,4 +165,58 @@ public class SearchService {
 
         return searchList;
     }
+
+    public Search save(AddDTO addDTO) {
+        Search search = newDTOtoReal(addDTO);
+        searchRepository.save(search);
+
+        for(ImagesDTO i: addDTO.getImages()){
+            Images image = this.createImage(i);
+            image.setSearch(search);
+            imagesRepository.save(image);
+        }
+
+        for(ReservedDatesDTO r: addDTO.getDates()){
+            ReservedDates reservedDate = this.createReservedDate(r);
+            reservedDate.setSearch(search);
+            reservedDatesRepository.save(reservedDate);
+        }
+
+
+        return search;
+    }
+
+    public Search newDTOtoReal(AddDTO dto){
+        Search real = new Search();
+        real.setId(dto.getId());
+        real.setOwner(dto.getAddvertiser_username());
+        real.setMileage(dto.getMileage());
+        real.setMileage_limit(dto.getMileage_limit());
+        real.setChild_seats(dto.getChild_seats());
+        real.setCdw(dto.isCdw());
+        real.setLocation(dto.getLocation());
+        real.setDaily_price(dto.getDaily_price());
+        real.setBrand(brandsRepository.findById(dto.getBrand().getId()).orElse(null));
+        real.setFuel_type(fuelTypesRepository.findById(dto.getFuel_type().getId()).orElse(null));
+        real.setTransmission_type(transmissionTypesRepository.findById(dto.getTransmission_type().getId()).orElse(null));
+        real.setVehicle_class(vehicleClassesRepository.findById(dto.getVehicle_class().getId()).orElse(null));
+        real.setVehicleModel(vehicleModelsRepository.findById(dto.getVehicle_model().getId()).orElse(null));
+
+        return real;
+    }
+
+    public Images createImage(ImagesDTO i){
+        Images image = new Images();
+        image.setUrl(i.getUrl());
+
+        return image;
+    }
+
+    public ReservedDates createReservedDate(ReservedDatesDTO r){
+        ReservedDates reservedDate = new ReservedDates();
+        reservedDate.setOneDate(r.getOneDate());
+
+        return reservedDate;
+    }
+
 }

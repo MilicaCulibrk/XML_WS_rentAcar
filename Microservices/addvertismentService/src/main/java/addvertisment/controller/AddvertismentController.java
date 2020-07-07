@@ -2,18 +2,15 @@ package addvertisment.controller;
 
 import addvertisment.dto.AddvertismentDTO;
 import addvertisment.dto.AddvertismentDisplayDTO;
-import addvertisment.dto.FuelTypeDTO;
 import addvertisment.model.Addvertisment;
-import addvertisment.model.Comment;
-import addvertisment.model.Grade;
 import addvertisment.service.AddvertismentService;
-import addvertisment.service.FuelTypeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.xml.bind.ValidationException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @CrossOrigin
@@ -36,11 +33,14 @@ public class AddvertismentController {
 
     //kad se kreira oglas treba da se kreira i nova klasa pretraga
     @PostMapping("")
-    public ResponseEntity<?> createAdd (@RequestBody AddvertismentDTO addvertismentDTO)  {
+    public ResponseEntity<?> createAdd (@RequestBody AddvertismentDTO addvertismentDTO, HttpServletRequest httpServletRequest)  {
 
-
-           Addvertisment addvertisment = addvertismentService.createAddvertisment(addvertismentDTO );
+        try {
+            Addvertisment addvertisment = addvertismentService.createAddvertisment(addvertismentDTO );
             return new ResponseEntity<>(addvertisment, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
     }
 

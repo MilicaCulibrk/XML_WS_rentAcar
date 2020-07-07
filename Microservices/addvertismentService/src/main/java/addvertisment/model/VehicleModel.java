@@ -1,5 +1,7 @@
 package addvertisment.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class VehicleModel {
     public List<Addvertisment> addvertisments;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JsonIgnore
     public Brand brand;
 
     public VehicleModel(){
