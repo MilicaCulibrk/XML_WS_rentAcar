@@ -1,31 +1,27 @@
-package addvertisment.configuration;
+package agentBackend.configuration;
 
-import addvertisment.soap.FuelTypeClient;
+import agentBackend.soap.AddClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 @Configuration
-public class SoapCofinguration {
-
+public class SoapConfig {
     @Bean
     public Jaxb2Marshaller marshaller() {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
         // this package must match the package in the <generatePackage> specified in
         // pom.xml
-        marshaller.setContextPath("com.xml.RentCar.wsdl");
+        marshaller.setContextPath("agentBackend.wsdl");
         return marshaller;
     }
 
-
-
     @Bean
-    public FuelTypeClient adClient(Jaxb2Marshaller marshaller) {
-        FuelTypeClient client = new FuelTypeClient();
-        client.setDefaultUri("http://agent:8081/fuelType-schema/ws");
+    public AddClient adClient(Jaxb2Marshaller marshaller) {
+        AddClient client = new AddClient();
+        client.setDefaultUri("http://localhost:8087/ws");
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
         return client;
     }
-
 }

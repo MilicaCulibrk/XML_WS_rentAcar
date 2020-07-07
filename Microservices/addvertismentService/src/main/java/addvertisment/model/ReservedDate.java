@@ -14,7 +14,7 @@ public class ReservedDate {
     private String oneDate;
 
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name="addvertisment")
     public Addvertisment addvertisment;
 
