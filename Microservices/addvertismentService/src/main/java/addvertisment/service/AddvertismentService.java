@@ -77,6 +77,8 @@ public class AddvertismentService {
             AddDTO dto = new AddDTO(addvertisment);
             dto.setOperation(OperationEnum.CREATE);
             dto.setEntity(EntityEnum.ADD);
+            dto.setImages(addvertismentDTO.getImages());
+            dto.setDates(addvertismentDTO.getArrayEvents());
             this.addvertismentProducer.send(dto);
         } catch (Exception e) {
             System.err.println("Did not sync with search service");

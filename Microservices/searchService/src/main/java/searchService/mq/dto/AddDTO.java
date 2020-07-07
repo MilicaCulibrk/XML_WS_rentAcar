@@ -1,8 +1,12 @@
 package searchService.mq.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import searchService.dto.ImagesDTO;
+import searchService.dto.ReservedDatesDTO;
 import searchService.mq.enums.EntityEnum;
 import searchService.mq.enums.OperationEnum;
+
+import java.util.ArrayList;
 
 public class AddDTO {
 
@@ -22,6 +26,8 @@ public class AddDTO {
 
     private OperationEnum operation;
     private EntityEnum entity;
+    private ArrayList<ImagesDTO> images;
+    private ArrayList<ReservedDatesDTO> dates;
 
     public AddDTO() {
 
@@ -41,7 +47,9 @@ public class AddDTO {
                                 @JsonProperty("fuel_type") AttributeDTO fuel_type,
                                 @JsonProperty("transmission_type") AttributeDTO transmission_type,
                                 @JsonProperty("operation") OperationEnum operation,
-                                @JsonProperty("entity") EntityEnum entity) {
+                                @JsonProperty("entity") EntityEnum entity,
+                                @JsonProperty("images") ArrayList<ImagesDTO> images,
+                                @JsonProperty("dates") ArrayList<ReservedDatesDTO> dates) {
         this.id = id;
         this.addvertiser_username = addvertiser_username;
         this.mileage = mileage;
@@ -57,7 +65,8 @@ public class AddDTO {
         this.transmission_type = transmission_type;
         this.operation = operation;
         this.entity = entity;
-
+        this.images = images;
+        this.dates = dates;
     }
 
 
@@ -179,5 +188,21 @@ public class AddDTO {
 
     public void setEntity(EntityEnum entity) {
         this.entity = entity;
+    }
+
+    public ArrayList<ImagesDTO> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<ImagesDTO> images) {
+        this.images = images;
+    }
+
+    public ArrayList<ReservedDatesDTO> getDates() {
+        return dates;
+    }
+
+    public void setDates(ArrayList<ReservedDatesDTO> dates) {
+        this.dates = dates;
     }
 }
