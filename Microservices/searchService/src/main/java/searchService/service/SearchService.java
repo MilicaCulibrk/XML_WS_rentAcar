@@ -2,8 +2,11 @@ package searchService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import searchService.dto.ImagesDTO;
+import searchService.dto.ReservedDatesDTO;
 import searchService.dto.SearchDTO;
 import searchService.dto.SearchQueryDTO;
+import searchService.model.Images;
 import searchService.model.ReservedDates;
 import searchService.model.Search;
 import searchService.model.TransmissionTypes;
@@ -38,6 +41,9 @@ public class SearchService {
 
     @Autowired
     private ReservedDatesRepository reservedDatesRepository;
+
+    @Autowired
+    private ImagesRepository imagesRepository;
 
     public List<SearchDTO> getAllSearches() {
         List<SearchDTO> searchesDTOlist = new ArrayList<>();
@@ -162,7 +168,22 @@ public class SearchService {
 
     public Search save(AddDTO addDTO) {
         Search search = newDTOtoReal(addDTO);
-        return searchRepository.save(search);
+        searchRepository.save(search);
+
+        for(ImagesDTO i: addDTO.getImages()){
+            Images image = this.createImage(i);
+            image.setSearch(search);
+            imagesRepository.save(image);
+        }
+
+        for(ReservedDatesDTO r: addDTO.getDates()){
+            ReservedDates reservedDate = this.createReservedDate(r);
+            reservedDate.setSearch(search);
+            reservedDatesRepository.save(reservedDate);
+        }
+
+
+        return search;
     }
 
     public Search newDTOtoReal(AddDTO dto){
@@ -182,6 +203,20 @@ public class SearchService {
         real.setVehicleModel(vehicleModelsRepository.findById(dto.getVehicle_model().getId()).orElse(null));
 
         return real;
+    }
+
+    public Images createImage(ImagesDTO i){
+        Images image = new Images();
+        image.setUrl(i.getUrl());
+
+        return image;
+    }
+
+    public ReservedDates createReservedDate(ReservedDatesDTO r){
+        ReservedDates reservedDate = new ReservedDates();
+        reservedDate.setOneDate(r.getOneDate());
+
+        return reservedDate;
     }
 
 }

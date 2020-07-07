@@ -13,7 +13,7 @@ public class ReservedDates {
     private String oneDate;
 
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name="search_id")
     public Search search;
 

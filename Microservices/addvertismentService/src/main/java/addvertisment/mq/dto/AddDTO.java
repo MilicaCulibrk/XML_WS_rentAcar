@@ -9,6 +9,9 @@ import addvertisment.model.ReservedDate;
 import addvertisment.mq.enums.EntityEnum;
 import addvertisment.mq.enums.OperationEnum;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class AddDTO {
 
@@ -28,9 +31,10 @@ public class AddDTO {
 
     private OperationEnum operation;
     private EntityEnum entity;
+    private ArrayList<ImageDTO> images;
+    private ArrayList<ReservedDateDTO> dates;
 
     public AddDTO(){}
-
 
     public AddDTO(Addvertisment addvertisment) {
         this.id = addvertisment.getId();
@@ -167,5 +171,21 @@ public class AddDTO {
 
     public void setEntity(EntityEnum entity) {
         this.entity = entity;
+    }
+
+    public ArrayList<ImageDTO> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<ImageDTO> images) {
+        this.images = images;
+    }
+
+    public ArrayList<ReservedDateDTO> getDates() {
+        return dates;
+    }
+
+    public void setDates(ArrayList<ReservedDateDTO> dates) {
+        this.dates = dates;
     }
 }
