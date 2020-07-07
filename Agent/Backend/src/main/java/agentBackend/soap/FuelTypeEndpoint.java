@@ -3,8 +3,8 @@ package agentBackend.soap;
 import agentBackend.dto.FuelTypeDTO;
 import agentBackend.model.FuelType;
 import agentBackend.service.FuelTypeService;
-import localhost._8081.fueltype_schema.FuelTypeRequest;
-import localhost._8081.fueltype_schema.FuelTypeResponse;
+//import localhost._8081.fueltype_schema.FuelTypeRequest;
+//import localhost._8081.fueltype_schema.FuelTypeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -19,7 +19,7 @@ public class FuelTypeEndpoint {
     @Autowired
     private FuelTypeService fuelTypeService;
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "FuelTypeRequest")
+ /*   @PayloadRoot(namespace = NAMESPACE_URI, localPart = "FuelTypeRequest")
     @ResponsePayload
     public FuelTypeResponse getCountry(@RequestPayload FuelTypeRequest request) {
         FuelTypeResponse response = new FuelTypeResponse();
@@ -28,6 +28,6 @@ public class FuelTypeEndpoint {
         response.setFuelTypeName(fuelType.getFuel_type_name());
         response.setId(fuelType.getId());
         return response;
-    }
+    }*/
 
 }

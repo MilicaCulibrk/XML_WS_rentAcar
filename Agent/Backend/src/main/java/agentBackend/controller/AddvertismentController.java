@@ -31,7 +31,7 @@ public class AddvertismentController {
 
     @PostMapping("")
     public ResponseEntity<?> createAdd (@RequestBody AddvertismentDTO addvertismentDTO)  {
-
+    	System.out.println("uso u oknt");
         Addvertisment addvertisment = addvertismentService.createAddvertisment(addvertismentDTO );
         return new ResponseEntity<>(addvertisment, HttpStatus.OK);
 
