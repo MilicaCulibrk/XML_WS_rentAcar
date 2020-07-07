@@ -26,6 +26,7 @@ public class AddvertismentDTO {
     private ArrayList<ReservedDateDTO> arrayEvents;
     private int number_of_purchases;
 
+
     public AddvertismentDTO(Addvertisment addvertisment) {
         this.id = addvertisment.getId();
         this.fuel_type_id =addvertisment.getFuel_type().getId();

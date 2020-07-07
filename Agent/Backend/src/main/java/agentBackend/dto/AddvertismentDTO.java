@@ -29,6 +29,9 @@ public class AddvertismentDTO {
     private ArrayList<ReservedDateDTO> arrayEvents;
     private int number_of_purchases;
 
+    public AddvertismentDTO() {
+    }
+
     public AddvertismentDTO(Long id, Long fuel_type_id, Long brand_id, Long vehicle_model_id, Long vehicle_class_id, Long transmission_type_id, float mileage, float mileage_limit, boolean cdw, int child_seats, String location, float price, ArrayList<ImageDTO> images, ArrayList<ReservedDateDTO> arrayEvents, String username, int number_of_purchases) {
         this.id = id;
         this.fuel_type_id = fuel_type_id;

@@ -70,7 +70,18 @@ public class AddvertismentService {
     public Addvertisment createAddvertisment(AddvertismentDTO addvertismentDTO) {
 
         Addvertisment addvertisment = newDTOtoReal(addvertismentDTO);
-        addvertismentRepository.save(addvertisment);
+        Addvertisment real = addvertismentRepository.save(addvertisment);
+        for(ImageDTO i: addvertismentDTO.getImages()){
+            Image image = this.createImage(i);
+            image.setAddvertisment(real);
+            imageRepository.save(image);
+        }
+        for(ReservedDateDTO r: addvertismentDTO.getArrayEvents()){
+            ReservedDate reservedDate = this.createReservedDate(r);
+            reservedDate.setAddvertisment(real);
+            reservedDateRepository.save(reservedDate);
+        }
+
 
         return addvertisment;
 
@@ -91,17 +102,6 @@ public class AddvertismentService {
         real.setTransmission_type(transmissionTypeRepository.findById(dto.getTransmission_type_id()).orElse(null));
         real.setVehicle_class(vehicleClassRepository.findById(dto.getVehicle_class_id()).orElse(null));
         real.setVehicle_model(vehicleModelRepository.findById(dto.getVehicle_model_id()).orElse(null));
-
-        for(ImageDTO i: dto.getImages()){
-            Image image = this.createImage(i);
-            image.setAddvertisment(real);
-            imageRepository.save(image);
-        }
-        for(ReservedDateDTO r: dto.getArrayEvents()){
-            ReservedDate reservedDate = this.createReservedDate(r);
-            reservedDate.setAddvertisment(real);
-            reservedDateRepository.save(reservedDate);
-        }
 
         return real;
     }
