@@ -60,6 +60,8 @@ public class AddvertismentService {
         List<AddvertismentDisplayDTO> addvertismentDisplayDTOS = new ArrayList<>();
         List<Addvertisment> addvertisments = addvertismentRepository.findAll();
         for (Addvertisment addvertisment : addvertisments) {
+        	System.out.println(username);
+        	System.out.println(addvertisment.getCompany().getUsername());
             if(addvertisment.getCompany().getUsername().equals(username)) {
                 addvertismentDisplayDTOS.add(new AddvertismentDisplayDTO(addvertisment));
             }
@@ -102,6 +104,7 @@ public class AddvertismentService {
         real.setTransmission_type(transmissionTypeRepository.findById(dto.getTransmission_type_id()).orElse(null));
         real.setVehicle_class(vehicleClassRepository.findById(dto.getVehicle_class_id()).orElse(null));
         real.setVehicle_model(vehicleModelRepository.findById(dto.getVehicle_model_id()).orElse(null));
+        real.setPriceList(dto.getPricelist());
 
         return real;
     }

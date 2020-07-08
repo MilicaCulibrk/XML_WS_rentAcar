@@ -25,7 +25,6 @@
                     :items="brandItems"
                     item-value="brandItems"
                     item-text="brand_name"
-                    :rules="requiredRules"
                     label="Brand"
                     outlined
                     dense
@@ -40,7 +39,6 @@
                       :items="modelItems"
                       item-value="modelItems"
                       item-text="vehicle_model_name"
-                      :rules="requiredRules"
                       label="Model"
                       outlined
                       dense
@@ -57,7 +55,6 @@
                     :items="transmissionTypeItems"
                     item-value="transmissionTypeItems"
                     item-text="transmission_type_name"
-                    :rules="requiredRules"
                     label="Transmission type"
                     outlined
                     dense
@@ -71,7 +68,6 @@
                     :items="fuelTypeItems"
                     item-value="fuelTypeItems"
                     item-text="fuel_type_name"
-                    :rules="requiredRules"
                     label="Gas type"
                     outlined
                     dense
@@ -84,7 +80,6 @@
                     v-model="selectChildSeats"
                     :items="childSeatsItems"
                     label="Number of child seats"
-                    :rules="requiredRules"
                     outlined
                     dense
                     class="pt-4"
@@ -100,7 +95,6 @@
                     item-value="vehicleClassItems"
                     item-text="vehicle_class_name"
                     label="Class"
-                    :rules="requiredRules"
                     outlined
                     dense
                     class="pt-4"
@@ -109,20 +103,17 @@
                 </v-col>
                 <v-col cols="4">
                   <v-text-field
-                    label="Mileage*"
+                    label="Location*"
                     color="black"
-                    v-model="selectMileage"
+                    v-model="selectLocation"
                     required
-                    :rules="[() => !!selectMileage || 'This field is required',
-                                 () => /^[0-9]*$/.test(selectMileage) || 'Only numbers are allowed']"
-                    suffix="KM"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="4">
                   <v-checkbox
                     label="Do you want to include CWD option?"
                     :v-model="selectCdw"
-                    @change="selectCdw=!selectCdw"
+                    
                     color="primary"
                   ></v-checkbox>
                 </v-col>
@@ -166,35 +157,27 @@
                 </v-col>
                 <v-col cols="4">
                   <v-text-field
-                    label="Price*"
+                    label="Mileage*"
                     color="black"
-                    v-model="selectPrice"
+                    v-model="selectMileage"
                     required
-                    :rules="[() => !!selectPrice || 'This field is required',
-                        () => /^[0-9]*$/.test(selectPrice) || 'Only numbers are allowed']"
-                    suffix="DIN"
+                    suffix="KM"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="4">
-                  <v-text-field
-                    label="Location*"
-                    color="black"
-                    v-model="selectLocation"
-                    required
-                    :rules="requiredRules"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row class="mt-n8">
                 <v-col cols="4">
                   <v-text-field
                     label="Mileage Limit*"
                     color="black"
                     v-model="selectMileageLimit"
                     required
-                    :rules="[() => !!selectMileageLimit || 'This field is required',
-                                 () => /^[0-9]*$/.test(selectMileageLimit) || 'Only numbers are allowed']"
                   ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row class="mt-n8">
+                <v-col cols="4" style="margin-top: 30px;">
+                  <div class="my-2">
+                  <Pricelist v-bind:addvertisment="addvertisment"></Pricelist>
+                  </div>
                 </v-col>
                 <v-col cols="8" style="margin-top: 30px;">
                   <template>
@@ -233,8 +216,10 @@
   <script>
 import axios from "axios";
 import { fb, db } from "@/firebase";
+import Pricelist from "@/views/agent/Pricelist";
 
 export default {
+  components: { Pricelist},
   data() {
     return {
       name: "Addvertisments",
@@ -262,10 +247,11 @@ export default {
         cdw: "",
         child_seats: "",
         location: "",
-        price: "",
+        daily_price: "",
         images: [],
         arrayEvents: [],
-        addvertiser_id: ""
+        owner: "",
+        pricelist: "",
       },
       snackbarSuccess: false,
       snackbarSuccessText: "",
@@ -277,7 +263,6 @@ export default {
       transmissionTypeItems: [],
       fuelTypeItems: [],
       childSeatsItems: ["0", "1", "2", "3", "4", "5"],
-      requiredRules: [v => !!v || "This field is required"],
       plannedToCrossRule: [
         v => /^[0-9]*$/.test(v) || "Only numbers are allowed"
       ],
@@ -394,7 +379,8 @@ export default {
         this.selectMileageLimit == "" ||
         this.selectChildSeats == "" ||
         this.selectLocation == "" ||
-        this.selectPrice == ""
+        this.addvertisment.pricelist == ""
+        
       ) {
         this.snackbarDanger = true;
         this.snackbarDangerText = "You need to fill all fileds!";
@@ -418,7 +404,6 @@ export default {
       this.addvertisment.cdw = this.selectCdw;
       this.addvertisment.child_seats = this.selectChildSeats;
       this.addvertisment.location = this.selectLocation;
-      this.addvertisment.price = this.selectPrice;
       this.addvertisment.owner = this.$store.state.user.username;
       this.addvertisment.images = this.createListImages(
         this.addvertisment.images
@@ -449,20 +434,11 @@ export default {
       this.selectLocation = "";
       this.selectPrice = "";
       this.selectCdw = false;
+      this.addvertisment = "";
+      this.addvertisment.cdw = false;
+      this.addvertisment.pricelist = '';
       this.addvertisment.images = [];
       this.addvertisment.arrayEvents = [];
-      this.addvertisment.brand_id = "";
-      this.addvertisment.fuel_type_id = "";
-      this.addvertisment.vehicle_model_id = "";
-      this.addvertisment.vehicle_class_id = "";
-      this.addvertisment.transmission_type_id = "";
-      this.addvertisment.mileage = "";
-      this.addvertisment.mileage_limit = "";
-      this.addvertisment.cdw = false;
-      this.addvertisment.child_seats = "";
-      this.addvertisment.location = "";
-      this.addvertisment.price = "";
-      this.addvertisment.addvertiser_id = "";
     },
     createListImages(images) {
       var listImages = [];

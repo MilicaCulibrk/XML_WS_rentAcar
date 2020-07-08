@@ -1,7 +1,16 @@
 package agentBackend.model;
 
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -62,18 +71,28 @@ public class Addvertisment {
    }
 //public java.util.Collection<Comment> comment;
    //public java.util.Collection<Grade> grade;
-   //public PriceList priceList;
    //public Order order;
    @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
    public List<Grade> grades;
 
    @OneToMany( fetch = FetchType.LAZY)
    public List<Comment> comments;
+   
+   @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+   public Pricelist priceList;
 
    public Addvertisment() {
    }
 
-   public List<Grade> getGrades() {
+   public Pricelist getPriceList() {
+	return priceList;
+}
+
+public void setPriceList(Pricelist priceList) {
+	this.priceList = priceList;
+}
+
+public List<Grade> getGrades() {
 	return grades;
 }
 

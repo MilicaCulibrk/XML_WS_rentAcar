@@ -35,11 +35,9 @@ public class AddvertismentController {
 
     @PostMapping("")
     public ResponseEntity<?> createAdd (@RequestBody AddvertismentDTO addvertismentDTO)  {
-
         Addvertisment addvertisment = addvertismentService.createAddvertisment(addvertismentDTO );
         addvertismentDTO.setId(addvertisment.getId());
         client.createAdd(addvertismentDTO);
         return new ResponseEntity<>(addvertisment, HttpStatus.OK);
-
     }
 }
