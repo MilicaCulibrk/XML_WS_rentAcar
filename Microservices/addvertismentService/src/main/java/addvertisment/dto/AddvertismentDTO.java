@@ -1,10 +1,11 @@
 package addvertisment.dto;
 
+import java.util.ArrayList;
+
 import addvertisment.model.Addvertisment;
 import addvertisment.model.Image;
+import addvertisment.model.Pricelist;
 import addvertisment.model.ReservedDate;
-
-import java.util.ArrayList;
 
 
 public class AddvertismentDTO {
@@ -26,6 +27,7 @@ public class AddvertismentDTO {
     private ArrayList<ReservedDateDTO> arrayEvents;
     private int number_of_purchases;
 
+    private Pricelist pricelist;
 
     public AddvertismentDTO(Addvertisment addvertisment) {
         this.id = addvertisment.getId();
@@ -54,10 +56,18 @@ public class AddvertismentDTO {
         }
 
         this.number_of_purchases = 0;
-
+        this.pricelist = addvertisment.getPriceList();
     }
 
-    public String getAddvertiser_id() {
+    public Pricelist getPricelist() {
+		return pricelist;
+	}
+
+	public void setPricelist(Pricelist pricelist) {
+		this.pricelist = pricelist;
+	}
+
+	public String getAddvertiser_id() {
         return addvertiser_id;
     }
 
@@ -173,15 +183,16 @@ public class AddvertismentDTO {
         this.location = location;
     }
 
-    public float getPrice() {
-        return price;
-    }
 
-    public void setPrice(float price) {
-        this.price = price;
-    }
+	public float getPrice() {
+		return price;
+	}
 
-    public int getNumber_of_purchases() {
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public int getNumber_of_purchases() {
         return number_of_purchases;
     }
 

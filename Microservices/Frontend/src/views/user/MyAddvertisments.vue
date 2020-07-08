@@ -142,7 +142,7 @@ export default {
     //izlistavanje oglasa
     axios
       .get(
-        "/addvertisment-service/addvertisment/user/" + this.$store.state.user.id
+        "/addvertisment-service/addvertisment/user/" + this.$store.state.user.username
       )
       .then(addvertisments => {
         this.addvertisments = addvertisments.data;

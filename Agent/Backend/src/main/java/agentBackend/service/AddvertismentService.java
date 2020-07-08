@@ -90,7 +90,6 @@ public class AddvertismentService {
     }
 
     public Addvertisment newDTOtoReal(AddvertismentDTO dto){
-        System.out.println(dto.getOwner());
         Addvertisment real = new Addvertisment();
         real.setCdw(dto.isCdw());
         real.setChild_seats(dto.getChild_seats());

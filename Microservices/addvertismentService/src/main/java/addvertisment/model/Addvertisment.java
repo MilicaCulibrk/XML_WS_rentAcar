@@ -62,10 +62,9 @@ public class Addvertisment {
     @Column(name = "price", nullable = false)
     private float price;
 
-    /*
-    //@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public PriceList price_list;
-*/
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    public Pricelist priceList;
+    
     @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<Grade> grades;
 
@@ -76,6 +75,18 @@ public class Addvertisment {
     public Addvertisment(){
         super();
     }
+
+
+
+	public Pricelist getPriceList() {
+		return priceList;
+	}
+
+
+
+	public void setPriceList(Pricelist priceList) {
+		this.priceList = priceList;
+	}
 
 
 
