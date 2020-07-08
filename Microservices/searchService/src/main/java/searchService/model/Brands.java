@@ -11,7 +11,7 @@ public class Brands {
     private Long id;
 
     @Column(name = "brands_name", nullable = false)
-    private String brand_name;
+    private String brands_name;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
@@ -33,12 +33,12 @@ public class Brands {
         this.id = id;
     }
 
-    public String getBrand_name() {
-        return brand_name;
+    public String getBrands_name() {
+        return brands_name;
     }
 
-    public void setBrand_name(String brand_name) {
-        this.brand_name = brand_name;
+    public void setBrands_name(String brand_name) {
+        this.brands_name = brand_name;
     }
 
     public List<VehicleModels> getVehicle_model_list() {
