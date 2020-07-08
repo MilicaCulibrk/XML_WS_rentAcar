@@ -111,7 +111,7 @@ public class AddvertismentService {
         real.setTransmission_type(transmissionTypeRepository.findById(dto.getTransmission_type_id()).orElse(null));
         real.setVehicle_class(vehicleClassRepository.findById(dto.getVehicle_class_id()).orElse(null));
         real.setVehicle_model(vehicleModelRepository.findById(dto.getVehicle_model_id()).orElse(null));
-
+        real.setPriceList(dto.getPricelist());
         return real;
     }
     public Image createImage(ImageDTO i){

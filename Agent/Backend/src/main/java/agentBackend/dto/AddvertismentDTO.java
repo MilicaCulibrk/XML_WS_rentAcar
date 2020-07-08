@@ -33,9 +33,15 @@ public class AddvertismentDTO {
     private Pricelist pricelist;
 
 
+	public String getOwner() {
+		return owner;
+	}
 
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
 
-    public AddvertismentDTO() {
+	public AddvertismentDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -43,7 +49,7 @@ public class AddvertismentDTO {
     public AddvertismentDTO(Long id, float daily_price, float mileage, float mileage_limit, boolean cdw,
         int child_seats, String location, Long fuel_type_id, String fuel_type_name, Long brand_id,
         String brand_name, Long vehicle_model_id, String vehicle_model_name, Long vehicle_class_id,
-        String vehicle_class_name, Long transmission_type_id, String transmission_type_name, String owner,
+        String vehicle_class_name, Long transmission_type_id, String transmission_type_name, String addvertisment_id,
         ArrayList<ImageDTO> images, ArrayList<ReservedDateDTO> arrayEvents, int number_of_purchases,
         Pricelist pricelist) {
       super();
@@ -235,14 +241,6 @@ public class AddvertismentDTO {
 
     public void setTransmission_type_name(String transmission_type_name) {
         this.transmission_type_name = transmission_type_name;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 
     public ArrayList<ImageDTO> getImages() {
