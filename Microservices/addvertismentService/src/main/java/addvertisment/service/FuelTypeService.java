@@ -1,8 +1,12 @@
 package addvertisment.service;
 
+import addvertisment.dto.BrandDTO;
 import addvertisment.dto.FuelTypeDTO;
 import addvertisment.model.Addvertisment;
 import addvertisment.model.FuelType;
+import addvertisment.mq.enums.OperationEnum;
+import addvertisment.mq.producer.BrandProducer;
+import addvertisment.mq.producer.FuelTypeProducer;
 import addvertisment.repository.AddvertismentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +27,12 @@ public class FuelTypeService {
 
     @Autowired
     private AddvertismentRepository addvertismentRepository;
+
+    private final FuelTypeProducer fuelTypeProducer;
+
+    public FuelTypeService(FuelTypeProducer fuelTypeProducer) {
+        this.fuelTypeProducer = fuelTypeProducer;
+    }
 
     public List<FuelTypeDTO> getAllFuelTypes() {
         List<FuelTypeDTO> fuelTypesDTOlist = new ArrayList<>();
@@ -46,6 +56,16 @@ public class FuelTypeService {
         FuelType fuelType = newDTOtoReal(fuelTypeDTO);
 
         fuelTypeRepository.save(fuelType);
+
+        try {
+            FuelTypeDTO dto = new FuelTypeDTO(fuelType);
+            dto.setOperation(OperationEnum.CREATE);
+            this.fuelTypeProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
+
+
         return fuelType;
     }
 
@@ -62,6 +82,14 @@ public class FuelTypeService {
         FuelType fuelType = fuelTypeRepository.getOne(fuelTypeDTO.getId());
         existingDTOtoReal(fuelType, fuelTypeDTO);
 
+        try {
+            FuelTypeDTO dto = new FuelTypeDTO(fuelType);
+            dto.setOperation(OperationEnum.UPDATE);
+            this.fuelTypeProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
+
         fuelTypeRepository.save(fuelType);
     }
 
@@ -69,6 +97,14 @@ public class FuelTypeService {
         Optional<FuelType> fuelType = fuelTypeRepository.findById(id);
         if (!fuelType.isPresent()){
             throw new ValidationException("Fuel type with that id doesn't exist!");
+        }
+
+        try {
+            FuelTypeDTO dto = new FuelTypeDTO(id, "delete");
+            dto.setOperation(OperationEnum.DELETE);
+            this.fuelTypeProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
         }
 
         fuelTypeRepository.delete(fuelType.get());
