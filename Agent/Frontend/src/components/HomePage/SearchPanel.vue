@@ -50,7 +50,7 @@
                     min-width="290px"
                   >
                     <template v-slot:activator="{ on }">
-                      <v-text-field
+                      <v-text-field @click="findDate"
                         :value="formattedDateFrom"
                         slot="activator"
                         prepend-icon="date_range"
@@ -88,7 +88,7 @@
                     min-width="290px"
                   >
                     <template v-slot:activator="{ on }">
-                      <v-text-field
+                      <v-text-field  @click="findDate"
                         :value="formattedDateTo"
                         slot="activator"
                         prepend-icon="date_range"
@@ -359,6 +359,12 @@ export default {
     };
   },
   methods: {
+    findDate(){
+     var tomorrow = new Date();
+    tomorrow.setDate(new Date().getDate()+2);
+    this.nowDate=tomorrow.toISOString().slice(0, 10) + 2;
+   
+    },
     cancelSearch() {
       this.searchItem.selectBrand = [];
       this.searchItem.selectModel = [];
@@ -376,6 +382,9 @@ export default {
       this.due = null;
       this.to = null;
       this.$emit("getCars");
+      this.$emit("clearDates");
+    },
+    clearDates(){
     },
     consoleLocation() {
       console.log(this.searchItem.selectLocation.length);
