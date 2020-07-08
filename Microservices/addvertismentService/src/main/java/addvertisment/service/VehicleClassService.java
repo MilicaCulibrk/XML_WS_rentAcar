@@ -1,10 +1,14 @@
 package addvertisment.service;
 
+import addvertisment.dto.BrandDTO;
 import addvertisment.dto.FuelTypeDTO;
 import addvertisment.dto.VehicleClassDTO;
 import addvertisment.model.Addvertisment;
 import addvertisment.model.FuelType;
 import addvertisment.model.VehicleClass;
+import addvertisment.mq.enums.OperationEnum;
+import addvertisment.mq.producer.BrandProducer;
+import addvertisment.mq.producer.ClassProducer;
 import addvertisment.repository.AddvertismentRepository;
 import addvertisment.repository.VehicleClassRepository;
 import addvertisment.repository.VehicleModelRepository;
@@ -24,6 +28,12 @@ public class VehicleClassService {
 
     @Autowired
     private AddvertismentRepository addvertismentRepository;
+
+    private final ClassProducer classProducer;
+
+    public VehicleClassService(ClassProducer classProducer) {
+        this.classProducer = classProducer;
+    }
 
     public List<VehicleClassDTO> getAllClasses() {
         List<VehicleClassDTO> classDTOlist = new ArrayList<>();
@@ -47,6 +57,15 @@ public class VehicleClassService {
         VehicleClass vehicleClass = newDTOtoReal(vehicleClassDTO);
 
         vehicleClassRepository.save(vehicleClass);
+
+        try {
+            VehicleClassDTO dto = new VehicleClassDTO(vehicleClass);
+            dto.setOperation(OperationEnum.CREATE);
+            this.classProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
+
         return vehicleClass;
     }
 
@@ -64,6 +83,14 @@ public class VehicleClassService {
         existingDTOtoReal(vehicleClass, vehicleClassDTO);
 
         vehicleClassRepository.save(vehicleClass);
+
+        try {
+            VehicleClassDTO dto = new VehicleClassDTO(vehicleClass);
+            dto.setOperation(OperationEnum.UPDATE);
+            this.classProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
     }
 
     public void deleteVehicleClass(Long id) throws ValidationException {
@@ -71,6 +98,15 @@ public class VehicleClassService {
         if (!vehicleClass.isPresent()){
             throw new ValidationException("Vehicle with that id doesn't exist!");
         }
+
+        try {
+            VehicleClassDTO dto = new VehicleClassDTO(id, "delete");
+            dto.setOperation(OperationEnum.DELETE);
+            this.classProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
+
 
         vehicleClassRepository.delete(vehicleClass.get());
     }

@@ -1,11 +1,13 @@
 package addvertisment.dto;
 
 import addvertisment.model.VehicleClass;
+import addvertisment.mq.enums.OperationEnum;
 
 public class VehicleClassDTO {
 
     private Long id;
     private String vehicle_class_name;
+    private OperationEnum operation;
 
     public VehicleClassDTO(){}
 
@@ -33,5 +35,13 @@ public class VehicleClassDTO {
 
     public void setVehicle_class_name(String vehicle_class_name) {
         this.vehicle_class_name = vehicle_class_name;
+    }
+
+    public OperationEnum getOperation() {
+        return operation;
+    }
+
+    public void setOperation(OperationEnum operation) {
+        this.operation = operation;
     }
 }

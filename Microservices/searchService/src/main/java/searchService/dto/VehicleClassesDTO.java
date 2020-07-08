@@ -1,12 +1,17 @@
 package searchService.dto;
 
 import searchService.model.VehicleClasses;
+import searchService.mq.enums.OperationEnum;
 
 public class VehicleClassesDTO {
 
 
     private Long id;
     private String vehicle_class_name;
+    private OperationEnum operation;
+
+    public VehicleClassesDTO(){}
+
 
     public VehicleClassesDTO(Long id, String vehicle_class_name) {
         this.id = id;
@@ -34,4 +39,11 @@ public class VehicleClassesDTO {
         this.vehicle_class_name = vehicle_class_name;
     }
 
+    public OperationEnum getOperation() {
+        return operation;
+    }
+
+    public void setOperation(OperationEnum operation) {
+        this.operation = operation;
+    }
 }
