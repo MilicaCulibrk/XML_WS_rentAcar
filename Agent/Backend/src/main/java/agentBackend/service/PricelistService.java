@@ -44,18 +44,6 @@ public class PricelistService {
         return pricelistRepository.findAll();
 	}
 
-	public List<Pricelist> updatePricelist(Pricelist pricelist) {
-		// TODO Auto-generated method stub
-		Pricelist p = pricelistRepository.findById(pricelist.getId()).get();
-        p.setCdwPrice(pricelist.getCdwPrice());
-        p.setDailyPrice(pricelist.getDailyPrice());
-        p.setDiscount(pricelist.getDiscount());
-        p.setNumberOfDays(pricelist.getNumberOfDays());
-        p.setOverlimitPrice(pricelist.getOverlimitPrice());
-        pricelistRepository.save(p);
-
-        return pricelistRepository.findAll();
-	}
 
 	public List<Pricelist> deletePricelist(Long id) {
 		// TODO Auto-generated method stub

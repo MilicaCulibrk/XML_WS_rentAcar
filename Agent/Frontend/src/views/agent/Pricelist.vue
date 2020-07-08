@@ -233,6 +233,7 @@ export default {
           this.pricelist.overlimitPrice = '';
           this.pricelist.discount = '';
           this.pricelist.numberOfDays ='';
+          this.pricelist.id ='';
           this.editable = true;
       }, 
       save(){
@@ -255,7 +256,11 @@ export default {
           this.pricelists = response.data;
           this.editable = false;
           this.snackbarSuccess = true;
-          this.snackbarSuccessText = "Pricelist is added!";
+          if(this.pricelist.id=='')
+            this.snackbarSuccessText = "Pricelist is added";
+          else
+            this.snackbarSuccessText = "Pricelist is changed";
+
         })
         .catch(error => {
           console.log(error);

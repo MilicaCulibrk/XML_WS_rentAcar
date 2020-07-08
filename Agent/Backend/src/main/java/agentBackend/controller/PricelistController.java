@@ -36,20 +36,11 @@ public class PricelistController {
 
     @PostMapping("")
     public ResponseEntity<?> createPricelist (@RequestBody Pricelist pricelist) {
-//	        if (pricelist.getNumber() == null) {
-//	            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
-//	        }
-
         List<Pricelist> p = pricelistService.createPricelist(pricelist);
 		return new ResponseEntity<List<Pricelist>>(p, HttpStatus.OK); 
 	}
     
-    @PutMapping("")
-    public ResponseEntity<?> updatePricelist (@RequestBody Pricelist pricelist) {
 
-        List<Pricelist> p = pricelistService.updatePricelist(pricelist);
-		return new ResponseEntity<List<Pricelist>>(p, HttpStatus.OK); 
-	}
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePricelist (@PathVariable Long id) {
 
