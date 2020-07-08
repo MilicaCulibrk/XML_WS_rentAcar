@@ -4,6 +4,11 @@ import addvertisment.dto.BrandDTO;
 import addvertisment.model.Addvertisment;
 import addvertisment.model.Brand;
 import addvertisment.model.VehicleModel;
+import addvertisment.mq.dto.AddDTO;
+import addvertisment.mq.enums.EntityEnum;
+import addvertisment.mq.enums.OperationEnum;
+import addvertisment.mq.producer.AddvertismentProducer;
+import addvertisment.mq.producer.BrandProducer;
 import addvertisment.repository.AddvertismentRepository;
 import addvertisment.repository.BrandRepository;
 import addvertisment.repository.VehicleModelRepository;
@@ -25,6 +30,12 @@ public class BrandService {
 
     @Autowired
     private VehicleModelRepository vehicleModelRepository;
+
+    private final BrandProducer brandProducer;
+
+    public BrandService(BrandProducer brandProducer) {
+        this.brandProducer = brandProducer;
+    }
 
     public List<BrandDTO> getAllBrands() {
         List<BrandDTO> brandsDTOlist = new ArrayList<>();
@@ -48,6 +59,14 @@ public class BrandService {
         Brand brand = newDTOtoReal(brandDTO);
 
         brandRepository.save(brand);
+
+        try {
+            BrandDTO dto = new BrandDTO(brand);
+            dto.setOperation(OperationEnum.CREATE);
+            this.brandProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
     }
 
     public void updateBrand(BrandDTO brandDTO) throws ValidationException {
@@ -64,6 +83,14 @@ public class BrandService {
         existingDTOtoReal(brand, brandDTO);
 
         brandRepository.save(brand);
+
+        try {
+            BrandDTO dto = new BrandDTO(brand);
+            dto.setOperation(OperationEnum.UPDATE);
+            this.brandProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
     }
 
     public void deleteBrand(Long id) throws ValidationException {
@@ -72,7 +99,16 @@ public class BrandService {
             throw new ValidationException("Brand with that id doesn't exist!");
         }
 
+        try {
+            BrandDTO dto = new BrandDTO(id, "delete");
+            dto.setOperation(OperationEnum.DELETE);
+            this.brandProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
+
         brandRepository.delete(brand.get());
+
     }
 
     public Brand newDTOtoReal(BrandDTO dto){

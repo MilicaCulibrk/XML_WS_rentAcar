@@ -1,10 +1,14 @@
 package addvertisment.service;
 
 
+import addvertisment.dto.FuelTypeDTO;
 import addvertisment.dto.TransmissionTypeDTO;
 import addvertisment.model.Addvertisment;
 import addvertisment.model.FuelType;
 import addvertisment.model.TransmissionType;
+import addvertisment.mq.enums.OperationEnum;
+import addvertisment.mq.producer.FuelTypeProducer;
+import addvertisment.mq.producer.TransmissionTypeProducer;
 import addvertisment.repository.AddvertismentRepository;
 import addvertisment.repository.TransmissionTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,12 @@ public class TransmissionTypeService {
 
     @Autowired
     private AddvertismentRepository addvertismentRepository;
+
+    private final TransmissionTypeProducer transmissionTypeProducer;
+
+    public TransmissionTypeService(TransmissionTypeProducer transmissionTypeProducer) {
+        this.transmissionTypeProducer = transmissionTypeProducer;
+    }
 
     public List<TransmissionTypeDTO> getAllTransmissionTypes() {
         List<TransmissionTypeDTO> transmissionsDTOlist = new ArrayList<>();
@@ -45,6 +55,14 @@ public class TransmissionTypeService {
         TransmissionType transmissionType = newDTOtoReal(transmissionTypeDTO);
 
         transmissionTypeRepository.save(transmissionType);
+
+        try {
+            TransmissionTypeDTO dto = new TransmissionTypeDTO(transmissionType);
+            dto.setOperation(OperationEnum.CREATE);
+            this.transmissionTypeProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
     }
 
     public void updateTransmissionType(TransmissionTypeDTO transmissionTypeDTO) throws ValidationException {
@@ -61,6 +79,14 @@ public class TransmissionTypeService {
         existingDTOtoReal(transmissionType, transmissionTypeDTO);
 
         transmissionTypeRepository.save(transmissionType);
+
+        try {
+            TransmissionTypeDTO dto = new TransmissionTypeDTO(transmissionType);
+            dto.setOperation(OperationEnum.UPDATE);
+            this.transmissionTypeProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
     }
 
     public TransmissionType newDTOtoReal(TransmissionTypeDTO dto){
@@ -75,6 +101,13 @@ public class TransmissionTypeService {
             throw new ValidationException("Transmission type with that id doesn't exist!");
         }
 
+        try {
+            TransmissionTypeDTO dto = new TransmissionTypeDTO(id, "delete");
+            dto.setOperation(OperationEnum.DELETE);
+            this.transmissionTypeProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
         transmissionTypeRepository.delete(transmissionType.get());
     }
 

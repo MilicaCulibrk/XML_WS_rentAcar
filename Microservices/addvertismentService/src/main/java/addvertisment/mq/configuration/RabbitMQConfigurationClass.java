@@ -10,43 +10,40 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Configuration
-public class RabbitMQConfiguration {
+public class RabbitMQConfigurationClass {
 
 
-    public static final String EXCHANGE_NAME = "add_search";
-    public static final String ROUTING_KEY = "add_key";
-    public static final String QUEUE_NAME = "add";
+    public static final String CLASS_EXCHANGE_NAME = "class_search";
+    public static final String CLASS_ROUTING_KEY = "class_key";
+    public static final String CLASS_QUEUE_NAME = "class";
 
     @Bean
-    public Queue queue() {
-        return new Queue(QUEUE_NAME, false);
+    public Queue class_queue() {
+        return new Queue(CLASS_QUEUE_NAME, false);
     }
 
     @Bean
-    public TopicExchange tipsExchange() {
-        return new TopicExchange(EXCHANGE_NAME);
+    public TopicExchange classtipsExchange() {
+        return new TopicExchange(CLASS_EXCHANGE_NAME);
     }
 
     @Bean
-    public Binding queueToExchangeBinding() {
-        return BindingBuilder.bind(queue()).to(tipsExchange()).with(ROUTING_KEY);
+    public Binding classqueueToExchangeBinding() {
+        return BindingBuilder.bind(class_queue()).to(classtipsExchange()).with(CLASS_ROUTING_KEY);
     }
 
     @Bean
-    public Jackson2JsonMessageConverter messageConverter() {
+    public Jackson2JsonMessageConverter classmessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 
 
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    public RabbitTemplate classrabbitTemplate(ConnectionFactory connectionFactory) {
 
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(messageConverter());
+        rabbitTemplate.setMessageConverter(classmessageConverter());
         return rabbitTemplate;
     }
 }

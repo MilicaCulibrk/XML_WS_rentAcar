@@ -39,7 +39,7 @@ public class SearchDTO {
         this.fuel_type_id = search.getFuel_type().getId();
         this.fuel_type_name = search.getFuel_type().getFuel_type_name();
         this.brand_id = search.getBrand().getId();
-        this.brand_name = search.getBrand().getBrand_name();
+        this.brand_name = search.getBrand().getBrands_name();
         this.vehicle_model_id = search.getVehicle_class().getId();
         this.vehicle_model_name = search.getVehicleModel().getVehicle_model_name();
         this.vehicle_class_id = search.getVehicle_class().getId();
