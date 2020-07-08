@@ -11,7 +11,7 @@
     </v-snackbar>
 
     <!-- pretraga -->
-    <SearchPanel @search="search" @getCars="getCars()"></SearchPanel>
+    <SearchPanel @search="search" @getCars="getCars()" @clearDates="clearDates()"></SearchPanel>
 
     <!-- cards -->
     <!-- sort -->
@@ -36,11 +36,11 @@
           <v-card hover elevation="2" class="text-center ma-6">
             <div class="cardBorderColor">
               <v-responsive class="pt-4"> 
-
-                <img
-                :src="car.images[0].url"
-                height="130px"
-              >
+                <carousel :perPage="1">
+                  <slide  v-for="(image, index) in car.images" :key="index">
+                    <img :src="image.url" height="100px" />
+                  </slide>
+                </carousel>
               </v-responsive>
               <v-card-title></v-card-title>
               <v-card-text>
@@ -125,7 +125,8 @@ export default {
         price: "",
         owner: "",
         date_from: "",
-        date_to: ""
+        date_to: "",
+        image: ""
       };
       carForChart.id = car.id;
       carForChart.brand = car.brand_name;
@@ -134,7 +135,16 @@ export default {
       carForChart.owner = car.owner;
       carForChart.date_from = this.date_from;
       carForChart.date_to = this.date_to;
+      carForChart.image = car.images[0].url;
+
+    
+      
       return carForChart;
+    },
+    clearDates(){
+      console.log("clear datesssssss")
+      this.date_to="";
+      this.date_from="";
     },
     addToBasket(car) {
       if (this.$store.state.user.role == "NONE") {
@@ -143,8 +153,16 @@ export default {
         this.snackbarDanger = true;
         return;
       }
+      if(this.date_from=="" || this.date_to==""){
+        this.snackbarDanger = true;
+        this.snackbarDangerText = "You have to select location, start and end date!";
+        return;
+      }
       this.$store.commit("addCarInCart", this.createCarForChart(car));
-      console.log(this.$store.state.carsInCart);
+     
+
+      this.snackbarSuccess = true;
+      this.snackbarSuccessText = "Car added to the cart.";
     },
     getCars() {
       axios
@@ -270,6 +288,7 @@ export default {
       .catch(error => {
         console.log(error);
       });
+
   }
 };
 </script>

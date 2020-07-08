@@ -6,7 +6,12 @@
           <v-card class="text-center ma-6">
             <div class="detailsBorderColor">
               <v-responsive class="pt-4">
-                <img :src="addvertisment.images[0].url" height="130px" />
+                <carousel :perPage="1">
+                  <slide  v-for="(image, index) in addvertisment.images" :key="index">
+                    <img :src="image.url" height="100px" />
+                  </slide>
+                </carousel>
+            
               </v-responsive>
               <v-card-title></v-card-title>
               <v-card-text>
@@ -85,17 +90,16 @@ export default {
         .get("/addvertisment-service/reservedDate/" + id)
         .then(reservedDates => {
           this.reservedDates = reservedDates.data;
-
           this.reservedOneDate = [];
           for (const i in this.reservedDates) {
-            console.log(this.reservedDates[i]);
             this.reservedOneDate.push(this.reservedDates[i].oneDate);
           }
+          
         })
         .catch(error => {
           console.log(error);
         });
-      console.log(this.reservedOneDate);
+     
     },
     reserveDate(dates, id) {
       var startDate = new Date(dates[0]);
@@ -139,13 +143,16 @@ export default {
     }
   },
   mounted() {
+
+
     //izlistavanje oglasa
     axios
       .get(
-        "/addvertisment-service/addvertisment/user/" + this.$store.state.user.id
+        "/addvertisment-service/addvertisment/user/" + this.$store.state.user.username
       )
       .then(addvertisments => {
         this.addvertisments = addvertisments.data;
+        
       })
       .catch(error => {
         console.log(error);

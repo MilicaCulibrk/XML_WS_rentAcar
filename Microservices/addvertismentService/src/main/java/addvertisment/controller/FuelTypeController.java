@@ -3,14 +3,11 @@ package addvertisment.controller;
 import addvertisment.dto.FuelTypeDTO;
 import addvertisment.model.FuelType;
 import addvertisment.service.FuelTypeService;
-import addvertisment.soap.FuelTypeClient;
-import com.xml.RentCar.wsdl.FuelTypeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.xml.bind.ValidationException;
 import java.util.List;
 
@@ -23,8 +20,6 @@ public class FuelTypeController {
     @Autowired
     private FuelTypeService fuelTypeService;
 
-    @Autowired
-    private FuelTypeClient client;
 
     @GetMapping()
     public ResponseEntity<List<FuelTypeDTO>> getAllFuelTypes() {
@@ -41,7 +36,6 @@ public class FuelTypeController {
         try {
             FuelType fuelType = fuelTypeService.createFuelType(fuelTypeDTO);
             fuelTypeDTO.setId(fuelType.getId());
-            FuelTypeResponse response = client.createVC(fuelTypeDTO);
             return new ResponseEntity<>(fuelTypeDTO, HttpStatus.OK);
         } catch (ValidationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);

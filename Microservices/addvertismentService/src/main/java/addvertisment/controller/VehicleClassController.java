@@ -1,13 +1,8 @@
 package addvertisment.controller;
 
-import addvertisment.dto.FuelTypeDTO;
-import addvertisment.dto.TransmissionTypeDTO;
 import addvertisment.dto.VehicleClassDTO;
 import addvertisment.model.VehicleClass;
-import addvertisment.service.FuelTypeService;
 import addvertisment.service.VehicleClassService;
-import addvertisment.soap.VCClient;
-import addvertisment.soap.VehicleClassClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
