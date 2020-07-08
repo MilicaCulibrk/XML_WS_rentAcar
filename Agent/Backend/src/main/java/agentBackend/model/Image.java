@@ -12,7 +12,7 @@ public class Image {
     @Column(name = "url", nullable = false)
     private String url;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name="addvertisment_id")
     public Addvertisment addvertisment;
 

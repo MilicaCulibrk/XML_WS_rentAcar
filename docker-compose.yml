@@ -2,7 +2,7 @@ version: '3'
 services:
 
   eureka-service:
-    build: ./eurekaService
+    build: ./Microservices/eurekaService
     container_name: eureka-service
     networks:
       - application-network
@@ -22,12 +22,14 @@ services:
       - POSTGRES_PASSWORD=test
       - POSTGRES_DB=services
       - REGISTRY_HOST=eureka-service
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
     tty: true
 
   add-service:
-    build: ./addvertismentService
+    build: ./Microservices/addvertismentService
     ports:
       - "8087:8087"
     tty: true
@@ -37,14 +39,17 @@ services:
       DATABASE_DOMAIN: postgres
       REGISTRY_HOST: eureka-service
       POSTGRES_DB: services
+      RABBIT_HOST: rabbitmq
+      RABBIT_PORT: 5672
     networks:
       -  application-network
     depends_on:
       - eureka-service
       - postgres
+      - rabbitmq
 
   user-service:
-    build: ./userService
+    build: ./Microservices/userService
     ports:
       - "8082:8082"
     tty: true
@@ -61,7 +66,7 @@ services:
       - postgres
 
   rent-service:
-    build: ./rentService
+    build: ./Microservices/rentService
     ports:
       - "8084:8084"
     environment:
@@ -78,7 +83,7 @@ services:
       - postgres
 
   search-service:
-    build: ./searchService
+    build: ./Microservices/searchService
     ports:
       - "8085:8085"
     tty: true
@@ -88,26 +93,33 @@ services:
       DATABASE_DOMAIN: postgres
       REGISTRY_HOST: eureka-service
       POSTGRES_DB: services
+      RABBIT_HOST: rabbitmq
+      RABBIT_PORT: 5672
     networks:
       - application-network
     depends_on:
       - eureka-service
       - postgres
+      - rabbitmq
 
-  message-service:
-    build: ./messageService
+  agent:
+    build: ./Agent/Backend
     ports:
-      - "8086:8086"
+      - "8081:8081"
+    tty: true
     environment:
-      - REGISTRY_HOST=eureka-service
+      DATABASE_USERNAME: test
+      DATABASE_PASSWORD: test
+      DATABASE_DOMAIN: postgres
+      POSTGRES_DB: agentapp
     networks:
       - application-network
-    tty: true
     depends_on:
-      - eureka-service
+      - postgres
+
 
   zuul:
-    build: ./zuulService/zuul
+    build: ./Microservices/zuulService/zuul
     networks:
       - application-network
     ports:
@@ -122,6 +134,17 @@ services:
       - eureka-service
       - postgres
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: test
+      RABBITMQ_DEFAULT_PASS: test
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - application-network
 
 networks:
   application-network:

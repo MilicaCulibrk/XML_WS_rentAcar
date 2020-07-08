@@ -2,11 +2,11 @@
   <div>
     <!-- Snackbar -->
     <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
-      <span>{{snackbarSuccessText}}</span>
+      <span>{{ snackbarSuccessText }}</span>
       <v-btn text @click="snackbarSuccess = false">Close</v-btn>
     </v-snackbar>
     <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
-      <span>{{snackbarDangerText}}</span>
+      <span>{{ snackbarDangerText }}</span>
       <v-btn text @click="snackbarDanger = false">Close</v-btn>
     </v-snackbar>
 
@@ -17,7 +17,12 @@
     <!-- sort -->
     <v-container class="my-5">
       <v-layout row wrap>
-        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('daily_price')">
+        <v-btn
+          medium
+          elevation="0"
+          color="white primary--text ml-4"
+          @click="sortBy('daily_price')"
+        >
           <v-icon left medium>attach_money</v-icon>
           <span class="caption text-lowercase">by price</span>
         </v-btn>
@@ -40,9 +45,9 @@
               </v-responsive>
               <v-card-title></v-card-title>
               <v-card-text>
-                <div
-                  class="primary--text font-weight-bold headline"
-                >{{ car.brand_name }} {{ car.vehicle_model_name }}</div>
+                <div class="primary--text font-weight-bold headline">
+                  {{ car.brand_name }} {{ car.vehicle_model_name }}
+                </div>
                 <div>Price: {{ car.daily_price }}</div>
               </v-card-text>
               <v-card-actions>
@@ -55,8 +60,15 @@
                 <PopupComments v-bind:car="car"></PopupComments>
                 <v-tooltip bottom color="black">
                   <template v-slot:activator="{ on }">
-                    <v-btn @click="addToBasket(car)" icon v-on="on" color="primary">
-                      <router-link :to="{ name: 'add', params: { name: car.id } }"></router-link>
+                    <v-btn
+                      @click="addToBasket(car)"
+                      icon
+                      v-on="on"
+                      color="primary"
+                    >
+                      <router-link
+                        :to="{ name: 'add', params: { name: car.id } }"
+                      ></router-link>
                       <v-icon>shopping_cart</v-icon>
                     </v-btn>
                   </template>
@@ -72,10 +84,10 @@
 </template>
 
 <script>
-import PopupDetails from "@/components/HomePage/PopupDetails";
-import PopupComments from "@/components/HomePage/PopupComments";
-import PopupRatings from "@/components/HomePage/PopupRatings";
-import SearchPanel from "@/components/HomePage/SearchPanel";
+import PopupDetails from "@/components/homePage/PopupDetails";
+import PopupComments from "@/components/homePage/PopupComments";
+import PopupRatings from "@/components/homePage/PopupRatings";
+import SearchPanel from "@/components/homePage/SearchPanel";
 import axios from "axios";
 //import format from "date-fns/format";
 export default {
@@ -83,8 +95,8 @@ export default {
   components: { PopupRatings, PopupComments, PopupDetails, SearchPanel },
   props: {
     header: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {
@@ -98,8 +110,8 @@ export default {
       snackbarDangerText: "",
       startDateGreater: false,
       dateList: {
-        arrayEvents: []
-      }
+        arrayEvents: [],
+      },
     };
   },
   methods: {
@@ -121,7 +133,7 @@ export default {
         price: "",
         agent: "",
         date_from: "",
-        date_to: ""
+        date_to: "",
       };
       carForChart.id = car.id;
       carForChart.brand = car.brand_name;
@@ -145,10 +157,10 @@ export default {
     getCars() {
       axios
         .get("/search-service/search")
-        .then(cars => {
+        .then((cars) => {
           this.cars = cars.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -181,11 +193,11 @@ export default {
     doSearch(searchItem) {
       axios
         .post("/search-service/search", searchItem)
-        .then(cars => {
+        .then((cars) => {
           this.cars = cars.data;
           console.log(searchItem);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -253,19 +265,19 @@ export default {
       for (const d in arr) {
         this.dateList.arrayEvents.push(arr[d]);
       }
-    }
+    },
   },
   mounted() {
     //get cars
     axios
       .get("/addvertisment")
-      .then(cars => {
+      .then((cars) => {
         this.cars = cars.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-  }
+  },
 };
 </script>
 

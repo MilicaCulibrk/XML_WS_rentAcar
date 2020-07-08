@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://localhost:8087/add-schema"
+           targetNamespace="http://localhost:8087/add-schema" elementFormDefault="qualified">
+
+    <xs:element name="addRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="add" type="tns:Add"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="Add">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="addvertiser_id" type="xs:string"/>
+            <xs:element name="brand_id" type="xs:long"/>
+            <xs:element name="vehicle_model_id" type="xs:long"/>
+            <xs:element name="vehicle_class_id" type="xs:long"/>
+            <xs:element name="transmission_type_id" type="xs:long"/>
+            <xs:element name="fuel_type_id" type="xs:long"/>
+            <xs:element name="mileage" type="xs:float"/>
+            <xs:element name="mileage_limit" type="xs:float"/>
+            <xs:element name="cdw" type="xs:boolean"/>
+            <xs:element name="child_seats" type="xs:int"/>
+            <xs:element name="location" type="xs:string"/>
+            <xs:element name="price" type="xs:float"/>
+            <xs:element name="images" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="reservedDates" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

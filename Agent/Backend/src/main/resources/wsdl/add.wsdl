@@ -1,0 +1,68 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://localhost:8087/add-schema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://localhost:8087/add-schema" targetNamespace="http://localhost:8087/add-schema">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://localhost:8087/add-schema">
+            <xs:element name="addRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="add" type="tns:Add"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="Add">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                    <xs:element name="addvertiser_id" type="xs:string"/>
+                    <xs:element name="brand_id" type="xs:long"/>
+                    <xs:element name="vehicle_model_id" type="xs:long"/>
+                    <xs:element name="vehicle_class_id" type="xs:long"/>
+                    <xs:element name="transmission_type_id" type="xs:long"/>
+                    <xs:element name="fuel_type_id" type="xs:long"/>
+                    <xs:element name="mileage" type="xs:float"/>
+                    <xs:element name="mileage_limit" type="xs:float"/>
+                    <xs:element name="cdw" type="xs:boolean"/>
+                    <xs:element name="child_seats" type="xs:int"/>
+                    <xs:element name="location" type="xs:string"/>
+                    <xs:element name="price" type="xs:float"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="images" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="reservedDates" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="addResponse">
+        <wsdl:part element="tns:addResponse" name="addResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="addRequest">
+        <wsdl:part element="tns:addRequest" name="addRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="AddsPort">
+        <wsdl:operation name="add">
+            <wsdl:input message="tns:addRequest" name="addRequest"> </wsdl:input>
+            <wsdl:output message="tns:addResponse" name="addResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AddsPortSoap11" type="tns:AddsPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="add">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="addRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="addResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="AddsPortService">
+        <wsdl:port binding="tns:AddsPortSoap11" name="AddsPortSoap11">
+            <soap:address location="http://localhost:8087/ws"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

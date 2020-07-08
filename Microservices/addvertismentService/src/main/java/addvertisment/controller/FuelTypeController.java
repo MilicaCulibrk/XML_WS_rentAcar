@@ -20,7 +20,6 @@ public class FuelTypeController {
     @Autowired
     private FuelTypeService fuelTypeService;
 
-
     @GetMapping()
     public ResponseEntity<List<FuelTypeDTO>> getAllFuelTypes() {
         return new ResponseEntity<List<FuelTypeDTO>>(fuelTypeService.getAllFuelTypes(), HttpStatus.OK);
