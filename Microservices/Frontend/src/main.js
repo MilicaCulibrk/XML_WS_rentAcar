@@ -6,6 +6,8 @@ import axios from "axios";
 import vuetify from "./plugins/vuetify";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import interceptorsSetup from "./interceptors";
+import VueCarousel from 'vue-carousel';
+Vue.use(VueCarousel);
 
 axios.defaults.baseURL = "http://localhost:8662";
 interceptorsSetup();

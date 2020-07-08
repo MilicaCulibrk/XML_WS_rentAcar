@@ -47,7 +47,13 @@
                       <v-row>
                         <v-col cols="4">
                           <v-responsive class="pt-1 ml-2">
-                            <img :src="car.images[0].url" height="100px" />
+                           
+                            <carousel :perPage="1">
+                              <slide  v-for="(image, index) in car.images" :key="index">
+                                <img :src="image.url" height="100px" />
+                              </slide>
+                            </carousel>
+                        
                           </v-responsive>
                         </v-col>
                         <v-col cols="4">
@@ -92,7 +98,12 @@
                       <v-row>
                         <v-col cols="4">
                           <v-responsive class="pt-1 ml-2">
-                            <img :src="car.images[0].url" height="100px" />
+                            <carousel :perPage="1">
+                              <slide  v-for="(image, index) in car.images" :key="index">
+                                <img :src="image.url" height="100px" />
+                              </slide>
+                            </carousel>
+                        
                           </v-responsive>
                         </v-col>
                         <v-col cols="4">
@@ -144,7 +155,12 @@
                       <v-row>
                         <v-col cols="4">
                           <v-responsive class="pt-1 ml-2">
-                            <img :src="car.images[0].url" height="100px" />
+                            <carousel :perPage="1">
+                              <slide  v-for="(image, index) in car.images" :key="index">
+                                <img :src="image.url" height="100px" />
+                              </slide>
+                            </carousel>
+                        
                           </v-responsive>
                         </v-col>
                         <v-col cols="4">
@@ -196,7 +212,12 @@
                       <v-row>
                         <v-col cols="4">
                           <v-responsive class="pt-1 ml-2">
-                            <img :src="car.images[0].url" height="100px" />
+                            <carousel :perPage="1">
+                              <slide  v-for="(image, index) in car.images" :key="index">
+                                <img :src="image.url" height="100px" />
+                              </slide>
+                            </carousel>
+                        
                           </v-responsive>
                         </v-col>
                         <v-col cols="4">
@@ -250,8 +271,9 @@ import PopupDetails from "@/components/homePage/PopupDetails";
 import PopupComments from "@/components/homePage/PopupComments";
 import PopupRatings from "@/components/homePage/PopupRatings";
 import PopupRequests from "@/components/statistics/PopupRequests";
+import { Carousel, Slide } from 'vue-carousel';
 export default {
-  components: { PopupRatings, PopupComments, PopupDetails, PopupRequests },
+  components: { PopupRatings, PopupComments, PopupDetails, PopupRequests, Carousel, Slide},
   data() {
     return {
       snackbarSuccess: false,
