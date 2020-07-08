@@ -1,8 +1,16 @@
 <template>
   <div class="text-center">
+    <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
+      <span>{{snackbarSuccessText}}</span>
+      <v-btn text @click="snackbarSuccess = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
+      <span>{{snackbarDangerText}}</span>
+      <v-btn text @click="snackbarDanger = false">Close</v-btn>
+    </v-snackbar>
     <v-dialog v-model="dialog" height="700px" max-width="800" >
       <template #activator="{ on: dialog }">
-            <v-btn v-if="addvertisment.pricelist==''" outlined color="grey"
+            <v-btn v-if="addvertisment.pricelist==''" @click="editable=false" outlined color="grey"
                       style="width: 255px; height: 45px;"
                       class="text-capitalize" v-on="{ ...dialog }" >Pick a pricelist 
             </v-btn>
@@ -74,10 +82,36 @@
             flat
             max-width="700"
           >
-            <v-card-text>
+            <v-card-text style=" position: relative">
               <h3 class="headline mb-2">
                 Pricelist number {{pricelist.id}}
               </h3>
+                <v-btn
+                  absolute
+                  dark
+                  fab
+                  small
+                  top
+                  right
+                  color="red"
+
+                  @click="deletePricelist(pricelist.id)"
+                >
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+                <v-btn
+                  absolute
+                  dark
+                  fab
+                  small
+                  bottom
+                  right
+                  color="yellow"
+
+                  @click="editable=true"
+                >
+                  <v-icon>mdi-pencil</v-icon>
+                </v-btn>
             </v-card-text>
             <v-divider></v-divider>
             <v-row
@@ -175,6 +209,10 @@ export default {
       selected: 'NONE',
       pricelist: { },
       editable: false,
+      snackbarSuccess: false,
+      snackbarSuccessText: "",
+      snackbarDanger: false,
+      snackbarDangerText: "",
     };
   },
   methods: {
@@ -190,24 +228,44 @@ export default {
       },
       newPricelist(){
           this.selected = '';
-          this.pricelist = {};
+          this.pricelist.dailyPrice = '' ;
+          this.pricelist.cdwPrice = '' ;
+          this.pricelist.overlimitPrice = '';
+          this.pricelist.discount = '';
+          this.pricelist.numberOfDays ='';
           this.editable = true;
       }, 
       save(){
         this.pricelist.username = this.$store.state.user.username;
+
+        if (
+          this.pricelist.dailyPrice === "" ||
+          this.pricelist.cdwPrice === "" ||
+          this.pricelist.overlimitPrice === "" ||
+          this.pricelist.discount === "" ||
+          this.pricelist.numberOfDays === ""        
+        ) {
+          this.snackbarDanger = true;
+          this.snackbarDangerText = "You need to fill all fileds!";
+          return;
+        }
             axios
         .post("/pricelist", this.pricelist)
         .then(response => {
           this.pricelists = response.data;
           this.editable = false;
-          this.selected = this.pricelist;
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText = "Pricelist is added!";
         })
         .catch(error => {
           console.log(error);
+          this.snackbarDanger = true;
+          this.snackbarDangerText = "Error";
         });
       },
       cancel(){
           this.selected = 'NONE';
+          this.getPricelists();
       },
       getPricelists(){
             axios
@@ -218,7 +276,20 @@ export default {
         .catch(error => {
           console.log(error);
         });
-      }
+      },
+      deletePricelist(id){
+          axios
+        .delete("/pricelist/" + id)
+        .then(response => {
+          this.selected = 'NONE';
+          this.pricelists = response.data;
+          this.editable = false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      },
+
   },
   mounted(){
       this.getPricelists();
