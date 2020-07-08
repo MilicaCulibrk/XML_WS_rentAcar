@@ -60,9 +60,6 @@ public class BrandsService {
             }
         }
 
-
-
-
     }
 
     public Brands newDTOtoReal(BrandsDTO dto){
