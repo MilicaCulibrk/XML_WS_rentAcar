@@ -2,12 +2,12 @@
   <nav>
     <!-- snackbar -->
     <v-snackbar v-model="snackbarSuccess" :timeout="4000" top color="success">
-      <span>{{snackbarSuccessText}}</span>
+      <span>{{ snackbarSuccessText }}</span>
       <v-btn text @click="snackbarSuccess = false">Close</v-btn>
     </v-snackbar>
 
     <v-snackbar v-model="snackbarDanger" :timeout="4000" top color="danger">
-      <span>{{snackbarDangerText}}</span>
+      <span>{{ snackbarDangerText }}</span>
       <v-btn text @click="snackbarDanger = false">Close</v-btn>
     </v-snackbar>
 
@@ -22,7 +22,7 @@
         text
         color="primary"
         @click="openUsers()"
-        v-if="(this.$store.state.user.role)=='ADMINISTRATOR'"
+        v-if="this.$store.state.user.role == 'ADMINISTRATOR'"
       >
         <span>Users</span>
         <v-icon right>person_pin</v-icon>
@@ -31,16 +31,16 @@
         text
         color="primary"
         @click="openCodebook()"
-        v-if="(this.$store.state.user.role)=='ADMINISTRATOR'"
+        v-if="this.$store.state.user.role == 'ADMINISTRATOR'"
       >
         <span>Codebook</span>
         <v-icon right>list_alt</v-icon>
       </v-btn>
-            <v-btn
+      <v-btn
         text
         color="primary"
         @click="openPurchases()"
-        v-if="(this.$store.state.user.role)=='USER'"
+        v-if="this.$store.state.user.role == 'USER'"
       >
         <span>My purchases</span>
         <v-icon right>list_alt</v-icon>
@@ -49,7 +49,7 @@
         text
         color="primary"
         @click="openComments()"
-        v-if="(this.$store.state.user.role)=='ADMINISTRATOR'"
+        v-if="this.$store.state.user.role == 'ADMINISTRATOR'"
       >
         <span>Comments</span>
         <v-icon right>mode_comment</v-icon>
@@ -58,7 +58,7 @@
         text
         color="primary"
         @click="openStatistics()"
-        v-if="(this.$store.state.user.role)=='COMPANY'"
+        v-if="this.$store.state.user.role == 'COMPANY'"
       >
         <span>Statistics</span>
         <v-icon right>bar_chart</v-icon>
@@ -67,12 +67,17 @@
         text
         color="primary"
         @click="openRequests()"
-        v-if="(this.$store.state.user.role)=='COMPANY'"
+        v-if="this.$store.state.user.role == 'COMPANY'"
       >
         <span>Requests</span>
         <v-icon right>check_box</v-icon>
       </v-btn>
-      <v-btn text color="primary" @click="openCart()" v-if="(this.$store.state.user.role)=='USER'">
+      <v-btn
+        text
+        color="primary"
+        @click="openCart()"
+        v-if="this.$store.state.user.role == 'USER'"
+      >
         <span>Cart</span>
         <v-icon right>shopping_cart</v-icon>
       </v-btn>
@@ -80,32 +85,48 @@
         text
         color="primary"
         @click="openAddNewAddvertisment()"
-        v-if="(this.$store.state.user.role)=='COMPANY'"
+        v-if="this.$store.state.user.role == 'COMPANY'"
       >
         <span>New Add</span>
         <v-icon right>add</v-icon>
       </v-btn>
-      <v-btn text color="primary" v-if="(this.$store.state.user.role)=='COMPANY'">
+      <v-btn
+        text
+        color="primary"
+        v-if="this.$store.state.user.role == 'COMPANY'"
+      >
         <span @click="openMyAddvertisments()">My Adds</span>
         <v-icon right>list</v-icon>
       </v-btn>
-      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
+      <v-btn text color="primary" v-if="this.$store.state.user.role != 'NONE'">
         <span @click="openChat()">Chat</span>
         <v-icon right>sms</v-icon>
       </v-btn>
       <div class="mx-2">
         <LoginComponent
-          @loggedIn="snackbarSuccess = true; snackbarSuccessText='You are logged in!'"
-          @notLoggedIn="snackbarDanger = true; snackbarDangerText='Can not log in. There is no such user!'"
+          @loggedIn="
+            snackbarSuccess = true;
+            snackbarSuccessText = 'You are logged in!';
+          "
+          @notLoggedIn="
+            snackbarDanger = true;
+            snackbarDangerText = 'Can not log in. There is no such user!';
+          "
         />
       </div>
       <div class="mx-2">
         <RegistrationComponent
-          @registered="snackbarSuccess = true; snackbarSuccessText='You are registered! Please login.'"
-          @notRegistered="snackbarDanger = true; snackbarDangerText='Can not register.'"
+          @registered="
+            snackbarSuccess = true;
+            snackbarSuccessText = 'You are registered! Please login.';
+          "
+          @notRegistered="
+            snackbarDanger = true;
+            snackbarDangerText = 'Can not register.';
+          "
         />
       </div>
-      <v-btn text color="primary" v-if="(this.$store.state.user.role)!='NONE'">
+      <v-btn text color="primary" v-if="this.$store.state.user.role != 'NONE'">
         <span @click="logout()">Logout</span>
         <v-icon right>logout</v-icon>
       </v-btn>
@@ -119,14 +140,14 @@ import RegistrationComponent from "@/components/homePage/RegistrationComponent.v
 export default {
   components: {
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
   },
   data() {
     return {
       snackbarSuccess: false,
       snackbarSuccessText: "",
       snackbarDanger: false,
-      snackbarDangerText: ""
+      snackbarDangerText: "",
     };
   },
   methods: {
@@ -139,7 +160,7 @@ export default {
     openCart() {
       this.$router.push("/cart");
     },
-       openPurchases() {
+    openPurchases() {
       this.$router.push("/purchases");
     },
     openAddNewAddvertisment() {
@@ -157,7 +178,7 @@ export default {
     openStatistics() {
       this.$router.push("/statistics");
     },
-    openChat(){
+    openChat() {
       this.$router.push("/chat");
     },
     logout() {
@@ -169,7 +190,7 @@ export default {
       this.snackbarSuccessText = "You are logged out";
       this.LoginDialog = false;
       this.$router.push("/");
-    }
-  }
+    },
+  },
 };
 </script>

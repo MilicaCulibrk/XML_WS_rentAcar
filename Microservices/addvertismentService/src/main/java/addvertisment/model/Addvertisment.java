@@ -1,5 +1,7 @@
 package addvertisment.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 import java.util.HashMap;
@@ -17,18 +19,23 @@ public class Addvertisment {
     private String addvertiser_id;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JsonIgnore
     public Brand brand;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JsonIgnore
     public VehicleModel vehicle_model;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JsonIgnore
     public TransmissionType transmission_type;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JsonIgnore
     public FuelType fuel_type;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JsonIgnore
     public VehicleClass vehicle_class;
 
     @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
