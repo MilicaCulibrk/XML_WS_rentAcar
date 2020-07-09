@@ -17,6 +17,22 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="editStatusRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ms_id" type="xs:long"/>
+                        <xs:element name="status" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <!-- xs:element name="editStatusResponse">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ms_id" type="xs:long"/>
+                            <xs:element name="agent_id" type="xs:long"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element -->
             <xs:complexType name="Request">
                 <xs:sequence>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="purchaseList" type="tns:Purchase"/>
@@ -36,6 +52,9 @@
             </xs:complexType>
         </xs:schema>
     </wsdl:types>
+    <wsdl:message name="editStatusRequest">
+        <wsdl:part element="tns:editStatusRequest" name="editStatusRequest"> </wsdl:part>
+    </wsdl:message>
     <wsdl:message name="orderRequest">
         <wsdl:part element="tns:orderRequest" name="orderRequest"> </wsdl:part>
     </wsdl:message>
@@ -43,6 +62,9 @@
         <wsdl:part element="tns:orderResponse" name="orderResponse"> </wsdl:part>
     </wsdl:message>
     <wsdl:portType name="RentPort">
+        <wsdl:operation name="editStatus">
+            <wsdl:input message="tns:editStatusRequest" name="editStatusRequest"> </wsdl:input>
+        </wsdl:operation>
         <wsdl:operation name="order">
             <wsdl:input message="tns:orderRequest" name="orderRequest"> </wsdl:input>
             <wsdl:output message="tns:orderResponse" name="orderResponse"> </wsdl:output>
@@ -50,6 +72,12 @@
     </wsdl:portType>
     <wsdl:binding name="RentPortSoap11" type="tns:RentPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="editStatus">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="editStatusRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
         <wsdl:operation name="order">
             <soap:operation soapAction=""/>
             <wsdl:input name="orderRequest">

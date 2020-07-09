@@ -163,6 +163,7 @@
 				<configuration>
 					<sources>
 						<source>${project.basedir}/src/main/resources/add.xsd</source>
+						<source>${project.basedir}/src/main/resources/priceList.xsd</source>
 					</sources>
 				</configuration>
 			</plugin>
