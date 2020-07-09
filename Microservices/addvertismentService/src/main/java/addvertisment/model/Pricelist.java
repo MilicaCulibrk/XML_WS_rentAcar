@@ -1,3 +1,4 @@
+
 package addvertisment.model;
 
 import javax.persistence.Column;
@@ -21,7 +22,7 @@ public class Pricelist {
    private float discount;
    @Column(name = "number_of_days", nullable = false)
    private int numberOfDays;
-   
+
    @Column(name = "username", nullable = false)
    public String username;
 

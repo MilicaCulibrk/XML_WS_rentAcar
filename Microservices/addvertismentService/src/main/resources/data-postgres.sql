@@ -252,9 +252,82 @@ INSERT INTO public.image(url, addvertisment)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '18');
 
 
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-13', '1');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-14', '1');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-15', '1');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-10', '3');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-11', '3');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-19', '3');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-20', '3');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-21', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-22', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-23', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-24', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-25', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-26', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-27', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-09', '7');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-10', '7');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-15', '7');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-26', '7');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-27', '7');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-28', '7');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-22', '9');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-11', '9');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-27', '11');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-18', '11');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-29', '11');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-30', '11');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-29', '13');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-30', '13');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-23', '15');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-24', '15');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-25', '15');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-26', '15');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-27', '15');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-08', '17');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-17', '17');
+
+
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (1, 9);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (2, 10);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (3, 11);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (4, 12);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (5, 12);
+
 
