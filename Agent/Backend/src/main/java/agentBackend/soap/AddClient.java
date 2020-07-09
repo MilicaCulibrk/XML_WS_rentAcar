@@ -4,7 +4,10 @@ import agentBackend.dto.AddvertismentDTO;
 import agentBackend.dto.ImageDTO;
 import agentBackend.dto.ReservedDateDTO;
 import agentBackend.model.ReservedDate;
+import agentBackend.model.SoapAddSync;
+import agentBackend.repository.SoapAddSyncRepository;
 import agentBackend.wsdl.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
 
@@ -12,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddClient extends WebServiceGatewaySupport {
+
+    @Autowired
+    private SoapAddSyncRepository repository;
 
     public AddResponse createAdd(AddvertismentDTO addvertismentDTO)  {
 
@@ -44,6 +50,13 @@ public class AddClient extends WebServiceGatewaySupport {
                 .marshalSendAndReceive("http://localhost:8087/ws/add-schema", request,
                         new SoapActionCallback("http://localhost:8087/ws/add-schema/addRequest"));
 
+        this.saveSync(response.getMsId(), response.getAgentId());
         return response;
+    }
+    public void saveSync (Long ms_id, Long agent_id){
+        SoapAddSync soapAddSync = new SoapAddSync();
+        soapAddSync.setAgentApp_id(agent_id);
+        soapAddSync.setMsApp_id(ms_id);
+        repository.save(soapAddSync);
     }
 }

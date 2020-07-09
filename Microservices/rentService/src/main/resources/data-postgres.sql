@@ -10,7 +10,7 @@ INSERT INTO public.request(status) VALUES ('PAID');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 	VALUES ( '2020-06-21', '2020-06-29', 11, 'ss', 'mm', false, 1, 'BMW X5');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
-	VALUES ( '2020-06-21', '2020-06-25', 11, 'ss', 'mm', false, 1, 'Suzuki Vitara SE');
+	VALUES ( '2020-06-21', '2020-06-25', 12, 'ss', 'mm', false, 1, 'Suzuki Vitara SE');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 	VALUES ( '2020-05-21', '2020-05-23', 9, 'vm', 'ss', true, 2, 'Mercedes GLB');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
@@ -30,6 +30,13 @@ INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, 
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
     VALUES ( '2020-05-21', '2020-06-03', 18, 'ss', 'sm', false, 4, 'BMW Vitara');
 
+INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (1, 1);
+INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (2, 2);
+INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (3, 3);
+INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (4, 4);
+INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (5, 6);
+INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (6, 7);
+
 INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
 VALUES ('true', 'This car was excellent and my experience was great. Addvertiser was very nice and helpful. I really recommend this car!', 'Great', 1, 'mm', 9);
 INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
@@ -43,10 +50,13 @@ VALUES ('false', 'Not recommend. I was not satisfied with this car', 'Very bad',
 INSERT INTO public.comment(text, title, user_id, user_username, addvertisment_id)
 VALUES ('Great, everything was good. Addvertiser was very nice and helpful.', 'Very good', 4, 'vm', 14);
 
+
+
+
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
 VALUES ('18','1');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('18','2');
+VALUES ('17','2');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
 VALUES ('9','3');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
@@ -66,3 +76,5 @@ INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('4', '2', '9');
 INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '9');
+
+

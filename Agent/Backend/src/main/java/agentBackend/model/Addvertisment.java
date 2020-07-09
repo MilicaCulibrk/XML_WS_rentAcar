@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -62,6 +63,16 @@ public class Addvertisment {
    @Column(name = "daily_price", nullable = false)
    private float daily_price;
 
+   @OneToMany(cascade = CascadeType.ALL, mappedBy = "addvertisment", fetch = FetchType.LAZY)
+   public List<Grade> grades;
+
+   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+   public List<Comment> comments;
+
+   @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+   @JoinColumn(name = "pricelist")
+   public Pricelist priceList;
+
    public float getDaily_price() {
       return daily_price;
    }
@@ -72,14 +83,7 @@ public class Addvertisment {
 //public java.util.Collection<Comment> comment;
    //public java.util.Collection<Grade> grade;
    //public Order order;
-   @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
-   public List<Grade> grades;
 
-   @OneToMany( fetch = FetchType.LAZY)
-   public List<Comment> comments;
-   
-   @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-   public Pricelist priceList;
 
    public Addvertisment() {
    }

@@ -13,10 +13,12 @@
     <xs:element name="addResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="id" type="xs:long"/>
+                <xs:element name="ms_id" type="xs:long"/>
+                <xs:element name="agent_id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
 
     <xs:complexType name="Add">
         <xs:sequence>
@@ -37,5 +39,6 @@
             <xs:element name="reservedDates" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+
 
 </xs:schema>

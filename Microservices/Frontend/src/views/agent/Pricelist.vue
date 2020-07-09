@@ -86,6 +86,9 @@
               <h3 class="headline mb-2">
                 Pricelist number {{pricelist.id}}
               </h3>
+                <v-row justify="center">
+                <v-dialog v-model="dialogDelete" persistent max-width="290">
+                <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   absolute
                   dark
@@ -94,11 +97,23 @@
                   top
                   right
                   color="red"
-
-                  @click="deletePricelist(pricelist.id)"
+                  v-bind="attrs"
+                  v-on="on"
                 >
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title class="headline">Are you sure about removing this pricelist?</v-card-title>
+                  <v-card-text>Removing can cause deleting addvertisments with this pricelist.</v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="green darken-1" text @click="dialogDelete = false">Disagree</v-btn>
+                    <v-btn color="green darken-1" text @click="deletePricelist(pricelist.id)">Agree</v-btn>
+                  </v-card-actions>
+                </v-card>
+                </v-dialog>
+                </v-row>
                 <v-btn
                   absolute
                   dark
@@ -148,8 +163,8 @@
                     placeholder="enter cdw price"
                 >
                 </v-col>
-                <v-col class="text-right mr-4 mb-2" tag="strong" cols="6">Discount:</v-col>
-                <v-col  cols="5">
+                <v-col v-if="(this.$store.state.user.role)!='USER'" class="text-right mr-4 mb-2" tag="strong" cols="6">Discount:</v-col>
+                <v-col v-if="(this.$store.state.user.role)!='USER'"  cols="5">
                 <input 
                     type="text"
                     class="form-control"
@@ -158,8 +173,8 @@
                     placeholder="enter discount"
                 >
                 </v-col>              
-                <v-col class="text-right mr-4 mb-2" tag="strong" cols="6">Number of days for discount:</v-col>
-                <v-col  cols="5">
+                <v-col v-if="(this.$store.state.user.role)!='USER'" class="text-right mr-4 mb-2" tag="strong" cols="6">Number of days for discount:</v-col>
+                <v-col  v-if="(this.$store.state.user.role)!='USER'" cols="5">
                 <input 
                     type="text"
                     class="form-control"
@@ -198,14 +213,9 @@ export default {
   },
   data() {
     return {
-        pricelists: [
-            { id: 1, name: 'Foo' },
-            { id: 2,name: 'Bar' }
-        ],
-              active: [],
-      avatar: null,
+      pricelists: [],
       dialog: false,
-      open: [],
+      dialogDelete: false,
       selected: 'NONE',
       pricelist: { },
       editable: false,
@@ -242,9 +252,7 @@ export default {
         if (
           this.pricelist.dailyPrice === "" ||
           this.pricelist.cdwPrice === "" ||
-          this.pricelist.overlimitPrice === "" ||
-          this.pricelist.discount === "" ||
-          this.pricelist.numberOfDays === ""        
+          this.pricelist.overlimitPrice === ""       
         ) {
           this.snackbarDanger = true;
           this.snackbarDangerText = "You need to fill all fileds!";
@@ -253,7 +261,7 @@ export default {
             axios
         .post("/addvertisment-service/pricelist", this.pricelist)
         .then(response => {
-          this.pricelists = response.data;
+          this.checkOwner(response.data);
           this.editable = false;
           this.snackbarSuccess = true;
           if(this.pricelist.id=='')
@@ -275,20 +283,29 @@ export default {
       getPricelists(){
             axios
         .get("/addvertisment-service/pricelist")
-        .then(pricelists => {
-          this.pricelists = pricelists.data;
+        .then(response => {
+          this.checkOwner(response.data);
         })
         .catch(error => {
           console.log(error);
         });
+      },
+      checkOwner(items){
+        this.pricelists.length = 0;
+        items.forEach(item => {
+            if (item.username === (this.$store.state.user.username)) {
+              this.pricelists.push(item);
+            }
+          });
       },
       deletePricelist(id){
           axios
         .delete("/addvertisment-service/pricelist/" + id)
         .then(response => {
           this.selected = 'NONE';
-          this.pricelists = response.data;
+          this.checkOwner(response.data);
           this.editable = false;
+          this.dialogDelete = false;
         })
         .catch(error => {
           console.log(error);
