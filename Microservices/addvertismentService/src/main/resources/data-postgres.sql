@@ -324,7 +324,7 @@ VALUES ('2020-06-08', '17');
 INSERT INTO public.reserved_date(one_date, addvertisment)
 VALUES ('2020-06-17', '17');
 
-
+mvnw
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (1, 9);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (2, 10);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (3, 11);
