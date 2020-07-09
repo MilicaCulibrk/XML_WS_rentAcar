@@ -189,6 +189,19 @@ VALUES ('false', 'Not recommend. I was not satisfied with this car', 'Very bad',
 INSERT INTO public.comment(text, title, user_id, user_username, addvertisment_id)
 VALUES ('Great, everything was good. Addvertiser was very nice and helpful.', 'Very good', 4, 'vm', 14);
 
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('9','1');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('10','2');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('11','3');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('18','4');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('18','5');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('14','6');
+
 INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '10');
 INSERT INTO public.grade(number, user_id, addvertisment_id)
@@ -202,16 +215,6 @@ VALUES ('4', '2', '9');
 INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '9');
 
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('18','1');
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('18','2');
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('9','3');
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('10','4');
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('11','5');
 
 INSERT INTO public.image(url, addvertisment)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '1');

@@ -121,6 +121,7 @@ public class RequestController {
     }
 
     //brisanje pojedinacnog oglasa
+    @PreAuthorize("hasAuthority('USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity deleteRequest (@PathVariable Long id) {
         if(id == null) {

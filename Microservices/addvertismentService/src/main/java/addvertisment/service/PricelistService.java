@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.xml.bind.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.transform.impl.AddStaticInitTransformer;
 import org.springframework.stereotype.Service;
 
 import addvertisment.model.Addvertisment;
@@ -19,6 +22,11 @@ public class PricelistService {
 	private PricelistRepository pricelistRepository;
     @Autowired
     private AddvertismentRepository addvertismentRepository;
+    
+    @Autowired
+    private AddvertismentService addvertismentService;
+    
+    
 	public List<Pricelist> getAllPricelists() {
 		// TODO Auto-generated method stub
 		return pricelistRepository.findAll();
@@ -58,8 +66,14 @@ public class PricelistService {
             throw new NoSuchElementException();
         }
         for (Addvertisment add : addvertismentRepository.findAll()) {
-			if(add.priceList.getId().equals(id))
-				addvertismentRepository.deleteById(add.getId());
+			if(add.priceList.getId().equals(id)) {
+				try {
+					addvertismentService.deleteAddvertisment(add.getId());
+				} catch (ValidationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		pricelistRepository.deleteById(id);
 		return pricelistRepository.findAll();
