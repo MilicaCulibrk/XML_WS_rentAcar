@@ -62,7 +62,7 @@ public class RentConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/h2-console/**")
+                .antMatchers("/h2-console/**", "/ws/**")
                 .permitAll()
                 .anyRequest().authenticated().and().cors();
         		

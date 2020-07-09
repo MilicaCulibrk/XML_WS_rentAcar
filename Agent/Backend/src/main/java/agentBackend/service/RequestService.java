@@ -42,13 +42,13 @@ public class RequestService {
 
         Request request = new Request();
         request.setStatus("PENDING");
+        requestRepository.save(request);
         for (PurchaseDTO p : purchases){
             Purchase purchase = this.createPurchase(p);
             purchase.setRequest(request);
             purchaseRepository.save(purchase);
-
         }
-        requestRepository.save(request);
+
         return request;
     }
 
@@ -59,14 +59,14 @@ public class RequestService {
         for (PurchaseDTO p : purchases){
             Request request = new Request();
             request.setStatus("PENDING");
+            request.setPurchaseList(new ArrayList<>());
+            requestRepository.save(request);
             Purchase purchase = this.createPurchase(p);
             purchase.setRequest(request);
             purchase.setOwner(p.getOwner());
             purchasesForRequest.add(purchase);
-            //request.setPurchaseList(purchasesForRequest);
             purchaseRepository.save(purchase);
-            System.out.println(purchase);
-            requestRepository.save(request);
+
             requests.add(request);
         }
         return requests;
@@ -76,7 +76,10 @@ public class RequestService {
         if (request == null){
             throw new NoSuchElementException();
         }
-        requestRepository.deleteById(id);
+        for (Purchase p : request.getPurchaseList()) {
+			purchaseRepository.delete(p);
+		}
+        requestRepository.delete(request);
     }
 
     public ArrayList<RequestDTO> getAllRequests(){
@@ -118,7 +121,7 @@ public class RequestService {
         requests = requestRepository.findAll();
         ArrayList<RequestDTO> requestDTOS = new ArrayList<>();
         for(Request r : requests){
-        	if(username.equals(r.getPurchaseList().get(0).getClient())){
+        	if(username.equals(r.purchaseList.get(0).getClient())){
         		requestDTOS.add(new RequestDTO(r));
         	}
         }

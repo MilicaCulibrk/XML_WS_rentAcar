@@ -6,6 +6,7 @@ import addvertisment.model.Addvertisment;
 import addvertisment.model.Image;
 import addvertisment.model.Pricelist;
 import addvertisment.model.ReservedDate;
+import addvertisment.mq.enums.OperationEnum;
 
 
 public class AddvertismentDTO {
@@ -28,6 +29,7 @@ public class AddvertismentDTO {
     private int number_of_purchases;
 
     private Pricelist pricelist;
+
 
     public AddvertismentDTO(Addvertisment addvertisment) {
         this.id = addvertisment.getId();

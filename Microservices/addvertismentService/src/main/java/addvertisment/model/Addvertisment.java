@@ -64,8 +64,9 @@ public class Addvertisment {
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "pricelist")
-    public Pricelist pricelist;
 
+   public Pricelist priceList;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<Grade> grades;
 

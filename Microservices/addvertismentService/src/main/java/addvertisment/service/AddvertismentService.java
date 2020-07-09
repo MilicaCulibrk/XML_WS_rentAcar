@@ -6,14 +6,19 @@ import addvertisment.mq.dto.AddDTO;
 import addvertisment.mq.enums.EntityEnum;
 import addvertisment.mq.enums.OperationEnum;
 import addvertisment.mq.producer.AddvertismentProducer;
+import addvertisment.mq.producer.FuelTypeProducer;
 import addvertisment.repository.*;
 import localhost._8087.add_schema.Add;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.xml.bind.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.xml.bind.ValidationException;
 
 @Service
 public class AddvertismentService {
@@ -38,7 +43,12 @@ public class AddvertismentService {
 
     @Autowired
     private ImageRepository imageRepository;
+    
+    @Autowired
+    private CommentRepository commentRepository;
 
+    @Autowired
+    private GradeRepository gradeRepository;
 
     @Autowired
     private ReservedDateRepository reservedDateRepository;
@@ -143,6 +153,74 @@ public class AddvertismentService {
 
         return reservedDate;
     }
+    public void updateAddvertisment(AddvertismentDTO addvertismentDTO) throws ValidationException {
 
 
+        Addvertisment addvertisment = addvertismentRepository.getOne(addvertismentDTO.getId());
+        existingDTOtoReal(addvertisment, addvertismentDTO);
+
+        try {
+            AddDTO dto = new AddDTO(addvertisment);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
+
+        addvertismentRepository.save(addvertisment);
+    }
+    public void existingDTOtoReal(Addvertisment real, AddvertismentDTO dto){
+        real.setCdw(dto.isCdw());
+        real.setChild_seats(dto.getChild_seats());
+        real.setLocation(dto.getLocation());
+        real.setMileage(dto.getMileage());
+        real.setMileage_limit(dto.getMileage_limit());
+        real.setPrice(dto.getPrice());
+        real.setAddvertiser_id(dto.getAddvertiser_id());
+        real.setBrand(brandRepository.findById(dto.getBrand_id()).orElse(null));
+        real.setFuel_type(fuelTypeRepository.findById(dto.getFuel_type_id()).orElse(null));
+        real.setTransmission_type(transmissionTypeRepository.findById(dto.getTransmission_type_id()).orElse(null));
+        real.setVehicle_class(vehicleClassRepository.findById(dto.getVehicle_class_id()).orElse(null));
+        real.setVehicle_model(vehicleModelRepository.findById(dto.getVehicle_model_id()).orElse(null));
+        real.setId(dto.getId());
+        return;
+    }
+    public AddvertismentDTO getOneAddvertisment(Long id) {
+
+        Addvertisment addvertisment = addvertismentRepository.getOne(id);
+        AddvertismentDTO addvertismentDTO= new AddvertismentDTO(addvertisment);
+        return addvertismentDTO;
+
+    }
+
+  public void deleteAddvertisment(Long id) throws ValidationException {
+        Optional<Addvertisment> add = addvertismentRepository.findById(id);
+        if (!add.isPresent()){
+            throw new ValidationException("Add with that id doesn't exist!");
+        }
+/*
+        try {
+            BrandDTO dto = new BrandDTO(id, "delete");
+            dto.setOperation(OperationEnum.DELETE);
+            this.brandProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }*/
+        for (ReservedDate date : add.get().getReservedDates()) {
+			reservedDateRepository.delete(date);
+		}
+
+        for (Image image : add.get().getImages()) {
+			imageRepository.delete(image);
+		}
+        
+        for (Grade grade : add.get().getGrades()) {
+			gradeRepository.delete(grade);
+		}
+        
+        for (Comment comment : add.get().getComments()) {
+			commentRepository.delete(comment);
+		}
+        
+        addvertismentRepository.delete(add.get());
+
+    }
 }

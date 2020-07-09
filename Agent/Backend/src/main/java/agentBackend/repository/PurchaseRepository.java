@@ -1,6 +1,7 @@
 package agentBackend.repository;
 
 import agentBackend.model.Purchase;
+import agentBackend.model.Request;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,4 +13,7 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 
     @Query("select s from Purchase s where s.id_add = ?1")
     List<Purchase> findByIdAdd(Long id);
+
+    List<Purchase> findAllByRequest(Request request);
+
 }

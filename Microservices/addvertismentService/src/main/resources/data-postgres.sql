@@ -125,19 +125,20 @@ VALUES ('semi-automatic');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
 VALUES ('2000', '8', '9', '10', '15', 'ss');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
-VALUES ('2800', '10', '10', '10', '10', 'ss');
+VALUES ('2800', '10', '10', '10', '10', 'ss'); 
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
 VALUES ('4000', '8', '9', '10', '15', 'mm');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
-VALUES ('8000', '10', '10', '10', '10', 'sm');
+VALUES ('8000', '10', '10', '10', '10', 'sm'); 
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
 VALUES ('4500', '8', '9', '10', '15', 'vm');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
-VALUES ('1800', '10', '10', '10', '10', 'bm');
+VALUES ('1800', '10', '10', '10', '10', 'bm'); 
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
 VALUES ('2100', '8', '9', '10', '15', 'ms');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
-VALUES ('3500', '10', '10', '10', '10', 'vs');
+VALUES ('3500', '10', '10', '10', '10', 'vs'); 
+
 
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
 VALUES ('true', '2', '4000', 'Beograd', '200000', '100', '3', '1', '1', '1', '1', 'mm', '3');

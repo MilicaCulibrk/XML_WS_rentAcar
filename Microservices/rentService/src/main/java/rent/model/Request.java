@@ -17,7 +17,6 @@ public class Request {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
     public List<Purchase> purchaseList;
 
