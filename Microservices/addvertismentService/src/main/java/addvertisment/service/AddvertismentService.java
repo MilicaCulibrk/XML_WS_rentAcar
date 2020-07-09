@@ -122,9 +122,25 @@ public class AddvertismentService {
         real.setTransmission_type(transmissionTypeRepository.findById(dto.getTransmission_type_id()).orElse(null));
         real.setVehicle_class(vehicleClassRepository.findById(dto.getVehicle_class_id()).orElse(null));
         real.setVehicle_model(vehicleModelRepository.findById(dto.getVehicle_model_id()).orElse(null));
-        real.setPriceList(dto.getPricelist());
+        real.setPricelist(dto.getPricelist());
         return real;
     }
+
+    public AddvertismentRentDTO getAddById(Long id){
+
+        Addvertisment add =  addvertismentRepository.findById(id).orElse(null);
+
+        AddvertismentRentDTO addDTO = new AddvertismentRentDTO();
+
+        addDTO.setMileage_limit(add.getMileage_limit());
+        addDTO.setPriceByKm(add.getPricelist().getOverlimitPrice());
+
+
+        return addDTO;
+
+    }
+
+
     public Image createImage(ImageDTO i){
         Image image = new Image();
         image.setUrl(i.getUrl());

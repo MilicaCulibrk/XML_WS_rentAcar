@@ -42,7 +42,8 @@ public class ReportService {
         Report report = newDTOtoReal(reportDTO, purchase_id);
 
         reportRepository.save(report);
-        addvertismentService.updateMileage(reportDTO.getKilometres_crossed(), reportDTO.getId_add());
+
+        reportDTO.setAdditionalPrice(addvertismentService.updateMileage(reportDTO.getKilometres_crossed(), reportDTO.getId_add()));
 
     }
 
@@ -53,7 +54,8 @@ public class ReportService {
         existingDTOtoReal(report, reportDTO);
 
         reportRepository.save(report);
-        addvertismentService.changeUpdatedMileage(reportDTO.getKilometres_crossed(), reportDTO.getId_add(), reportDTO.getOld_kilometres());
+
+        reportDTO.setAdditionalPrice(addvertismentService.changeUpdatedMileage(reportDTO.getKilometres_crossed(), reportDTO.getId_add(), reportDTO.getOld_kilometres()));
     }
 
     public Report newDTOtoReal(ReportDTO dto, Long purchase_id){

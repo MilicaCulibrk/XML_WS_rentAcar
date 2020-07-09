@@ -139,6 +139,7 @@ VALUES ('2100', '8', '9', '10', '15', 'ms');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
 VALUES ('3500', '10', '10', '10', '10', 'vs'); 
 
+
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
 VALUES ('true', '2', '4000', 'Beograd', '200000', '100', '3', '1', '1', '1', '1', 'mm', '3');
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
@@ -329,5 +330,4 @@ INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (2, 10);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (3, 11);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (4, 12);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (5, 12);
-
 

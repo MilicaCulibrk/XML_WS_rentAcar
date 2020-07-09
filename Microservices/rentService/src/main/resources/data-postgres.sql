@@ -77,4 +77,3 @@ VALUES ('4', '2', '9');
 INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '9');
 
-

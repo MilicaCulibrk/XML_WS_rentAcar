@@ -24,6 +24,15 @@ public class VehicleModelService {
     @Autowired
     private AddvertismentRepository addvertismentRepository;
 
+    public List<String> getVehicleModelNames() {
+        List<String> vehicleModelNames = new ArrayList<>();
+        List<VehicleModel> vehicleModels = vehicleModelRepository.findAll();
+        for (VehicleModel vehicleModel : vehicleModels) {
+            vehicleModelNames.add(vehicleModel.getVehicle_model_name());
+        }
+        return vehicleModelNames;
+    }
+
     public List<VehicleModelDTO> getAllModels(Long brandId) {
 
         Brand brand = brandRepository.getOne(brandId);

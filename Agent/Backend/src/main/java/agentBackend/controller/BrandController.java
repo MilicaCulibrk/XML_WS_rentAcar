@@ -23,6 +23,7 @@ public class BrandController {
 
     @GetMapping()
     public ResponseEntity<List<BrandDTO>> getAllBrands() {
+        System.out.println(brandService.getAllBrands().size());
         return new ResponseEntity<List<BrandDTO>>(brandService.getAllBrands(), HttpStatus.OK);
     }
 }

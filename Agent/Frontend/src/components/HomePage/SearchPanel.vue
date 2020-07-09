@@ -50,7 +50,8 @@
                     min-width="290px"
                   >
                     <template v-slot:activator="{ on }">
-                      <v-text-field @click="findDate"
+                      <v-text-field
+                        @click="findDate"
                         :value="formattedDateFrom"
                         slot="activator"
                         prepend-icon="date_range"
@@ -88,7 +89,8 @@
                     min-width="290px"
                   >
                     <template v-slot:activator="{ on }">
-                      <v-text-field  @click="findDate"
+                      <v-text-field
+                        @click="findDate"
                         :value="formattedDateTo"
                         slot="activator"
                         prepend-icon="date_range"
@@ -306,6 +308,7 @@ export default {
   data() {
     return {
       nowDate: new Date().toISOString().slice(0, 10) + 2,
+
       fromDateMenu: false,
       toDateMenu: false,
       due: null,
@@ -317,7 +320,6 @@ export default {
       gasItems: [],
       cars: [],
       locationItems: [],
-
       searchItem: {
         selectBrand: [],
         selectModel: [],
@@ -359,11 +361,10 @@ export default {
     };
   },
   methods: {
-    findDate(){
-     var tomorrow = new Date();
-    tomorrow.setDate(new Date().getDate()+2);
-    this.nowDate=tomorrow.toISOString().slice(0, 10) + 2;
-   
+    findDate() {
+      var tomorrow = new Date();
+      tomorrow.setDate(new Date().getDate() + 2);
+      this.nowDate = tomorrow.toISOString().slice(0, 10) + 2;
     },
     cancelSearch() {
       this.searchItem.selectBrand = [];
@@ -384,8 +385,7 @@ export default {
       this.$emit("getCars");
       this.$emit("clearDates");
     },
-    clearDates(){
-    },
+    clearDates() {},
     consoleLocation() {
       console.log(this.searchItem.selectLocation.length);
     },
@@ -397,7 +397,7 @@ export default {
     },
     getCars() {
       axios
-        .get("/search-service/search")
+        .get("/addvertisment")
         .then(cars => {
           this.cars = cars.data;
           this.getLocations();
@@ -415,7 +415,23 @@ export default {
     axios
       .get("/brand")
       .then(brandItems => {
-        this.brandItems = brandItems.data;
+        this.brands = brandItems.data;
+
+        var i = 0;
+        for (i = 0; i < this.brands.length; i++) {
+          this.brandItems.push(this.brands[i].brand_name);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //izlistavanje modela
+    axios
+      .get("/brand/model")
+      .then(modelItems => {
+        this.modelItems = modelItems.data;
+        console.log(this.modelItems);
       })
       .catch(error => {
         console.log(error);
@@ -425,7 +441,12 @@ export default {
     axios
       .get("/vehicle_class")
       .then(classItems => {
-        this.classItems = classItems.data;
+        this.calsses = classItems.data;
+
+        var i = 0;
+        for (i = 0; i < this.calsses.length; i++) {
+          this.classItems.push(this.calsses[i].vehicle_class_name);
+        }
       })
       .catch(error => {
         console.log(error);
@@ -435,8 +456,12 @@ export default {
     axios
       .get("/fuel_type")
       .then(gasItems => {
-        this.gasItems = gasItems.data;
+        this.fuelTypes = gasItems.data;
 
+        var i = 0;
+        for (i = 0; i < this.fuelTypes.length; i++) {
+          this.gasItems.push(this.fuelTypes[i].fuel_type_name);
+        }
       })
       .catch(error => {
         console.log(error);
@@ -446,7 +471,25 @@ export default {
     axios
       .get("/transmission_type")
       .then(transmissionItems => {
-        this.transmissionItems = transmissionItems.data;
+        this.transmissionTypes = transmissionItems.data;
+
+        var i = 0;
+        for (i = 0; i < this.transmissionTypes.length; i++) {
+          this.transmissionItems.push(
+            this.transmissionTypes[i].transmission_type_name
+          );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    //get cars
+    axios
+      .get("/addvertisment")
+      .then(cars => {
+        this.cars = cars.data;
+        this.getLocations();
       })
       .catch(error => {
         console.log(error);
