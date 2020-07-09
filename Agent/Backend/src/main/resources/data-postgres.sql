@@ -250,3 +250,7 @@ INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (6, 7);
 
 
 
+INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
+VALUES ('5', '8', '9', '10', '15', 'ss');
+INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
+VALUES ('10', '10', '10', '10', '10', 'ss');

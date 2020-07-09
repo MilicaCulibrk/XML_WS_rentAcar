@@ -17,6 +17,6 @@ public class AddvertismentProducer {
     public void send(AddDTO message) {
 
         rabbitTemplate.convertAndSend(RabbitMQConfiguration.EXCHANGE_NAME, RabbitMQConfiguration.ROUTING_KEY, message);
-
+        System.out.println("-----------Add sent to search-----------------");
     }
 }

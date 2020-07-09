@@ -5,6 +5,9 @@ import addvertisment.dto.VehicleModelDTO;
 import addvertisment.model.Addvertisment;
 import addvertisment.model.Brand;
 import addvertisment.model.VehicleModel;
+import addvertisment.mq.enums.OperationEnum;
+import addvertisment.mq.producer.BrandProducer;
+import addvertisment.mq.producer.ModelProducer;
 import addvertisment.repository.AddvertismentRepository;
 import addvertisment.repository.BrandRepository;
 import addvertisment.repository.VehicleModelRepository;
@@ -26,6 +29,12 @@ public class VehicleModelService {
 
     @Autowired
     private AddvertismentRepository addvertismentRepository;
+
+    private final ModelProducer modelProducer;
+
+    public VehicleModelService(ModelProducer modelProducer) {
+        this.modelProducer = modelProducer;
+    }
 
     public List<VehicleModelDTO> getAllModels(Long brandId) {
 
@@ -61,6 +70,14 @@ public class VehicleModelService {
         VehicleModel vehicleModel = newDTOtoReal(vehicleModelDTO, brandId);
 
         vehicleModelRepository.save(vehicleModel);
+
+        try {
+            VehicleModelDTO dto = new VehicleModelDTO(vehicleModel);
+            dto.setOperation(OperationEnum.CREATE);
+            this.modelProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
     }
 
 
@@ -82,6 +99,14 @@ public class VehicleModelService {
         existingDTOtoReal(vehicleModel, vehicleModelDTO);
 
         vehicleModelRepository.save(vehicleModel);
+
+        try {
+            VehicleModelDTO dto = new VehicleModelDTO(vehicleModel);
+            dto.setOperation(OperationEnum.UPDATE);
+            this.modelProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
     }
 
     public void deleteModel(Long modelId) throws ValidationException {
@@ -91,6 +116,15 @@ public class VehicleModelService {
         }
 
         vehicleModelRepository.delete(vehicleModel.get());
+        Long brandId = null;
+
+        try {
+            VehicleModelDTO dto = new VehicleModelDTO(modelId, "delete", brandId);
+            dto.setOperation(OperationEnum.DELETE);
+            this.modelProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
     }
 
     public VehicleModel newDTOtoReal(VehicleModelDTO dto, Long brand_id){

@@ -6,7 +6,11 @@
           <v-card hover elevation="2" class="text-center ma-6">
             <div class="cardBorderColor">
               <v-responsive class="pt-4">
-                <img :src="addvertisment.images[0].url" height="130px" />
+                <carousel :perPage="1">
+                  <slide  v-for="(image, index) in addvertisment.images" :key="index">
+                    <img :src="image.url" height="100px" />
+                  </slide>
+                </carousel> 
               </v-responsive>
               <v-card-title></v-card-title>
               <v-card-text>

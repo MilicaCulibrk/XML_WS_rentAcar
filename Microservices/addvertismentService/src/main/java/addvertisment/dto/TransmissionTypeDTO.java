@@ -1,11 +1,15 @@
 package addvertisment.dto;
 
 import addvertisment.model.TransmissionType;
+import addvertisment.mq.enums.OperationEnum;
 
 public class TransmissionTypeDTO {
 
     private Long id;
     private String transmission_type_name;
+    private OperationEnum operation;
+
+    public TransmissionTypeDTO(){}
 
     public TransmissionTypeDTO(Long id, String transmission_type_name) {
         this.id = id;
@@ -31,5 +35,13 @@ public class TransmissionTypeDTO {
 
     public void setTransmission_type_name(String transmission_type_name) {
         this.transmission_type_name = transmission_type_name;
+    }
+
+    public OperationEnum getOperation() {
+        return operation;
+    }
+
+    public void setOperation(OperationEnum operation) {
+        this.operation = operation;
     }
 }

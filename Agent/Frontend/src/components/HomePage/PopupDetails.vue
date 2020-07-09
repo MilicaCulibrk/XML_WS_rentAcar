@@ -4,7 +4,7 @@
       <template #activator="{ on: dialogDetails }">
         <v-tooltip bottom color="black">
           <template #activator="{ on: tooltip }">
-            <v-btn icon v-on="{ ...tooltip, ...dialogDetails }" color="primary">
+            <v-btn icon  @click="getGrade" v-on="{ ...tooltip, ...dialogDetails }" color="primary">
               <v-icon>zoom_in</v-icon>
             </v-btn>
           </template>
@@ -20,8 +20,13 @@
               <v-icon>cancel</v-icon>
             </v-btn>
           </v-card-title>
-          <v-responsive class="pt-4 mx-4">images go here</v-responsive>
-          <v-card-text class="text-center-left">
+          <v-responsive class="pt-4 mx-4">
+            <carousel :perPage="1">
+              <slide  v-for="(image, index) in car.images" :key="index">
+                <img :src="image.url" height="100px" />
+              </slide>
+            </carousel>
+        </v-responsive>          <v-card-text class="text-center-left">
             <div>{{ car.brand }} {{ car.model }}</div>
             <div class="secondary">Price: {{ car.daily_price }}</div>
             <div>CDW option: {{ carCDW }}</div>
@@ -31,6 +36,8 @@
             <div>Fuel type: {{ car.fuel_type_name }}</div>
             <div class="secondary">Transmission type: {{ car.transmission_type_name }}</div>
             <div>Number of child seats: {{ car.child_seats }}</div>
+            <div class="secondary" >Grade: {{ average }}</div>
+
           </v-card-text>
         </div>
       </v-card>
@@ -39,6 +46,7 @@
 </template>
 
 <script>
+   import axios from "axios";
 export default {
   props: {
     car: {
@@ -49,8 +57,31 @@ export default {
     return {
       dialogDetails: false,
       carCDW: "",
-      carMileageLimit: ""
+      carMileageLimit: "",
+      grades: 0,
+      average: 0,
     };
+  },
+  methods: {
+    getGrade() {
+        axios
+          .get("/addvertisment-service/grade/" + this.car.id)
+          .then(grades => {
+            this.grades = grades.data;
+            var total=0;
+            for(var i = 0; i<this.grades.length; i++){
+              total += this.grades[i].number;
+            }
+            var avg = total/this.grades.length;
+            this.average = avg;
+            if(this.grades.length==0){
+              this.average="still not rated";
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
   },
   mounted() {
     //da li ima cdw

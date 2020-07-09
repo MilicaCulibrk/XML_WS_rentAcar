@@ -1,6 +1,8 @@
 package addvertisment.dto;
 
 import addvertisment.model.FuelType;
+import addvertisment.mq.enums.OperationEnum;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +13,7 @@ public class FuelTypeDTO{
 
     private Long id;
     private String fuel_type_name;
+    private OperationEnum operation;
 
     public FuelTypeDTO() {
 
@@ -42,5 +45,11 @@ public class FuelTypeDTO{
         this.fuel_type_name = fuel_type_name;
     }
 
+    public OperationEnum getOperation() {
+        return operation;
+    }
 
+    public void setOperation(OperationEnum operation) {
+        this.operation = operation;
+    }
 }

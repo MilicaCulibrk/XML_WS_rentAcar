@@ -10,7 +10,7 @@ import java.util.List;
 public interface SearchRepository extends JpaRepository<Search, Long> {
 
     @Query("select search from Search search where " +
-            "('emptyBrand' in ?1 or search.brand.brand_name  in ?1)" +
+            "('emptyBrand' in ?1 or search.brand.brands_name  in ?1)" +
             "and ('emptyModel' in ?2 or search.vehicleModel.vehicle_model_name  in ?2)" +
             "and ('emptyClass' in ?3 or search.vehicle_class.vehicle_class_name  in ?3)" +
             "and ('emptyTransmission' in ?4 or search.transmission_type.transmission_type_name  in ?4)" +

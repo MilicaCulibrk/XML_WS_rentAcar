@@ -2,11 +2,15 @@ package addvertisment.dto;
 
 import addvertisment.model.Brand;
 import addvertisment.model.FuelType;
+import addvertisment.mq.enums.OperationEnum;
+
+import java.util.Optional;
 
 public class BrandDTO {
 
     private Long id;
     private String brand_name;
+    private OperationEnum operation;
 
     public BrandDTO(Long id, String brand_name) {
         this.id = id;
@@ -22,6 +26,7 @@ public class BrandDTO {
 
     }
 
+
     public Long getId() {
         return id;
     }
@@ -36,5 +41,13 @@ public class BrandDTO {
 
     public void setBrand_name(String brand_name) {
         this.brand_name = brand_name;
+    }
+
+    public OperationEnum getOperation() {
+        return operation;
+    }
+
+    public void setOperation(OperationEnum operation) {
+        this.operation = operation;
     }
 }

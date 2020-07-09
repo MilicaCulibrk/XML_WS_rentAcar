@@ -1,11 +1,15 @@
 package searchService.dto;
 
 import searchService.model.FuelTypes;
+import searchService.mq.enums.OperationEnum;
 
 public class FuelTypesDTO {
 
     private Long id;
     private String fuel_type_name;
+    private OperationEnum operation;
+
+    public FuelTypesDTO(){}
 
     public FuelTypesDTO(Long id, String fuel_type_name) {
         this.id = id;
@@ -33,4 +37,11 @@ public class FuelTypesDTO {
         this.fuel_type_name = fuel_type_name;
     }
 
+    public OperationEnum getOperation() {
+        return operation;
+    }
+
+    public void setOperation(OperationEnum operation) {
+        this.operation = operation;
+    }
 }

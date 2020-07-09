@@ -10,8 +10,12 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Configuration
 public class RabbitMQConfiguration {
+
 
     public static final String EXCHANGE_NAME = "add_search";
     public static final String ROUTING_KEY = "add_key";

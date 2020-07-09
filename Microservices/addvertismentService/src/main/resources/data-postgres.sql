@@ -232,8 +232,14 @@ VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com
 INSERT INTO public.image(url, addvertisment)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '18');
 
+
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (1, 9);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (2, 10);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (3, 11);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (4, 12);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (5, 12);
+
+INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
+VALUES ('5', '8', '9', '10', '15', 'ss');
+INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
+VALUES ('10', '10', '10', '10', '10', 'ss'); 
