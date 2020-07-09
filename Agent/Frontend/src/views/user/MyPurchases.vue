@@ -125,6 +125,27 @@
                                     </v-card>
                                 </v-dialog>
                             </v-col>
+                            
+                            <v-col v-else>
+                              <v-row justify="center">
+                                <v-dialog v-model="dialogDelete" persistent max-width="290">
+                                  <template v-slot:activator="{ on, attrs }">
+                                      <v-btn icon v-bind="attrs" v-on="on" color="red">
+                                      <v-icon>delete</v-icon>
+                                      </v-btn>
+                                  </template>
+                                  <v-card>
+                                    <v-card-title class="headline">Are you sure about  removing this purchase?</v-card-title>
+                                    <v-card-text>Removing will cause deleting complete request.</v-card-text>
+                                    <v-card-actions>
+                                      <v-spacer></v-spacer>
+                                      <v-btn color="green darken-1" text @click="dialogDelete = false">Disagree</v-btn>
+                                      <v-btn color="green darken-1" text @click="deleteRequest(request.id)">Agree</v-btn>
+                                    </v-card-actions>
+                                  </v-card>
+                                </v-dialog>
+                              </v-row>
+                            </v-col>
                         </v-row>
                         </v-fade-transition>
                       </v-col>
@@ -148,7 +169,7 @@ export default {
       snackbarSuccessText: "",
       snackbarDanger: false,
       snackbarDangerText: "",
- 
+        dialogDelete: false,
       dialogComment: false,
       dialogRating: false,
       comment: {
@@ -219,11 +240,10 @@ export default {
                 r.purchaseDTOS.forEach(purchase => {
                     var endDate = new Date(purchase.date_to);
                     var today = new Date();
-                    if(today>endDate){
-                      if(r.status=="PAID"){
+                     if(today>endDate && r.status=='PAID'){
                         purchase.pass = true;
                       }
-                    }
+                    
                 });
 
           });
@@ -231,7 +251,23 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    }
+    }, 
+        deleteRequest(req){
+          axios
+      .delete("/request/" + req)
+      .then(response => {
+        this.snackbarSuccess = true;
+        this.snackbarSuccessText = "Whole request is deleted.";
+        console.log(response);
+        this.getRequests();
+        this.dialogDelete = false;
+      })
+      .catch(error => {
+        this.snackbarDanger = true;
+        this.snackbarDangerText = "Error in deleting";
+        console.log(error);
+      });
+    },
   },
   mounted() {
     this.getRequests();
