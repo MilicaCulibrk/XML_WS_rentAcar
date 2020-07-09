@@ -38,10 +38,10 @@ public class Addvertisment {
     @JsonIgnore
     public VehicleClass vehicle_class;
 
-    @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<ReservedDate> reservedDates;
 
-    @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<Image> images;
 
     @Column(name = "mileage", nullable = false)
@@ -62,13 +62,14 @@ public class Addvertisment {
     @Column(name = "price", nullable = false)
     private float price;
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public Pricelist priceList;
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "pricelist")
+   public Pricelist priceList;
     
-    @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<Grade> grades;
 
-    @OneToMany( fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<Comment> comments;
 
 
