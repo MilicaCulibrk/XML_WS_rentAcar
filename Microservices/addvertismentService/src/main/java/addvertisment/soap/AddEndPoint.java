@@ -3,6 +3,9 @@ package addvertisment.soap;
 import addvertisment.dto.AddvertismentDTO;
 import addvertisment.dto.ImageDTO;
 import addvertisment.dto.ReservedDateDTO;
+import addvertisment.model.Addvertisment;
+import addvertisment.model.SoapAddSync;
+import addvertisment.repository.SoapAddSyncRepository;
 import addvertisment.service.AddvertismentService;
 import localhost._8087.add_schema.AddRequest;
 import localhost._8087.add_schema.AddResponse;
@@ -22,6 +25,9 @@ public class AddEndPoint {
     @Autowired
     private AddvertismentService addvertismentService;
 
+    @Autowired
+    private SoapAddSyncRepository repository;
+
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "addRequest")
     @ResponsePayload
@@ -40,7 +46,6 @@ public class AddEndPoint {
             dateDTO.setOneDate(date);
             addvertismentDTO.getArrayEvents().add(dateDTO);
         }
-        addvertismentDTO.setId(request.getAdd().getId());
         addvertismentDTO.setAddvertiser_id(request.getAdd().getAddvertiserId());
         addvertismentDTO.setTransmission_type_id(request.getAdd().getTransmissionTypeId());
         addvertismentDTO.setVehicle_model_id(request.getAdd().getVehicleModelId());
@@ -53,9 +58,18 @@ public class AddEndPoint {
         addvertismentDTO.setMileage_limit(request.getAdd().getMileageLimit());
         addvertismentDTO.setMileage(request.getAdd().getMileage());
         addvertismentDTO.setChild_seats(request.getAdd().getChildSeats());
-        addvertismentService.createAddvertisment(addvertismentDTO);
-        response.setId(request.getAdd().getId());
+        Addvertisment addvertisment =  addvertismentService.createAddvertisment(addvertismentDTO);
 
+        this.saveSync(addvertisment.getId(), request.getAdd().getId() );
+
+        response.setMsId(addvertisment.getId());
+        response.setAgentId(request.getAdd().getId());
         return response;
+    }
+    public void saveSync (Long ms_id, Long agent_id){
+        SoapAddSync soapAddSync = new SoapAddSync();
+        soapAddSync.setAgentApp_id(agent_id);
+        soapAddSync.setMsApp_id(ms_id);
+        repository.save(soapAddSync);
     }
 }
