@@ -1,8 +1,3 @@
-/***********************************************************************
- * Module:  PriceList.java
- * Author:  23nik
- * Purpose: Defines the Class PriceList
- ***********************************************************************/
 
 package addvertisment.model;
 
@@ -27,7 +22,6 @@ public class Pricelist {
    private float discount;
    @Column(name = "number_of_days", nullable = false)
    private int numberOfDays;
-   
    @Column(name = "username", nullable = false)
    public String username;
 

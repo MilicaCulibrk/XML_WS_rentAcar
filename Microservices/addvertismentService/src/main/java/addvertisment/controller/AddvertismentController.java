@@ -2,6 +2,7 @@ package addvertisment.controller;
 
 import addvertisment.dto.AddvertismentDTO;
 import addvertisment.dto.AddvertismentDisplayDTO;
+import addvertisment.dto.FuelTypeDTO;
 import addvertisment.model.Addvertisment;
 import addvertisment.service.AddvertismentService;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @CrossOrigin
@@ -24,6 +26,10 @@ public class AddvertismentController {
     @GetMapping()
     public ResponseEntity<List<AddvertismentDTO>> getAllAddvertisments()  {
         return new ResponseEntity<List<AddvertismentDTO>>(addvertismentService.getAllAddvertisments(), HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<AddvertismentDTO> getOneAddvertisment(@PathVariable Long id)  {
+        return new ResponseEntity<AddvertismentDTO>(addvertismentService.getOneAddvertisment(id), HttpStatus.OK);
     }
 
     @GetMapping("/user/{username}")
@@ -44,10 +50,17 @@ public class AddvertismentController {
 
     }
 
-    //kad se modifikuje oglas treba da se modifikuje i pretraga
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateAdd (@RequestBody Addvertisment addvertisment, @PathVariable Long id) {
-        return null;
+
+    @PutMapping("")
+    public ResponseEntity updateAdd(@RequestBody AddvertismentDTO addvertismentDTO) {
+
+        try {
+            addvertismentService.updateAddvertisment(addvertismentDTO);
+            return new ResponseEntity<>(addvertismentDTO, HttpStatus.OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+
     }
 
     //pri brisanju oglasa treba da se obrisu i sve njegove ocene i komentari

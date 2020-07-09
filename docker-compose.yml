@@ -102,6 +102,7 @@ services:
       - postgres
       - rabbitmq
 
+
   agent:
     build: ./Agent/Backend
     ports:
