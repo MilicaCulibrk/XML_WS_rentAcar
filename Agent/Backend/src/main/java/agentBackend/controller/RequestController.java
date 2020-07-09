@@ -1,5 +1,7 @@
 package agentBackend.controller;
 
+import agentBackend.repository.PurchaseRepository;
+import agentBackend.soap.RentClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,13 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/request")
 public class RequestController {
 
     @Autowired
-    RequestService requestService;
+    private RequestService requestService;
+
+    @Autowired
+    private RentClient rentClient;
+
+    @Autowired
+    private PurchaseRepository purchaseRepository;
 
     @GetMapping(value = "")
     public ResponseEntity<String> getAllRequests ()  {
@@ -71,6 +79,11 @@ public class RequestController {
         }
 
         ArrayList<Request> requests = requestService.createRequest(purchases);
+        ArrayList<Long> ids = new ArrayList<>();
+        for (Request r : requests){
+            ids.add(r.getId());
+        }
+        rentClient.getOrder(purchases, false, ids);
         return new ResponseEntity(requests, HttpStatus.OK);
     }
     @PostMapping(value = "/bundle", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -81,6 +94,9 @@ public class RequestController {
         }
 
         Request request = requestService.createBundleRequest(purchases);
+        ArrayList<Long> ids = new ArrayList<>();
+        ids.add(request.getId());
+        rentClient.getOrder(purchases, true, ids);
         return new ResponseEntity(request, HttpStatus.OK);
     }
 

@@ -31,7 +31,7 @@ public class Purchase {
     @Column(name = "brand_model",  nullable = false)
     private String brand_model;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "request")
     public Request request;
 
