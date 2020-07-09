@@ -47,13 +47,12 @@ public class RequestService {
 
         Request request = new Request();
         request.setStatus("PENDING");
+        requestRepository.save(request);
         for (PurchaseDTO p : purchases){
             Purchase purchase = this.createPurchase(p);
             purchase.setRequest(request);
             purchaseRepository.save(purchase);
-
         }
-        requestRepository.save(request);
         return request;
     }
 
@@ -64,12 +63,11 @@ public class RequestService {
         for (PurchaseDTO p : purchases){
             Request request = new Request();
             request.setStatus("PENDING");
+            requestRepository.save(request);
             Purchase purchase = this.createPurchase(p);
             purchase.setRequest(request);
             purchasesForRequest.add(purchase);
-            //request.setPurchaseList(purchasesForRequest);
             purchaseRepository.save(purchase);
-            requestRepository.save(request);
             requests.add(request);
         }
         return requests;

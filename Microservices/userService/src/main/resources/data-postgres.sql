@@ -23,7 +23,5 @@ INSERT INTO public.company(name, password,username, email, address, city, phone_
 VALUES ('Vanja', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','vs', 'vs@gmail.com', 'Sibinjanin Janka 9', 'Novi Sad', '0645857828', '1');
 
 
-
-
 INSERT INTO public.administrator(name, surname, password, username, email, address, city, phone_number)
 VALUES ('Milica', 'Culibrk', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','mc','mc@gmail.com', 'Sibinjanin Janka 9', 'Novi Sad', '0645858028');
