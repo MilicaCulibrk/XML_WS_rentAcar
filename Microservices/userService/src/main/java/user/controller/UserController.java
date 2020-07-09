@@ -33,16 +33,19 @@ public class UserController {
         return new ResponseEntity(userService.getAllUsers(),HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    @GetMapping("/hello/{id}")
-    public ResponseEntity getSingleUser(@PathVariable Long id)  {
-        return new ResponseEntity(HttpStatus.OK);
+    @PreAuthorize("hasAuthority('USER')")
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getSingleUser(@PathVariable Long id)  {
+        if (id == null) {
+            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        return new ResponseEntity(userService.getUser(id), HttpStatus.OK);
     }
 
     //admin moze da bolira ili odblokira korisnika promenom boolean polja
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @PutMapping("/{id}")
-    public ResponseEntity updateUser (@PathVariable  Long id) {
+    public ResponseEntity updateUserStatus (@PathVariable  Long id) {
     	User user;
         if (id == null) {
             return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
@@ -54,6 +57,22 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
         return new ResponseEntity<>(user, HttpStatus.OK);    
+    }
+    
+    @PreAuthorize("hasAuthority('USER')")
+    @PutMapping("")
+    public ResponseEntity updateUser (@RequestBody  User user) {
+    	User u;
+        if (user.getId() == null) {
+            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            u = userService.updateUser(user);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        return new ResponseEntity<>(u, HttpStatus.OK);    
     }
 
     //brisanje pojedinacnog agenta

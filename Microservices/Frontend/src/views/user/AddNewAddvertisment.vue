@@ -1,7 +1,8 @@
 
 <template>
+
   <div>
-    <!-- Snackbar -->
+        <!-- Snackbar -->
     <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
       <span>{{snackbarSuccessText}}</span>
       <v-btn text @click="snackbarSuccess = false">Close</v-btn>
@@ -10,6 +11,13 @@
       <span>{{snackbarDangerText}}</span>
       <v-btn text @click="snackbarDanger = false">Close</v-btn>
     </v-snackbar>
+    <v-alert v-if="user.number_of_addvertisment>=3"       
+      dense
+      outlined
+      type="error">
+      We are sorry, this page is not visible for you anymore. You have reached the limit of adds.
+    </v-alert>
+    <div v-else>
     <v-container>
       <v-card class="detailsBorderColor">
         <v-card-title>
@@ -212,6 +220,7 @@
       </v-card>
     </v-container>
   </div>
+  </div>
 </template>
   <script>
 import axios from "axios";
@@ -222,6 +231,9 @@ export default {
   data() {
     return {
       name: "Addvertisments",
+      user: {
+        number_of_addvertisment: 0,
+      },
       addvertisments: [],
       selectBrand: "",
       selectModel: "",
@@ -367,15 +379,16 @@ export default {
       this.$router.push("/");
     },
     addNewAddvertisment(){
-          if(this.selectBrand=="" || this.selectFuelType=="" || this.selectModel=="" || this.selectClass==""  || this.selectTransmission=="" || this.selectMileage=="" || this.selectMileageLimit=="" || this.selectChildSeats=="" || this.selectLocation=="" || this.addvertisment.pricelist==""){
-            this.snackbarDanger = true;
-            this.snackbarDangerText="You need to fill all fileds!";
-            return;
-          }
-          var rex = /^[0-9]*$/;
-          if(!rex.test(String(this.selectMileage.trim())) || !rex.test(String(this.selectMileageLimit.trim())) || !rex.test(String(this.selectPrice.trim())) ){
-              return;
-          }
+      
+      if(this.selectBrand=="" || this.selectFuelType=="" || this.selectModel=="" || this.selectClass==""  || this.selectTransmission=="" || this.selectMileage=="" || this.selectMileageLimit=="" || this.selectChildSeats=="" || this.selectLocation=="" || this.addvertisment.pricelist==""){
+        this.snackbarDanger = true;
+        this.snackbarDangerText="You need to fill all fileds!";
+        return;
+      }
+      var rex = /^[0-9]*$/;
+      if(!rex.test(String(this.selectMileage.trim())) || !rex.test(String(this.selectMileageLimit.trim())) || !rex.test(String(this.selectPrice.trim())) ){
+          return;
+      }
       this.addvertisment.brand_id = this.selectBrand.id;
       this.addvertisment.fuel_type_id = this.selectFuelType.id;
       this.addvertisment.vehicle_model_id = this.selectModel.id;
@@ -399,6 +412,9 @@ export default {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "You added new addvertisement!";
           this.setOnEmptyString();
+          if(this.$store.state.user.role=='USER'){
+            this.incrementAdds();
+          }
         })
         .catch(error => {
           console.log(error);
@@ -432,6 +448,31 @@ export default {
       this.addvertisment.addvertiser_id = "";
       this.addvertisment.pricelist = '';    
     },
+    checkUser(){
+      if((this.$store.state.user.role)=='USER'){
+          axios
+        .get("/user-service/user/" +  this.$store.state.user.id)
+        .then(response => {
+          this.user = response.data;
+          this.number_of_addvertisment = this.user.number_of_addvertisment;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }
+    },
+    incrementAdds(){
+      this.user.number_of_addvertisment = this.user.number_of_addvertisment + 1;
+        axios
+      .put("/user-service/user", this.user)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        this.snackbarDanger = true;
+        this.snackbarDangerText=error;
+      });
+    },
     createListImages(images) {
       var listImages = [];
       for (const i in images) {
@@ -459,6 +500,7 @@ export default {
 
   mounted() {
     //izlistavanje brendova
+    this.checkUser();
     axios
       .get("/addvertisment-service/brand")
       .then(brandItems => {

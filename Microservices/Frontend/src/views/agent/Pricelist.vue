@@ -148,8 +148,8 @@
                     placeholder="enter cdw price"
                 >
                 </v-col>
-                <v-col class="text-right mr-4 mb-2" tag="strong" cols="6">Discount:</v-col>
-                <v-col  cols="5">
+                <v-col v-if="(this.$store.state.user.role)!='USER'" class="text-right mr-4 mb-2" tag="strong" cols="6">Discount:</v-col>
+                <v-col v-if="(this.$store.state.user.role)!='USER'"  cols="5">
                 <input 
                     type="text"
                     class="form-control"
@@ -158,8 +158,8 @@
                     placeholder="enter discount"
                 >
                 </v-col>              
-                <v-col class="text-right mr-4 mb-2" tag="strong" cols="6">Number of days for discount:</v-col>
-                <v-col  cols="5">
+                <v-col v-if="(this.$store.state.user.role)!='USER'" class="text-right mr-4 mb-2" tag="strong" cols="6">Number of days for discount:</v-col>
+                <v-col  v-if="(this.$store.state.user.role)!='USER'" cols="5">
                 <input 
                     type="text"
                     class="form-control"
@@ -242,9 +242,7 @@ export default {
         if (
           this.pricelist.dailyPrice === "" ||
           this.pricelist.cdwPrice === "" ||
-          this.pricelist.overlimitPrice === "" ||
-          this.pricelist.discount === "" ||
-          this.pricelist.numberOfDays === ""        
+          this.pricelist.overlimitPrice === ""       
         ) {
           this.snackbarDanger = true;
           this.snackbarDangerText = "You need to fill all fileds!";

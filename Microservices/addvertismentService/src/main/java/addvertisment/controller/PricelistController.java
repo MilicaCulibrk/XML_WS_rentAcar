@@ -28,21 +28,21 @@ public class PricelistController {
   	@Autowired
     private PricelistService pricelistService;
 	
-    @PreAuthorize("hasAuthority('COMPANY')")
+    @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('COMPANY')")
     @GetMapping("")
     public ResponseEntity<?> getAllPricelists ()  {
         return new ResponseEntity<List<Pricelist>>(pricelistService.getAllPricelists(), HttpStatus.OK);
 
 	}
 
-    @PreAuthorize("hasAuthority('COMPANY')")
+    @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('COMPANY')")
     @PostMapping("")
     public ResponseEntity<?> createPricelist (@RequestBody Pricelist pricelist) {
         List<Pricelist> p = pricelistService.createPricelist(pricelist);
 		return new ResponseEntity<List<Pricelist>>(p, HttpStatus.OK); 
 	}
     
-    @PreAuthorize("hasAuthority('COMPANY')")
+    @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('COMPANY')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePricelist (@PathVariable Long id) {
 

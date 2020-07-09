@@ -69,7 +69,7 @@ public class UserService {
 		// TODO Auto-generated method stub
         Optional<User> user = userRepository.findById(id);
         if (!user.isPresent()){
-            throw new ValidationException("Fuel type with that id doesn't exist!");
+            throw new ValidationException("User with that id doesn't exist!");
         }
         if(user.get().isActive()) {
         	user.get().setActive(false);
@@ -79,4 +79,21 @@ public class UserService {
         userRepository.save(user.get());
         return user.get();
 	}
+
+	public User getUser(Long id) {
+		// TODO Auto-generated method stub
+		return userRepository.findById(id).get();
+	}
+
+	public User updateUser(User user) throws ValidationException {
+		// TODO Auto-generated method stub
+        User u = userRepository.findById(user.getId()).get();
+
+        if (u==null){
+            throw new ValidationException("User with that id doesn't exist!");
+        }
+        u.setNumber_of_addvertisment(user.getNumber_of_addvertisment());
+        userRepository.save(u);
+        return u;	
+    }
 }

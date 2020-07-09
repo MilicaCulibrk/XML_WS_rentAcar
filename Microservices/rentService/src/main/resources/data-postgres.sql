@@ -46,7 +46,7 @@ VALUES ('Great, everything was good. Addvertiser was very nice and helpful.', 'V
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
 VALUES ('18','1');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('18','2');
+VALUES ('17','2');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
 VALUES ('9','3');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
