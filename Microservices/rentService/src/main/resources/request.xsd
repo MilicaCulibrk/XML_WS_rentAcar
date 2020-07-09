@@ -20,6 +20,24 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="editStatusRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ms_id" type="xs:long"/>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!--xs:element name="editStatusResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ms_id" type="xs:long"/>
+                <xs:element name="agent_id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element-->
+
     <xs:complexType name="Request">
         <xs:sequence>
             <xs:element name="purchaseList" type="tns:Purchase" minOccurs="0" maxOccurs="unbounded"/>

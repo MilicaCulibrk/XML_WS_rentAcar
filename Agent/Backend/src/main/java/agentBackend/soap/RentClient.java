@@ -4,9 +4,7 @@ import agentBackend.model.SoapAddSync;
 import agentBackend.model.SoapRentSync;
 import agentBackend.repository.SoapAddSyncRepository;
 import agentBackend.repository.SoapRentSyncRepository;
-import agentBackend.wsdl.OrderRequest;
-import agentBackend.wsdl.OrderResponse;
-import agentBackend.wsdl.Purchase;
+import agentBackend.wsdl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
@@ -43,6 +41,22 @@ public class RentClient  extends WebServiceGatewaySupport {
             rentSyncRepository.save(sync);
         }
         return response;
+    }
+    public void editStatus(Long agent_id, String status) {
+
+        EditStatusRequest request = new EditStatusRequest();
+        List<SoapRentSync> sync = rentSyncRepository.findAll();
+        Long ms_id = null;
+        for (SoapRentSync s : sync){
+            if (s.getAgentApp_id().equals(agent_id)){
+                ms_id = s.getMsApp_id();
+            }
+        }
+        request.setMsId(ms_id);
+        request.setStatus(status);
+        getWebServiceTemplate().marshalSendAndReceive("http://localhost:8084/ws/request-schema", request,
+                        new SoapActionCallback("http://localhost:8084/ws/request-schema/orderRequest"));
+        //return response;
     }
     public Purchase cratePuchaseForSoap (PurchaseDTO purchaseDTO){
 

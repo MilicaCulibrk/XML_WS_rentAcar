@@ -108,6 +108,7 @@ public class RequestController {
         }
         try {
             requestService.updateRequest(id);
+            rentClient.editStatus(id, "ACCEPT");
             return new ResponseEntity("Request is updated", HttpStatus.OK);
         }catch (NoSuchElementException e) {
             return new ResponseEntity<>("Request with this id doesn't exist", HttpStatus.NOT_FOUND);
@@ -122,6 +123,7 @@ public class RequestController {
         }
         try {
             requestService.updateDeclineRequest(id);
+            rentClient.editStatus(id, "DECLINE");
             return new ResponseEntity("Request is updated", HttpStatus.OK);
         }catch (NoSuchElementException e) {
             return new ResponseEntity<>("Request with this id doesn't exist", HttpStatus.NOT_FOUND);

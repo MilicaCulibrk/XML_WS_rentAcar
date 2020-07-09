@@ -1,8 +1,6 @@
 package rent.soap;
 
-import localhost._8084.request_schema.OrderRequest;
-import localhost._8084.request_schema.OrderResponse;
-import localhost._8084.request_schema.Purchase;
+import localhost._8084.request_schema.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -14,6 +12,7 @@ import rent.model.SoapRentSync;
 import rent.repository.SoapRentSyncRepository;
 import rent.service.RequestService;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +54,21 @@ public class RentEndpoint {
         }
         return response;
     }
+
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "editStatusRequest")
+    @ResponsePayload
+    public void setStatus(@RequestPayload EditStatusRequest request) throws ParseException {
+        //EditStatusResponse response = new EditStatusResponse();
+        if (request.getStatus().equals("ACCEPT")){
+              requestService.updateRequest(request.getMsId());
+        }else {
+            requestService.updateDeclineRequest(request.getMsId());
+        }
+     //   return response;
+    }
+
+
     public PurchaseDTO createDTO (Purchase purchase){
 
         PurchaseDTO purchaseDTO =  new PurchaseDTO();
