@@ -76,7 +76,10 @@ public class RequestService {
         if (request == null){
             throw new NoSuchElementException();
         }
-        requestRepository.deleteById(id);
+        for (Purchase p : request.getPurchaseList()) {
+			purchaseRepository.delete(p);
+		}
+        requestRepository.delete(request);
     }
 
     public ArrayList<RequestDTO> getAllRequests(){
