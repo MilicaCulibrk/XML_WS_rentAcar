@@ -104,7 +104,7 @@ public class AddvertismentDTO {
         }
 
         this.number_of_purchases = 0;
-        this.pricelist = addvertisment.getPriceList();
+        this.pricelist = addvertisment.getPricelist();
     }
 
     public Long getId() {

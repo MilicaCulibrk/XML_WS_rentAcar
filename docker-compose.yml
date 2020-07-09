@@ -48,6 +48,7 @@ services:
       - postgres
       - rabbitmq
 
+
   user-service:
     build: ./Microservices/userService
     ports:
@@ -145,6 +146,7 @@ services:
       - 15672:15672
     networks:
       - application-network
+
 
 networks:
   application-network:

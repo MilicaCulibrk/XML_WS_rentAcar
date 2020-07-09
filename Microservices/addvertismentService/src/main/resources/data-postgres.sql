@@ -122,46 +122,60 @@ VALUES ('automatic');
 INSERT INTO public.transmission_type(transmission_type_name)
 VALUES ('semi-automatic');
 
+INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
+VALUES ('2000', '8', '9', '10', '15', 'ss');
+INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
+VALUES ('2800', '10', '10', '10', '10', 'ss');
+INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
+VALUES ('4000', '8', '9', '10', '15', 'mm');
+INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
+VALUES ('8000', '10', '10', '10', '10', 'sm');
+INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
+VALUES ('4500', '8', '9', '10', '15', 'vm');
+INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
+VALUES ('1800', '10', '10', '10', '10', 'bm');
+INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
+VALUES ('2100', '8', '9', '10', '15', 'ms');
+INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
+VALUES ('3500', '10', '10', '10', '10', 'vs');
 
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('true', '2', '2000', 'Beograd', '200000', '100', '3', '1', '1', '1', '1', 'mm');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('true', '1', '3000', 'Novi Sad', '211000', '0', '1', '2', '3', '18', '5', 'mm');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('false', '2', '1500', 'Sombor', '300000', '90', '7', '2', '2', '11', '10', 'sm');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('true', '2', '2000', 'Beograd', '400000', '100', '9', '3', '3', '34', '9', 'bm');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('false', '3', '3500', 'Beograd', '100000', '70', '8', '2', '3', '31', '7', 'bm');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('false', '2', '1500', 'Sombor', '115000', '90', '3', '2', '2', '1', '6', 'bm');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('true', '2', '4000', 'Beograd', '285000', '100', '3', '1', '2', '1', '1', 'vm');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('false', '1', '1000', 'Beograd', '211000', '50', '1', '1', '3', '21', '5', 'vm');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('false', '2', '1500', 'Sombor', '323000', '90', '2', '1', '1', '6', '10', 'ss');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('true', '2', '5000', 'Beograd', '440000', '130', '3', '1', '1', '5', '3', 'ss');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('true', '4', '3000', 'Beograd', '211000', '0', '2', '2', '3', '9', '4', 'ss');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('false', '2', '1500', 'Sombor', '553000', '90', '2', '1', '2', '2', '3', '2');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('true', '2', '2000', 'Beograd', '98000', '130', '1', '1', '1', '22', '1', 'vs');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('true', '1', '1500', 'Novi Sad', '211000', '0', '8', '2', '3', '30', '8', 'ms');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('false', '2', '1500', 'Novi Sad', '300000', '170', '9', '2', '3', '33', '10', 'ms');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('true', '3', '2000', 'Beograd', '262000', '100', '9', '1', '1', '32', '7', 'vs');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('true', '1', '2500', 'Novi Sad', '333000', '80', '7', '2', '3', '10', '3', 'vs');
-INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id)
-VALUES ('false', '2', '1500', 'Sombor', '300000', '0', '3', '2', '2', '2', '10', 'ss');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('true', '2', '4000', 'Beograd', '200000', '100', '3', '1', '1', '1', '1', 'mm', '3');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('true', '1', '4000', 'Novi Sad', '211000', '0', '1', '2', '3', '18', '5', 'mm', '3');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('false', '2', '8000', 'Sombor', '300000', '90', '7', '2', '2', '11', '10', 'sm', '4');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('true', '2', '1800', 'Beograd', '400000', '100', '9', '3', '3', '34', '9', 'bm', '6');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('false', '3', '1800', 'Beograd', '100000', '70', '8', '2', '3', '31', '7', 'bm', '6');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('false', '2', '1800', 'Sombor', '115000', '90', '3', '2', '2', '1', '6', 'bm', '6');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('true', '2', '4500', 'Beograd', '285000', '100', '3', '1', '2', '1', '1', 'vm', '5');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('false', '1', '4500', 'Beograd', '211000', '50', '1', '1', '3', '21', '5', 'vm', '5');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('false', '2', '2000', 'Sombor', '323000', '90', '2', '1', '1', '6', '10', 'ss', '1');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('true', '2', '2000', 'Beograd', '440000', '130', '3', '1', '1', '5', '3', 'ss', '1');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('true', '4', '2800', 'Beograd', '211000', '0', '2', '2', '3', '9', '4', 'ss', '2');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('false', '2', '2800', 'Sombor', '553000', '90', '2', '1', '2', '2', '3', 'ss', '2');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('false', '2', '2800', 'Sombor', '300000', '0', '3', '2', '2', '2', '10', 'ss', '2');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('true', '2', '4600', 'Beograd', '98000', '130', '1', '1', '1', '22', '1', 'vs', '8');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('true', '1', '2100', 'Novi Sad', '211000', '0', '8', '2', '3', '30', '8', 'ms', '7');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('false', '2', '3500', 'Novi Sad', '300000', '170', '9', '2', '3', '33', '10', 'ms', '7');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('true', '3', '4600', 'Beograd', '262000', '100', '9', '1', '1', '32', '7', 'vs', '8');
+INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
+VALUES ('true', '1', '4600', 'Novi Sad', '333000', '80', '7', '2', '3', '10', '3', 'vs', '8');
 
-INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
-VALUES ('true', 'This car was excellent and my experience was great. Addvertiser was very nice and helpful. I really recommend this car!', 'Great', 1, 'mm', 9);
 INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
 VALUES ('true', 'I was not satisfied with this car', 'Bad', 2, 'sm', 10);
 INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
@@ -172,6 +186,19 @@ INSERT INTO public.comment(accepted, text, title, user_id, user_username, addver
 VALUES ('false', 'Not recommend. I was not satisfied with this car', 'Very bad', 4, 'vm', 18);
 INSERT INTO public.comment(text, title, user_id, user_username, addvertisment_id)
 VALUES ('Great, everything was good. Addvertiser was very nice and helpful.', 'Very good', 4, 'vm', 14);
+
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('9','1');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('10','2');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('11','3');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('18','4');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('18','5');
+INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
+VALUES ('14','6');
 
 INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '10');
@@ -186,16 +213,6 @@ VALUES ('4', '2', '9');
 INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '9');
 
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('18','1');
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('18','2');
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('9','3');
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('10','4');
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('11','5');
 
 INSERT INTO public.image(url, addvertisment)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '1');
@@ -234,7 +251,82 @@ VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com
 INSERT INTO public.image(url, addvertisment)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '18');
 
-INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
-VALUES ('5', '8', '9', '10', '15', 'ss');
-INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
-VALUES ('10', '10', '10', '10', '10', 'ss'); 
+
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-13', '1');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-14', '1');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-15', '1');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-10', '3');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-11', '3');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-19', '3');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-20', '3');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-21', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-22', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-23', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-24', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-25', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-26', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-27', '5');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-09', '7');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-10', '7');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-15', '7');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-26', '7');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-27', '7');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-28', '7');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-22', '9');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-11', '9');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-27', '11');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-18', '11');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-29', '11');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-30', '11');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-29', '13');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-30', '13');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-23', '15');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-24', '15');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-25', '15');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-26', '15');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-27', '15');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-08', '17');
+INSERT INTO public.reserved_date(one_date, addvertisment)
+VALUES ('2020-06-17', '17');
+
+
+INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (1, 9);
+INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (2, 10);
+INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (3, 11);
+INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (4, 12);
+INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (5, 12);
+

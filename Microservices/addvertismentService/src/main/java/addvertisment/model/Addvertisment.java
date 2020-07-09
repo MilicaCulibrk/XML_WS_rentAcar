@@ -15,7 +15,7 @@ public class Addvertisment {
     private Long id;
 
     @Column(name = "addvertiser_id", nullable = false)
-        //koji user/firma ga kreira
+    //koji user/firma ga kreira
     private String addvertiser_id;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
@@ -38,10 +38,10 @@ public class Addvertisment {
     @JsonIgnore
     public VehicleClass vehicle_class;
 
-    @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<ReservedDate> reservedDates;
 
-    @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<Image> images;
 
     @Column(name = "mileage", nullable = false)
@@ -62,13 +62,14 @@ public class Addvertisment {
     @Column(name = "price", nullable = false)
     private float price;
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    public Pricelist priceList;
-    
-    @OneToMany(mappedBy = "addvertisment", fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "pricelist")
+    public Pricelist pricelist;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "addvertisment", fetch = FetchType.LAZY)
     public List<Grade> grades;
 
-    @OneToMany( fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<Comment> comments;
 
 
@@ -78,31 +79,31 @@ public class Addvertisment {
 
 
 
-	public Pricelist getPriceList() {
-		return priceList;
-	}
+    public Pricelist getPricelist() {
+        return pricelist;
+    }
 
 
 
-	public void setPriceList(Pricelist priceList) {
-		this.priceList = priceList;
-	}
+    public void setPricelist(Pricelist priceList) {
+        this.pricelist = priceList;
+    }
 
 
 
-	public List<Grade> getGrades() {
-		return grades;
-	}
+    public List<Grade> getGrades() {
+        return grades;
+    }
 
 
 
-	public void setGrades(List<Grade> grades) {
-		this.grades = grades;
-	}
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
 
 
 
-	public float getPrice() {
+    public float getPrice() {
         return price;
     }
 
@@ -232,21 +233,21 @@ public class Addvertisment {
         this.images = images;
     }
 
-	public String getAddvertiser_id() {
-		return addvertiser_id;
-	}
+    public String getAddvertiser_id() {
+        return addvertiser_id;
+    }
 
-	public void setAddvertiser_id(String addvertiser_id) {
-		this.addvertiser_id = addvertiser_id;
-	}
+    public void setAddvertiser_id(String addvertiser_id) {
+        this.addvertiser_id = addvertiser_id;
+    }
 
-	public List<Comment> getComments() {
-		return comments;
-	}
+    public List<Comment> getComments() {
+        return comments;
+    }
 
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
 
 
