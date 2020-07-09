@@ -1,9 +1,3 @@
-/***********************************************************************
- * Module:  Pricelist.java
- * Author:  23nik
- * Purpose: Defines the Class PriceList
- ***********************************************************************/
-
 package addvertisment.model;
 
 import javax.persistence.Column;
