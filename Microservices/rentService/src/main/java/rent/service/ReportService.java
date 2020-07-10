@@ -52,19 +52,19 @@ public class ReportService {
 
         reportRepository.save(report);
 
-        reportDTO.setAdditionalPrice(updateMileage(reportDTO.getKilometres_crossed(), addClient.getAddById(reportDTO.getId_add())));
+        reportDTO.setAdditionalPrice(updateMileage(reportDTO.getKilometres_crossed(), addClient.getAddById(reportDTO.getId_add(), reportDTO.getKilometres_crossed())));
         System.out.println("-----------------------" + reportDTO.getAdditionalPrice() + "-----------------");
     }
 
     public void updateReport(ReportDTO reportDTO, Long purchase_id) throws ValidationException {
-System.out.println("-----------------perendijaaaaaaaaaa-----------------");
+        System.out.println("-----------------perendijaaaaaaaaaa-----------------");
         Report report = reportRepository.getOne(reportDTO.getId());
 
         existingDTOtoReal(report, reportDTO);
 
         reportRepository.save(report);
 
-        reportDTO.setAdditionalPrice(changeUpdatedMileage(reportDTO.getKilometres_crossed(), addClient.getAddById(reportDTO.getId_add()), reportDTO.getOld_kilometres()));
+        reportDTO.setAdditionalPrice(changeUpdatedMileage(reportDTO.getKilometres_crossed(), addClient.getAddById(reportDTO.getId_add(), reportDTO.getKilometres_crossed()), reportDTO.getOld_kilometres()));
         System.out.println("-----------------------" + reportDTO.getAdditionalPrice() + "-----------------");
     }
 

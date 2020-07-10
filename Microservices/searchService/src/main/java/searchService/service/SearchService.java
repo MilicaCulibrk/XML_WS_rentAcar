@@ -52,6 +52,18 @@ public class SearchService {
         return searchesDTOlist;
     }
 
+    public List<SearchDTO> getAllOthersSearches(String username) {
+        List<SearchDTO> searchesDTOlist = new ArrayList<>();
+        List<Search> searches = searchRepository.findAll();
+        for (Search search : searches) {
+            if(!search.getOwner().equals(username)) {
+                searchesDTOlist.add(new SearchDTO(search));
+            }
+        }
+        System.out.println(searchesDTOlist);
+        return searchesDTOlist;
+    }
+
     public List<SearchDTO> getByQuery(SearchQueryDTO searchQueryDTO) {
 
         SearchQueryDTO sDTO = checkIfEmpty(searchQueryDTO);

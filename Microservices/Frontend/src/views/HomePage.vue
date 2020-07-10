@@ -136,18 +136,14 @@ export default {
       carForChart.date_from = this.date_from;
       carForChart.date_to = this.date_to;
       carForChart.image = car.images[0].url;
-
-    
-      
       return carForChart;
     },
     clearDates(){
-      console.log("clear datesssssss")
       this.date_to="";
       this.date_from="";
     },
     addToBasket(car) {
-      if (this.$store.state.user.role == "NONE" || this.$store.state.user.active==null) {
+      if (this.$store.state.user.role == "NONE" || this.$store.state.user.active==null ) {
         console.log("usao");
         this.snackbarDangerText = "You must log in to add the car to the cart";
         this.snackbarDanger = true;
@@ -158,6 +154,7 @@ export default {
         this.snackbarDangerText = "You have to select location, start and end date!";
         return;
       }
+     
       this.$store.commit("addCarInCart", this.createCarForChart(car));
      
 
@@ -165,14 +162,31 @@ export default {
       this.snackbarSuccessText = "Car added to the cart.";
     },
     getCars() {
-      axios
+      if (this.$store.state.user.role == "NONE") {
+        axios
         .get("/search-service/search")
         .then(cars => {
+          console.log("iscitao je sveeeeeee");
           this.cars = cars.data;
+          this.getLocations();
         })
         .catch(error => {
           console.log(error);
         });
+      }else{
+        axios
+        .get("/search-service/search/" + this.$store.state.user.username)
+        .then(cars => {
+          console.log("iscitao je samo tudje oglaseeeee");
+          console.log(cars.data);
+
+          this.cars = cars.data;
+          this.getLocations();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }
     },
     search(searchItem, startDate, endDate) {
       this.date_from = startDate;
@@ -277,18 +291,41 @@ export default {
       }
     }
   },
+  computed: {
+    getCars1() {
+      return  this.getCars();
+    },
+  },
+  created: function() {
+     this.getCars();
+    },
+   
   mounted() {
-    //get cars
-    axios
-      .get("/search-service/search")
-      .then(cars => {
-        this.cars = cars.data;
-        console.log(cars);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
+    
+    if (this.$store.state.user.role == "NONE") {
+        axios
+        .get("/search-service/search")
+        .then(cars => {
+          console.log("iscitao je sveeeeeee");
+          this.cars = cars.data;
+          this.getLocations();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }else{
+        axios
+        .get("/search-service/search/" + this.$store.state.user.username)
+        .then(cars => {
+          console.log("iscitao je samo tudje oglaseeeee");
+          console.log(cars.data);
+          this.cars = cars.data;
+          this.getLocations();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }
   }
 };
 </script>

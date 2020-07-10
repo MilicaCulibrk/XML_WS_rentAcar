@@ -497,6 +497,7 @@ export default {
       return this.dates.join(" ~ ");
     }
   },
+  
 
   mounted() {
     //izlistavanje brendova

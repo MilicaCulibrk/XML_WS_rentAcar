@@ -37,10 +37,10 @@ public class AddvertismentController {
         return new ResponseEntity<AddvertismentDTO>(addvertismentService.getOneAddvertisment(id), HttpStatus.OK);
     }
 
-    @GetMapping("/rent/{id}")
-    public ResponseEntity<AddvertismentRentDTO> getAddById(@PathVariable Long id)  {
-        System.out.println("------------vikiiii----------------");
-        return new ResponseEntity<AddvertismentRentDTO>(addvertismentService.getAddById(id), HttpStatus.OK);
+    @GetMapping("/rent/{id}/{kilometresCrossed}")
+    public ResponseEntity<AddvertismentRentDTO> getAddById(@PathVariable Long id, @PathVariable float kilometresCrossed)  {
+        System.out.println("------------vikiiii----------------" + kilometresCrossed);
+        return new ResponseEntity<AddvertismentRentDTO>(addvertismentService.getAddById(id, kilometresCrossed), HttpStatus.OK);
     }
 
     @GetMapping("/user/{username}")
@@ -64,8 +64,8 @@ public class AddvertismentController {
 
     @PutMapping("")
     public ResponseEntity updateAdd(@RequestBody AddvertismentDTO addvertismentDTO) {
-    	//System.out.println(addvertismentDTO.getPricelist().getDailyPrice());
-    	//System.out.println(addvertismentDTO.getPrice());
+        //System.out.println(addvertismentDTO.getPricelist().getDailyPrice());
+        //System.out.println(addvertismentDTO.getPrice());
         System.out.println(addvertismentDTO);
 
         try {
@@ -92,9 +92,7 @@ public class AddvertismentController {
 
     //izlistavanja svih oglasa jedne firme zbog statistike
     @GetMapping("/company/{company_id}")
-        public ResponseEntity<?> statistic (@PathVariable Long id){
-            return null;
-        }
+    public ResponseEntity<?> statistic (@PathVariable Long id){
+        return null;
+    }
 }
-
-
