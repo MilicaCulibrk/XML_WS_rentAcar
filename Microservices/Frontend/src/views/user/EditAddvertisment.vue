@@ -265,21 +265,22 @@ export default {
             this.addvertismentUpdate.transmission_type_id = this.addvertismentReal.transmission_type_id;
             this.addvertismentUpdate.pricelist = this.addvertisment.pricelist;
             for(var i in this.vehicleClassItems){
-                if(this.addvertisment.vehicle_class_name== this.vehicleClassItems[i].vehicle_class_name){
+                if(this.addvertisment.vehicle_class_name.vehicle_class_name== this.vehicleClassItems[i].vehicle_class_name){
                     this.addvertismentUpdate.vehicle_class_id = this.vehicleClassItems[i].id;
                 }
             }
            
 
             for(var i1 in this.fuelTypeItems){
-                if(this.addvertisment.fuel_type_name==this.fuelTypeItems[i1].fuel_type_name){
+                if(this.addvertisment.fuel_type_name.fuel_type_name==this.fuelTypeItems[i1].fuel_type_name){
+
                     this.addvertismentUpdate.fuel_type_id = this.fuelTypeItems[i1].id;
                 }
             }
          
             
             for(var i2 in this.transmissionTypeItems){
-                if(this.addvertisment.transmission_type_name==this.transmissionTypeItems[i2].transmission_type_name){
+                if(this.addvertisment.transmission_type_name.transmission_type_name==this.transmissionTypeItems[i2].transmission_type_name){
                     this.addvertismentUpdate.transmission_type_id = this.transmissionTypeItems[i2].id;
                 }
             } 
