@@ -23,6 +23,17 @@ public class AddvertismentConsumer {
         if(message.getOperation() == OperationEnum.CREATE) {
 
             this.addvertismentMessageHandler.createEntity(message);
+        }
+
+        if(message.getOperation() == OperationEnum.UPDATE) {
+
+            this.addvertismentMessageHandler.updateEntity(message);
+
+        }
+
+        if(message.getOperation() == OperationEnum.DELETE) {
+
+            this.addvertismentMessageHandler.deleteEntity(message);
 
         }
 
