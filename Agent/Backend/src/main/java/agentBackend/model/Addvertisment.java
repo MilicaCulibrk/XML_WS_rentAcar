@@ -60,9 +60,6 @@ public class Addvertisment {
    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    public List<Comment> comments;
 
-   @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-   @JoinColumn(name = "pricelist")
-   public Pricelist priceList;
 
    public float getDaily_price() {
       return daily_price;
@@ -74,10 +71,6 @@ public class Addvertisment {
 //public java.util.Collection<Comment> comment;
    //public java.util.Collection<Grade> grade;
    //public Order order;
-
-
-   @OneToMany( fetch = FetchType.LAZY)
-   public List<Comment> comments;
 
    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
    @JoinColumn(name = "pricelist")
