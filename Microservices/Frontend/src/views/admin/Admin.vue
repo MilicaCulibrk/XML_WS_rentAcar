@@ -81,8 +81,13 @@ export default {
         })
     },
     changeStatus(user){
+      if(user.active==true){
+        user.active = false;
+      } else {
+        user.active = true;
+      }
       axios
-        .put("/user-service/user/"  + user.id)
+        .put("/user-service/user", user)
         .then(response=>{
           this.snackbarSuccess = true;
           this.snackbarSuccessText ="User's status is changed!";

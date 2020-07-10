@@ -80,11 +80,13 @@ public class Addvertisment {
    public Addvertisment() {
    }
 
-   public Pricelist getPricelist() {
+
+
+public Pricelist getPricelist() {
 	return pricelist;
 }
 
-public void setPricelist(Pricelist priceList) {
+public void setPricelist(Pricelist pricelist) {
 	this.pricelist = pricelist;
 }
 

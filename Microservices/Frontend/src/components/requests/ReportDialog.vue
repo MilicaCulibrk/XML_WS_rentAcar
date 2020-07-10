@@ -113,7 +113,8 @@ export default {
     purchase: {
       default: ""
     },
-    greenReport: {}
+    greenReport: {},
+    user: {},
   },
   data() {
     return {
@@ -145,11 +146,27 @@ export default {
             this.greenReportTemp = true;
             this.dialogDetails = false;
             this.getReports();
+            this.checkAddPrice();
           })
           .catch(error => {
             console.log(error);
             this.$emit("notAddedReport");
           });
+      }
+    },
+    checkAddPrice(){
+      if(this.report.additionalPrice>0){
+        this.user.username = this.purchase.client;
+        this.user.active = null;
+          axios
+        .put("/user-service/user", this.user)
+        .then(response=>{
+          alert("Korpa korisnika je blokirana!");
+          console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        })
       }
     },
     changeReport(report) {
@@ -167,6 +184,7 @@ export default {
             this.greenReportTemp = true;
             this.dialogDetails = false;
             this.getReports();
+            this.checkAddPrice();
           })
           .catch(error => {
             console.log(error);
