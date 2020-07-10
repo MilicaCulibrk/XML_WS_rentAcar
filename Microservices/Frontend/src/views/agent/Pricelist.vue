@@ -99,6 +99,7 @@
                   color="red"
                   v-bind="attrs"
                   v-on="on"
+                  v-if="addvertisment.id==null"
                 >
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
@@ -216,8 +217,8 @@ export default {
       pricelists: [],
       dialog: false,
       dialogDelete: false,
-      selected: 'NONE',
-      pricelist: { },
+      selected: '',
+      pricelist: {},
       editable: false,
       snackbarSuccess: false,
       snackbarSuccessText: "",
@@ -284,6 +285,7 @@ export default {
             axios
         .get("/addvertisment-service/pricelist")
         .then(response => {
+
           this.checkOwner(response.data);
         })
         .catch(error => {
@@ -314,7 +316,14 @@ export default {
 
   },
   mounted(){
-      this.getPricelists();
+    if(this.addvertisment.pricelist.username == this.$store.state.user.username){
+      this.selected = this.addvertisment.pricelist;
+      this.pricelist = this.selected;
+    } else {
+      this.selected = 'NONE';
+    }
+
+    this.getPricelists();
   }
 };
 </script>

@@ -53,7 +53,8 @@ public class AddvertismentController {
 
     @PutMapping("")
     public ResponseEntity updateAdd(@RequestBody AddvertismentDTO addvertismentDTO) {
-
+    	System.out.println(addvertismentDTO.getPricelist().getDailyPrice());
+    	System.out.println(addvertismentDTO.getPrice());
         try {
             addvertismentService.updateAddvertisment(addvertismentDTO);
             return new ResponseEntity<>(addvertismentDTO, HttpStatus.OK);

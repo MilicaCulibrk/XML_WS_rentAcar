@@ -197,8 +197,7 @@ INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
 VALUES ('18','4');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
 VALUES ('18','5');
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('14','6');
+
 
 INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '10');
