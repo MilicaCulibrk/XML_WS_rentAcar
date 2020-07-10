@@ -75,28 +75,28 @@ public class LoginController {
         System.out.println(nekiKorisnik);
         System.out.println("Verification invoked! - login");
         String username = authenticationDTO.getUsername();
-        String password = authenticationDTO.getPassword();
-        String role = null;
+        
         try {
 			if(this.userService.verify(username)) {
 				User user = (User) nekiKorisnik;
 				authenticationDTO.setId(user.getId());
 				authenticationDTO.setRole("USER");
-				//role="USER";
+				authenticationDTO.setActive(user.isActive());
+				if(user.isActive()==false) {
+		            return new ResponseEntity<>("We are sorry but your account is blocked. You can't login.", HttpStatus.FORBIDDEN);
+				}
 		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
 			} else if(this.administratorService.verify(username)) {
 				Administrator admin = (Administrator) nekiKorisnik;
 				authenticationDTO.setId(admin.getId());
 				authenticationDTO.setRole("ADMINISTRATOR");
-				role="ADMINISTRATOR";
 		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
 			} else if(this.companyService.verify(username)) {
 				Company company = (Company) nekiKorisnik;
 				authenticationDTO.setId(company.getId());
 				authenticationDTO.setRole("COMPANY");
-				role="COMPANY";
 		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
 			}

@@ -79,6 +79,7 @@ export default {
           .catch(error => {
             this.$emit("notDeletedBrand");
             console.log(error);
+            console.log("wtf");
           });
       } else {
         this.$emit("hasModelsBrand");

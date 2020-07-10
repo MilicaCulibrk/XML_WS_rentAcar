@@ -59,13 +59,10 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);    
     }
     
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('ADMINISTRATOR')" + "|| hasAuthority('COMPANY')")
     @PutMapping("")
     public ResponseEntity updateUser (@RequestBody  User user) {
     	User u;
-        if (user.getId() == null) {
-            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
-        }
 
         try {
             u = userService.updateUser(user);

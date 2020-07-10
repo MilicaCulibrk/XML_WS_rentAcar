@@ -21,7 +21,7 @@ public class UserDTO {
         private String city;
     
        private String phone_number;
-
+       private Boolean active;
 	public UserDTO(String name, String surname, String email, String password, String address, String city,
 			String phone_number) {
 		super();
@@ -39,6 +39,14 @@ public class UserDTO {
 	public UserDTO() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public String getName() {
