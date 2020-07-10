@@ -2,11 +2,13 @@ package agentBackend.controller;
 
 import agentBackend.dto.AddvertismentDTO;
 import agentBackend.dto.AddvertismentDisplayDTO;
+import agentBackend.dto.SearchQueryDTO;
 import agentBackend.model.Addvertisment;
 import agentBackend.service.AddvertismentService;
 import agentBackend.soap.AddClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,5 +70,10 @@ public class AddvertismentController {
         } catch (ValidationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
+
+    @PostMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
+    public ResponseEntity getAllByQuery(@RequestBody SearchQueryDTO searchQueryDTO) {
+        List<AddvertismentDTO> searches = addvertismentService.getByQuery(searchQueryDTO);
+        return new ResponseEntity<>(searches, HttpStatus.OK);
     }
 }

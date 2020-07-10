@@ -1,10 +1,6 @@
-package agentBackend.dto;
-
-import agentBackend.model.Brand;
-import agentBackend.model.Report;
+package addvertisment.dto;
 
 public class ReportDTO {
-
     private Long id;
     private float kilometres_crossed;
     private String additional_information;
@@ -15,7 +11,6 @@ public class ReportDTO {
 
     public ReportDTO(){}
 
-
     public ReportDTO(Long id, float kilometres_crossed, String additional_information, Long purchase_id, Long id_add, float old_kilometres) {
         this.id = id;
         this.kilometres_crossed = kilometres_crossed;
@@ -25,14 +20,6 @@ public class ReportDTO {
         this.old_kilometres = old_kilometres;
     }
 
-    public ReportDTO(Report report) {
-        this.id = report.getId();
-        this.kilometres_crossed = report.getKilometresCrossed();
-        this.additional_information = report.getAdditionalInformation();
-        this.purchase_id = report.getPurchase().getId();
-        this.id_add = report.getPurchase().getId_add();
-        this.old_kilometres = report.getKilometresCrossed();
-    }
 
     public Long getId() {
         return id;

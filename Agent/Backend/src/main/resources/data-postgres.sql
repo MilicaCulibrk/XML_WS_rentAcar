@@ -245,6 +245,7 @@ INSERT INTO public.request(status) VALUES ('PAID');
 
 
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
+
 	VALUES ( '2020-06-21', '2020-06-29', 3, 'ss', 'mm', false, 1, 'BMW X5');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 	VALUES ( '2020-06-21', '2020-06-25', 4, 'ss', 'mm', false, 1, 'Suzuki Vitara SE');
@@ -265,4 +266,5 @@ INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (3, 3);
 INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (4, 4);
 INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (5, 6);
 INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (6, 7);
+
 

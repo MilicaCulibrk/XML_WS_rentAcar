@@ -27,7 +27,7 @@
               <v-card hover elevation="2" class="text-center ma-6" v-if="car.agent == agent">
                 <div class="cardBorderColor">
                   <v-list-item three-line>
-                    <v-list-item-avatar >
+                    <v-list-item-avatar>
                       <img :src="car.image" height="100px" />
                     </v-list-item-avatar>
                     <v-list-item-content>

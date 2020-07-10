@@ -17,6 +17,11 @@ public class VehicleModelController {
     @Autowired
     private VehicleModelService vehicleModelService;
 
+    @GetMapping("/model")
+    public ResponseEntity<List<String>> getVehicleModelNames() {
+        return new ResponseEntity<List<String>>(vehicleModelService.getVehicleModelNames(), HttpStatus.OK);
+    }
+
     @GetMapping("/{brand_id}/model")
     public ResponseEntity getAllModels(@PathVariable Long brand_id)  {
         return new ResponseEntity<List<VehicleModelDTO>>(vehicleModelService.getAllModels(brand_id), HttpStatus.OK);

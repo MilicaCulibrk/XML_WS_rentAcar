@@ -23,7 +23,7 @@ public class AddvertismentDisplayDTO {
     private float average_grade;
     private ArrayList<ReservedDateDTO> arrayEvents;
     private int number_of_purchases;
-
+    private Pricelist pricelist;
 
     public AddvertismentDisplayDTO(Addvertisment addvertisment) {
         this.id = addvertisment.getId();
@@ -64,12 +64,20 @@ public class AddvertismentDisplayDTO {
         }
 
 
-
+        this.pricelist = addvertisment.getPriceList();
         this.number_of_purchases = 0;
 
     }
 
-    public AddvertismentDisplayDTO(){
+    public Pricelist getPricelist() {
+		return pricelist;
+	}
+
+	public void setPricelist(Pricelist pricelist) {
+		this.pricelist = pricelist;
+	}
+
+	public AddvertismentDisplayDTO(){
         super();
     }
 
