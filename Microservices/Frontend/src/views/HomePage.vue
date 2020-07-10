@@ -147,7 +147,7 @@ export default {
       this.date_from="";
     },
     addToBasket(car) {
-      if (this.$store.state.user.role == "NONE") {
+      if (this.$store.state.user.role == "NONE" || this.$store.state.user.active==null) {
         console.log("usao");
         this.snackbarDangerText = "You must log in to add the car to the cart";
         this.snackbarDanger = true;

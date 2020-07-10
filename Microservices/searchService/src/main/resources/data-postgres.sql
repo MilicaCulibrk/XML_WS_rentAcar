@@ -269,4 +269,3 @@ VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com
 INSERT INTO public.images(url, search_id)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '18');
 
-

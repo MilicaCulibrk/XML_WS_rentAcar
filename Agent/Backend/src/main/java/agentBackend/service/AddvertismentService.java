@@ -1,5 +1,8 @@
 package agentBackend.service;
 
+
+import agentBackend.dto.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,27 +11,16 @@ import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import agentBackend.dto.AddvertismentDTO;
-import agentBackend.dto.AddvertismentDisplayDTO;
-import agentBackend.dto.ImageDTO;
-import agentBackend.dto.ReservedDateDTO;
 import agentBackend.model.Addvertisment;
 import agentBackend.model.Comment;
 import agentBackend.model.Grade;
 import agentBackend.model.Image;
 import agentBackend.model.ReservedDate;
-import agentBackend.repository.AddvertismentRepository;
-import agentBackend.repository.BrandRepository;
-import agentBackend.repository.CommentRepository;
-import agentBackend.repository.CompanyRepository;
-import agentBackend.repository.FuelTypeRepository;
-import agentBackend.repository.GradeRepository;
-import agentBackend.repository.ImageRepository;
-import agentBackend.repository.ReservedDateRepository;
-import agentBackend.repository.TransmissionTypeRepository;
-import agentBackend.repository.VehicleClassRepository;
-import agentBackend.repository.VehicleModelRepository;
+import agentBackend.repository.*;
+import agentBackend.wsdl.Add;
+
+import java.awt.*;
+
 
 @Service
 public class AddvertismentService {
@@ -114,15 +106,14 @@ public class AddvertismentService {
         real.setLocation(dto.getLocation());
         real.setMileage(dto.getMileage());
         real.setMileage_limit(dto.getMileage_limit());
-        real.setDaily_price(dto.getDaily_price());
+        real.setDaily_price(dto.getPricelist().getDailyPrice());
         real.setCompany(companyRepository.findByUsername(dto.getOwner()));
         real.setBrand(brandRepository.findById(dto.getBrand_id()).orElse(null));
         real.setFuel_type(fuelTypeRepository.findById(dto.getFuel_type_id()).orElse(null));
         real.setTransmission_type(transmissionTypeRepository.findById(dto.getTransmission_type_id()).orElse(null));
         real.setVehicle_class(vehicleClassRepository.findById(dto.getVehicle_class_id()).orElse(null));
         real.setVehicle_model(vehicleModelRepository.findById(dto.getVehicle_model_id()).orElse(null));
-        real.setPriceList(dto.getPricelist());
-
+        real.setPricelist(dto.getPricelist());
         return real;
     }
 
@@ -139,23 +130,179 @@ public class AddvertismentService {
         return reservedDate;
     }
 
-    public void updateMileage(float kilometresCrossed, Long id_add){
+        public float updateMileage(float kilometresCrossed, Long id_add){
 
-        Addvertisment addvertisment = addvertismentRepository.getOne(id_add);
+            Addvertisment addvertisment = addvertismentRepository.getOne(id_add);
 
-        float newMileage = addvertisment.getMileage() + kilometresCrossed;
-        addvertisment.setMileage(newMileage);
-        addvertismentRepository.save(addvertisment);
-    }
+            float newMileage = addvertisment.getMileage() + kilometresCrossed;
+            addvertisment.setMileage(newMileage);
+            addvertismentRepository.save(addvertisment);
 
-    public void changeUpdatedMileage(float kilometresCrossed, Long id_add, float old_kilometres){
+            float crossedOverKilometres = checkMileageLimit(kilometresCrossed, addvertisment);
+
+            if(crossedOverKilometres != 0){
+                return crossedOverKilometres * addvertisment.getPricelist().getOverlimitPrice();
+            }else{
+                return 0;
+            }
+        }
+
+    public float changeUpdatedMileage(float kilometresCrossed, Long id_add, float old_kilometres){
 
         Addvertisment addvertisment = addvertismentRepository.getOne(id_add);
 
         float newMileage = addvertisment.getMileage() - old_kilometres + kilometresCrossed;
         addvertisment.setMileage(newMileage);
         addvertismentRepository.save(addvertisment);
+
+        float crossedOverKilometres = checkMileageLimit(kilometresCrossed, addvertisment);
+
+        if(crossedOverKilometres != 0){
+            return crossedOverKilometres * addvertisment.getPricelist().getOverlimitPrice();
+        }else{
+            return 0;
+        }
     }
+
+    public float checkMileageLimit(float kilometresCrossed, Addvertisment addvertisment){
+        float crossedOverKilometres = 0;
+        if(kilometresCrossed > addvertisment.getMileage_limit() && addvertisment.getMileage_limit() != 0){
+            crossedOverKilometres = kilometresCrossed - addvertisment.getMileage_limit();
+        }
+
+        return crossedOverKilometres;
+    }
+
+    public List<AddvertismentDTO> getByQuery(SearchQueryDTO searchQueryDTO) {
+
+        SearchQueryDTO sDTO = checkIfEmpty(searchQueryDTO);
+
+        int minPrice = parseMinPrice(searchQueryDTO);
+        int maxPrice = parseMaxPrice(searchQueryDTO);
+        int minMileage = parseMinMileage(searchQueryDTO);
+        int maxMileage = parseMaxMileage(searchQueryDTO);
+
+
+        List<Addvertisment> searches = addvertismentRepository.getByQuery(sDTO.getSelectBrand(), sDTO.getSelectModel(), sDTO.getSelectClass(), sDTO.getSelectTransmission(), sDTO.getSelectGas(), sDTO.getSelectLocation(), sDTO.getSelectChildSeats(), minPrice, maxPrice, minMileage, maxMileage);
+
+        List<Addvertisment> dateSearches = searchDates(searches, searchQueryDTO);
+
+        List<AddvertismentDTO> searchDTOS = new ArrayList<>();
+        for(Addvertisment search: dateSearches) {
+            AddvertismentDTO searchDTO = new AddvertismentDTO(search);
+            searchDTOS.add(searchDTO);
+        }
+        return searchDTOS;
+    }
+
+    SearchQueryDTO checkIfEmpty(SearchQueryDTO searchQueryDTO){
+        if(searchQueryDTO.getSelectBrand().isEmpty()){
+            searchQueryDTO.getSelectBrand().add("emptyBrand");
+        }
+        if(searchQueryDTO.getSelectModel().isEmpty()){
+            searchQueryDTO.getSelectModel().add("emptyModel");
+        }
+        if(searchQueryDTO.getSelectClass().isEmpty()){
+            searchQueryDTO.getSelectClass().add("emptyClass");
+        }
+        if(searchQueryDTO.getSelectTransmission().isEmpty()){
+            searchQueryDTO.getSelectTransmission().add("emptyTransmission");
+        }
+        if(searchQueryDTO.getSelectGas().isEmpty()){
+            searchQueryDTO.getSelectGas().add("emptyGas");
+        }
+        if(searchQueryDTO.getSelectLocation().isEmpty()){
+            searchQueryDTO.getSelectLocation().add("emptyLocation");
+        }
+        if(searchQueryDTO.getSelectChildSeats().isEmpty()){
+            searchQueryDTO.getSelectChildSeats().add(100);
+        }
+
+        return searchQueryDTO;
+    }
+
+    int parseMinPrice(SearchQueryDTO searchQueryDTO){
+
+        if(searchQueryDTO.getSelectMinPrice() != null){
+            return Integer.parseInt(searchQueryDTO.getSelectMinPrice());
+        }else{
+            return 0;
+        }
+
+    }
+
+    int parseMaxPrice(SearchQueryDTO searchQueryDTO){
+
+        if(searchQueryDTO.getSelectMaxPrice() != null){
+            return Integer.parseInt(searchQueryDTO.getSelectMaxPrice());
+        }else{
+            return 0;
+        }
+    }
+
+    int parseMinMileage(SearchQueryDTO searchQueryDTO){
+
+        if(searchQueryDTO.getSelectMinMileage() != null){
+            return Integer.parseInt(searchQueryDTO.getSelectMinMileage());
+        }else{
+            return 0;
+        }
+    }
+
+    int parseMaxMileage(SearchQueryDTO searchQueryDTO){
+
+        if(searchQueryDTO.getSelectMaxMileage() != null){
+            return Integer.parseInt(searchQueryDTO.getSelectMaxMileage());
+        }else{
+            return 0;
+        }
+    }
+
+    List<Addvertisment> searchDates(List<Addvertisment> searches, SearchQueryDTO searchQueryDTO){
+
+        List<Addvertisment> searchList = new ArrayList<>();
+
+        for(Addvertisment search : searches){
+            List<ReservedDate> reservedDatesList = reservedDateRepository.getAllByAddvertismentId(search.getId());
+
+            boolean flag = false;
+            for(ReservedDate reservedDate: reservedDatesList){
+                for(String date: searchQueryDTO.getDates()){
+                    if(reservedDate.getOneDate().equals(date)){
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+
+            if(!flag){
+                searchList.add(search);
+            }
+        }
+
+        return searchList;
+    }
+
+    public Addvertisment save(AddvertismentDTO addDTO) {
+        Addvertisment search = newDTOtoReal(addDTO);
+        addvertismentRepository.save(search);
+
+        for(ImageDTO i: addDTO.getImages()){
+            Image image = this.createImage(i);
+            image.setAddvertisment(search);
+            imageRepository.save(image);
+        }
+
+        for(ReservedDateDTO r: addDTO.getArrayEvents()){
+            ReservedDate reservedDate = this.createReservedDate(r);
+            reservedDate.setAddvertisment(search);
+            reservedDateRepository.save(reservedDate);
+        }
+
+
+        return search;
+    }
+
     
     public void deleteAddvertisment(Long id) throws ValidationException {
         Optional<Addvertisment> add = addvertismentRepository.findById(id);
@@ -189,4 +336,44 @@ public class AddvertismentService {
         addvertismentRepository.delete(add.get());
 
     }
+
+    public void updateAddvertisment(AddvertismentDTO addvertismentDTO) throws ValidationException {
+
+
+        Addvertisment addvertisment = addvertismentRepository.getOne(addvertismentDTO.getId());
+        existingDTOtoReal(addvertisment, addvertismentDTO);
+
+        try {
+            AddvertismentDTO dto = new AddvertismentDTO(addvertisment);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
+
+        addvertismentRepository.save(addvertisment);
+    }
+    public void existingDTOtoReal(Addvertisment real, AddvertismentDTO dto){
+        real.setCdw(dto.isCdw());
+        real.setChild_seats(dto.getChild_seats());
+        real.setLocation(dto.getLocation());
+        real.setMileage(dto.getMileage());
+        real.setMileage_limit(dto.getMileage_limit());
+        real.setDaily_price(dto.getPricelist().getDailyPrice());
+        real.setPricelist(dto.getPricelist());
+        real.setCompany(companyRepository.findByUsername(dto.getOwner()));
+        real.setBrand(brandRepository.findById(dto.getBrand_id()).orElse(null));
+        real.setFuel_type(fuelTypeRepository.findById(dto.getFuel_type_id()).orElse(null));
+        real.setTransmission_type(transmissionTypeRepository.findById(dto.getTransmission_type_id()).orElse(null));
+        real.setVehicle_class(vehicleClassRepository.findById(dto.getVehicle_class_id()).orElse(null));
+        real.setVehicle_model(vehicleModelRepository.findById(dto.getVehicle_model_id()).orElse(null));
+        real.setId(dto.getId());
+        return;
+    }
+    public AddvertismentDTO getOneAddvertisment(Long id) {
+
+        Addvertisment addvertisment = addvertismentRepository.getOne(id);
+        AddvertismentDTO addvertismentDTO= new AddvertismentDTO(addvertisment);
+        return addvertismentDTO;
+
+    }
+
 }

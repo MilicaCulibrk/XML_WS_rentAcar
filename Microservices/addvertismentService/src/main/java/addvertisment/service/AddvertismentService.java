@@ -115,16 +115,32 @@ public class AddvertismentService {
         real.setLocation(dto.getLocation());
         real.setMileage(dto.getMileage());
         real.setMileage_limit(dto.getMileage_limit());
-        real.setPrice(dto.getPrice());
+        real.setPrice(dto.getPricelist().getDailyPrice());
         real.setAddvertiser_id(dto.getAddvertiser_id());
         real.setBrand(brandRepository.findById(dto.getBrand_id()).orElse(null));
         real.setFuel_type(fuelTypeRepository.findById(dto.getFuel_type_id()).orElse(null));
         real.setTransmission_type(transmissionTypeRepository.findById(dto.getTransmission_type_id()).orElse(null));
         real.setVehicle_class(vehicleClassRepository.findById(dto.getVehicle_class_id()).orElse(null));
         real.setVehicle_model(vehicleModelRepository.findById(dto.getVehicle_model_id()).orElse(null));
-        real.setPriceList(dto.getPricelist());
+        real.setPricelist(dto.getPricelist());
         return real;
     }
+
+    public AddvertismentRentDTO getAddById(Long id){
+
+        Addvertisment add =  addvertismentRepository.findById(id).orElse(null);
+
+        AddvertismentRentDTO addDTO = new AddvertismentRentDTO();
+
+        addDTO.setMileage_limit(add.getMileage_limit());
+        addDTO.setPriceByKm(add.getPricelist().getOverlimitPrice());
+
+
+        return addDTO;
+
+    }
+
+
     public Image createImage(ImageDTO i){
         Image image = new Image();
         image.setUrl(i.getUrl());
@@ -143,13 +159,16 @@ public class AddvertismentService {
         Addvertisment addvertisment = addvertismentRepository.getOne(addvertismentDTO.getId());
         existingDTOtoReal(addvertisment, addvertismentDTO);
 
+        addvertismentRepository.save(addvertisment);
+
         try {
             AddDTO dto = new AddDTO(addvertisment);
+            dto.setOperation(OperationEnum.UPDATE);
+            dto.setEntity(EntityEnum.ADD);
+            this.addvertismentProducer.send(dto);
         } catch (Exception e) {
             System.err.println("Did not sync with search service");
         }
-
-        addvertismentRepository.save(addvertisment);
     }
     public void existingDTOtoReal(Addvertisment real, AddvertismentDTO dto){
         real.setCdw(dto.isCdw());
@@ -157,7 +176,8 @@ public class AddvertismentService {
         real.setLocation(dto.getLocation());
         real.setMileage(dto.getMileage());
         real.setMileage_limit(dto.getMileage_limit());
-        real.setPrice(dto.getPrice());
+        real.setPricelist(dto.getPricelist());
+        real.setPrice(dto.getPricelist().getDailyPrice());
         real.setAddvertiser_id(dto.getAddvertiser_id());
         real.setBrand(brandRepository.findById(dto.getBrand_id()).orElse(null));
         real.setFuel_type(fuelTypeRepository.findById(dto.getFuel_type_id()).orElse(null));
@@ -180,14 +200,17 @@ public class AddvertismentService {
         if (!add.isPresent()){
             throw new ValidationException("Add with that id doesn't exist!");
         }
-/*
-        try {
-            BrandDTO dto = new BrandDTO(id, "delete");
-            dto.setOperation(OperationEnum.DELETE);
-            this.brandProducer.send(dto);
-        } catch (Exception e) {
-            System.err.println("Did not sync with search service");
-        }*/
+
+
+      try {
+          AddDTO dto = new AddDTO(add.get());
+          dto.setOperation(OperationEnum.DELETE);
+          this.addvertismentProducer.send(dto);
+      } catch (Exception e) {
+          System.err.println("Did not sync with search service");
+      }
+
+
         for (ReservedDate date : add.get().getReservedDates()) {
 			reservedDateRepository.delete(date);
 		}
@@ -201,6 +224,7 @@ public class AddvertismentService {
 		}
         
         for (Comment comment : add.get().getComments()) {
+            System.out.println("----uso----");
 			commentRepository.delete(comment);
 		}
         

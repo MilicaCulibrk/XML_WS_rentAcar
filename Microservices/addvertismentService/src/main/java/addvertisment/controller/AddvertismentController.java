@@ -2,7 +2,12 @@ package addvertisment.controller;
 
 import addvertisment.dto.AddvertismentDTO;
 import addvertisment.dto.AddvertismentDisplayDTO;
+
+import addvertisment.dto.AddvertismentRentDTO;
+import addvertisment.dto.ReportDTO;
+
 import addvertisment.dto.FuelTypeDTO;
+
 import addvertisment.model.Addvertisment;
 import addvertisment.service.AddvertismentService;
 import org.slf4j.Logger;
@@ -32,6 +37,12 @@ public class AddvertismentController {
         return new ResponseEntity<AddvertismentDTO>(addvertismentService.getOneAddvertisment(id), HttpStatus.OK);
     }
 
+    @GetMapping("/rent/{id}")
+    public ResponseEntity<AddvertismentRentDTO> getAddById(@PathVariable Long id)  {
+        System.out.println("------------vikiiii----------------");
+        return new ResponseEntity<AddvertismentRentDTO>(addvertismentService.getAddById(id), HttpStatus.OK);
+    }
+
     @GetMapping("/user/{username}")
     public ResponseEntity<List<AddvertismentDisplayDTO>> getAllUsersAddvertisments(@PathVariable String username)  {
         return new ResponseEntity<List<AddvertismentDisplayDTO>>(addvertismentService.getAllUsersAddvertisments(username), HttpStatus.OK);
@@ -39,7 +50,7 @@ public class AddvertismentController {
 
     //kad se kreira oglas treba da se kreira i nova klasa pretraga
     @PostMapping("")
-    public ResponseEntity<?> createAdd (@RequestBody AddvertismentDTO addvertismentDTO, HttpServletRequest httpServletRequest)  {
+    public ResponseEntity<?> createAdd (@RequestBody AddvertismentDTO addvertismentDTO)  {
 
         try {
             Addvertisment addvertisment = addvertismentService.createAddvertisment(addvertismentDTO );
@@ -53,6 +64,9 @@ public class AddvertismentController {
 
     @PutMapping("")
     public ResponseEntity updateAdd(@RequestBody AddvertismentDTO addvertismentDTO) {
+    	//System.out.println(addvertismentDTO.getPricelist().getDailyPrice());
+    	//System.out.println(addvertismentDTO.getPrice());
+        System.out.println(addvertismentDTO);
 
         try {
             addvertismentService.updateAddvertisment(addvertismentDTO);
@@ -66,8 +80,14 @@ public class AddvertismentController {
     //pri brisanju oglasa treba da se obrisu i sve njegove ocene i komentari
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAdd (@PathVariable Long id) {
-        return null;
+        try {
+            addvertismentService.deleteAddvertisment(id);
+            return new ResponseEntity<>(id, HttpStatus.OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
+
 
 
     //izlistavanja svih oglasa jedne firme zbog statistike

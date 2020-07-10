@@ -2,17 +2,8 @@ package agentBackend.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
+import javax.persistence.*;
 
 @Entity
 public class Addvertisment {
@@ -69,9 +60,6 @@ public class Addvertisment {
    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    public List<Comment> comments;
 
-   @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-   @JoinColumn(name = "pricelist")
-   public Pricelist priceList;
 
    public float getDaily_price() {
       return daily_price;
@@ -84,16 +72,22 @@ public class Addvertisment {
    //public java.util.Collection<Grade> grade;
    //public Order order;
 
+   @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+   @JoinColumn(name = "pricelist")
+   public Pricelist pricelist;
+
 
    public Addvertisment() {
    }
 
-   public Pricelist getPriceList() {
-	return priceList;
+
+
+public Pricelist getPricelist() {
+	return pricelist;
 }
 
-public void setPriceList(Pricelist priceList) {
-	this.priceList = priceList;
+public void setPricelist(Pricelist pricelist) {
+	this.pricelist = pricelist;
 }
 
 public List<Grade> getGrades() {

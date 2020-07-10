@@ -105,6 +105,7 @@
         <LoginComponent
           @loggedIn="snackbarSuccess = true; snackbarSuccessText='You are logged in!'"
           @notLoggedIn="snackbarDanger = true; snackbarDangerText='Can not log in. There is no such user!'"
+          @cantLoggedIn="snackbarDanger = true; snackbarDangerText='Can not log in. We are sorry but your account is blocked.'"
         />
       </div>
       <div class="mx-2">

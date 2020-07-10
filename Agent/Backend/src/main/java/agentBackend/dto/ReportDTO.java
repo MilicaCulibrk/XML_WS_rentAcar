@@ -11,6 +11,10 @@ public class ReportDTO {
     private Long purchase_id;
     private Long id_add;
     private float old_kilometres;
+    private float additionalPrice;
+
+    public ReportDTO(){}
+
 
     public ReportDTO(Long id, float kilometres_crossed, String additional_information, Long purchase_id, Long id_add, float old_kilometres) {
         this.id = id;
@@ -76,5 +80,13 @@ public class ReportDTO {
 
     public void setOld_kilometres(float old_kilometres) {
         this.old_kilometres = old_kilometres;
+    }
+
+    public float getAdditionalPrice() {
+        return additionalPrice;
+    }
+
+    public void setAdditionalPrice(float additionalPrice) {
+        this.additionalPrice = additionalPrice;
     }
 }

@@ -5,11 +5,7 @@
         <div v-if="greenReport == false && greenReportTemp == false">
           <v-tooltip bottom color="black">
             <template #activator="{ on: tooltip }">
-              <v-btn
-                icon
-                v-on="{ ...tooltip, ...dialogDetails }"
-                color="primary"
-              >
+              <v-btn icon v-on="{ ...tooltip, ...dialogDetails }" color="primary">
                 <v-icon>description</v-icon>
               </v-btn>
             </template>
@@ -64,9 +60,7 @@
                 <v-col cols="4"></v-col>
                 <v-col cols="4"></v-col>
                 <v-col cols="4">
-                  <v-btn color="primary" class="ml-12" @click="saveReport()"
-                    >Add</v-btn
-                  >
+                  <v-btn color="primary" class="ml-12" @click="saveReport()">Add</v-btn>
                 </v-col>
               </v-row>
             </div>
@@ -98,12 +92,7 @@
                     <v-col cols="4"></v-col>
                     <v-col cols="4"></v-col>
                     <v-col cols="4">
-                      <v-btn
-                        color="primary"
-                        class="ml-6"
-                        @click="changeReport(report)"
-                        >Change</v-btn
-                      >
+                      <v-btn color="primary" class="ml-6" @click="changeReport(report)">Change</v-btn>
                     </v-col>
                   </v-row>
                 </div>
@@ -122,9 +111,9 @@ import axios from "axios";
 export default {
   props: {
     purchase: {
-      default: "",
+      default: ""
     },
-    greenReport: {},
+    greenReport: {}
   },
   data() {
     return {
@@ -132,11 +121,11 @@ export default {
       report: {
         kilometres_crossed: "",
         additional_information: "",
-        id_add: this.purchase.id_add,
+        id_add: this.purchase.id_add
       },
       reportsList: [],
       greenReportTemp: false,
-      rules: [(v) => v.length <= 100 || "Max 100 characters"],
+      rules: [v => v.length <= 100 || "Max 100 characters"]
     };
   },
   methods: {
@@ -147,36 +136,35 @@ export default {
       } else {
         axios
           .post("/purchase/" + this.purchase.id + "/report", this.report)
-          .then((report) => {
+          .then(report => {
             this.report = report.data;
             this.$emit("addedReport");
             this.greenReportTemp = true;
             this.dialogDetails = false;
             this.getReports();
+            console.log(this.report.additionalPrice);
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
             this.$emit("notAddedReport");
           });
       }
     },
     changeReport(report) {
-      console.log("change");
-      console.log(report.old_kilometres);
-      console.log(report.kilometres_crossed);
       if (report.kilometres_crossed == "") {
         this.$emit("emptyKilometres");
       } else {
         axios
           .put("/purchase/" + this.purchase.id + "/report", report)
-          .then((report) => {
+          .then(report => {
             this.report = report.data;
             this.$emit("changedReport");
             this.greenReportTemp = true;
             this.dialogDetails = false;
             this.getReports();
+            console.log(this.report.additionalPrice);
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
             this.$emit("notChangedReport");
           });
@@ -185,18 +173,18 @@ export default {
     getReports() {
       axios
         .get("/purchase/report")
-        .then((reportsList) => {
+        .then(reportsList => {
           this.reportsList = reportsList.data;
-          this.getPurchases();
+          // this.getPurchases();
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
-    },
+    }
   },
   mounted() {
     this.getReports();
-  },
+  }
 };
 </script>
 

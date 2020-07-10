@@ -59,8 +59,8 @@ public class PricelistService {
         p.setUsername(pricelist.getUsername());
         this.pricelistSoap = pricelistRepository.save(p);
         for (Addvertisment add : addvertismentRepository.findAll()) {
-			if (add.getPriceList().getId().equals(p.getId())){
-				add.setPriceList(p);
+			if (add.getPricelist().getId().equals(p.getId())){
+				add.setPricelist(p);
 				add.setDaily_price(p.getDailyPrice());
 				addvertismentRepository.save(add);
 			}
@@ -76,7 +76,7 @@ public class PricelistService {
             throw new NoSuchElementException();
         }
         for (Addvertisment add : addvertismentRepository.findAll()) {
-			if(add.priceList.getId().equals(id)) {
+			if(add.pricelist.getId().equals(id)) {
 				try {
 					addvertismentService.deleteAddvertisment(add.getId());
 				} catch (ValidationException e) {

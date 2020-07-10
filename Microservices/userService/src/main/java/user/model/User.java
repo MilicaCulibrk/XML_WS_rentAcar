@@ -35,7 +35,7 @@ public class User implements UserDetails{
     @Column(name = "email", nullable = true)
     private String email;
     @Column(name = "active", nullable = true)
-    private boolean active;
+    private Boolean active;
     @Column(name = "password", nullable = true)
         private String password;
     
@@ -87,11 +87,11 @@ public class User implements UserDetails{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public boolean isActive() {
+	public Boolean isActive() {
 		return active;
 	}
 
-	public void setActive(boolean active) {
+	public void setActive(Boolean active) {
 		this.active = active;
 	}
 

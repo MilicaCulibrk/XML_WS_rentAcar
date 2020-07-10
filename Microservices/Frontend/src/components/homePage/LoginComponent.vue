@@ -80,8 +80,12 @@ export default {
             this.$emit("loggedIn");
           })
           .catch(error => {
-            console.log(error);
-            this.$emit("notLoggedIn");
+            console.log(error.response.data);
+            if(error.response.status==403){
+              this.$emit("cantLoggedIn");
+            } else {
+              this.$emit("notLoggedIn");
+            }
           });
       } else {
         console.log("nije validno");
