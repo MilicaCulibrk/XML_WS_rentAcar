@@ -1,14 +1,12 @@
 package agentBackend.dto;
 
+import java.util.ArrayList;
+
 import agentBackend.model.Addvertisment;
 import agentBackend.model.Grade;
 import agentBackend.model.Image;
+import agentBackend.model.Pricelist;
 import agentBackend.model.ReservedDate;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
 
 public class AddvertismentDisplayDTO {
     private Long id;
@@ -29,7 +27,7 @@ public class AddvertismentDisplayDTO {
     private int number_of_comments;
     private float average_grade;
     private int number_of_purchases;
-
+    private Pricelist pricelist;
     public AddvertismentDisplayDTO(Addvertisment addvertisment) {
         this.id = addvertisment.getId();
         this.fuel_type_name = addvertisment.getFuel_type().getFuel_type_name();
@@ -66,7 +64,7 @@ public class AddvertismentDisplayDTO {
         }else {
             this.average_grade = 0;
         }
-
+        this.pricelist = addvertisment.getPricelist();
         this.number_of_purchases = 0;
 
     }
@@ -74,6 +72,14 @@ public class AddvertismentDisplayDTO {
     public AddvertismentDisplayDTO(){
         super();
     }
+    public Pricelist getPricelist() {
+ 		return pricelist;
+ 	}
+
+ 	public void setPricelist(Pricelist pricelist) {
+ 		this.pricelist = pricelist;
+ 	}
+
 
     public Long getId() {
         return id;

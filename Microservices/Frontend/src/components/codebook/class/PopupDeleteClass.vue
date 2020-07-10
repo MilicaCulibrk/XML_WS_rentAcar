@@ -73,7 +73,7 @@ export default {
         })
         .catch(error => {
           this.$emit("notDeletedVehicleClass");
-          console.log(error);
+          console.log("nars" + error);
         });
     },
     checkIfHasAdds() {

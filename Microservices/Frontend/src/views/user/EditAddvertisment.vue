@@ -242,57 +242,44 @@ export default {
     saveChanges() {
       console.log(this.selectMileageLimit);
 
-      if (
-        this.addvertisment.vehicle_class_name == null ||
-        this.addvertisment.fuel_type_name == null ||
-        this.addvertisment.transmission_type_name == null ||
-        this.addvertisment.vehicle_class_name == "" ||
-        this.addvertisment.fuel_type_name == "" ||
-        this.addvertisment.transmission_type_name == "" ||
-        this.selectMileage == "" ||
-        this.selectChildSeats == "" ||
-        this.selectLocation == ""
-      ) {
-        this.snackbarDanger = true;
-        this.snackbarDangerText = "You can not leave fileds empty! ";
-        return;
-      }
-      this.addvertismentUpdate.brand_id = this.addvertismentReal.brand_id;
-      this.addvertismentUpdate.vehicle_model_id = this.addvertismentReal.vehicle_model_id;
-      this.addvertismentUpdate.vehicle_class_id = this.addvertismentReal.vehicle_class_id;
-      this.addvertismentUpdate.fuel_type_id = this.addvertismentReal.fuel_type_id;
-      this.addvertismentUpdate.transmission_type_id = this.addvertismentReal.transmission_type_id;
-      this.addvertismentUpdate.pricelist = this.addvertisment.pricelist;
-      for (var i in this.vehicleClassItems) {
-        if (
-          this.addvertisment.vehicle_class_name.vehicle_class_name ==
-          this.vehicleClassItems[i].vehicle_class_name
-        ) {
-          this.addvertismentUpdate.vehicle_class_id = this.vehicleClassItems[
-            i
-          ].id;
-        }
-      }
 
-      for (var i1 in this.fuelTypeItems) {
-        if (
-          this.addvertisment.fuel_type_name.fuel_type_name ==
-          this.fuelTypeItems[i1].fuel_type_name
-        ) {
-          this.addvertismentUpdate.fuel_type_id = this.fuelTypeItems[i1].id;
-        }
-      }
+            if(this.addvertisment.vehicle_class_name==null || this.addvertisment.fuel_type_name==null || this.addvertisment.transmission_type_name==null || this.addvertisment.vehicle_class_name=="" || this.addvertisment.fuel_type_name=="" || this.addvertisment.transmission_type_name=="" || this.selectMileage=="" || this.selectChildSeats=="" || this.selectLocation=="" )
+          
+{
+            this.snackbarDanger = true;
+            this.snackbarDangerText="You can not leave fileds empty! ";
+            return;
+          }
+            this.addvertismentUpdate.brand_id = this.addvertismentReal.brand_id;
+            this.addvertismentUpdate.vehicle_model_id = this.addvertismentReal.vehicle_model_id;
+            this.addvertismentUpdate.vehicle_class_id = this.addvertismentReal.vehicle_class_id;
+            this.addvertismentUpdate.fuel_type_id = this.addvertismentReal.fuel_type_id;
+            this.addvertismentUpdate.transmission_type_id = this.addvertismentReal.transmission_type_id;
+            this.addvertismentUpdate.pricelist = this.addvertisment.pricelist;
+            for(var i in this.vehicleClassItems){
+                if(this.addvertisment.vehicle_class_name.vehicle_class_name== this.vehicleClassItems[i].vehicle_class_name){
+                    this.addvertismentUpdate.vehicle_class_id = this.vehicleClassItems[i].id;
+                }
+            }
+           
 
-      for (var i2 in this.transmissionTypeItems) {
-        if (
-          this.addvertisment.transmission_type_name.fuel_type_name ==
-          this.transmissionTypeItems[i2].transmission_type_name
-        ) {
-          this.addvertismentUpdate.transmission_type_id = this.transmissionTypeItems[
-            i2
-          ].id;
-        }
-      }
+            for(var i1 in this.fuelTypeItems){
+                if(this.addvertisment.fuel_type_name.fuel_type_name==this.fuelTypeItems[i1].fuel_type_name){
+
+                    this.addvertismentUpdate.fuel_type_id = this.fuelTypeItems[i1].id;
+                }
+            }
+         
+            
+            for(var i2 in this.transmissionTypeItems){
+                if(this.addvertisment.transmission_type_name.transmission_type_name==this.transmissionTypeItems[i2].transmission_type_name){
+                    this.addvertismentUpdate.transmission_type_id = this.transmissionTypeItems[i2].id;
+                }
+            } 
+          
+
+
+      
 
       this.addvertismentUpdate.mileage = this.selectMileage;
       this.addvertismentUpdate.mileage_limit = this.selectMileageLimit;
