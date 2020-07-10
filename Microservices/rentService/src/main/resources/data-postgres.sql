@@ -37,5 +37,3 @@ INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (4, 4);
 INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (5, 6);
 INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (6, 7);
 
-
-

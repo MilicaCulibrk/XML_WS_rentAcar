@@ -24,10 +24,10 @@
             <v-card-title class="headline">Agent {{ agent }}</v-card-title>
             <!-- cards in card-->
             <v-flex xs12 sm10 md10 lg10 v-for="car in cars" :key="car.id">
-              <v-card hover elevation="2" class="text-center ma-6" v-if="car.agent == agent">
+              <v-card hover elevation="2" class="text-center ma-6" v-if="car.owner == agent">
                 <div class="cardBorderColor">
                   <v-list-item three-line>
-                    <v-list-item-avatar >
+                    <v-list-item-avatar>
                       <img :src="car.image" height="100px" />
                     </v-list-item-avatar>
                     <v-list-item-content>
@@ -105,8 +105,8 @@ export default {
     },
     getAgents() {
       this.cars.forEach(car => {
-        if (!this.agents.includes(car.agent)) {
-          this.agents.push(car.agent);
+        if (!this.agents.includes(car.owner)) {
+          this.agents.push(car.owner);
         }
       });
       return this.agents;
@@ -118,7 +118,7 @@ export default {
         this.bundleOrder = [];
         if (this.checkList.includes(agent)) {
           this.cars.forEach(car => {
-            if (car.agent == agent) {
+            if (car.owner == agent) {
               this.bundleOrder.push(this.createOrderFromAdd(car));
             }
           });
@@ -127,7 +127,7 @@ export default {
           this.sendBundleRequest(this.bundleOrder);
         } else {
           this.cars.forEach(car => {
-            if (car.agent == agent) {
+            if (car.owner == agent) {
               this.singleOrders.push(this.createOrderFromAdd(car));
             }
           });
@@ -180,10 +180,9 @@ export default {
   },
   computed: {
     cars() {
-      console.log( this.$store.state.carsInCart);
+      console.log("kola u korpi");
+      console.log(this.$store.state.carsInCart);
       return this.$store.state.carsInCart;
-     
-      
     },
     totalPrice() {
       this.$store.commit("subtotal");

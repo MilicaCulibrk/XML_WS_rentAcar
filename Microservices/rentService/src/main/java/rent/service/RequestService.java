@@ -143,7 +143,7 @@ public class RequestService {
         
         ArrayList<Long> ids = new ArrayList<>();
 
-        for (Purchase purchaseAccepted : request.purchaseList) {
+        for (Purchase purchaseAccepted : request.getPurchaseList()) {
         	purchaseAccepted.setOrdered(true);
 	        purchaseRepository.save(purchaseAccepted);
 	        

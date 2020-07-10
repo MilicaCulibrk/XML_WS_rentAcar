@@ -17,6 +17,10 @@
         primary-title
         >
         Grade - {{average}}
+        <v-spacer></v-spacer>
+        <v-btn icon color="primary" @click="dialog =  false">
+          <v-icon>cancel</v-icon>
+        </v-btn>
         </v-card-title>
         <v-card-text>
 

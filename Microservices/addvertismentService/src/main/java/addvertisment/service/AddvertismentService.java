@@ -115,7 +115,7 @@ public class AddvertismentService {
         real.setLocation(dto.getLocation());
         real.setMileage(dto.getMileage());
         real.setMileage_limit(dto.getMileage_limit());
-        real.setPrice(dto.getPrice());
+        real.setPrice(dto.getPricelist().getDailyPrice());
         real.setAddvertiser_id(dto.getAddvertiser_id());
         real.setBrand(brandRepository.findById(dto.getBrand_id()).orElse(null));
         real.setFuel_type(fuelTypeRepository.findById(dto.getFuel_type_id()).orElse(null));
@@ -173,7 +173,8 @@ public class AddvertismentService {
         real.setLocation(dto.getLocation());
         real.setMileage(dto.getMileage());
         real.setMileage_limit(dto.getMileage_limit());
-        real.setPrice(dto.getPrice());
+        real.setPriceList(dto.getPricelist());
+        real.setPrice(dto.getPricelist().getDailyPrice());
         real.setAddvertiser_id(dto.getAddvertiser_id());
         real.setBrand(brandRepository.findById(dto.getBrand_id()).orElse(null));
         real.setFuel_type(fuelTypeRepository.findById(dto.getFuel_type_id()).orElse(null));

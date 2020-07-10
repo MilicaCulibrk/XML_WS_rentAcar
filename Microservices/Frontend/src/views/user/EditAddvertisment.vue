@@ -157,6 +157,11 @@
                       required
                     ></v-text-field>
                   </v-col>
+                  <v-col cols="4" style="margin-top: 30px;">
+                    <div class="my-2">
+                    <Pricelist v-bind:addvertisment="addvertisment"></Pricelist>
+                  </div>
+                </v-col>
                 </v-row>
               </v-form>
             
@@ -173,9 +178,11 @@
   </div>
 </template>
 <script>
-    import axios from "axios";
-    export default {
-        props: {
+import axios from "axios";
+import Pricelist from "@/views/agent/Pricelist";
+export default {
+  components: { Pricelist},
+  props: {
     addvertisment: {
       default: ""
     },
@@ -243,7 +250,9 @@
             console.log(this.selectMileageLimit);
             
             
-            if(this.addvertisment.vehicle_class_name==null || this.addvertisment.fuel_type_name==null || this.addvertisment.transmission_type_name.transmission_type_name==null || this.addvertisment.vehicle_class_name=="" || this.addvertisment.fuel_type_name=="" || this.addvertisment.transmission_type_name.transmission_type_name=="" || this.selectMileage=="" || this.selectChildSeats=="" || this.selectLocation=="" )
+
+            if(this.addvertisment.vehicle_class_name==null || this.addvertisment.fuel_type_name==null || this.addvertisment.transmission_type_name==null || this.addvertisment.vehicle_class_name=="" || this.addvertisment.fuel_type_name=="" || this.addvertisment.transmission_type_name=="" || this.selectMileage=="" || this.selectChildSeats=="" || this.selectLocation=="" )
+          
 {
             this.snackbarDanger = true;
             this.snackbarDangerText="You can not leave fileds empty! ";
@@ -254,7 +263,7 @@
             this.addvertismentUpdate.vehicle_class_id = this.addvertismentReal.vehicle_class_id;
             this.addvertismentUpdate.fuel_type_id = this.addvertismentReal.fuel_type_id;
             this.addvertismentUpdate.transmission_type_id = this.addvertismentReal.transmission_type_id;
-
+            this.addvertismentUpdate.pricelist = this.addvertisment.pricelist;
             for(var i in this.vehicleClassItems){
                 if(this.addvertisment.vehicle_class_name== this.vehicleClassItems[i].vehicle_class_name){
                     this.addvertismentUpdate.vehicle_class_id = this.vehicleClassItems[i].id;
@@ -270,7 +279,7 @@
          
             
             for(var i2 in this.transmissionTypeItems){
-                if(this.addvertisment.transmission_type_name.transmission_type_name==this.transmissionTypeItems[i2].transmission_type_name){
+                if(this.addvertisment.transmission_type_name==this.transmissionTypeItems[i2].transmission_type_name){
                     this.addvertismentUpdate.transmission_type_id = this.transmissionTypeItems[i2].id;
                 }
             } 
@@ -285,7 +294,7 @@
             this.addvertismentUpdate.images = this.addvertisment.images;
             this.addvertismentUpdate.arrayEvents = this.addvertisment.arrayEvents;
             this.addvertismentUpdate.id = this.addvertisment.id;
-            this.addvertismentUpdate.price- this.addvertisment.price;
+            this.addvertismentUpdate.price- this.addvertisment.pricelist.dailyPrice;
 
            console.log(this.addvertismentUpdate);
            

@@ -54,11 +54,14 @@
                     <v-btn
                       text
                       color="primary"
-                      @click="reserveDate(dates,addvertisment.id)"
+                      @click="reserveDate(dates)"
                     >Disable dates</v-btn>
                   </v-date-picker>
                 </v-dialog>
+
                 <EditAddvertisment v-bind:addvertisment="addvertisment"></EditAddvertisment>
+                
+                <DeleteAddvertisment  v-bind:addvertisment="addvertisment"></DeleteAddvertisment>
               </v-card-actions>
             </div>
           </v-card>
@@ -74,8 +77,9 @@
 import axios from "axios";
 import { fb, db } from "@/firebase";
 import EditAddvertisment from "@/views/user/EditAddvertisment";
+import DeleteAddvertisment from "@/views/user/DeleteAddvertisment";
 export default {
-  components: { EditAddvertisment },
+  components: { EditAddvertisment , DeleteAddvertisment },
   data() {
     return {
       selectBrand: "",
@@ -106,6 +110,7 @@ export default {
         addvertiser_id: "",*/
        
       },
+      add_id: "",
       modelItems: [],
       brandItems: [],
       vehicleClassItems: [],
@@ -129,6 +134,7 @@ export default {
   },
   methods: {
     findReservedDates(id) {
+      this.add_id=id;
       axios
         .get("/addvertisment-service/reservedDate/" + id)
         .then(reservedDates => {
@@ -176,7 +182,7 @@ export default {
         );
       }
     },
-    reserveDate(dates, id) {
+    reserveDate(dates) {
       var startDate = new Date(dates[0]);
       var endDate = new Date(dates[1]);
       var arr = new Array();
@@ -197,7 +203,7 @@ export default {
       }
       axios
         .post(
-          "/addvertisment-service/reservedDate/" + id,
+          "/addvertisment-service/reservedDate/" + this.add_id,
           this.createListDates(arr)
         )
         .then(response => {
@@ -266,6 +272,7 @@ export default {
       )
       .then(addvertisments => {
         this.addvertisments = addvertisments.data;
+        console.log(this.addvertisments);
         
       })
       .catch(error => {
