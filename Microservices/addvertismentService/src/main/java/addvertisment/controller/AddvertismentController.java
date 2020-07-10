@@ -37,7 +37,7 @@ public class AddvertismentController {
         return new ResponseEntity<AddvertismentDTO>(addvertismentService.getOneAddvertisment(id), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/rent/{id}")
     public ResponseEntity<AddvertismentRentDTO> getAddById(@PathVariable Long id)  {
         System.out.println("------------vikiiii----------------");
         return new ResponseEntity<AddvertismentRentDTO>(addvertismentService.getAddById(id), HttpStatus.OK);
