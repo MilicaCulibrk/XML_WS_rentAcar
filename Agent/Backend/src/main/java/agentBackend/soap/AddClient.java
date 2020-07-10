@@ -44,6 +44,7 @@ public class AddClient extends WebServiceGatewaySupport {
         add.setMileage(addvertismentDTO.getMileage());
         add.setMileageLimit(addvertismentDTO.getMileage_limit());
         add.setPrice(addvertismentDTO.getDaily_price());
+        add.setPriceListId(addvertismentDTO.getPricelist().getId());
         request.setAdd(add);
        // request.setFuelTypeName(fuelTypeDTO.getFuel_type_name());
         AddResponse response = (AddResponse) getWebServiceTemplate()

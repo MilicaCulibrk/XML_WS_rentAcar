@@ -1,4 +1,4 @@
-package addvertisment.model;
+package agentBackend.model;
 
 import javax.persistence.*;
 

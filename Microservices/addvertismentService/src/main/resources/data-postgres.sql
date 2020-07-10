@@ -1,4 +1,3 @@
-
 INSERT INTO public.brand(brand_name)
 VALUES ('Mercedes');
 INSERT INTO public.brand(brand_name)
@@ -125,19 +124,19 @@ VALUES ('semi-automatic');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
 VALUES ('2000', '8', '9', '10', '15', 'ss');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
-VALUES ('2800', '10', '10', '10', '10', 'ss'); 
+VALUES ('2800', '10', '10', '10', '10', 'ss');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
 VALUES ('4000', '8', '9', '10', '15', 'mm');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
-VALUES ('8000', '10', '10', '10', '10', 'sm'); 
+VALUES ('8000', '10', '10', '10', '10', 'sm');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
 VALUES ('4500', '8', '9', '10', '15', 'vm');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
-VALUES ('1800', '10', '10', '10', '10', 'bm'); 
+VALUES ('1800', '10', '10', '10', '10', 'bm');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
 VALUES ('2100', '8', '9', '10', '15', 'ms');
 INSERT INTO public.pricelist(daily_price, overlimit_price, cdw_price, discount, number_of_days, username)
-VALUES ('3500', '10', '10', '10', '10', 'vs'); 
+VALUES ('3500', '10', '10', '10', '10', 'vs');
 
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
 VALUES ('true', '2', '4000', 'Beograd', '200000', '100', '3', '1', '1', '1', '1', 'mm', '3');
@@ -188,17 +187,15 @@ INSERT INTO public.comment(text, title, user_id, user_username, addvertisment_id
 VALUES ('Great, everything was good. Addvertiser was very nice and helpful.', 'Very good', 4, 'vm', 14);
 
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('9','1');
+VALUES ('10','1');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('10','2');
+VALUES ('11','2');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('11','3');
+VALUES ('18','3');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
 VALUES ('18','4');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('18','5');
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('14','6');
+VALUES ('14','5');
 
 INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '10');
@@ -212,7 +209,6 @@ INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('4', '2', '9');
 INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '9');
-
 
 INSERT INTO public.image(url, addvertisment)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '1');
@@ -250,7 +246,6 @@ INSERT INTO public.image(url, addvertisment)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '17');
 INSERT INTO public.image(url, addvertisment)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '18');
-
 
 INSERT INTO public.reserved_date(one_date, addvertisment)
 VALUES ('2020-06-13', '1');
@@ -323,11 +318,11 @@ VALUES ('2020-06-08', '17');
 INSERT INTO public.reserved_date(one_date, addvertisment)
 VALUES ('2020-06-17', '17');
 
-
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (1, 9);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (2, 10);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (3, 11);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (4, 12);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (5, 12);
 
-
+INSERT INTO public.soap_price_list_sync(agent_app_id, ms_app_id) VALUES ( 1, 1);
+INSERT INTO public.soap_price_list_sync(agent_app_id, ms_app_id) VALUES ( 2, 2);

@@ -2,6 +2,7 @@ package agentBackend.controller;
 
 import java.util.List;
 
+import agentBackend.soap.PriceListClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,9 @@ public class PricelistController {
 	
   	@Autowired
     private PricelistService pricelistService;
+
+  	@Autowired
+    private PriceListClient client;
 	
     @GetMapping("")
     public ResponseEntity<?> getAllPricelists ()  {
@@ -37,6 +41,7 @@ public class PricelistController {
     @PostMapping("")
     public ResponseEntity<?> createPricelist (@RequestBody Pricelist pricelist) {
         List<Pricelist> p = pricelistService.createPricelist(pricelist);
+        client.createPriceList(pricelistService.getPricelistSoap());
 		return new ResponseEntity<List<Pricelist>>(p, HttpStatus.OK); 
 	}
     
@@ -45,6 +50,7 @@ public class PricelistController {
     public ResponseEntity<?> deletePricelist (@PathVariable Long id) {
 
         List<Pricelist> p = pricelistService.deletePricelist(id);
-		return new ResponseEntity<List<Pricelist>>(p, HttpStatus.OK); 
+       // client.deletePriceList(id);
+		return new ResponseEntity<List<Pricelist>>(p, HttpStatus.OK);
 	}
 }
