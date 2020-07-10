@@ -79,6 +79,8 @@
             this.snackbarSuccess=true;
             this.snackbarSuccessText="Addvertisment deleted!";
             this.deleteDialog=false;
+            this.$emit("loadAddvertisments");
+
             })
             .catch(error => {
             console.log(error);

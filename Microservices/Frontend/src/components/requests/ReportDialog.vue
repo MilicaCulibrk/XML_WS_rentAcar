@@ -142,7 +142,7 @@ export default {
           )
           .then(report => {
             this.report = report.data;
-            this.$emit("addedReport");
+            this.$emit("addedReport", this.report.additionalPrice, this.purchase.client);
             this.greenReportTemp = true;
             this.dialogDetails = false;
             this.getReports();
@@ -150,7 +150,6 @@ export default {
           })
           .catch(error => {
             console.log(error);
-            this.$emit("notAddedReport");
           });
       }
     },
@@ -180,7 +179,7 @@ export default {
           .put("rent-service/purchase/" + this.purchase.id + "/report", report)
           .then(report => {
             this.report = report.data;
-            this.$emit("changedReport");
+            this.$emit("changedReport", this.report.additionalPrice, this.purchase.client);
             this.greenReportTemp = true;
             this.dialogDetails = false;
             this.getReports();
@@ -188,7 +187,6 @@ export default {
           })
           .catch(error => {
             console.log(error);
-            this.$emit("notChangedReport");
           });
       }
     },

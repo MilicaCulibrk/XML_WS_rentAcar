@@ -397,21 +397,36 @@ export default {
       }
     },
     getCars() {
-      axios
+      if (this.$store.state.user.role == "NONE") {
+        axios
         .get("/search-service/search")
         .then(cars => {
-          console.log("uso");
+          console.log("iscitao je sveeeeeee");
           this.cars = cars.data;
           this.getLocations();
         })
         .catch(error => {
           console.log(error);
         });
+      }else{
+        axios
+        .get("/search-service/search/" + this.$store.state.user.username)
+        .then(cars => {
+          console.log("iscitao je samo tudje oglaseeeee");
+          this.cars = cars.data;
+          this.getLocations();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }
+     
     },
     search() {
       this.$emit("search", this.searchItem, this.due, this.to);
     }
   },
+  
   mounted() {
     //izlistavanje brendova
     axios
@@ -466,18 +481,37 @@ export default {
       });
 
     //get cars
-    axios
-      .get("/search-service/search")
-      .then(cars => {
-        this.cars = cars.data;
-        this.getLocations();
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
+    if (this.$store.state.user.role == "NONE") {
+        axios
+        .get("/search-service/search")
+        .then(cars => {
+          console.log("iscitao je sveeeeeee");
+          this.cars = cars.data;
+          this.getLocations();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }else{
+        axios
+        .get("/search-service/search/" + this.$store.state.user.username)
+        .then(cars => {
+          console.log("iscitao je samo tudje oglaseeeee");
+          this.cars = cars.data;
+          this.getLocations();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }
+     
       
   },
+  created: function() {
+     console.log("eo meeeeeeee");
+    this.getCars();
+   },
+  
   computed: {
     formattedDateFrom() {
       console.log(this.due);
@@ -486,7 +520,11 @@ export default {
     formattedDateTo() {
       console.log(this.to);
       return this.to;
-    }
+    },
+    getCars1() {
+      
+     return  this.getCars();
+   },
   }
 };
 </script>
