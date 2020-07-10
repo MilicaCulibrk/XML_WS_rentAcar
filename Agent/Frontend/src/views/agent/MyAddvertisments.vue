@@ -5,7 +5,7 @@
         <v-flex xs12 sm6 md4 lg4 v-for="addvertisment in addvertisments" :key="addvertisment.id">
           <v-card hover elevation="2" class="text-center ma-6">
             <div class="cardBorderColor">
-              <v-responsive class="pt-4">
+              <v-responsive class="pt-4"  style="height:190px;">
                 <carousel :perPage="1">
                   <slide  v-for="(image, index) in addvertisment.images" :key="index">
                     <img :src="image.url" height="100px" />
@@ -55,10 +55,12 @@
                     <v-btn
                       text
                       color="primary"
-                      @click="reserveDate(dates,addvertisment.id)"
+                      @click="reserveDate(dates)"
                     >Disable dates</v-btn>
                   </v-date-picker>
                 </v-dialog>
+                <EditAddvertisment v-bind:addvertisment="addvertisment"></EditAddvertisment>
+                <DeleteAddvertisment  v-bind:addvertisment="addvertisment"></DeleteAddvertisment>
               </v-card-actions>
             </div>
           </v-card>
@@ -70,27 +72,73 @@
 
   <script>
 import axios from "axios";
+import { fb, db } from "@/firebase";
+import EditAddvertisment from "@/views/agent/EditAddvertisment";
+import DeleteAddvertisment from "@/views/agent/DeleteAddvertisment";
+
 export default {
+  components: { EditAddvertisment,DeleteAddvertisment },
   data() {
     return {
+      selectBrand: "",
+      selectModel: "",
+      selectClass: "",
+      selectTransmission: "",
+      selectFuelType: "",
+      selectMileage: "",
+      selectPrice: "",
+      selectChildSeats: "",
+      selectLocation: "",
+      selectCdw: false,
+      selectMileageLimit: "",
+      addvertisment: {
+       /* brand_id: "",
+        fuel_type_id: "",
+        vehicle_model_id: "",
+        vehicle_class_id: "",
+        transmission_type_id: "",
+        mileage: "",
+        mileage_limit: "",
+        cdw: "",
+        child_seats: "",
+        location: "",
+        price: "",
+        images: [],
+        arrayEvents: [],
+        addvertiser_id: "",*/
+       
+      },
+      add_id: "",
+      modelItems: [],
+      brandItems: [],
+      vehicleClassItems: [],
+      transmissionTypeItems: [],
+      fuelTypeItems: [],
+      childSeatsItems: ["0", "1", "2", "3", "4", "5"],
       dialogCalendar: false,
       addvertisments: {},
       dates: [],
       modal: false,
       nowDate: new Date().toISOString().slice(0, 10) + 2,
       reservedDates: [],
-      reservedOneDate: []
+      reservedOneDate: [],
     };
   },
-
+  firestore() {
+    return {
+      addvertisments: db.collection("addvertisments")
+    };
+  },
   methods: {
+   
     findReservedDates(id) {
+      this.add_id=id;
       axios
-        .get("/reservedDate/" + id)
+        .get("/reservedDate/" + this.add_id)
         .then(reservedDates => {
           this.reservedDates = reservedDates.data;
-
-          this.reservedOneDate = [];
+         // this.reservedOneDate = [];
+          this.reservedOneDate.lenght=0;
           for (const i in this.reservedDates) {
             console.log(this.reservedDates[i]);
             this.reservedOneDate.push(this.reservedDates[i].oneDate);
@@ -99,9 +147,40 @@ export default {
         .catch(error => {
           console.log(error);
         });
-      console.log(this.reservedOneDate);
     },
-    reserveDate(dates, id) {
+    deleteImage(img, index) {
+      let image = fb.storage().refFromURL(img);
+      this.addvertisment.images.splice(index, 1);
+      image
+        .delete()
+        .then(function() {
+          console.log("image deleted");
+        })
+        .catch(function() {
+          // Uh-oh, an error occurred!
+          console.log("an error occurred");
+        });
+    },
+    uploadImage(e) {
+      if (e.target.files[0]) {
+        let file = e.target.files[0];
+        var storageRef = fb
+          .storage()
+          .ref("addvertisments/" + Math.random() + "_" + file.name);
+        let uploadTask = storageRef.put(file);
+        uploadTask.on(
+          "state_changed",
+          () => {},
+          () => {},
+          () => {
+            uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+              this.addvertisment.images.push(downloadURL);
+            });
+          }
+        );
+      }
+    },
+    reserveDate(dates) {
       var startDate = new Date(dates[0]);
       var endDate = new Date(dates[1]);
       var arr = new Array();
@@ -121,7 +200,7 @@ export default {
         this.reservedOneDate.push(arr[d]);
       }
       axios
-        .post("/reservedDate/" + id, this.createListDates(arr))
+        .post("/reservedDate/" + this.add_id, this.createListDates(arr))
         .then(response => {
           console.log(response);
         })
@@ -140,6 +219,8 @@ export default {
     }
   },
   mounted() {
+     
+  
     //izlistavanje oglasa
     axios
       .get("/addvertisment/user/" + this.$store.state.user.username)

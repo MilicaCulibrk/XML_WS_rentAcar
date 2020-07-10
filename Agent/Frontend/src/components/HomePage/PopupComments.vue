@@ -19,7 +19,12 @@
       <v-card>
         <v-list two-line>
           <v-subheader class="primary--text font-weight-bold headline"
-            >Comments</v-subheader
+            >Comments
+            <v-spacer></v-spacer>
+            <v-btn icon color="primary" @click="dialog1 =  false">
+              <v-icon>cancel</v-icon>
+            </v-btn>
+            </v-subheader
           >
           <template v-for="item in comments">
             <v-divider :key="item.header"></v-divider>
