@@ -64,7 +64,7 @@ public class AddvertismentDisplayDTO {
         }
 
 
-        this.pricelist = addvertisment.getPriceList();
+        this.pricelist = addvertisment.getPricelist();
         this.number_of_purchases = 0;
 
     }

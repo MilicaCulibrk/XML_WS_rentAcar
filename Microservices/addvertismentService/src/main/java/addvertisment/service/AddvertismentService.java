@@ -173,7 +173,7 @@ public class AddvertismentService {
         real.setLocation(dto.getLocation());
         real.setMileage(dto.getMileage());
         real.setMileage_limit(dto.getMileage_limit());
-        real.setPriceList(dto.getPricelist());
+        real.setPricelist(dto.getPricelist());
         real.setPrice(dto.getPricelist().getDailyPrice());
         real.setAddvertiser_id(dto.getAddvertiser_id());
         real.setBrand(brandRepository.findById(dto.getBrand_id()).orElse(null));
