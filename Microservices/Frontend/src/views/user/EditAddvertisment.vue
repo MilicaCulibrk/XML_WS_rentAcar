@@ -243,7 +243,7 @@
             console.log(this.selectMileageLimit);
             
             
-            if(this.addvertisment.vehicle_class_name==null || this.addvertisment.fuel_type_name==null || this.addvertisment.transmission_type_name.transmission_type_name==null || this.addvertisment.vehicle_class_name=="" || this.addvertisment.fuel_type_name=="" || this.addvertisment.transmission_type_name.transmission_type_name=="" || this.selectMileage=="" || this.selectChildSeats=="" || this.selectLocation=="" )
+            if(this.addvertisment.vehicle_class_name==null || this.addvertisment.fuel_type_name==null || this.addvertisment.transmission_type_name==null || this.addvertisment.vehicle_class_name=="" || this.addvertisment.fuel_type_name=="" || this.addvertisment.transmission_type_name=="" || this.selectMileage=="" || this.selectChildSeats=="" || this.selectLocation=="" )
 {
             this.snackbarDanger = true;
             this.snackbarDangerText="You can not leave fileds empty! ";

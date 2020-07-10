@@ -66,8 +66,14 @@ public class AddvertismentController {
     //pri brisanju oglasa treba da se obrisu i sve njegove ocene i komentari
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAdd (@PathVariable Long id) {
-        return null;
+        try {
+            addvertismentService.deleteAddvertisment(id);
+            return new ResponseEntity<>(id, HttpStatus.OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
+
 
 
     //izlistavanja svih oglasa jedne firme zbog statistike

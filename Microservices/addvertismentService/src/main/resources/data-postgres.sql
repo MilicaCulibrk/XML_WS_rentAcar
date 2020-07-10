@@ -184,8 +184,8 @@ INSERT INTO public.comment(accepted, text, title, user_id, user_username, addver
 VALUES ('true', 'Everything was excellent and my experience was great.  I really recommend this car!', 'Excellent!!!!', 4, 'vm', 18);
 INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
 VALUES ('false', 'Not recommend. I was not satisfied with this car', 'Very bad', 4, 'vm', 18);
-INSERT INTO public.comment(text, title, user_id, user_username, addvertisment_id)
-VALUES ('Great, everything was good. Addvertiser was very nice and helpful.', 'Very good', 4, 'vm', 14);
+INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
+VALUES ('false','Great, everything was good. Addvertiser was very nice and helpful.', 'Very good', 4, 'vm', 14);
 
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
 VALUES ('9','1');
@@ -197,8 +197,7 @@ INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
 VALUES ('18','4');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
 VALUES ('18','5');
-INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('14','6');
+
 
 INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '10');
