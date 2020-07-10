@@ -36,8 +36,8 @@ public class PriceListClient extends WebServiceGatewaySupport {
         request.setPricelist(pricelistSoap);
 
         PricelistResponse response = (PricelistResponse) getWebServiceTemplate()
-                .marshalSendAndReceive("http://localhost:8087/ws/add-schema", request,
-                        new SoapActionCallback("http://localhost:8087/ws/add-schema/pricelistRequest"));
+                .marshalSendAndReceive("http://add-service:8087/ws/add-schema", request,
+                        new SoapActionCallback("http://add-service:8087/ws/add-schema/pricelistRequest"));
 
 
         this.saveSyncPriceList(response.getMsId(), response.getAgentId());
@@ -51,9 +51,13 @@ public class PriceListClient extends WebServiceGatewaySupport {
        request.setMsId(sync.getMsAppId());
        priceListRepository.delete(sync);
 
-      getWebServiceTemplate().marshalSendAndReceive("http://localhost:8087/ws/add-schema", request,
-                        new SoapActionCallback("http://localhost:8087/ws/add-schema/deletepricelistRequest"));
+      getWebServiceTemplate().marshalSendAndReceive("http://add-service:8087/ws/add-schema", request,
+                        new SoapActionCallback("http://add-service:8087/ws/add-schema/deletepricelistRequest"));
     }
+
+
+
+
     public void saveSyncPriceList (Long ms_id, Long agent_id){
         SoapPriceListSync sync = new SoapPriceListSync();
         sync.setAgentAppId(agent_id);

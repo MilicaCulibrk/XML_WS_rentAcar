@@ -9,9 +9,9 @@ public class SoapAddSync {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private Long msApp_id;
+    private Long msAppId;
     @Column
-    private Long agentApp_id;
+    private Long agentAppId;
 
     public SoapAddSync() {
     }
@@ -24,19 +24,19 @@ public class SoapAddSync {
         this.id = id;
     }
 
-    public Long getMsApp_id() {
-        return msApp_id;
+    public Long getMsAppId() {
+        return msAppId;
     }
 
-    public void setMsApp_id(Long msApp_id) {
-        this.msApp_id = msApp_id;
+    public void setMsAppId(Long msAppId) {
+        this.msAppId = msAppId;
     }
 
-    public Long getAgentApp_id() {
-        return agentApp_id;
+    public Long getAgentAppId() {
+        return agentAppId;
     }
 
-    public void setAgentApp_id(Long agentApp_id) {
-        this.agentApp_id = agentApp_id;
+    public void setAgentAppId(Long agentAppId) {
+        this.agentAppId = agentAppId;
     }
 }

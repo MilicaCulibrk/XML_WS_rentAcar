@@ -54,6 +54,7 @@ public class AddvertismentController {
 
         try {
             addvertismentService.updateAddvertisment(addvertismentDTO);
+          //  client.editAdd(addvertismentDTO);
             return new ResponseEntity<>(addvertismentDTO, HttpStatus.OK);
         } catch (ValidationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);

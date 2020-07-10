@@ -8,6 +8,14 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="editAddRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="add" type="tns:Add"/>
+                        <xs:element name="priceList" type="tns:PricelistSoap"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="addResponse">
                 <xs:complexType>
                     <xs:sequence>
@@ -85,6 +93,9 @@
     <wsdl:message name="addRequest">
         <wsdl:part element="tns:addRequest" name="addRequest"> </wsdl:part>
     </wsdl:message>
+    <wsdl:message name="editAddRequest">
+        <wsdl:part element="tns:editAddRequest" name="editAddRequest"> </wsdl:part>
+    </wsdl:message>
     <wsdl:message name="pricelistResponse">
         <wsdl:part element="tns:pricelistResponse" name="pricelistResponse"> </wsdl:part>
     </wsdl:message>
@@ -101,6 +112,9 @@
         <wsdl:operation name="add">
             <wsdl:input message="tns:addRequest" name="addRequest"> </wsdl:input>
             <wsdl:output message="tns:addResponse" name="addResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="editAdd">
+            <wsdl:input message="tns:editAddRequest" name="editAddRequest"> </wsdl:input>
         </wsdl:operation>
         <wsdl:operation name="pricelist">
             <wsdl:input message="tns:pricelistRequest" name="pricelistRequest"> </wsdl:input>
@@ -123,6 +137,12 @@
             <wsdl:output name="addResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="editAdd">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="editAddRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
         </wsdl:operation>
         <wsdl:operation name="pricelist">
             <soap:operation soapAction=""/>

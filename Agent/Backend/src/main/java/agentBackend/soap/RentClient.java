@@ -30,9 +30,9 @@ public class RentClient  extends WebServiceGatewaySupport {
         request.setBundle(bundle);
         request.getAgentRequestId().addAll(agentRequestId);
         OrderResponse response = (OrderResponse) getWebServiceTemplate()
-                .marshalSendAndReceive("http://localhost:8084/ws/request-schema", request,
+                .marshalSendAndReceive("http://rent-service:8084/ws/request-schema", request,
                         new SoapActionCallback(
-                                "http://localhost:8084/ws/request-schema/orderRequest"));
+                                "http://rent-service:8084/ws/request-schema/orderRequest"));
 
         for (int i=0; i< agentRequestId.size(); i++){
             SoapRentSync sync = new SoapRentSync();
@@ -54,8 +54,8 @@ public class RentClient  extends WebServiceGatewaySupport {
         }
         request.setMsId(ms_id);
         request.setStatus(status);
-        getWebServiceTemplate().marshalSendAndReceive("http://localhost:8084/ws/request-schema", request,
-                        new SoapActionCallback("http://localhost:8084/ws/request-schema/orderRequest"));
+        getWebServiceTemplate().marshalSendAndReceive("http://rent-service:8084/ws/request-schema", request,
+                        new SoapActionCallback("http://rent-service:8084/ws/request-schema/orderRequest"));
         //return response;
     }
     public Purchase cratePuchaseForSoap (PurchaseDTO purchaseDTO){

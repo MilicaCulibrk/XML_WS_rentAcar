@@ -74,8 +74,8 @@ public class PricelistService {
 		p.setUsername(pricelist.getUsername());
 		pricelistRepository.save(p);
 		for (Addvertisment add : addvertismentRepository.findAll()) {
-			if (add.getPriceList().getId().equals(p.getId())){
-				add.setPriceList(p);
+			if (add.getPricelist().getId().equals(p.getId())){
+				add.setPricelist(p);
 				add.setPrice(p.getDailyPrice());
 				addvertismentRepository.save(add);
 			}

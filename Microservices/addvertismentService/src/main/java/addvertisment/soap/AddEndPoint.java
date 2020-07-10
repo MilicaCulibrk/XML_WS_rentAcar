@@ -111,6 +111,41 @@ public class AddEndPoint {
         response.setAgentId(request.getPricelist().getId());
         return response;
     }
+/*    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "editAddRequest")
+    @ResponsePayload
+    public void editAdd(@RequestPayload EditAddRequest request) throws ValidationException {
+
+        SoapAddSync sync = repository.findByAgentAppId(request.getAdd().getId());
+        SoapPriceListSync priceListSync = priceListRepository.findByAgentAppId(request.getPriceList().getId());
+
+        Pricelist pricelist = new Pricelist();
+        pricelist.setId(priceListSync.getMsAppId());
+        pricelist.setDailyPrice(request.getPriceList().getDailyPrice());
+        pricelist.setOverlimitPrice(request.getPriceList().getOverlimitPrice());
+        pricelist.setCdwPrice(request.getPriceList().getCdwPrice());
+        pricelist.setDiscount(request.getPriceList().getDiscount());
+        pricelist.setNumberOfDays(request.getPriceList().getNumberOfDays());
+        pricelist.setUsername(request.getPriceList().getUsername());
+
+
+        AddvertismentDTO addvertismentDTO = new AddvertismentDTO();
+        addvertismentDTO.setId(sync.getMsAppId());
+        addvertismentDTO.setAddvertiser_id(request.getAdd().getAddvertiserId());
+        addvertismentDTO.setPricelist(pricelist);
+        addvertismentDTO.setTransmission_type_id(request.getAdd().getTransmissionTypeId());
+        addvertismentDTO.setVehicle_model_id(request.getAdd().getVehicleModelId());
+        addvertismentDTO.setVehicle_class_id(request.getAdd().getVehicleClassId());
+        addvertismentDTO.setFuel_type_id(request.getAdd().getFuelTypeId());
+        addvertismentDTO.setBrand_id(request.getAdd().getBrandId());
+        addvertismentDTO.setPrice(request.getAdd().getPrice());
+        addvertismentDTO.setLocation(request.getAdd().getLocation());
+        addvertismentDTO.setCdw(request.getAdd().isCdw());
+        addvertismentDTO.setMileage_limit(request.getAdd().getMileageLimit());
+        addvertismentDTO.setMileage(request.getAdd().getMileage());
+        addvertismentDTO.setChild_seats(request.getAdd().getChildSeats());
+
+        this.addvertismentService.updateAddvertisment(addvertismentDTO);
+    }*/
    /* @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deletepricelistRequest")
     @ResponsePayload
     public void deletePriceList(@RequestPayload DeletepricelistRequest request) {
@@ -134,8 +169,8 @@ public class AddEndPoint {
 
     public void saveSync (Long ms_id, Long agent_id){
         SoapAddSync soapAddSync = new SoapAddSync();
-        soapAddSync.setAgentApp_id(agent_id);
-        soapAddSync.setMsApp_id(ms_id);
+        soapAddSync.setAgentAppId(agent_id);
+        soapAddSync.setMsAppId(ms_id);
         repository.save(soapAddSync);
     }
 }
