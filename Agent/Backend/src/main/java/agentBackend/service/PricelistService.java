@@ -24,11 +24,22 @@ public class PricelistService {
     @Autowired
     private AddvertismentService addvertismentService;
 
+	private Pricelist pricelistSoap;
+
+
+	public Pricelist getPricelistSoap() {
+		return pricelistSoap;
+	}
+
+	public void setPricelistSoap(Pricelist pricelistSoap) {
+		this.pricelistSoap = pricelistSoap;
+	}
 
 	public List<Pricelist> getAllPricelists() {
 		// TODO Auto-generated method stub
 		return pricelistRepository.findAll();
 	}
+
 
 	public List<Pricelist> createPricelist(Pricelist pricelist) {
 		// TODO Auto-generated method stub
@@ -46,7 +57,7 @@ public class PricelistService {
         p.setNumberOfDays(pricelist.getNumberOfDays());
         p.setOverlimitPrice(pricelist.getOverlimitPrice());
         p.setUsername(pricelist.getUsername());
-        pricelistRepository.save(p);
+        this.pricelistSoap = pricelistRepository.save(p);
         for (Addvertisment add : addvertismentRepository.findAll()) {
 			if (add.getPricelist().getId().equals(p.getId())){
 				add.setPricelist(p);

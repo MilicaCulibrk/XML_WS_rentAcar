@@ -1,4 +1,3 @@
-
 INSERT INTO public.brand(brand_name)
 VALUES ('Mercedes');
 INSERT INTO public.brand(brand_name)
@@ -323,4 +322,8 @@ INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (1, 9);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (2, 10);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (3, 11);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (4, 12);
-INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (5, 12);
+INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (5, 13);
+
+INSERT INTO public.soap_price_list_sync(agent_app_id, ms_app_id) VALUES ( 1, 1);
+INSERT INTO public.soap_price_list_sync(agent_app_id, ms_app_id) VALUES ( 2, 2);
+

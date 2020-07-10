@@ -1,6 +1,7 @@
 package agentBackend.configuration;
 
 import agentBackend.soap.AddClient;
+import agentBackend.soap.PriceListClient;
 import agentBackend.soap.RentClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,14 @@ public class SoapConfig {
     @Bean
     public AddClient addClient(Jaxb2Marshaller marshaller) {
         AddClient client = new AddClient();
+        client.setDefaultUri("http://localhost:8087/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
+    @Bean
+    public PriceListClient priceListClient(Jaxb2Marshaller marshaller) {
+        PriceListClient client = new PriceListClient();
         client.setDefaultUri("http://localhost:8087/ws");
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);

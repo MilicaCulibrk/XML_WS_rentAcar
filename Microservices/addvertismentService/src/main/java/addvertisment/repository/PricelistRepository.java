@@ -7,4 +7,6 @@ import addvertisment.model.Pricelist;
 
 public interface PricelistRepository extends JpaRepository<Pricelist, Long> {
 
+
+
 }
