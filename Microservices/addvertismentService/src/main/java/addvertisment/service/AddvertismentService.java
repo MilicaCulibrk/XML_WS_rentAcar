@@ -159,13 +159,16 @@ public class AddvertismentService {
         Addvertisment addvertisment = addvertismentRepository.getOne(addvertismentDTO.getId());
         existingDTOtoReal(addvertisment, addvertismentDTO);
 
+        addvertismentRepository.save(addvertisment);
+
         try {
             AddDTO dto = new AddDTO(addvertisment);
+            dto.setOperation(OperationEnum.UPDATE);
+            dto.setEntity(EntityEnum.ADD);
+            this.addvertismentProducer.send(dto);
         } catch (Exception e) {
             System.err.println("Did not sync with search service");
         }
-
-        addvertismentRepository.save(addvertisment);
     }
     public void existingDTOtoReal(Addvertisment real, AddvertismentDTO dto){
         real.setCdw(dto.isCdw());
@@ -197,14 +200,17 @@ public class AddvertismentService {
         if (!add.isPresent()){
             throw new ValidationException("Add with that id doesn't exist!");
         }
-/*
-        try {
-            BrandDTO dto = new BrandDTO(id, "delete");
-            dto.setOperation(OperationEnum.DELETE);
-            this.brandProducer.send(dto);
-        } catch (Exception e) {
-            System.err.println("Did not sync with search service");
-        }*/
+
+
+      try {
+          AddDTO dto = new AddDTO(add.get());
+          dto.setOperation(OperationEnum.DELETE);
+          this.addvertismentProducer.send(dto);
+      } catch (Exception e) {
+          System.err.println("Did not sync with search service");
+      }
+
+
         for (ReservedDate date : add.get().getReservedDates()) {
 			reservedDateRepository.delete(date);
 		}
@@ -218,6 +224,7 @@ public class AddvertismentService {
 		}
         
         for (Comment comment : add.get().getComments()) {
+            System.out.println("----uso----");
 			commentRepository.delete(comment);
 		}
         

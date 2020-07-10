@@ -23,6 +23,7 @@ public class AddDTO {
     private AttributeDTO vehicle_class;
     private AttributeDTO fuel_type;
     private AttributeDTO transmission_type;
+    private Long priceListId;
 
     private OperationEnum operation;
     private EntityEnum entity;
@@ -49,7 +50,8 @@ public class AddDTO {
                                 @JsonProperty("operation") OperationEnum operation,
                                 @JsonProperty("entity") EntityEnum entity,
                                 @JsonProperty("images") ArrayList<ImagesDTO> images,
-                                @JsonProperty("dates") ArrayList<ReservedDatesDTO> dates) {
+                                @JsonProperty("dates") ArrayList<ReservedDatesDTO> dates,
+                                @JsonProperty("priceListId") Long priceListId) {
         this.id = id;
         this.addvertiser_username = addvertiser_username;
         this.mileage = mileage;
@@ -67,6 +69,7 @@ public class AddDTO {
         this.entity = entity;
         this.images = images;
         this.dates = dates;
+        this.priceListId = priceListId;
     }
 
 
@@ -204,5 +207,13 @@ public class AddDTO {
 
     public void setDates(ArrayList<ReservedDatesDTO> dates) {
         this.dates = dates;
+    }
+
+    public Long getPriceListId() {
+        return priceListId;
+    }
+
+    public void setPriceListId(Long priceListId) {
+        this.priceListId = priceListId;
     }
 }

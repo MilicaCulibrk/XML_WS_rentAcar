@@ -188,15 +188,15 @@ INSERT INTO public.comment(accepted, text, title, user_id, user_username, addver
 VALUES ('false','Great, everything was good. Addvertiser was very nice and helpful.', 'Very good', 4, 'vm', 14);
 
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('9','1');
+VALUES ('10','1');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('10','2');
+VALUES ('11','2');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('11','3');
+VALUES ('18','3');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
 VALUES ('18','4');
 INSERT INTO public.addvertisment_comments(addvertisment_id, comments_id)
-VALUES ('18','5');
+VALUES ('14','5');
 
 INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '10');

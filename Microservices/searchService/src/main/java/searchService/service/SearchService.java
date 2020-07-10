@@ -2,20 +2,16 @@ package searchService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import searchService.dto.ImagesDTO;
-import searchService.dto.ReservedDatesDTO;
-import searchService.dto.SearchDTO;
-import searchService.dto.SearchQueryDTO;
-import searchService.model.Images;
-import searchService.model.ReservedDates;
-import searchService.model.Search;
-import searchService.model.TransmissionTypes;
+import searchService.dto.*;
+import searchService.model.*;
 import searchService.mq.dto.AddDTO;
 import searchService.repository.*;
 
+import javax.xml.bind.ValidationException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SearchService {
@@ -186,6 +182,37 @@ public class SearchService {
         return search;
     }
 
+    public void update(AddDTO addDTO) {
+
+        Search search = searchRepository.getOne(addDTO.getId());
+        existingDTOtoReal(search, addDTO);
+
+        searchRepository.save(search);
+    }
+
+    public void delete(AddDTO addDTO){
+
+        Search search = searchRepository.getOne(addDTO.getId());
+
+        for (ReservedDates date : search.getReservedDates()) {
+            reservedDatesRepository.delete(date);
+        }
+
+        for (Images image : search.getImages()) {
+            imagesRepository.delete(image);
+        }
+
+        List<Search> searches = searchRepository.findAll();
+
+        for(Search sr: searches){
+            if(sr.getId().equals(addDTO.getId())){
+                Search search1 = sr;
+                searchRepository.delete(search1);
+            }
+        }
+
+    }
+
     public Search newDTOtoReal(AddDTO dto){
         Search real = new Search();
         real.setId(dto.getId());
@@ -203,6 +230,22 @@ public class SearchService {
         real.setVehicleModel(vehicleModelsRepository.findById(dto.getVehicle_model().getId()).orElse(null));
 
         return real;
+    }
+
+    public void existingDTOtoReal(Search real, AddDTO dto){
+        real.setOwner(dto.getAddvertiser_username());
+        real.setMileage(dto.getMileage());
+        real.setMileage_limit(dto.getMileage_limit());
+        real.setChild_seats(dto.getChild_seats());
+        real.setCdw(dto.isCdw());
+        real.setLocation(dto.getLocation());
+        real.setDaily_price(dto.getDaily_price());
+        real.setBrand(brandsRepository.findById(dto.getBrand().getId()).orElse(null));
+        real.setFuel_type(fuelTypesRepository.findById(dto.getFuel_type().getId()).orElse(null));
+        real.setTransmission_type(transmissionTypesRepository.findById(dto.getTransmission_type().getId()).orElse(null));
+        real.setVehicle_class(vehicleClassesRepository.findById(dto.getVehicle_class().getId()).orElse(null));
+        real.setVehicleModel(vehicleModelsRepository.findById(dto.getVehicle_model().getId()).orElse(null));
+        return;
     }
 
     public Images createImage(ImagesDTO i){

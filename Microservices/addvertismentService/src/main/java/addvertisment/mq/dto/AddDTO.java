@@ -33,6 +33,7 @@ public class AddDTO {
     private EntityEnum entity;
     private ArrayList<ImageDTO> images;
     private ArrayList<ReservedDateDTO> dates;
+    private Long priceListId;
 
     public AddDTO(){}
 
@@ -50,7 +51,7 @@ public class AddDTO {
         this.vehicle_class = new AttributeDTO(addvertisment.getVehicle_class().getId(), addvertisment.getVehicle_class().getVehicle_class_name(), addvertisment.getBrand().getId());
         this.fuel_type = new AttributeDTO(addvertisment.getFuel_type().getId(), addvertisment.getFuel_type().getFuel_type_name(), addvertisment.getBrand().getId());
         this.transmission_type = new AttributeDTO(addvertisment.getTransmission_type().getId(), addvertisment.getTransmission_type().getTransmission_type_name(), addvertisment.getBrand().getId());
-
+        this.priceListId = addvertisment.getPricelist().getId();
     }
 
     public Long getId() {
@@ -187,5 +188,13 @@ public class AddDTO {
 
     public void setDates(ArrayList<ReservedDateDTO> dates) {
         this.dates = dates;
+    }
+
+    public Long getPriceListId() {
+        return priceListId;
+    }
+
+    public void setPriceListId(Long priceListId) {
+        this.priceListId = priceListId;
     }
 }
