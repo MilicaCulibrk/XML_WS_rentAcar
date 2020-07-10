@@ -184,7 +184,6 @@ INSERT INTO public.comment(accepted, text, title, user_id, user_username, addver
 VALUES ('true', 'Everything was excellent and my experience was great.  I really recommend this car!', 'Excellent!!!!', 4, 'vm', 18);
 INSERT INTO public.comment(accepted, text, title, user_id, user_username, addvertisment_id)
 VALUES ('false', 'Not recommend. I was not satisfied with this car', 'Very bad', 4, 'vm', 18);
-<<<<<<< HEAD
 INSERT INTO public.comment(text, title, user_id, user_username, addvertisment_id)
 VALUES ('Great, everything was good. Addvertiser was very nice and helpful.', 'Very good', 4, 'vm', 14);
 
