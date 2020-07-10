@@ -1,4 +1,4 @@
-<template>
+    <template>
   <div>
     <v-dialog v-model="dialogDetails" max-width="450px">
       <template #activator="{ on: dialogDetails }">
@@ -135,14 +135,16 @@ export default {
         this.$emit("emptyKilometres");
       } else {
         axios
-          .post("/purchase/" + this.purchase.id + "/report", this.report)
+          .post(
+            "rent-service/purchase/" + this.purchase.id + "/report",
+            this.report
+          )
           .then(report => {
             this.report = report.data;
             this.$emit("addedReport");
             this.greenReportTemp = true;
             this.dialogDetails = false;
             this.getReports();
-            console.log(this.report.additionalPrice);
           })
           .catch(error => {
             console.log(error);
@@ -151,18 +153,20 @@ export default {
       }
     },
     changeReport(report) {
+      console.log("change");
+      console.log(report.old_kilometres);
+      console.log(report.kilometres_crossed);
       if (report.kilometres_crossed == "") {
         this.$emit("emptyKilometres");
       } else {
         axios
-          .put("/purchase/" + this.purchase.id + "/report", report)
+          .put("rent-service/purchase/" + this.purchase.id + "/report", report)
           .then(report => {
             this.report = report.data;
             this.$emit("changedReport");
             this.greenReportTemp = true;
             this.dialogDetails = false;
             this.getReports();
-            console.log(this.report.additionalPrice);
           })
           .catch(error => {
             console.log(error);
@@ -172,10 +176,10 @@ export default {
     },
     getReports() {
       axios
-        .get("/purchase/report")
+        .get("rent-service/purchase/report")
         .then(reportsList => {
           this.reportsList = reportsList.data;
-          // this.getPurchases();
+          this.getPurchases();
         })
         .catch(error => {
           console.log(error);
@@ -190,15 +194,16 @@ export default {
 
 <style scoped>
 .cardBorderColor {
-  border-left: 1px solid #ff8a65;
-  border-top: 1px solid #ff8a65;
-  border-right: 1px solid #ff8a65;
-  border-bottom: 1px solid #ff8a65;
+  border-left: 2px solid #fbc02d;
+  border-top: 2px solid #fbc02d;
+  border-right: 2px solid #fbc02d;
+  border-bottom: 2px solid #fbc02d;
 }
+
 .detailsBorderColor {
-  border-left: 1.5px solid #ff8a65;
-  border-top: 1.5px solid #ff8a65;
-  border-right: 1.5px solid #ff8a65;
-  border-bottom: 1.5px solid #ff8a65;
+  border-left: 1.5px solid #fbc02d;
+  border-top: 1.5px solid #fbc02d;
+  border-right: 1.5px solid #fbc02d;
+  border-bottom: 1.5px solid #fbc02d;
 }
 </style>

@@ -2,11 +2,11 @@
   <div>
     <!-- Snackbar -->
     <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
-      <span>{{ snackbarSuccessText }}</span>
+      <span>{{snackbarSuccessText}}</span>
       <v-btn text @click="snackbarSuccess = false">Close</v-btn>
     </v-snackbar>
     <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
-      <span>{{ snackbarDangerText }}</span>
+      <span>{{snackbarDangerText}}</span>
       <v-btn text @click="snackbarDanger = false">Close</v-btn>
     </v-snackbar>
 
@@ -17,12 +17,7 @@
     <!-- sort -->
     <v-container class="my-5">
       <v-layout row wrap>
-        <v-btn
-          medium
-          elevation="0"
-          color="white primary--text ml-4"
-          @click="sortBy('daily_price')"
-        >
+        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('daily_price')">
           <v-icon left medium>attach_money</v-icon>
           <span class="caption text-lowercase">by price</span>
         </v-btn>
@@ -42,19 +37,20 @@
             <div class="cardBorderColor">
               <v-responsive class="pt-4">
                 <carousel :perPage="1">
-                  <slide  v-for="(image, index) in car.images" :key="index">
+                  <slide v-for="(image, index) in car.images" :key="index">
                     <img :src="image.url" height="100px" />
                   </slide>
-                </carousel>              </v-responsive>
+                </carousel>
+              </v-responsive>
               <v-card-title></v-card-title>
               <v-card-text>
-                <div class="primary--text font-weight-bold headline">
-                  {{ car.brand_name }} {{ car.vehicle_model_name }}
-                </div>
+                <div
+                  class="primary--text font-weight-bold headline"
+                >{{ car.brand_name }} {{ car.vehicle_model_name }}</div>
                 <div>Price: {{ car.daily_price }}</div>
               </v-card-text>
               <v-card-actions>
-                <!-- komponenta detalji o autu -->
+                <!-- komponenta detalji o autu-->
                 <PopupDetails v-bind:car="car"></PopupDetails>
                 <v-spacer></v-spacer>
                 <!-- komponenta ocene -->
@@ -63,15 +59,8 @@
                 <PopupComments v-bind:car="car"></PopupComments>
                 <v-tooltip bottom color="black">
                   <template v-slot:activator="{ on }">
-                    <v-btn
-                      @click="addToBasket(car)"
-                      icon
-                      v-on="on"
-                      color="primary"
-                    >
-                      <router-link
-                        :to="{ name: 'add', params: { name: car.id } }"
-                      ></router-link>
+                    <v-btn @click="addToBasket(car)" icon v-on="on" color="primary">
+                      <router-link :to="{ name: 'add', params: { name: car.id } }"></router-link>
                       <v-icon>shopping_cart</v-icon>
                     </v-btn>
                   </template>
@@ -98,8 +87,8 @@ export default {
   components: { PopupRatings, PopupComments, PopupDetails, SearchPanel },
   props: {
     header: {
-      type: String,
-    },
+      type: String
+    }
   },
   data() {
     return {
@@ -113,8 +102,8 @@ export default {
       snackbarDangerText: "",
       startDateGreater: false,
       dateList: {
-        arrayEvents: [],
-      },
+        arrayEvents: []
+      }
     };
   },
   methods: {
@@ -134,7 +123,7 @@ export default {
         brand: "",
         model: "",
         price: "",
-        agent: "",
+        owner: "",
         date_from: "",
         date_to: "",
         image: ""
@@ -143,16 +132,17 @@ export default {
       carForChart.brand = car.brand_name;
       carForChart.model = car.vehicle_model_name;
       carForChart.price = car.daily_price;
-      carForChart.agent = car.owner;
+      carForChart.owner = car.owner;
       carForChart.date_from = this.date_from;
       carForChart.date_to = this.date_to;
       carForChart.image = car.images[0].url;
 
       return carForChart;
     },
-    clearDates(){
-      this.date_to="";
-      this.date_from="";
+    clearDates() {
+      console.log("clear datesssssss");
+      this.date_to = "";
+      this.date_from = "";
     },
     addToBasket(car) {
       if (this.$store.state.user.role == "NONE") {
@@ -161,24 +151,24 @@ export default {
         this.snackbarDanger = true;
         return;
       }
-      if(this.date_from=="" || this.date_to==""){
+      if (this.date_from == "" || this.date_to == "") {
         this.snackbarDanger = true;
-        this.snackbarDangerText = "You have to select location, start and end date!";
+        this.snackbarDangerText =
+          "You have to select location, start and end date!";
         return;
       }
       this.$store.commit("addCarInCart", this.createCarForChart(car));
-      console.log(this.$store.state.carsInCart);
-   
+
       this.snackbarSuccess = true;
       this.snackbarSuccessText = "Car added to the cart.";
     },
     getCars() {
       axios
-        .get("/search-service/search")
-        .then((cars) => {
+        .get("/addvertisment")
+        .then(cars => {
           this.cars = cars.data;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
@@ -210,12 +200,12 @@ export default {
     },
     doSearch(searchItem) {
       axios
-        .post("/search-service/search", searchItem)
-        .then((cars) => {
+        .post("/addvertisment/search", searchItem)
+        .then(cars => {
           this.cars = cars.data;
           console.log(searchItem);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
@@ -283,29 +273,31 @@ export default {
       for (const d in arr) {
         this.dateList.arrayEvents.push(arr[d]);
       }
-    },
+    }
   },
   mounted() {
     //get cars
     axios
       .get("/addvertisment")
-      .then((cars) => {
+      .then(cars => {
         this.cars = cars.data;
+        console.log(cars);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
-  },
+  }
 };
 </script>
 
 <style scoped>
 .cardBorderColor {
-  border-left: 1px solid #ff8a65;
-  border-top: 1px solid #ff8a65;
-  border-right: 1px solid #ff8a65;
-  border-bottom: 1px solid #ff8a65;
+  border-left: 2px solid #ff8a65;
+  border-top: 2px solid #ff8a65;
+  border-right: 2px solid #ff8a65;
+  border-bottom: 2px solid #ff8a65;
 }
+
 .detailsBorderColor {
   border-left: 1.5px solid #ff8a65;
   border-top: 1.5px solid #ff8a65;

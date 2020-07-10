@@ -16,12 +16,13 @@
             :key="request.id"
             class="detailsBorderColor"
           >
-            <v-expansion-panel-header>Request {{request.id}} - {{request.status}}
-                <template v-slot:actions >
-                    <v-icon color="teal" v-if="request.status=='PAID'">mdi-check</v-icon>
-                    <v-icon color="error" v-if="request.status=='CANCELED'">mdi-alert-circle</v-icon>
-                    <v-icon v-if="request.status=='PENDING'">mdi-dots-horizontal</v-icon>
-                </template>
+            <v-expansion-panel-header>
+              Request {{request.id}} - {{request.status}}
+              <template v-slot:actions>
+                <v-icon color="teal" v-if="request.status=='PAID'">mdi-check</v-icon>
+                <v-icon color="error" v-if="request.status=='CANCELED'">mdi-alert-circle</v-icon>
+                <v-icon v-if="request.status=='PENDING'">mdi-dots-horizontal</v-icon>
+              </template>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-expansion-panels>
@@ -59,6 +60,83 @@
                       </v-col>
                     </v-row>
                   </v-expansion-panel-content>
+                  <v-row>
+                    <v-col cols="2"></v-col>
+                    <v-col cols="2"></v-col>
+                    <v-col cols="2"></v-col>
+                    <v-col cols="2"></v-col>
+                    <v-col cols="2"></v-col>
+                    <v-col cols="2">
+                      <div
+                        v-if="
+                          request.status == 'PAID' &&
+                            purchase.date_to <
+                              new Date().toISOString().slice(0, 10) + 2
+                        "
+                      >
+                        <div v-for="(purchaseId, idx) in purchaseIds" :key="idx">
+                          <div v-if="purchaseId == purchase.id">
+                            <ReportDialog
+                              v-bind:purchase="purchase"
+                              v-bind:greenReport="true"
+                              @addedReport="
+                                snackbarSuccess = true;
+                                snackbarSuccessText = 'You added the report!';
+                              "
+                              @changedReport="
+                                snackbarSuccess = true;
+                                snackbarSuccessText = 'You changed the report!';
+                              "
+                              @notAddedReport="
+                                snackbarDanger = true;
+                                snackbarDangerText =
+                                  'Report not added, something went wrong!';
+                              "
+                              @notChangedReport="
+                                snackbarDanger = true;
+                                snackbarDangerText =
+                                  'Report not changed, something went wrong!';
+                              "
+                              @emptyKilometres="
+                                snackbarDanger = true;
+                                snackbarDangerText = 'You must add kilometres!';
+                              "
+                            ></ReportDialog>
+                          </div>
+                        </div>
+                        <div v-for="(redId, index) in redIds" :key="index - 100">
+                          <div v-if="redId == purchase.id">
+                            <ReportDialog
+                              v-bind:purchase="purchase"
+                              v-bind:greenReport="false"
+                              @addedReport="
+                                snackbarSuccess = true;
+                                snackbarSuccessText = 'You added the report!';
+                              "
+                              @changedReport="
+                                snackbarSuccess = true;
+                                snackbarSuccessText = 'You changed the report!';
+                              "
+                              @notAddedReport="
+                                snackbarDanger = true;
+                                snackbarDangerText =
+                                  'Report not added, something went wrong!';
+                              "
+                              @notChangedReport="
+                                snackbarDanger = true;
+                                snackbarDangerText =
+                                  'Report not changed, something went wrong!';
+                              "
+                              @emptyKilometres="
+                                snackbarDanger = true;
+                                snackbarDangerText = 'You must add kilometres!';
+                              "
+                            ></ReportDialog>
+                          </div>
+                        </div>
+                      </div>
+                    </v-col>
+                  </v-row>
                 </v-expansion-panel>
                 <v-container fluid v-if="request.status=='PENDING'">
                   <v-row>
@@ -96,15 +174,22 @@
 
 <script>
 import axios from "axios";
-
+import ReportDialog from "@/components/requests/ReportDialog";
 export default {
+  components: { ReportDialog },
   data() {
     return {
       requests: [],
       snackbarSuccess: false,
       snackbarSuccessText: "",
       snackbarDanger: false,
-      snackbarDangerText: ""
+      snackbarDangerText: "",
+      reportsList: [],
+      purchaseList: [],
+      purchaseIds: [],
+      redIds: [],
+      greenReport: true,
+      greenReportFalse: false
     };
   },
   methods: {
@@ -148,9 +233,54 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    getPurchases() {
+      axios
+        .get("/rent-service/purchase")
+        .then(purchaseList => {
+          this.purchaseList = purchaseList.data;
+          this.searchPurchases();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getReports() {
+      axios
+        .get("/rent-service/purchase/report")
+        .then(reportsList => {
+          this.reportsList = reportsList.data;
+          this.getPurchases();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    searchPurchases() {
+      var i = 0;
+      for (i = 0; i < this.reportsList.length; i++) {
+        this.purchaseIds.push(this.reportsList[i].purchase_id);
+      }
+      this.setRedIds();
+    },
+    setRedIds() {
+      var i = 0;
+      for (i = 0; i < this.purchaseList.length; i++) {
+        var j = 0;
+        var flag = 0;
+        for (j = 0; j < this.purchaseIds.length; j++) {
+          if (this.purchaseList[i].id == this.purchaseIds[j]) {
+            flag = 1;
+          }
+        }
+        if (flag == 0) {
+          this.redIds.push(this.purchaseList[i].id);
+        }
+      }
     }
   },
   mounted() {
+    this.getReports();
     this.getRequests();
   }
 };

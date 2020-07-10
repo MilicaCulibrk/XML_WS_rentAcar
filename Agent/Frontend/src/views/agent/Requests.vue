@@ -17,10 +17,15 @@
             :key="request.id"
             class="detailsBorderColor"
           >
-            <v-expansion-panel-header
-              >Request {{ request.id }} -
-              {{ request.status }}</v-expansion-panel-header
-            >
+            <v-expansion-panel-header>
+              Request {{ request.id }} -
+              {{ request.status }}
+              <template v-slot:actions>
+                <v-icon color="teal" v-if="request.status=='PAID'">mdi-check</v-icon>
+                <v-icon color="error" v-if="request.status=='CANCELED'">mdi-alert-circle</v-icon>
+                <v-icon v-if="request.status=='PENDING'">mdi-dots-horizontal</v-icon>
+              </template>
+            </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-expansion-panels>
                 <v-expansion-panel
@@ -30,19 +35,15 @@
                 >
                   <v-expansion-panel-header>
                     <v-row no-gutters>
-                      <v-col cols="4" class="primary--text"
-                        >Car {{ purchase.id_add }} -
-                        {{ purchase.brand_model }}</v-col
-                      >
+                      <v-col cols="4" class="primary--text">
+                        Car {{ purchase.id_add }} -
+                        {{ purchase.brand_model }}
+                      </v-col>
                       <v-col cols="8" class="text--secondary">
                         <v-fade-transition leave-absolute>
                           <v-row no-gutters style="width: 100%">
-                            <v-col cols="6"
-                              >Start date: {{ purchase.date_from }}</v-col
-                            >
-                            <v-col cols="6"
-                              >End date: {{ purchase.date_to }}</v-col
-                            >
+                            <v-col cols="6">Start date: {{ purchase.date_from }}</v-col>
+                            <v-col cols="6">End date: {{ purchase.date_to }}</v-col>
                           </v-row>
                         </v-fade-transition>
                       </v-col>
@@ -55,9 +56,7 @@
                         <v-fade-transition leave-absolute>
                           <v-row no-gutters style="width: 100%">
                             <v-col cols="6">Owner: {{ purchase.owner }}</v-col>
-                            <v-col cols="6"
-                              >Client: {{ purchase.client }}</v-col
-                            >
+                            <v-col cols="6">Client: {{ purchase.client }}</v-col>
                           </v-row>
                         </v-fade-transition>
                       </v-col>
@@ -77,10 +76,7 @@
                               new Date().toISOString().slice(0, 10) + 2
                         "
                       >
-                        <div
-                          v-for="(purchaseId, idx) in purchaseIds"
-                          :key="idx"
-                        >
+                        <div v-for="(purchaseId, idx) in purchaseIds" :key="idx">
                           <div v-if="purchaseId == purchase.id">
                             <ReportDialog
                               v-bind:purchase="purchase"
@@ -110,10 +106,7 @@
                             ></ReportDialog>
                           </div>
                         </div>
-                        <div
-                          v-for="(redId, index) in redIds"
-                          :key="index - 100"
-                        >
+                        <div v-for="(redId, index) in redIds" :key="index - 100">
                           <div v-if="redId == purchase.id">
                             <ReportDialog
                               v-bind:purchase="purchase"
@@ -153,12 +146,7 @@
                     <v-col cols="1">
                       <v-tooltip bottom color="white">
                         <template v-slot:activator="{ on }">
-                          <v-btn
-                            icon
-                            v-on="on"
-                            color="green"
-                            @click="acceptRequest(request.id)"
-                          >
+                          <v-btn icon v-on="on" color="green" @click="acceptRequest(request.id)">
                             <v-icon>mdi-check</v-icon>
                           </v-btn>
                         </template>
@@ -168,12 +156,7 @@
                     <v-col cols="1">
                       <v-tooltip bottom color="white">
                         <template v-slot:activator="{ on }">
-                          <v-btn
-                            icon
-                            v-on="on"
-                            color="red"
-                            @click="declineRequest(request.id)"
-                          >
+                          <v-btn icon v-on="on" color="red" @click="declineRequest(request.id)">
                             <v-icon>mdi-close</v-icon>
                           </v-btn>
                         </template>
@@ -208,20 +191,20 @@ export default {
       purchaseIds: [],
       redIds: [],
       greenReport: true,
-      greenReportFalse: false,
+      greenReportFalse: false
     };
   },
   methods: {
     acceptRequest(id) {
       axios
         .put("/request/" + id)
-        .then((response) => {
+        .then(response => {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "Request is accepted!";
           console.log(response);
           this.getRequests();
         })
-        .catch((error) => {
+        .catch(error => {
           this.snackbarDanger = true;
           this.snackbarDangerText = "Error";
           console.log(error);
@@ -230,13 +213,13 @@ export default {
     declineRequest(id) {
       axios
         .put("/request/decline/" + id)
-        .then((response) => {
+        .then(response => {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "Request is canceled!";
           console.log(response);
           this.getRequests();
         })
-        .catch((error) => {
+        .catch(error => {
           this.snackbarDanger = true;
           this.snackbarDangerText = "Error";
           console.log(error);
@@ -245,33 +228,34 @@ export default {
     getRequests() {
       axios
         .get("/request/to/" + this.$store.state.user.username)
-        .then((requests) => {
+        .then(requests => {
           this.requests = requests.data;
           console.log(this.requests);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
     getPurchases() {
       axios
         .get("/purchase")
-        .then((purchaseList) => {
+        .then(purchaseList => {
           this.purchaseList = purchaseList.data;
           this.searchPurchases();
+          console.log(this.purchaseList.length + "jaaaaaaaaa");
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
     getReports() {
       axios
         .get("/purchase/report")
-        .then((reportsList) => {
+        .then(reportsList => {
           this.reportsList = reportsList.data;
           this.getPurchases();
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
@@ -298,12 +282,12 @@ export default {
           this.redIds.push(this.purchaseList[i].id);
         }
       }
-    },
+    }
   },
   mounted() {
     this.getReports();
     this.getRequests();
-  },
+  }
 };
 </script>
 
