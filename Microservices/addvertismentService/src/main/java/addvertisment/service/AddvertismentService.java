@@ -8,7 +8,6 @@ import addvertisment.mq.enums.OperationEnum;
 import addvertisment.mq.producer.AddvertismentProducer;
 import addvertisment.mq.producer.FuelTypeProducer;
 import addvertisment.repository.*;
-import localhost._8087.add_schema.Add;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
