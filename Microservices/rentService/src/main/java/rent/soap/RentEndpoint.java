@@ -75,7 +75,7 @@ public class RentEndpoint {
         //purchaseDTO.setId(purchase.getId());
         purchaseDTO.setClient(purchase.getClient());
         purchaseDTO.setId_add(purchase.getIdAdd());
-        purchaseDTO.setOwner(purchase.getOwner());
+        purchaseDTO.setOwner("ss");
         purchaseDTO.setOrdered(purchase.isOrdered());
         purchaseDTO.setDate_from(purchase.getDateFrom());
         purchaseDTO.setDate_to(purchase.getDateTo());

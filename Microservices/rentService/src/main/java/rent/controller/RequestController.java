@@ -10,7 +10,9 @@ import rent.dto.PurchaseDTO;
 import rent.dto.RequestDTO;
 import rent.model.Purchase;
 import rent.model.Request;
+import rent.service.PurchaseService;
 import rent.service.RequestService;
+import rent.soap.RentClient;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -24,6 +26,13 @@ public class RequestController {
 
     @Autowired
     RequestService requestService;
+
+    @Autowired
+    RentClient client;
+
+    @Autowired
+    PurchaseService purchaseService;
+
 
     @GetMapping(value = "")
     public ResponseEntity<String> getAllRequests ()  {
@@ -73,8 +82,17 @@ public class RequestController {
         if (purchases == null){
             return new ResponseEntity("List of purchases does not exist", HttpStatus.BAD_REQUEST);
         }
-
+      //  this.client.editStatus();
         ArrayList<Request> requests = requestService.createRequest(purchases);
+        ArrayList<Long> ids = new ArrayList<>();
+        for(Request r : requests){
+            if (purchaseService.isRequestForSS(r)) {
+                ids.add(r.getId());
+                this.client.getOrder(purchases, false, ids);
+            }
+        }
+
+
         return new ResponseEntity(requests, HttpStatus.OK);
     }
     
@@ -85,8 +103,14 @@ public class RequestController {
         if (purchases == null){
             return new ResponseEntity("List of purchases does not exist", HttpStatus.BAD_REQUEST);
         }
-
+     //   this.client.editStatus();
         Request request = requestService.createBundleRequest(purchases);
+
+        if (purchaseService.isRequestForSS(request)) {
+            ArrayList<Long> ids = new ArrayList<>();
+            ids.add(request.getId());
+            this.client.getOrder(purchases, true, ids);
+        }
         return new ResponseEntity(request, HttpStatus.OK);
     }
 
@@ -99,6 +123,7 @@ public class RequestController {
         }
         try {
             requestService.updateRequest(id);
+            this.client.editStatus(id, "ACCEPT");
             return new ResponseEntity("Request is updated", HttpStatus.OK);
         }catch (NoSuchElementException e) {
             return new ResponseEntity<>("Request with this id doesn't exist", HttpStatus.NOT_FOUND);
@@ -114,6 +139,7 @@ public class RequestController {
         }
         try {
             requestService.updateDeclineRequest(id);
+            this.client.editStatus(id, "DECLINE");
             return new ResponseEntity("Request is updated", HttpStatus.OK);
         }catch (NoSuchElementException e) {
             return new ResponseEntity<>("Request with this id doesn't exist", HttpStatus.NOT_FOUND);

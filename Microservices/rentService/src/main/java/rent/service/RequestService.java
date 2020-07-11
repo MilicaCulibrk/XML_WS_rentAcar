@@ -63,12 +63,13 @@ public class RequestService {
         for (PurchaseDTO p : purchases){
             Request request = new Request();
             request.setStatus("PENDING");
-            requestRepository.save(request);
+            Request request1 = requestRepository.save(request);
             Purchase purchase = this.createPurchase(p);
-            purchase.setRequest(request);
+            purchase.setRequest(request1);
             purchasesForRequest.add(purchase);
             purchaseRepository.save(purchase);
-            requests.add(request);
+            requests.add(request1);
+
         }
         return requests;
     }
@@ -142,8 +143,8 @@ public class RequestService {
 
         
         ArrayList<Long> ids = new ArrayList<>();
-
-        for (Purchase purchaseAccepted : request.getPurchaseList()) {
+        List<Purchase> purchaseList = purchaseRepository.findAllByRequest(request);
+        for (Purchase purchaseAccepted : purchaseList) {
         	purchaseAccepted.setOrdered(true);
 	        purchaseRepository.save(purchaseAccepted);
 	        
@@ -171,7 +172,6 @@ public class RequestService {
 		}
 
 	}
-
 	public void updateDeclineRequest(Long id) {
 		// TODO Auto-generated method stub
         Request request = requestRepository.findById(id).orElse(null);
@@ -179,7 +179,8 @@ public class RequestService {
             throw new NoSuchElementException();
         }
         request.setStatus("CANCELED");
-        for (Purchase purchase : request.purchaseList) {
+        List<Purchase> purchaseList = purchaseRepository.findAllByRequest(request);
+        for (Purchase purchase : purchaseList) {
 			purchase.setOrdered(false);
 	        purchaseRepository.save(purchase);
 		}
