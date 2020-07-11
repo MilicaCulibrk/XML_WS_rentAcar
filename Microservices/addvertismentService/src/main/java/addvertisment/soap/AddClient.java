@@ -51,8 +51,8 @@ public class AddClient extends WebServiceGatewaySupport {
         request.setAdd(add);
        // request.setFuelTypeName(fuelTypeDTO.getFuel_type_name());
         AddMSResponse response = (AddMSResponse) getWebServiceTemplate()
-                .marshalSendAndReceive("http://add-service:8081/ws/add-schema", request,
-                        new SoapActionCallback("http://add-service:8081/ws/add-schema/addMSRequest"));
+                .marshalSendAndReceive("http://agent:8081/ws/add-schema", request,
+                        new SoapActionCallback("http://agent:8081/ws/add-schema/addMSRequest"));
 
         this.saveSync(response.getMsId(), response.getAgentId());
         return response;

@@ -19,7 +19,7 @@ public class SoapConfig {
     @Bean
     public AddClient addClient(Jaxb2Marshaller marshaller) {
         AddClient client = new AddClient();
-        client.setDefaultUri("http://add-service:8081/ws");
+        client.setDefaultUri("http://agent:8081/ws");
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
         return client;
@@ -27,7 +27,7 @@ public class SoapConfig {
     @Bean
     public PriceListClient priceListClient(Jaxb2Marshaller marshaller) {
         PriceListClient client = new PriceListClient();
-        client.setDefaultUri("http://add-service:8081/ws");
+        client.setDefaultUri("http://agent:8081/ws");
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
         return client;
