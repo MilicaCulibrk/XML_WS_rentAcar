@@ -134,7 +134,7 @@
                     <v-col cols="1">
                       <v-tooltip bottom color="white">
                         <template v-slot:activator="{ on }">
-                          <v-btn icon v-on="on" color="green" @click="acceptRequest(request.id)">
+                          <v-btn icon v-on="on" color="green" @click="acceptRequest(request)">
                             <v-icon>mdi-check</v-icon>
                           </v-btn>
                         </template>
@@ -179,13 +179,18 @@ export default {
       purchaseIds: [],
       redIds: [],
       greenReport: true,
-      greenReportFalse: false
+      greenReportFalse: false,
+      dates: [],
+      modal: false,
+      nowDate: new Date().toISOString().slice(0, 10) + 2,
+      reservedDates: [],
+      reservedOneDate: [],
     };
   },
   methods: {
-    acceptRequest(id) {
+    acceptRequest(request) {
       axios
-        .put("/request/" + id)
+        .put("/request/" + request.id)
         .then(response => {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "Request is accepted!";
@@ -197,6 +202,12 @@ export default {
           this.snackbarDangerText = "Error";
           console.log(error);
         });
+      request.purchaseDTOS.forEach(element => {
+        var list = new Array();
+        list.push(element.date_from);
+        list.push(element.date_to);
+        this.reserveDate(list, element.id_add);
+      });
     },
     declineRequest(id) {
       axios
@@ -212,6 +223,48 @@ export default {
           this.snackbarDangerText = "Error";
           console.log(error);
         });
+    },
+    reserveDate(dates, id_add) {
+      var startDate = new Date(dates[0]);
+      var endDate = new Date(dates[1]);
+      var arr = new Array();
+      var dt = new Date(startDate);
+      if (dt < endDate) {
+        while (dt <= endDate) {
+          arr.push(new Date(dt).toISOString().substr(0, 10));
+          dt.setDate(dt.getDate() + 1);
+        }
+      } else {
+        while (endDate <= dt) {
+          arr.push(new Date(endDate).toISOString().substr(0, 10));
+          endDate.setDate(endDate.getDate() + 1);
+        }
+      }
+      for (const d in arr) {
+        this.reservedOneDate.push(arr[d]);
+      }
+      axios
+        .post(
+          "/reservedDate/" + id_add,
+          this.createListDates(arr)
+        )
+        .then(response => {
+          console.log(response);
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText = "Those dates are marked in add.";
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    createListDates(arrayEvents) {
+      var listDates = [];
+      for (const i in arrayEvents) {
+        var arrayEvent = { id: "", oneDate: "" };
+        arrayEvent.oneDate = arrayEvents[i];
+        listDates.push(arrayEvent);
+      }
+      return listDates;
     },
     getRequests() {
       axios
