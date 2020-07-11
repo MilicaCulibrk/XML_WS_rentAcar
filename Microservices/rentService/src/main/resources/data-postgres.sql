@@ -8,9 +8,9 @@ INSERT INTO public.request(status) VALUES ('PAID');
 INSERT INTO public.request(status) VALUES ('PAID');
 
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
-	VALUES ( '2020-06-21', '2020-06-29', 11, 'ss', 'mm', false, 1, 'Suzuki Vitara SE');
+	VALUES ( '2020-07-21', '2020-07-29', 11, 'ss', 'mm', false, 1, 'Suzuki Vitara SE');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
-	VALUES ( '2020-06-21', '2020-06-25', 12, 'ss', 'mm', false, 1, 'Suzuki Vitara');
+	VALUES ( '2020-07-21', '2020-07-25', 12, 'ss', 'mm', false, 1, 'Suzuki Vitara');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 	VALUES ( '2020-05-21', '2020-05-23', 9, 'vm', 'ss', true, 2, 'Suzuki Cross');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)

@@ -32,9 +32,25 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         wsdl11Definition.setSchema(rentSchema);
         return wsdl11Definition;
     }
+    @Bean(name = "add")
+    public DefaultWsdl11Definition defaultWsdl11DefinitionAdd(XsdSchema addSchema) {
+        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+        wsdl11Definition.setPortTypeName("AddPort");
+        wsdl11Definition.setLocationUri("/ws");
+        wsdl11Definition.setTargetNamespace("http://localhost:8081/add-schema");
+        wsdl11Definition.setSchema(addSchema);
+        return wsdl11Definition;
+    }
 
     @Bean
     public XsdSchema rentSchema() {
         return new SimpleXsdSchema(new ClassPathResource("request.xsd"));
     }
+
+    @Bean
+    public XsdSchema addSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("add.xsd"));
+    }
+
+
 }

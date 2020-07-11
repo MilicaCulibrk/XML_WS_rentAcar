@@ -118,7 +118,8 @@ export default {
       dates: [],
       nowDate: new Date().toISOString().slice(0, 10) + 2,
       reservedDates: [],
-      reservedOneDate: []
+      reservedOneDate: [],
+      requests: {},
     };
   },
   firestore() {
@@ -202,6 +203,7 @@ export default {
             this.modals.push("modal" + i);
             this.modals[i] = false;
           }
+          this.getRequests(dates[0], dates[1]);
         })
         .catch(error => {
           console.log(error);
@@ -222,7 +224,42 @@ export default {
         listDates.push(arrayEvent);
       }
       return listDates;
-    }
+    },
+    getRequests(start, end) {
+      var newStart = new Date(start);
+      var newEnd = new Date(end);
+      axios
+        .get("/request/to/" + this.$store.state.user.username)
+        .then(requests => {
+          this.requests = requests.data;
+          this.requests.forEach(request => {
+            request.purchaseDTOS.forEach(purchase => {
+              var startDate = new Date(purchase.date_from);
+              var endDate = new Date(purchase.date_to);
+              if(!((startDate<newStart && endDate<newStart) || (startDate>newEnd && endDate>newEnd))){
+                this.declineRequest(request.id);
+              }
+            });
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    declineRequest(id) {
+      axios
+        .put("/request/decline/" + id)
+        .then(response => {
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText = "Request is canceled!";
+          console.log(response);
+        })
+        .catch(error => {
+          this.snackbarDanger = true;
+          this.snackbarDangerText = "Error";
+          console.log(error);
+        });
+    },
   },
   computed() {
     this.modalsUpdate();
