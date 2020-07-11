@@ -11,40 +11,21 @@
     </v-snackbar>
 
     <!-- pretraga -->
-    <SearchPanel
-      @search="search"
-      @getCars="getCars()"
-      @clearDates="clearDates()"
-    ></SearchPanel>
+    <SearchPanel @search="search" @getCars="getCars()" @clearDates="clearDates()"></SearchPanel>
 
     <!-- cards -->
     <!-- sort -->
     <v-container class="my-5">
       <v-layout row wrap>
-        <v-btn
-          medium
-          elevation="0"
-          color="white primary--text ml-4"
-          @click="sortBy('daily_price')"
-        >
+        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('daily_price')">
           <v-icon left medium>attach_money</v-icon>
           <span class="caption text-lowercase">by price</span>
         </v-btn>
-        <v-btn
-          medium
-          elevation="0"
-          color="white primary--text ml-4"
-          @click="sortBy('mileage')"
-        >
+        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('mileage')">
           <v-icon left medium>av_timer</v-icon>
           <span class="caption text-lowercase">by mileage</span>
         </v-btn>
-        <v-btn
-          medium
-          elevation="0"
-          color="white primary--text ml-4"
-          @click="sortBy('daily_price')"
-        >
+        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('daily_price')">
           <v-icon left medium>star</v-icon>
           <span class="caption text-lowercase">by ratings</span>
         </v-btn>
@@ -63,9 +44,9 @@
               </v-responsive>
               <v-card-title></v-card-title>
               <v-card-text>
-                <div class="primary--text font-weight-bold headline">
-                  {{ car.brand_name }} {{ car.vehicle_model_name }}
-                </div>
+                <div
+                  class="primary--text font-weight-bold headline"
+                >{{ car.brand_name }} {{ car.vehicle_model_name }}</div>
                 <div>Price: {{ car.daily_price }}</div>
               </v-card-text>
               <v-card-actions>
@@ -77,59 +58,51 @@
                 <!-- komponenta komentari -->
                 <PopupComments v-bind:car="car"></PopupComments>
                 <v-tooltip bottom color="black">
-                  <template
-                    v-slot:activator="{ on }"
-                    v-if="$store.state.user.active == true"
-                  >
-                    <v-btn
-                      @click="addToBasket(car)"
-                      icon
-                      v-on="on"
-                      color="primary"
-                    >
-                      <router-link
-                        :to="{ name: 'add', params: { name: car.id } }"
-                      ></router-link>
+                  <template v-slot:activator="{ on }" v-if="$store.state.user.active == true">
+                    <v-btn @click="addToBasket(car)" icon v-on="on" color="primary">
+                      <router-link :to="{ name: 'add', params: { name: car.id } }"></router-link>
                       <v-icon>shopping_cart</v-icon>
                     </v-btn>
                   </template>
                   <span class="primary--text">Add to basket</span>
                 </v-tooltip>
-                <v-row justify="center" v-if="$store.state.user.active == null">
-                  <v-dialog
-                    v-model="dialogForbbiden"
-                    persistent
-                    max-width="600"
+                <v-row v-if="$store.state.user.active == null">
+                  <v-menu
+                    :nudge-right="40"
+                    lazy
+                    center
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="600px"
+                    v-model="dialogsForbidden[car.id]"
                   >
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon v-bind="attrs" v-on="on" color="primary">
+                      <v-btn icon v-bind="attrs" v-on="on" color="primary" class="ml-12">
                         <v-icon>shopping_cart</v-icon>
                       </v-btn>
                     </template>
 
                     <v-card>
-                      <v-card-title class="headline"
-                        >You can't rent until you settle your
-                        debts.</v-card-title
-                      >
-                      <v-card-text
-                        >You have exceeded the mileage limit. Please pay your
-                        debts to continue.</v-card-text
-                      >
+                      <v-card-title class="headline">
+                        You can't rent until you settle your
+                        debts.
+                      </v-card-title>
+                      <v-card-text>
+                        You have exceeded the mileage limit. Please pay your
+                        debts to continue.
+                      </v-card-text>
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn
                           color="green darken-1"
                           text
-                          @click="dialogForbbiden = false"
-                          >Cancel</v-btn
-                        >
-                        <v-btn color="green darken-1" text @click="payDebts()"
-                          >Pay</v-btn
-                        >
+                          @click="dialogsForbidden[car.id] = false"
+                        >Cancel</v-btn>
+                        <v-btn color="green darken-1" text @click="payDebts()">Pay</v-btn>
                       </v-card-actions>
                     </v-card>
-                  </v-dialog>
+                  </v-menu>
                 </v-row>
               </v-card-actions>
             </div>
@@ -152,8 +125,8 @@ export default {
   components: { PopupRatings, PopupComments, PopupDetails, SearchPanel },
   props: {
     header: {
-      type: String,
-    },
+      type: String
+    }
   },
   data() {
     return {
@@ -166,13 +139,14 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       startDateGreater: false,
+      dialogsForbidden: [],
       grades: 0,
       average: 0,
       dateList: {
-        arrayEvents: [],
+        arrayEvents: []
       },
       dialogForbbiden: false,
-      user: {},
+      user: {}
     };
   },
   methods: {
@@ -200,7 +174,7 @@ export default {
         owner: "",
         date_from: "",
         date_to: "",
-        image: "",
+        image: ""
       };
       carForChart.id = car.id;
       carForChart.brand = car.brand_name;
@@ -246,15 +220,21 @@ export default {
       this.user.active = true;
       axios
         .put("/user-service/user", this.user)
-        .then((response) => {
+        .then(response => {
           this.snackbarSuccess = true;
           this.snackbarSuccessText =
             "Thank you for the payment. Now you can rent a car.";
+
+          var i = 0;
+          for (i = 0; i < this.dialogsForbidden.length; i++) {
+            this.dialogsForbidden[i] = false;
+          }
+
           this.dialogForbbiden = false;
           this.$store.state.user.active = true;
           console.log(response);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
@@ -262,21 +242,26 @@ export default {
       if (this.$store.state.user.role == "NONE") {
         axios
           .get("/search-service/search")
-          .then((cars) => {
+          .then(cars => {
             this.cars = cars.data;
             this.getLocations();
+            var i = 0;
+            for (i = 0; i < this.cars.length; i++) {
+              this.dialogsForbidden.push("modal" + i);
+              this.dialogsForbidden[i] = false;
+            }
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
           });
       } else {
         axios
           .get("/search-service/search/" + this.$store.state.user.username)
-          .then((cars) => {
+          .then(cars => {
             this.cars = cars.data;
             this.getLocations();
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
           });
       }
@@ -308,10 +293,10 @@ export default {
     doSearch(searchItem) {
       axios
         .post("/search-service/search", searchItem)
-        .then((cars) => {
+        .then(cars => {
           this.cars = cars.data;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
@@ -376,12 +361,12 @@ export default {
       for (const d in arr) {
         this.dateList.arrayEvents.push(arr[d]);
       }
-    },
+    }
   },
   computed: {
     getCars1() {
       return this.getCars();
-    },
+    }
   },
   created: function() {
     this.getCars();
@@ -391,25 +376,30 @@ export default {
     if (this.$store.state.user.role == "NONE") {
       axios
         .get("/search-service/search")
-        .then((cars) => {
+        .then(cars => {
           this.cars = cars.data;
           this.getLocations();
+          var i = 0;
+          for (i = 0; i < this.cars.length; i++) {
+            this.dialogsForbidden.push("modal" + i);
+            this.dialogsForbidden[i] = false;
+          }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     } else {
       axios
         .get("/search-service/search/" + this.$store.state.user.username)
-        .then((cars) => {
+        .then(cars => {
           this.cars = cars.data;
           this.getLocations();
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }
-  },
+  }
 };
 </script>
 

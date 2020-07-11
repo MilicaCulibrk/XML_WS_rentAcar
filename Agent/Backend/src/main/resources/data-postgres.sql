@@ -253,7 +253,7 @@ INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, 
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 	VALUES ( '2020-06-23', '2020-06-26', 3, 'ss', 'mm', false, 3, 'Suzuki Vitara SE');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
-	VALUES ( '2020-05-18', '2020-06-06', 2, 'ss', 'ss', true, 4, 'BMW X3');
+	VALUES ( '2020-05-18', '2020-06-06', 2, 'ss', 'mm', true, 4, 'BMW X3');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 	VALUES ( '2020-05-23', '2020-05-26', 3, 'ss', 'mm', true, 5, 'Suzuki Vitara SE');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)

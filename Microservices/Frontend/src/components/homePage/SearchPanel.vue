@@ -168,7 +168,7 @@
             <v-select
               v-model="searchItem.selectMinPrice"
               :items="minPriceItems"
-              label="Min daily price (RSD)"
+              label="Min daily price"
               outlined
               dense
               clearable
@@ -181,7 +181,7 @@
             <v-select
               v-model="searchItem.selectMaxPrice"
               :items="minPriceItems"
-              label="Max daily price (RSD)"
+              label="Max daily price"
               outlined
               dense
               clearable
