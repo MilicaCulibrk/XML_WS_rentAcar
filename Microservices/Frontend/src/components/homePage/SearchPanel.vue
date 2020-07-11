@@ -115,7 +115,12 @@
             <!-- search button  -->
             <v-spacer></v-spacer>
             <v-col class="mr-n3 mt-3">
-              <v-btn rounded class="primary white--text mt-2" @click.native.stop @click="search()">
+              <v-btn
+                rounded
+                class="primary white--text mt-2"
+                @click.native.stop
+                @click="search()"
+              >
                 <v-icon left>search</v-icon>
                 <span>search</span>
               </v-btn>
@@ -281,7 +286,12 @@
           </v-col>
           <!-- CDW -->
           <v-col cols="1">
-            <v-checkbox label="CDW" class="mt-6" v-model="searchItem.cdw" color="primary"></v-checkbox>
+            <v-checkbox
+              label="CDW"
+              class="mt-6"
+              v-model="searchItem.cdw"
+              color="primary"
+            ></v-checkbox>
           </v-col>
           <!-- Mileage limit -->
           <v-col cols="1.5">
@@ -294,7 +304,9 @@
           </v-col>
           <!-- Cancel search -->
           <v-col cols="1.5">
-            <v-btn text color="primary" class="mt-6" @click="cancelSearch">cancel search</v-btn>
+            <v-btn text color="primary" class="mt-6" @click="cancelSearch"
+              >cancel search</v-btn
+            >
           </v-col>
         </v-row>
       </v-expansion-panel-content>
@@ -334,7 +346,7 @@ export default {
         selectMaxPrice: null,
         selectMinMileage: null,
         selectMaxMileage: null,
-        dates: []
+        dates: [],
       },
       minMileageItems: [
         "100000",
@@ -342,7 +354,7 @@ export default {
         "300000",
         "400000",
         "500000",
-        "500000"
+        "500000",
       ],
       maxMileageItems: [
         "100000",
@@ -350,14 +362,14 @@ export default {
         "300000",
         "400000",
         "500000",
-        "500000"
+        "500000",
       ],
       minPriceItems: ["1000", "2000", "3000", "4000", "5000", "5000"],
       maxPriceItems: ["1000", "2000", "3000", "4000", "5000", "5000"],
       childSeatsItems: ["0", "1", "2", "3", "4"],
       plannedToCrossRule: [
-        v => /^[0-9]*$/.test(v) || "Only numbers are allowed"
-      ]
+        (v) => /^[0-9]*$/.test(v) || "Only numbers are allowed",
+      ],
     };
   },
   methods: {
@@ -399,82 +411,78 @@ export default {
       if (this.$store.state.user.role == "NONE") {
         axios
           .get("/search-service/search")
-          .then(cars => {
-            console.log("iscitao je sveeeeeee");
+          .then((cars) => {
             this.cars = cars.data;
             this.getLocations();
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
           });
       } else {
         axios
           .get("/search-service/search/" + this.$store.state.user.username)
-          .then(cars => {
-            console.log("iscitao je samo tudje oglaseeeee");
+          .then((cars) => {
             this.cars = cars.data;
             this.getLocations();
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
           });
       }
     },
     search() {
       this.$emit("search", this.searchItem, this.due, this.to);
-    }
+    },
   },
 
   mounted() {
     //izlistavanje brendova
     axios
       .get("/search-service/brands")
-      .then(brandItems => {
+      .then((brandItems) => {
         this.brandItems = brandItems.data;
-        console.log(this.brandItems);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
 
     //izlistavanje modela
     axios
       .get("/search-service/models")
-      .then(modelItems => {
+      .then((modelItems) => {
         this.modelItems = modelItems.data;
-        console.log(this.modelItems);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
 
     //izlistavanje klasa
     axios
       .get("/search-service/vehicle_classes")
-      .then(classItems => {
+      .then((classItems) => {
         this.classItems = classItems.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
 
     //izlistavanje tipova goriva
     axios
       .get("/search-service/fuel_types")
-      .then(gasItems => {
+      .then((gasItems) => {
         this.gasItems = gasItems.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
 
     //izlistavanje tipova prenosa
     axios
       .get("/search-service/transmission_types")
-      .then(transmissionItems => {
+      .then((transmissionItems) => {
         this.transmissionItems = transmissionItems.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
 
@@ -482,29 +490,27 @@ export default {
     if (this.$store.state.user.role == "NONE") {
       axios
         .get("/search-service/search")
-        .then(cars => {
-          console.log("iscitao je sveeeeeee");
+        .then((cars) => {
           this.cars = cars.data;
           this.getLocations();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     } else {
       axios
         .get("/search-service/search/" + this.$store.state.user.username)
-        .then(cars => {
+        .then((cars) => {
           console.log("iscitao je samo tudje oglaseeeee");
           this.cars = cars.data;
           this.getLocations();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     }
   },
   created: function() {
-    console.log("eo meeeeeeee");
     this.getCars();
   },
 
@@ -519,7 +525,7 @@ export default {
     },
     getCars1() {
       return this.getCars();
-    }
-  }
+    },
+  },
 };
 </script>

@@ -78,3 +78,17 @@ export default {
   mounted() {},
 };
 </script>
+<style scoped>
+  .cardBorderColor {
+    border-left: 1px solid #ff8a65;
+    border-top: 1px solid #ff8a65;
+    border-right: 1px solid #ff8a65;
+    border-bottom: 1px solid #ff8a65;
+  }
+  .detailsBorderColor {
+    border-left: 1.5px solid #ff8a65;
+    border-top: 1.5px solid #ff8a65;
+    border-right: 1.5px solid #ff8a65;
+    border-bottom: 1.5px solid #ff8a65;
+  }
+  </style>

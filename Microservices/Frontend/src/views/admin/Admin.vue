@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
-      <span>{{snackbarSuccessText}}</span>
+      <span>{{ snackbarSuccessText }}</span>
       <v-btn text @click="snackbarSuccess = false">Close</v-btn>
     </v-snackbar>
     <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
-      <span>{{snackbarDangerText}}</span>
+      <span>{{ snackbarDangerText }}</span>
       <v-btn text @click="snackbarDanger = false">Close</v-btn>
     </v-snackbar>
     <v-card max-width="600" class="mx-auto mt-12">
@@ -21,11 +21,15 @@
           <!-- ako je aktivan -->
 
           <v-list-item-content class="mt-2" v-if="user.active">
-            <v-list-item-title v-text="user.name + ' ' +user.surname"></v-list-item-title>
+            <v-list-item-title
+              v-text="user.name + ' ' + user.surname"
+            ></v-list-item-title>
             <v-list-item-subtitle v-text="user.email"></v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-content class="mt-2 danger" v-if="!user.active">
-            <v-list-item-title v-text="user.name + user.surname"></v-list-item-title>
+            <v-list-item-title
+              v-text="user.name + user.surname"
+            ></v-list-item-title>
             <v-list-item-subtitle v-text="user.email"></v-list-item-subtitle>
           </v-list-item-content>
           <v-tooltip bottom color="black">
@@ -62,7 +66,7 @@ export default {
       snackbarSuccess: false,
       snackbarSuccessText: "",
       snackbarDanger: false,
-      snackbarDangerText: ""
+      snackbarDangerText: "",
     };
   },
   methods: {
@@ -70,25 +74,19 @@ export default {
       axios
 
         .get("/user-service/user")
-        .then(response => {      
-            this.users.length = 0;
-            response.data.forEach(element => {
-              if(element.active==null){
-                element.active=true;
-              }
-              this.users.push(element);
+        .then((response) => {
+          this.users.length = 0;
+          response.data.forEach((element) => {
+            if (element.active == null) {
+              element.active = true;
+            }
+            this.users.push(element);
+          });
 
-            });
-              
-              console.log(response);
-              console.log(response.data);
-
-            }) 
-        .catch(error => {
-            console.log(error)
-
+          console.log(response);
+          console.log(response.data);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -100,13 +98,13 @@ export default {
       }
       axios
         .put("/user-service/user", user)
-        .then(response => {
+        .then((response) => {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "User's status is changed!";
           console.log(response);
           this.getUsers();
         })
-        .catch(error => {
+        .catch((error) => {
           this.snackbarDanger = true;
           this.snackbarDangerText = "Error";
           console.log(error);
@@ -115,37 +113,38 @@ export default {
     deleteUser(user) {
       axios
         .delete("/user-service/user/" + user.id)
-        .then(response => {
+        .then((response) => {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "User succesfully deleted!";
           console.log(response.data);
           this.getUsers();
           this.deleteAdds(user.username);
         })
-        .catch(error => {
+        .catch((error) => {
           this.snackbarDanger = true;
-          this.snackbarDangerText ="Error";
-          console.log(error)
-        })
+          this.snackbarDangerText = "User not deleted. Something went wrong!";
+          console.log(error);
+        });
     },
-    deleteAdds(username){
+    deleteAdds(username) {
       axios
-        .delete("/addvertisment-service/addvertisment/from/"  + username)
-        .then(response=>{
+        .delete("/addvertisment-service/addvertisment/from/" + username)
+        .then((response) => {
           this.snackbarSuccess = true;
-          this.snackbarSuccessText ="User's adds succesfully deleted!";
+          this.snackbarSuccessText =
+            "User and his adds are succesfully deleted!";
           console.log(response.data);
           this.getUsers();
         })
-        .catch(error => {
+        .catch((error) => {
           this.snackbarDanger = true;
-          this.snackbarDangerText = "Error";
+          this.snackbarDangerText = "Couldn't delete company's adds!";
           console.log(error);
         });
-    }
+    },
   },
   mounted() {
     this.getUsers();
-  }
+  },
 };
 </script>

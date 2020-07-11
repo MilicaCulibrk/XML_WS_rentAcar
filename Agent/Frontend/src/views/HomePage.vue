@@ -21,20 +21,20 @@
           <v-icon left medium>attach_money</v-icon>
           <span class="caption text-lowercase">by price</span>
         </v-btn>
-        <v-btn medium elevation="0" color="white primary--text ml-4">
-          <v-icon left medium>star</v-icon>
-          <span class="caption text-lowercase">by ratings</span>
-        </v-btn>
-        <v-btn medium elevation="0" color="white primary--text ml-4">
+        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('mileage')">
           <v-icon left medium>av_timer</v-icon>
           <span class="caption text-lowercase">by mileage</span>
+        </v-btn>
+        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('daily_price')">
+          <v-icon left medium>star</v-icon>
+          <span class="caption text-lowercase">by ratings</span>
         </v-btn>
       </v-layout>
       <!-- kartice -->
       <v-layout row wrap>
         <v-flex xs12 sm6 md4 lg4 v-for="car in cars" :key="car.id">
           <v-card hover elevation="2" class="text-center ma-6">
-            <div class="cardBorderColor">
+            <div class="detailsBorderColor">
               <v-responsive class="pt-4" style="height:190px;">
                 <carousel :perPage="1">
                   <slide v-for="(image, index) in car.images" :key="index">
@@ -67,14 +67,9 @@
                   <span class="primary--text">Add to basket</span>
                 </v-tooltip>
                 <v-row justify="center" v-if="($store.state.user.active)==null ">
-                  <v-dialog v-model="dialogForbbiden"  persistent max-width="600">
+                  <v-dialog v-model="dialogForbbiden" persistent max-width="600">
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        icon
-                        v-bind="attrs"
-                        v-on="on"
-                        color="primary"
-                      >
+                      <v-btn icon v-bind="attrs" v-on="on" color="primary">
                         <v-icon>shopping_cart</v-icon>
                       </v-btn>
                     </template>
@@ -129,7 +124,7 @@ export default {
         arrayEvents: []
       },
       dialogForbbiden: false,
-      user: {},
+      user: {}
     };
   },
   methods: {
@@ -138,6 +133,11 @@ export default {
     },
     sortBy(sortProp) {
       if (sortProp == "daily_price") {
+        this.cars.sort((a, b) =>
+          parseFloat(a[sortProp]) < parseFloat(b[sortProp]) ? -1 : 1
+        );
+      }
+      if (sortProp == "mileage") {
         this.cars.sort((a, b) =>
           parseFloat(a[sortProp]) < parseFloat(b[sortProp]) ? -1 : 1
         );
@@ -166,11 +166,15 @@ export default {
       return carForChart;
     },
     clearDates() {
-      console.log("clear datesssssss");
       this.date_to = "";
       this.date_from = "";
     },
     addToBasket(car) {
+      if (this.$store.state.user.role == "COMPANY" ) {
+        this.snackbarDangerText = "Only users can add the car to the cart";
+        this.snackbarDanger = true;
+        return;
+      }
       if (this.$store.state.user.role == "NONE") {
         this.snackbarDangerText = "You must log in to add the car to the cart";
         this.snackbarDanger = true;
@@ -187,21 +191,22 @@ export default {
       this.snackbarSuccess = true;
       this.snackbarSuccessText = "Car added to the cart.";
     },
-    payDebts(){
-        this.user.username = this.$store.state.user.username;
-        this.user.active = true;
-          axios
+    payDebts() {
+      this.user.username = this.$store.state.user.username;
+      this.user.active = true;
+      axios
         .put("/user", this.user)
-        .then(response=>{
+        .then(response => {
           this.snackbarSuccess = true;
-          this.snackbarSuccessText = "Thank you for the payment. Now you can rent a car.";
+          this.snackbarSuccessText =
+            "Thank you for the payment. Now you can rent a car.";
           this.dialogForbbiden = false;
           this.$store.state.user.active = true;
           console.log(response);
         })
         .catch(error => {
-            console.log(error);
-        })
+          console.log(error);
+        });
     },
     getCars() {
       axios

@@ -80,9 +80,8 @@ public class CommentService {
         List<CommentDTO> CommentsDTOlist = new ArrayList<>();
         List<Comment> Comments = addvertismentRepository.findById(add_id).get().comments;
         for (Comment comment : Comments) {
-        	if(comment.isAccepted()==true) {
 	            CommentsDTOlist.add(new CommentDTO(comment));
-        	}
+
         }
         return CommentsDTOlist;
 	}
