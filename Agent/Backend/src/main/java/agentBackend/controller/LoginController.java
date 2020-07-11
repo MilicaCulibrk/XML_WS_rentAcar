@@ -72,6 +72,7 @@ public class LoginController {
                 User user = (User) nekiKorisnik;
                 authenticationDTO.setId(user.getId());
                 authenticationDTO.setRole("USER");
+                authenticationDTO.setActive(user.isActive());
                 //role="USER";
                 return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 

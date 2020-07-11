@@ -31,20 +31,16 @@ public class UserController {
     }
 
     //admin moze da bolira ili odblokira korisnika promenom boolean polja
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    @PutMapping("/{id}")
-    public ResponseEntity updateUser (@PathVariable  Long id) {
-        User user;
-        if (id == null) {
-            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-
+    //@PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @PutMapping("")
+    public ResponseEntity updateUser (@RequestBody  User user) {
+    	User u;
         try {
-            user = userService.changeStatus(id);
+            u = userService.updateUser(user);
         } catch (ValidationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(u, HttpStatus.OK);    
     }
 
     //brisanje pojedinacnog agenta
