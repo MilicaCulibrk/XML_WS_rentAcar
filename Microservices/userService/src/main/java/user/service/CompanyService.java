@@ -14,6 +14,7 @@ import user.repository.CompanyRepository;
 
 import javax.xml.bind.ValidationException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CompanyService {
@@ -47,6 +48,15 @@ public class CompanyService {
 
         Company company = newDTOtoReal(companyDTO);
         companyRepository.save(company);
+    }
+
+    public void deleteCompany(Long id) throws ValidationException {
+        Optional<Company> company = companyRepository.findById(id);
+        if (!company.isPresent()){
+            throw new ValidationException("Fuel type with that id doesn't exist!");
+        }
+
+        companyRepository.delete(company.get());
     }
 
     public Company newDTOtoReal(CompanyDTO dto){

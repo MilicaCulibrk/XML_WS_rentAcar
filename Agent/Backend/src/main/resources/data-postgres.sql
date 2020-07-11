@@ -245,7 +245,6 @@ INSERT INTO public.request(status) VALUES ('PAID');
 
 
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
-
 	VALUES ( '2020-06-21', '2020-06-29', 3, 'ss', 'mm', false, 1, 'Suzuki Vitara SE');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 	VALUES ( '2020-06-21', '2020-06-25', 4, 'ss', 'mm', false, 1, 'Suzuki Vitara SE');
