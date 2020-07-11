@@ -37,10 +37,10 @@ public class AddvertismentController {
         return new ResponseEntity<AddvertismentDTO>(addvertismentService.getOneAddvertisment(id), HttpStatus.OK);
     }
 
-    @GetMapping("/rent/{id}/{kilometresCrossed}")
-    public ResponseEntity<AddvertismentRentDTO> getAddById(@PathVariable Long id, @PathVariable float kilometresCrossed)  {
-        System.out.println("------------vikiiii----------------" + kilometresCrossed);
-        return new ResponseEntity<AddvertismentRentDTO>(addvertismentService.getAddById(id, kilometresCrossed), HttpStatus.OK);
+    @GetMapping("/rent/{id}/{kilometresCrossed}/{oldKilometres}")
+    public ResponseEntity<AddvertismentRentDTO> getAddById(@PathVariable Long id, @PathVariable float kilometresCrossed, @PathVariable float oldKilometres)  {
+        System.out.println("------------vikiiii----------------" + kilometresCrossed + "---" + oldKilometres);
+        return new ResponseEntity<AddvertismentRentDTO>(addvertismentService.getAddById(id, kilometresCrossed, oldKilometres), HttpStatus.OK);
     }
 
     @GetMapping("/user/{username}")

@@ -50,7 +50,8 @@
                     min-width="290px"
                   >
                     <template v-slot:activator="{ on }">
-                      <v-text-field @click="findDate"
+                      <v-text-field
+                        @click="findDate"
                         :value="formattedDateFrom"
                         slot="activator"
                         prepend-icon="date_range"
@@ -88,7 +89,8 @@
                     min-width="290px"
                   >
                     <template v-slot:activator="{ on }">
-                      <v-text-field  @click="findDate"
+                      <v-text-field
+                        @click="findDate"
                         :value="formattedDateTo"
                         slot="activator"
                         prepend-icon="date_range"
@@ -100,7 +102,6 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
-                    
                       locale="en-in"
                       @input="toDateMenu = false"
                       v-model="to"
@@ -307,7 +308,7 @@ export default {
   data() {
     return {
       nowDate: new Date().toISOString().slice(0, 10) + 2,
-      
+
       fromDateMenu: false,
       toDateMenu: false,
       due: null,
@@ -360,11 +361,10 @@ export default {
     };
   },
   methods: {
-    findDate(){
-     var tomorrow = new Date();
-    tomorrow.setDate(new Date().getDate()+2);
-    this.nowDate=tomorrow.toISOString().slice(0, 10) + 2;
-   
+    findDate() {
+      var tomorrow = new Date();
+      tomorrow.setDate(new Date().getDate() + 2);
+      this.nowDate = tomorrow.toISOString().slice(0, 10) + 2;
     },
     cancelSearch() {
       this.searchItem.selectBrand = [];
@@ -385,8 +385,7 @@ export default {
       this.$emit("getCars");
       this.$emit("clearDates");
     },
-    clearDates(){
-    },
+    clearDates() {},
     consoleLocation() {
       console.log(this.searchItem.selectLocation.length);
     },
@@ -399,34 +398,33 @@ export default {
     getCars() {
       if (this.$store.state.user.role == "NONE") {
         axios
-        .get("/search-service/search")
-        .then(cars => {
-          console.log("iscitao je sveeeeeee");
-          this.cars = cars.data;
-          this.getLocations();
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      }else{
+          .get("/search-service/search")
+          .then(cars => {
+            console.log("iscitao je sveeeeeee");
+            this.cars = cars.data;
+            this.getLocations();
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
         axios
-        .get("/search-service/search/" + this.$store.state.user.username)
-        .then(cars => {
-          console.log("iscitao je samo tudje oglaseeeee");
-          this.cars = cars.data;
-          this.getLocations();
-        })
-        .catch(error => {
-          console.log(error);
-        });
+          .get("/search-service/search/" + this.$store.state.user.username)
+          .then(cars => {
+            console.log("iscitao je samo tudje oglaseeeee");
+            this.cars = cars.data;
+            this.getLocations();
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
-     
     },
     search() {
       this.$emit("search", this.searchItem, this.due, this.to);
     }
   },
-  
+
   mounted() {
     //izlistavanje brendova
     axios
@@ -482,7 +480,7 @@ export default {
 
     //get cars
     if (this.$store.state.user.role == "NONE") {
-        axios
+      axios
         .get("/search-service/search")
         .then(cars => {
           console.log("iscitao je sveeeeeee");
@@ -492,8 +490,8 @@ export default {
         .catch(error => {
           console.log(error);
         });
-      }else{
-        axios
+    } else {
+      axios
         .get("/search-service/search/" + this.$store.state.user.username)
         .then(cars => {
           console.log("iscitao je samo tudje oglaseeeee");
@@ -503,15 +501,13 @@ export default {
         .catch(error => {
           console.log(error);
         });
-      }
-     
-      
+    }
   },
   created: function() {
-     console.log("eo meeeeeeee");
+    console.log("eo meeeeeeee");
     this.getCars();
-   },
-  
+  },
+
   computed: {
     formattedDateFrom() {
       console.log(this.due);
@@ -522,9 +518,8 @@ export default {
       return this.to;
     },
     getCars1() {
-      
-     return  this.getCars();
-   },
+      return this.getCars();
+    }
   }
 };
 </script>

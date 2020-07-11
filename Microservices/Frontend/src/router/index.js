@@ -2,8 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomePage from "../views/HomePage.vue";
 import Admin from "../views/admin/Admin.vue";
-import User from "../views/user/User.vue";
-import Agent from "../views/agent/Agent.vue";
+import Company from "../views/agent/Company.vue";
 import Cart from "../views/user/Cart.vue";
 import MyPurchases from "../views/user/MyPurchases.vue";
 import Codebook from "../views/admin/Codebook.vue";
@@ -28,14 +27,9 @@ const routes = [
     component: Admin,
   },
   {
-    path: "/user",
-    name: "User",
-    component: User,
-  },
-  {
-    path: "/agent",
-    name: "Agent",
-    component: Agent,
+    path: "/company",
+    name: "Company",
+    component: Company,
   },
   {
     path: "/cart",

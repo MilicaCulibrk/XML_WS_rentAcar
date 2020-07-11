@@ -11,7 +11,7 @@ import rent.model.Report;
 @FeignClient(name = "add-service")
 public interface AddClient {
 
-    @GetMapping("/addvertisment/rent/{id}/{kilometresCrossed}")
-    AddvertismentRentDTO getAddById(@PathVariable Long id, @PathVariable float kilometresCrossed);
+    @GetMapping("/addvertisment/rent/{id}/{kilometresCrossed}/{oldKilometres}")
+    AddvertismentRentDTO getAddById(@PathVariable Long id, @PathVariable float kilometresCrossed, @PathVariable float oldKilometres);
 
 }

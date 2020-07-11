@@ -125,7 +125,7 @@ public class AddvertismentService {
         return real;
     }
 
-    public AddvertismentRentDTO getAddById(Long id, float kilometresCrossed){
+    public AddvertismentRentDTO getAddById(Long id, float kilometresCrossed, float oldKilometres){
 
         Addvertisment add =  addvertismentRepository.findById(id).orElse(null);
 
@@ -134,7 +134,7 @@ public class AddvertismentService {
         addDTO.setMileage_limit(add.getMileage_limit());
         addDTO.setPriceByKm(add.getPricelist().getOverlimitPrice());
 
-        float newMileage = add.getMileage() + kilometresCrossed;
+        float newMileage = add.getMileage()  - oldKilometres + kilometresCrossed;
         add.setMileage(newMileage);
         addvertismentRepository.save(add);
 
