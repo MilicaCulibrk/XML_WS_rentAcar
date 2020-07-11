@@ -139,7 +139,7 @@ VALUES ('true', '2', '1500', 'Beograd', '440000', '130', '3', '1', '1', '5', '3'
 INSERT INTO public.addvertisment(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, company_id, pricelist)
 VALUES ('true', '4', '2000', 'Beograd', '211000', '0', '2', '2', '3', '9', '4', '1', '2');
 INSERT INTO public.addvertisment(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, company_id, pricelist)
-VALUES ('false', '2', '2000', 'Sombor', '553000', '90', '2', '1', '2', '2', '3', '1', '2');
+VALUES ('false', '2', '2000', 'Sombor', '553000', '90', '2', '1', '2', '3', '3', '1', '2');
 INSERT INTO public.addvertisment(cdw, child_seats, daily_price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, company_id, pricelist)
 VALUES ('false', '2', '2000', 'Sombor', '300000', '0', '3', '2', '2', '2', '10', '1', '2');
 

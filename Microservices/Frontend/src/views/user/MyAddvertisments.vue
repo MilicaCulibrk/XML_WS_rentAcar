@@ -61,7 +61,7 @@
 
                 <EditAddvertisment v-bind:addvertisment="addvertisment"></EditAddvertisment>
                 
-                <DeleteAddvertisment  v-bind:addvertisment="addvertisment"></DeleteAddvertisment>
+                <DeleteAddvertisment @loadAddvertisments="loadAddvertisments()" v-bind:addvertisment="addvertisment"></DeleteAddvertisment>
               </v-card-actions>
             </div>
           </v-card>
@@ -221,8 +221,23 @@ export default {
         listDates.push(arrayEvent);
       }
       return listDates;
+    },
+    loadAddvertisments(){
+      axios
+      .get(
+        "/addvertisment-service/addvertisment/user/" + this.$store.state.user.username
+      )
+      .then(addvertisments => {
+        this.addvertisments = addvertisments.data;
+        console.log(this.addvertisments);
+        
+      })
+      .catch(error => {
+        console.log(error);
+      });
     }
   },
+  
   mounted() {
 
  //izlistavanje brendova

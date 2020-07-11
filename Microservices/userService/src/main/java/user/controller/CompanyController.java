@@ -17,7 +17,7 @@ public class CompanyController {
     private CompanyService companyService;
 
     //izlistavanje svih firmi
-    @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('COMPANY')")
+    @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('COMPANY')" + "|| hasAuthority('ADMINISTRATOR')")
     @GetMapping(value = "")
     public ResponseEntity<?> getAllCompanies()  {
         return new ResponseEntity(companyService.getAllCompanies(), HttpStatus.OK);

@@ -14,13 +14,13 @@ VALUES ('Veljko', 'Matovic', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z6
 
 
 INSERT INTO public.company(name, password,username, email, address, city, phone_number, company_number)
-VALUES ('Stasa', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','ss', 'ss@gmail.com', 'Sibinjanin Janka 9', 'Novi Sad', '0645858456', '1');
+VALUES ('Stasa Rent', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','ss', 'ss@gmail.com', 'Sibinjanin Janka 9', 'Novi Sad', '0645858456', '12345678');
 
 INSERT INTO public.company(name, password,username, email, address, city, phone_number, company_number)
-VALUES ('Milos', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','ms', 'ms@gmail.com', 'Sibinjanin Janka 9', 'Novi Sad', '0645854528', '1');
+VALUES ('Milos Car Company', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','ms', 'ms@gmail.com', 'Sibinjanin Janka 9', 'Novi Sad', '0645854528', '23456789');
 
 INSERT INTO public.company(name, password,username, email, address, city, phone_number, company_number)
-VALUES ('Vanja', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','vs', 'vs@gmail.com', 'Sibinjanin Janka 9', 'Novi Sad', '0645857828', '1');
+VALUES ('Vanja Cars', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','vs', 'vs@gmail.com', 'Sibinjanin Janka 9', 'Novi Sad', '0645857828', '34567891');
 
 
 INSERT INTO public.administrator(name, surname, password, username, email, address, city, phone_number)

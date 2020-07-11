@@ -113,7 +113,9 @@ export default {
     purchase: {
       default: ""
     },
-    greenReport: {}
+
+    greenReport: {},
+    
   },
   data() {
     return {
@@ -125,7 +127,11 @@ export default {
       },
       reportsList: [],
       greenReportTemp: false,
-      rules: [v => v.length <= 100 || "Max 100 characters"]
+      rules: [v => v.length <= 100 || "Max 100 characters"],
+      purchaseUser: {
+        username: "",
+        active: true,
+      },
     };
   },
   methods: {
@@ -138,15 +144,16 @@ export default {
           .post("/purchase/" + this.purchase.id + "/report", this.report)
           .then(report => {
             this.report = report.data;
-            this.$emit("addedReport");
+            this.$emit("addedReport", this.report.additionalPrice, this.purchase.client);
             this.greenReportTemp = true;
             this.dialogDetails = false;
             this.getReports();
             console.log(this.report.additionalPrice);
+            this.checkAddPrice();
           })
           .catch(error => {
             console.log(error);
-            this.$emit("notAddedReport");
+            //this.$emit("notAddedReport");
           });
       }
     },
@@ -158,16 +165,31 @@ export default {
           .put("/purchase/" + this.purchase.id + "/report", report)
           .then(report => {
             this.report = report.data;
-            this.$emit("changedReport");
+            this.$emit("changedReport", this.report.additionalPrice, this.purchase.client);
             this.greenReportTemp = true;
             this.dialogDetails = false;
             this.getReports();
             console.log(this.report.additionalPrice);
+            this.checkAddPrice();
           })
           .catch(error => {
             console.log(error);
             this.$emit("notChangedReport");
           });
+      }
+    },
+    checkAddPrice(){
+      if(this.report.additionalPrice>0){
+        this.purchaseUser.username = this.purchase.client;
+        this.purchaseUser.active = null;
+          axios
+        .put("/user", this.purchaseUser)
+        .then(response=>{
+          console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        })
       }
     },
     getReports() {

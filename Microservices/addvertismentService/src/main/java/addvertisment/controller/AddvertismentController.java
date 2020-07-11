@@ -41,10 +41,10 @@ public class AddvertismentController {
         return new ResponseEntity<AddvertismentDTO>(addvertismentService.getOneAddvertisment(id), HttpStatus.OK);
     }
 
-    @GetMapping("/rent/{id}")
-    public ResponseEntity<AddvertismentRentDTO> getAddById(@PathVariable Long id)  {
-        System.out.println("------------vikiiii----------------");
-        return new ResponseEntity<AddvertismentRentDTO>(addvertismentService.getAddById(id), HttpStatus.OK);
+    @GetMapping("/rent/{id}/{kilometresCrossed}/{oldKilometres}")
+    public ResponseEntity<AddvertismentRentDTO> getAddById(@PathVariable Long id, @PathVariable float kilometresCrossed, @PathVariable float oldKilometres)  {
+        System.out.println("------------vikiiii----------------" + kilometresCrossed + "---" + oldKilometres);
+        return new ResponseEntity<AddvertismentRentDTO>(addvertismentService.getAddById(id, kilometresCrossed, oldKilometres), HttpStatus.OK);
     }
 
     @GetMapping("/user/{username}")
@@ -72,8 +72,8 @@ public class AddvertismentController {
 
     @PutMapping("")
     public ResponseEntity updateAdd(@RequestBody AddvertismentDTO addvertismentDTO) {
-    	//System.out.println(addvertismentDTO.getPricelist().getDailyPrice());
-    	//System.out.println(addvertismentDTO.getPrice());
+        //System.out.println(addvertismentDTO.getPricelist().getDailyPrice());
+        //System.out.println(addvertismentDTO.getPrice());
         System.out.println(addvertismentDTO);
 
         try {
@@ -96,13 +96,19 @@ public class AddvertismentController {
         }
     }
 
-
+    @DeleteMapping("/from/{username}")
+    public ResponseEntity<?> deleteAdd (@PathVariable String username) {
+        try {
+            addvertismentService.deleteAddvertismentFromUser(username);
+            return new ResponseEntity<>(username, HttpStatus.OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
 
     //izlistavanja svih oglasa jedne firme zbog statistike
     @GetMapping("/company/{company_id}")
-        public ResponseEntity<?> statistic (@PathVariable Long id){
-            return null;
-        }
+    public ResponseEntity<?> statistic (@PathVariable Long id){
+        return null;
+    }
 }
-
-

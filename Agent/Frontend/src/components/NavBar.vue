@@ -185,6 +185,7 @@ export default {
       localStorage.removeItem("loggedUser");
       this.$store.state.user = {};
       this.$store.state.user.role = "NONE";
+      this.$store.state.user.active = true;
       this.$store.state.loggedUser = false;
       this.snackbarSuccess = true;
       this.snackbarSuccessText = "You are logged out";

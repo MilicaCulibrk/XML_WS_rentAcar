@@ -24,6 +24,11 @@ public class SearchController {
         return new ResponseEntity<List<SearchDTO>>(searchService.getAllSearches(), HttpStatus.OK);
     }
 
+    @GetMapping("/{username}")
+    public ResponseEntity<List<SearchDTO>> getAllOthersSearches(@PathVariable String username)  {
+        return new ResponseEntity<List<SearchDTO>>(searchService.getAllOthersSearches(username), HttpStatus.OK);
+    }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
     public ResponseEntity getAllByQuery(@RequestBody SearchQueryDTO searchQueryDTO) {
         List<SearchDTO> searches = searchService.getByQuery(searchQueryDTO);

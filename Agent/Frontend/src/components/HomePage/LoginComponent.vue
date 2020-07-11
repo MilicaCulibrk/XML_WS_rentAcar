@@ -75,6 +75,7 @@ export default {
             this.$store.state.user = JSON.parse(
               localStorage.getItem("loggedUser")
             );
+            console.log("active:" + this.$store.state.user.active);
             console.log("ROLE: " + this.$store.state.user.role);
             this.$emit("loggedIn");
           })

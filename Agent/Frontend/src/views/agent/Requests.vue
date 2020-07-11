@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Snackbar -->
-    <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
+    <v-snackbar v-model="snackbarSuccess" :timeout="8000" top color="success">
       <span>{{ snackbarSuccessText }}</span>
       <v-btn text @click="snackbarSuccess = false">Close</v-btn>
     </v-snackbar>
@@ -81,14 +81,8 @@
                             <ReportDialog
                               v-bind:purchase="purchase"
                               v-bind:greenReport="true"
-                              @addedReport="
-                                snackbarSuccess = true;
-                                snackbarSuccessText = 'You added the report!';
-                              "
-                              @changedReport="
-                                snackbarSuccess = true;
-                                snackbarSuccessText = 'You changed the report!';
-                              "
+                              @addedReport="addedReport"
+                              @changedReport="changedReport"
                               @notAddedReport="
                                 snackbarDanger = true;
                                 snackbarDangerText =
@@ -111,14 +105,8 @@
                             <ReportDialog
                               v-bind:purchase="purchase"
                               v-bind:greenReport="false"
-                              @addedReport="
-                                snackbarSuccess = true;
-                                snackbarSuccessText = 'You added the report!';
-                              "
-                              @changedReport="
-                                snackbarSuccess = true;
-                                snackbarSuccessText = 'You changed the report!';
-                              "
+                              @addedReport="addedReport"
+                              @changedReport="changedReport"
                               @notAddedReport="
                                 snackbarDanger = true;
                                 snackbarDangerText =
@@ -282,7 +270,15 @@ export default {
           this.redIds.push(this.purchaseList[i].id);
         }
       }
-    }
+    },
+    addedReport(additionalPrice, client){
+      this.snackbarSuccess = true;
+      this.snackbarSuccessText = 'You added the report! User ' + client + ' will be blocked until he pays overlimit price: ' + additionalPrice;
+    },
+    changedReport(additionalPrice, client){
+      this.snackbarSuccess = true;
+      this.snackbarSuccessText = 'You changed the report! User ' + client + ' will be blocked until he pays overlimit price: ' + additionalPrice;
+    },
   },
   mounted() {
     this.getReports();
