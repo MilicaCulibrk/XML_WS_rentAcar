@@ -6,9 +6,10 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   plugins: [createPersistedState()],
-    state: {
+  state: {
     user: {
       role: "NONE",
+      active: true,
     },
     loggedUser: false,
     carsInCart: [],
@@ -36,18 +37,15 @@ export const store = new Vuex.Store({
       state.user = item;
     },
     logout(state) {
-     /* this.$store.state.user = {};
+      /* this.$store.state.user = {};
       this.$store.state.user.role = "NONE";
       this.$store.state.user.active = true;
       this.$store.state.loggedUser = false;*/
 
-      state.user = {
-        role: "NONE",
-        active: true,
-      },
-      state.loggedUser = false;
-
-    }
+      state.user = {};
+      state.user.role = "NONE";
+      (state.user.active = true), (state.loggedUser = false);
+    },
   },
   actions: {},
   modules: {},
