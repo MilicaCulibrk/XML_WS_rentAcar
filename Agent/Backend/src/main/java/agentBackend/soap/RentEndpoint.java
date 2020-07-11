@@ -98,5 +98,5 @@ public class RentEndpoint {
             purchaseDTO.setDate_to(purchase.getDateTo());
             purchaseDTO.setBrand_model(purchase.getBrandModel());
             return purchaseDTO;
-        }
+       }
 }
