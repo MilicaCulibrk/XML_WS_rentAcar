@@ -2,22 +2,31 @@
   <div>
     <!-- Snackbar -->
     <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
-      <span>{{snackbarSuccessText}}</span>
+      <span>{{ snackbarSuccessText }}</span>
       <v-btn text @click="snackbarSuccess = false">Close</v-btn>
     </v-snackbar>
     <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
-      <span>{{snackbarDangerText}}</span>
+      <span>{{ snackbarDangerText }}</span>
       <v-btn text @click="snackbarDanger = false">Close</v-btn>
     </v-snackbar>
 
     <!-- pretraga -->
-    <SearchPanel @search="search" @getCars="getCars()" @clearDates="clearDates()"></SearchPanel>
+    <SearchPanel
+      @search="search"
+      @getCars="getCars()"
+      @clearDates="clearDates()"
+    ></SearchPanel>
 
     <!-- cards -->
     <!-- sort -->
     <v-container class="my-5">
       <v-layout row wrap>
-        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('daily_price')">
+        <v-btn
+          medium
+          elevation="0"
+          color="white primary--text ml-4"
+          @click="sortBy('daily_price')"
+        >
           <v-icon left medium>attach_money</v-icon>
           <span class="caption text-lowercase">by price</span>
         </v-btn>
@@ -35,18 +44,18 @@
         <v-flex xs12 sm6 md4 lg4 v-for="car in cars" :key="car.id">
           <v-card hover elevation="2" class="text-center ma-6">
             <div class="cardBorderColor">
-              <v-responsive class="pt-4"> 
+              <v-responsive class="pt-4">
                 <carousel :perPage="1">
-                  <slide  v-for="(image, index) in car.images" :key="index">
+                  <slide v-for="(image, index) in car.images" :key="index">
                     <img :src="image.url" height="100px" />
                   </slide>
                 </carousel>
               </v-responsive>
               <v-card-title></v-card-title>
               <v-card-text>
-                <div
-                  class="primary--text font-weight-bold headline"
-                >{{ car.brand_name }} {{ car.vehicle_model_name }}</div>
+                <div class="primary--text font-weight-bold headline">
+                  {{ car.brand_name }} {{ car.vehicle_model_name }}
+                </div>
                 <div>Price: {{ car.daily_price }}</div>
               </v-card-text>
               <v-card-actions>
@@ -59,8 +68,15 @@
                 <PopupComments v-bind:car="car"></PopupComments>
                 <v-tooltip bottom color="black">
                   <template v-slot:activator="{ on }">
-                    <v-btn @click="addToBasket(car)" icon v-on="on" color="primary">
-                      <router-link :to="{ name: 'add', params: { name: car.id } }"></router-link>
+                    <v-btn
+                      @click="addToBasket(car)"
+                      icon
+                      v-on="on"
+                      color="primary"
+                    >
+                      <router-link
+                        :to="{ name: 'add', params: { name: car.id } }"
+                      ></router-link>
                       <v-icon>shopping_cart</v-icon>
                     </v-btn>
                   </template>
@@ -87,8 +103,8 @@ export default {
   components: { PopupRatings, PopupComments, PopupDetails, SearchPanel },
   props: {
     header: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {
@@ -102,8 +118,8 @@ export default {
       snackbarDangerText: "",
       startDateGreater: false,
       dateList: {
-        arrayEvents: []
-      }
+        arrayEvents: [],
+      },
     };
   },
   methods: {
@@ -126,7 +142,7 @@ export default {
         owner: "",
         date_from: "",
         date_to: "",
-        image: ""
+        image: "",
       };
       carForChart.id = car.id;
       carForChart.brand = car.brand_name;
@@ -137,29 +153,30 @@ export default {
       carForChart.date_to = this.date_to;
       carForChart.image = car.images[0].url;
 
-    
-      
       return carForChart;
     },
-    clearDates(){
-      console.log("clear datesssssss")
-      this.date_to="";
-      this.date_from="";
+    clearDates() {
+      console.log("clear datesssssss");
+      this.date_to = "";
+      this.date_from = "";
     },
     addToBasket(car) {
-      if (this.$store.state.user.role == "NONE" || this.$store.state.user.active==null) {
+      console.log(this.$store.state.user.role);
+      console.log(this.$store.state.user.active);
+
+      if (this.$store.state.user.role == "NONE") {
         console.log("usao");
         this.snackbarDangerText = "You must log in to add the car to the cart";
         this.snackbarDanger = true;
         return;
       }
-      if(this.date_from=="" || this.date_to==""){
+      if (this.date_from == "" || this.date_to == "") {
         this.snackbarDanger = true;
-        this.snackbarDangerText = "You have to select location, start and end date!";
+        this.snackbarDangerText =
+          "You have to select location, start and end date!";
         return;
       }
       this.$store.commit("addCarInCart", this.createCarForChart(car));
-     
 
       this.snackbarSuccess = true;
       this.snackbarSuccessText = "Car added to the cart.";
@@ -167,10 +184,10 @@ export default {
     getCars() {
       axios
         .get("/search-service/search")
-        .then(cars => {
+        .then((cars) => {
           this.cars = cars.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -203,11 +220,11 @@ export default {
     doSearch(searchItem) {
       axios
         .post("/search-service/search", searchItem)
-        .then(cars => {
+        .then((cars) => {
           this.cars = cars.data;
           console.log(searchItem);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -275,21 +292,20 @@ export default {
       for (const d in arr) {
         this.dateList.arrayEvents.push(arr[d]);
       }
-    }
+    },
   },
   mounted() {
     //get cars
     axios
       .get("/search-service/search")
-      .then(cars => {
+      .then((cars) => {
         this.cars = cars.data;
         console.log(cars);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-
-  }
+  },
 };
 </script>
 
