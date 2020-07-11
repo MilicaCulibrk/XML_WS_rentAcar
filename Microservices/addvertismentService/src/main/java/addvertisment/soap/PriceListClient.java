@@ -30,8 +30,8 @@ public class PriceListClient extends WebServiceGatewaySupport {
         request.setPricelist(pricelistSoap);
 
         PricelistMSResponse response = (PricelistMSResponse) getWebServiceTemplate()
-                .marshalSendAndReceive("http://add-service:8081/ws/add-schema", request,
-                        new SoapActionCallback("http://add-service:8081/ws/add-schema/pricelistMSRequest"));
+                .marshalSendAndReceive("http://agent:8081/ws/add-schema", request,
+                        new SoapActionCallback("http://agent:8081/ws/add-schema/pricelistMSRequest"));
 
 
         this.saveSyncPriceList(response.getMsId(), response.getAgentId());

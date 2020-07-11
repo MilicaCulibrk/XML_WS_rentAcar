@@ -220,7 +220,8 @@ export default {
       this.user.active = true;
       axios
         .put("/user-service/user", this.user)
-        .then(response => {
+        .then((response) => {
+          this.user=response.data;
           this.snackbarSuccess = true;
           this.snackbarSuccessText =
             "Thank you for the payment. Now you can rent a car.";
@@ -231,12 +232,14 @@ export default {
           }
 
           this.dialogForbbiden = false;
-          this.$store.state.user.active = true;
           console.log(response);
+          this.$store.state.user.active = true;
         })
         .catch(error => {
           console.log(error);
         });
+        
+        location.reload();
     },
     getCars() {
       if (this.$store.state.user.role == "NONE") {

@@ -186,14 +186,16 @@ export default {
     },
     logout() {
       localStorage.removeItem("loggedUser");
-      this.$store.state.user = {};
+     /* this.$store.state.user = {};
       this.$store.state.user.role = "NONE";
       this.$store.state.user.active = true;
-      this.$store.state.loggedUser = false;
+      this.$store.state.loggedUser = false;*/
+      this.$store.commit("logout");
       this.snackbarSuccess = true;
       this.snackbarSuccessText = "You are logged out";
       this.LoginDialog = false;
       this.$router.push("/");
+      location.reload();
     }
   }
 };
