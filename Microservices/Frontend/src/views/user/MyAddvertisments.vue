@@ -2,12 +2,22 @@
   <div>
     <v-container class="my-5">
       <v-layout row wrap>
-        <v-flex xs12 sm6 md4 lg4 v-for="addvertisment in addvertisments" :key="addvertisment.id">
+        <v-flex
+          xs12
+          sm6
+          md4
+          lg4
+          v-for="addvertisment in addvertisments"
+          :key="addvertisment.id"
+        >
           <v-card class="text-center ma-6">
             <div class="detailsBorderColor">
               <v-responsive class="pt-4" style="height:190px;">
                 <carousel :perPage="1">
-                  <slide v-for="(image, index) in addvertisment.images" :key="index">
+                  <slide
+                    v-for="(image, index) in addvertisment.images"
+                    :key="index"
+                  >
                     <img :src="image.url" height="100px" />
                   </slide>
                 </carousel>
@@ -52,11 +62,15 @@
                     event-color="red"
                   >
                     <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="reserveDate(dates)">Disable dates</v-btn>
+                    <v-btn text color="primary" @click="reserveDate(dates)"
+                      >Disable dates</v-btn
+                    >
                   </v-date-picker>
                 </v-menu>
 
-                <EditAddvertisment v-bind:addvertisment="addvertisment"></EditAddvertisment>
+                <EditAddvertisment
+                  v-bind:addvertisment="addvertisment"
+                ></EditAddvertisment>
 
                 <DeleteAddvertisment
                   @loadAddvertisments="loadAddvertisments()"
@@ -126,7 +140,7 @@ export default {
   },
   firestore() {
     return {
-      addvertisments: db.collection("addvertisments")
+      addvertisments: db.collection("addvertisments"),
     };
   },
   methods: {
@@ -134,14 +148,14 @@ export default {
       this.add_id = id;
       axios
         .get("/addvertisment-service/reservedDate/" + id)
-        .then(reservedDates => {
+        .then((reservedDates) => {
           this.reservedDates = reservedDates.data;
           this.reservedOneDate = [];
           for (const i in this.reservedDates) {
             this.reservedOneDate.push(this.reservedDates[i].oneDate);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -170,7 +184,7 @@ export default {
           () => {},
           () => {},
           () => {
-            uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
               this.addvertisment.images.push(downloadURL);
             });
           }
@@ -201,7 +215,7 @@ export default {
           "/addvertisment-service/reservedDate/" + this.add_id,
           this.createListDates(arr)
         )
-        .then(response => {
+        .then((response) => {
           console.log(response);
           var i = 0;
           for (i = 0; i < this.modals.length; i++) {
@@ -209,7 +223,7 @@ export default {
           }
           this.getRequests(dates[0], dates[1]);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -222,92 +236,96 @@ export default {
       }
       return listDates;
     },
-    loadAddvertisments() {
     getRequests(start, end) {
       var newStart = new Date(start);
       var newEnd = new Date(end);
       axios
         .get("/rent-service/request/to/" + this.$store.state.user.username)
-        .then(requests => {
+        .then((requests) => {
           this.requests = requests.data;
-          this.requests.forEach(request => {
-            request.purchaseDTOS.forEach(purchase => {
+          this.requests.forEach((request) => {
+            request.purchaseDTOS.forEach((purchase) => {
               var startDate = new Date(purchase.date_from);
               var endDate = new Date(purchase.date_to);
-              if(!((startDate<newStart && endDate<newStart) || (startDate>newEnd && endDate>newEnd))){
+              if (
+                !(
+                  (startDate < newStart && endDate < newStart) ||
+                  (startDate > newEnd && endDate > newEnd)
+                )
+              ) {
                 this.declineRequest(request.id);
               }
             });
           });
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
     declineRequest(id) {
       axios
         .put("/rent-service/request/decline/" + id)
-        .then(response => {
+        .then((response) => {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "Request is canceled!";
           console.log(response);
         })
-        .catch(error => {
+        .catch((error) => {
           this.snackbarDanger = true;
           this.snackbarDangerText = "Error";
           console.log(error);
         });
     },
-    loadAddvertisments(){
+    loadAddvertisments() {
       axios
         .get(
           "/addvertisment-service/addvertisment/user/" +
             this.$store.state.user.username
         )
-        .then(addvertisments => {
+        .then((addvertisments) => {
           this.addvertisments = addvertisments.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
-    }
+    },
   },
 
   mounted() {
     //izlistavanje brendova
     axios
       .get("/addvertisment-service/brand")
-      .then(brandItems => {
+      .then((brandItems) => {
         this.brandItems = brandItems.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
     //izlistavanje klasa
     axios
       .get("/addvertisment-service/vehicle_class")
-      .then(vehicleClassItems => {
+      .then((vehicleClassItems) => {
         this.vehicleClassItems = vehicleClassItems.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
     //izlistavanje tipova menjaca
     axios
       .get("/addvertisment-service/transmission_type")
-      .then(transmissionTypeItems => {
+      .then((transmissionTypeItems) => {
         this.transmissionTypeItems = transmissionTypeItems.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
     //izlistavanje tipova goriva
     axios
       .get("/addvertisment-service/fuel_type")
-      .then(fuelTypeItems => {
+      .then((fuelTypeItems) => {
         this.fuelTypeItems = fuelTypeItems.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
 
@@ -317,7 +335,7 @@ export default {
         "/addvertisment-service/addvertisment/user/" +
           this.$store.state.user.username
       )
-      .then(addvertisments => {
+      .then((addvertisments) => {
         this.addvertisments = addvertisments.data;
 
         var i = 0;
@@ -327,10 +345,10 @@ export default {
         }
         console.log(this.addvertisments);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-  }
+  },
 };
 </script>
 <style>
