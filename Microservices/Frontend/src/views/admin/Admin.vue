@@ -21,15 +21,15 @@
           <!-- ako je aktivan -->
 
           <v-list-item-content class="mt-2" v-if="user.active">
-            <v-list-item-title v-text="user.name + user.surname"></v-list-item-title>
+            <v-list-item-title v-text="user.name + ' ' +user.surname"></v-list-item-title>
             <v-list-item-subtitle v-text="user.email"></v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-content class="mt-2 danger" v-if="!user.active">
             <v-list-item-title v-text="user.name + user.surname"></v-list-item-title>
             <v-list-item-subtitle v-text="user.email"></v-list-item-subtitle>
           </v-list-item-content>
-          <v-tooltip bottom color="black" >
-            <template v-slot:activator="{ on }"  >
+          <v-tooltip bottom color="black">
+            <template v-slot:activator="{ on }">
               <v-btn icon v-on="on" color="primary" @click="changeStatus(user)">
                 <v-icon v-if="user.active">block</v-icon>
                 <v-icon v-if="!user.active">toggle_on</v-icon>
@@ -38,8 +38,8 @@
             <span v-if="user.active" class="primary--text">Block</span>
             <span v-if="!user.active" class="primary--text">Activate</span>
           </v-tooltip>
-          <v-tooltip bottom color="black"  >
-            <template v-slot:activator="{ on }" >
+          <v-tooltip bottom color="black">
+            <template v-slot:activator="{ on }">
               <v-btn icon v-on="on" color="primary" @click="deleteUser(user)">
                 <v-icon>delete</v-icon>
               </v-btn>
@@ -58,17 +58,17 @@ import axios from "axios";
 export default {
   data() {
     return {
-      users: [
-      ],
+      users: [],
       snackbarSuccess: false,
       snackbarSuccessText: "",
       snackbarDanger: false,
-      snackbarDangerText: "",
+      snackbarDangerText: ""
     };
   },
-   methods: {
-    getUsers(){
+  methods: {
+    getUsers() {
       axios
+
         .get("/user-service/user")
         .then(response => {      
             this.users.length = 0;
@@ -86,34 +86,38 @@ export default {
             }) 
         .catch(error => {
             console.log(error)
+
         })
+        .catch(error => {
+          console.log(error);
+        });
     },
-    changeStatus(user){
-      if(user.active==true){
+    changeStatus(user) {
+      if (user.active == true) {
         user.active = false;
       } else {
         user.active = true;
       }
       axios
         .put("/user-service/user", user)
-        .then(response=>{
+        .then(response => {
           this.snackbarSuccess = true;
-          this.snackbarSuccessText ="User's status is changed!";
+          this.snackbarSuccessText = "User's status is changed!";
           console.log(response);
           this.getUsers();
         })
         .catch(error => {
-            this.snackbarDanger = true;
-            this.snackbarDangerText ="Error";
-            console.log(error)
-        })
+          this.snackbarDanger = true;
+          this.snackbarDangerText = "Error";
+          console.log(error);
+        });
     },
-    deleteUser(user){
+    deleteUser(user) {
       axios
-        .delete("/user-service/user/"  + user.id)
-        .then(response=>{
+        .delete("/user-service/user/" + user.id)
+        .then(response => {
           this.snackbarSuccess = true;
-          this.snackbarSuccessText ="User succesfully deleted!";
+          this.snackbarSuccessText = "User succesfully deleted!";
           console.log(response.data);
           this.getUsers();
           this.deleteAdds(user.username);
@@ -135,12 +139,12 @@ export default {
         })
         .catch(error => {
           this.snackbarDanger = true;
-          this.snackbarDangerText ="Error";
-          console.log(error)
-        })
+          this.snackbarDangerText = "Error";
+          console.log(error);
+        });
     }
   },
-  mounted(){
+  mounted() {
     this.getUsers();
   }
 };

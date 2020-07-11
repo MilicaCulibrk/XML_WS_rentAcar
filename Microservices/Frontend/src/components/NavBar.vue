@@ -21,6 +21,15 @@
       <v-btn
         text
         color="primary"
+        @click="openCompanies()"
+        v-if="(this.$store.state.user.role)=='ADMINISTRATOR'"
+      >
+        <span>Companies</span>
+        <v-icon right>business</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
         @click="openUsers()"
         v-if="(this.$store.state.user.role)=='ADMINISTRATOR'"
       >
@@ -144,6 +153,9 @@ export default {
     },
     openUsers() {
       this.$router.push("/admin");
+    },
+    openCompanies() {
+      this.$router.push("/company");
     },
     openCart() {
       this.$router.push("/cart");
