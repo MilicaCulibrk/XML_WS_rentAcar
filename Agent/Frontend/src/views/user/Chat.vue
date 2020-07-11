@@ -107,7 +107,7 @@ export default {
 
       getUsers(){
       axios
-        .get("/user/nes")
+        .get("/user")
         .then(response => {  
               
               this.allUsers = response.data;

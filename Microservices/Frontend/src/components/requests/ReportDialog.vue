@@ -114,7 +114,7 @@ export default {
       default: ""
     },
     greenReport: {},
-    user: {},
+    
   },
   data() {
     return {
@@ -126,7 +126,11 @@ export default {
       },
       reportsList: [],
       greenReportTemp: false,
-      rules: [v => v.length <= 100 || "Max 100 characters"]
+      rules: [v => v.length <= 100 || "Max 100 characters"],
+      purchaseUser: {
+        username: "",
+        active: true,
+      },
     };
   },
   methods: {
@@ -155,12 +159,11 @@ export default {
     },
     checkAddPrice(){
       if(this.report.additionalPrice>0){
-        this.user.username = this.purchase.client;
-        this.user.active = null;
+        this.purchaseUser.username = this.purchase.client;
+        this.purchaseUser.active = null;
           axios
-        .put("/user-service/user", this.user)
+        .put("/user-service/user", this.purchaseUser)
         .then(response=>{
-          alert("Korpa korisnika je blokirana!");
           console.log(response);
         })
         .catch(error => {

@@ -5,7 +5,7 @@ public class AuthenticationDTO {
     private String password;
     private String role;
     private Long id;
-
+ 	private Boolean active;
     public AuthenticationDTO() {
         super();
         // TODO Auto-generated constructor stub
@@ -21,6 +21,14 @@ public class AuthenticationDTO {
         this.username = username;
     }
 
+	public Boolean getActive() {
+		return active;
+	}
+
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
     public String getPassword() {
         return password;

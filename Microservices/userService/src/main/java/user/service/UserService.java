@@ -93,7 +93,9 @@ public class UserService {
             throw new ValidationException("User with that id doesn't exist!");
         }
         u.setActive(user.isActive());
-        u.setNumber_of_addvertisment(user.getNumber_of_addvertisment());
+        if(user.getNumber_of_addvertisment()!=0) {
+        	u.setNumber_of_addvertisment(user.getNumber_of_addvertisment());
+        }
         userRepository.save(u);
         return u;	
     }

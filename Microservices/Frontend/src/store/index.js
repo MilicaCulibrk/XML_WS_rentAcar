@@ -7,6 +7,7 @@ export const store = new Vuex.Store({
     state: {
     user: {
       role: "NONE",
+      active: true,
     },
     loggedUser: false,
     carsInCart: [],

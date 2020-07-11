@@ -28,7 +28,7 @@ public class UserController {
     private UserService userService;
     
     @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('ADMINISTRATOR')" + "|| hasAuthority('COMPANY')")
-	@RequestMapping(value = "/nes", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getAllusers(){
         return new ResponseEntity(userService.getAllUsers(),HttpStatus.OK);
     }

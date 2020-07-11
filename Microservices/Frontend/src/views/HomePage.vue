@@ -58,14 +58,37 @@
                 <!-- komponenta komentari -->
                 <PopupComments v-bind:car="car"></PopupComments>
                 <v-tooltip bottom color="black">
-                  <template v-slot:activator="{ on }">
-                    <v-btn @click="addToBasket(car)" icon v-on="on" color="primary">
+                   <template v-slot:activator="{ on }" v-if="($store.state.user.active)==true">                    <v-btn @click="addToBasket(car)" icon v-on="on" color="primary">
                       <router-link :to="{ name: 'add', params: { name: car.id } }"></router-link>
                       <v-icon>shopping_cart</v-icon>
                     </v-btn>
                   </template>
                   <span class="primary--text">Add to basket</span>
                 </v-tooltip>
+                <v-row justify="center" v-if="($store.state.user.active)==null ">
+                  <v-dialog v-model="dialogForbbiden"  persistent max-width="600">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                        color="primary"
+                      >
+                        <v-icon>shopping_cart</v-icon>
+                      </v-btn>
+                    </template>
+
+                    <v-card>
+                      <v-card-title class="headline">You can't rent until you settle your debts.</v-card-title>
+                      <v-card-text>You have exceeded the mileage limit. Please pay your debts to continue.</v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="green darken-1" text @click="dialogForbbiden=false">Cancel</v-btn>
+                        <v-btn color="green darken-1" text @click="payDebts()">Pay</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-row>
               </v-card-actions>
             </div>
           </v-card>
@@ -105,7 +128,9 @@ export default {
       average: 0,
       dateList: {
         arrayEvents: []
-      }
+      },
+      dialogForbbiden: false,
+      user: {},
     };
   },
   methods: {
@@ -171,6 +196,22 @@ export default {
 
       this.snackbarSuccess = true;
       this.snackbarSuccessText = "Car added to the cart.";
+    },
+    payDebts(){
+        this.user.username = this.$store.state.user.username;
+        this.user.active = true;
+          axios
+        .put("/user-service/user", this.user)
+        .then(response=>{
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText = "Thank you for the payment. Now you can rent a car.";
+          this.dialogForbbiden = false;
+          this.$store.state.user.active = true;
+          console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        })
     },
     getCars() {
       if (this.$store.state.user.role == "NONE") {
