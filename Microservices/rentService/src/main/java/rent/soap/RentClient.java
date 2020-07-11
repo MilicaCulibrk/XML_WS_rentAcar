@@ -28,8 +28,9 @@ public class RentClient extends WebServiceGatewaySupport {
         OrderRequest request = new OrderRequest();
      //   ArrayList<Long> msRequestIdForSS = new ArrayList<>();
         for (PurchaseDTO purchaseDTO : purchaseDTOList){
-            request.getPurchaseList().add(this.cratePuchaseForSoap(purchaseDTO));
-
+            if(purchaseDTO.getOwner().equals("ss")) {
+                request.getPurchaseList().add(this.cratePuchaseForSoap(purchaseDTO));
+            }
         }
         request.setBundle(bundle);
         request.getMsRequestId().addAll(msRequestId);
