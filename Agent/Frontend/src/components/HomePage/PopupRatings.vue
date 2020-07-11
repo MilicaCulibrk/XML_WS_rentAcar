@@ -16,7 +16,7 @@
         class="headline"
         primary-title
         >
-        Grade - {{average}}
+        Grade - {{ text }} 
         <v-spacer></v-spacer>
         <v-btn icon color="primary" @click="dialog =  false">
           <v-icon>cancel</v-icon>
@@ -32,6 +32,7 @@
             empty-icon="$ratingFull"
             half-increments
             hover
+            readonly
             ></v-rating>
         </div>
         </v-card-text>
@@ -54,6 +55,7 @@ export default {
       dialog: false,
       grades: 0,
       average: 0,
+      text: "",
     };
   },
   methods: {
@@ -69,6 +71,13 @@ export default {
             }
             var avg = total/this.grades.length;
             this.average = avg;
+            if(this.grades.length==0){
+              this.text="still not rated";
+              this.average = avg;
+            }else{
+              this.text=avg;
+              this.average = avg;
+            }
           })
           .catch(error => {
             console.log(error);

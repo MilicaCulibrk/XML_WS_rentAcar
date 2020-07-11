@@ -23,7 +23,7 @@
           <v-responsive class="pt-4 mx-4">
             <carousel :perPage="1">
               <slide  v-for="(image, index) in car.images" :key="index">
-                <img :src="image.url" height="100px" />
+                <img :src="image.url" height="100px"  style="margin-left: 100px;" />
               </slide>
             </carousel>
         </v-responsive>          <v-card-text class="text-center-left">
@@ -37,6 +37,7 @@
             <div class="secondary">Transmission type: {{ car.transmission_type_name }}</div>
             <div>Number of child seats: {{ car.child_seats }}</div>
             <div class="secondary" >Grade: {{ average }}</div>
+            <div>Owner: {{ car.owner }}</div>
 
           </v-card-text>
         </div>
@@ -65,7 +66,7 @@ export default {
   methods: {
     getGrade() {
         axios
-          .get("/addvertisment-service/grade/" + this.car.id)
+          .get("/grade/" + this.car.id)
           .then(grades => {
             this.grades = grades.data;
             var total=0;

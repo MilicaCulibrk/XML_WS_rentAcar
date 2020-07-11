@@ -65,9 +65,9 @@
                             <!-- komponenta detalji o autu-->
                             <PopupDetails v-bind:car="car"></PopupDetails>
                             <!-- komponenta ocene -->
-                            <PopupRatings />
+                            <PopupRatings v-bind:car="car" />
                             <!-- komponenta komentari -->
-                            <PopupComments />
+                            <PopupComments v-bind:car="car"/>
                             <!-- komponenta zahtevi -->
                             <PopupRequests v-bind:car="car"></PopupRequests>
                           </v-card-actions>
@@ -113,9 +113,9 @@
                             <!-- komponenta detalji o autu-->
                             <PopupDetails v-bind:car="car"></PopupDetails>
                             <!-- komponenta ocene -->
-                            <PopupRatings />
+                            <PopupRatings v-bind:car="car"/>
                             <!-- komponenta komentari -->
-                            <PopupComments />
+                            <PopupComments v-bind:car="car" />
                             <!-- komponenta zahtevi -->
                             <PopupRequests v-bind:car="car"></PopupRequests>
                           </v-card-actions>
@@ -168,7 +168,7 @@
                             <!-- komponenta detalji o autu-->
                             <PopupDetails v-bind:car="car"></PopupDetails>
                             <!-- komponenta ocene -->
-                            <PopupRatings />
+                            <PopupRatings v-bind:car="car" ></PopupRatings>
                             <!-- komponenta komentari -->
                             <PopupComments />
                             <!-- komponenta zahtevi -->
@@ -217,15 +217,15 @@
                             <div
                               class="primary--text"
                             >{{ car.brand_name }} {{ car.vehicle_model_name }}</div>
-                            <div>Price: {{ car.daily_price }}</div>
+                            <div>Price: {{ car.price }}</div>
                           </v-card-text>
                           <v-card-actions class="mt-n4">
                             <!-- komponenta detalji o autu-->
                             <PopupDetails v-bind:car="car"></PopupDetails>
                             <!-- komponenta ocene -->
-                            <PopupRatings />
+                            <PopupRatings v-bind:car="car"/>
                             <!-- komponenta komentari -->
-                            <PopupComments />
+                            <PopupComments v-bind:car="car" />
                             <!-- komponenta zahtevi -->
                             <PopupRequests v-bind:car="car"></PopupRequests>
                           </v-card-actions>
@@ -391,15 +391,15 @@ export default {
 
 <style>
 .cardBorderColor {
-  border-left: 1px solid #fbc02d;
-  border-top: 1px solid #fbc02d;
-  border-right: 1px solid #fbc02d;
-  border-bottom: 1px solid #fbc02d;
+  border-left: 1px solid #ff8a65;
+  border-top: 1px solid #ff8a65;
+  border-right: 1px solid #ff8a65;
+  border-bottom: 1px solid #ff8a65;
 }
 .detailsBorderColor {
-  border-left: 1.5px solid #fbc02d;
-  border-top: 1.5px solid #fbc02d;
-  border-right: 1.5px solid #fbc02d;
-  border-bottom: 1.5px solid #fbc02d;
+  border-left: 1.5px solid #ff8a65;
+  border-top: 1.5px solid #ff8a65;
+  border-right: 1.5px solid #ff8a65;
+  border-bottom: 1.5px solid #ff8a65;
 }
 </style> 

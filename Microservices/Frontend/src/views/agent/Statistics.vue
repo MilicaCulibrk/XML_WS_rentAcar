@@ -70,8 +70,7 @@
                             <PopupRatings v-bind:car="car"></PopupRatings>
                             <!-- komponenta komentari -->
                             <PopupComments v-bind:car="car"></PopupComments>
-                            <!-- komponenta zahtevi -->
-                            <PopupRequests v-bind:car="car"></PopupRequests>
+                           
                           </v-card-actions>
                         </v-col>
                         <v-col cols="4">
@@ -117,11 +116,10 @@
                             <!-- komponenta detalji o autu-->
                             <PopupDetails v-bind:car="car"></PopupDetails>
                             <!-- komponenta ocene -->
-                            <PopupRatings />
+                            <PopupRatings v-bind:car="car"></PopupRatings>
                             <!-- komponenta komentari -->
-                            <PopupComments />
-                            <!-- komponenta zahtevi -->
-                            <PopupRequests v-bind:car="car"></PopupRequests>
+                            <PopupComments v-bind:car="car"></PopupComments>
+                           
                           </v-card-actions>
                         </v-col>
                         <v-col cols="4">
@@ -174,11 +172,10 @@
                             <!-- komponenta detalji o autu-->
                             <PopupDetails v-bind:car="car"></PopupDetails>
                             <!-- komponenta ocene -->
-                            <PopupRatings />
+                            <PopupRatings v-bind:car="car"></PopupRatings>
                             <!-- komponenta komentari -->
-                            <PopupComments />
-                            <!-- komponenta zahtevi -->
-                            <PopupRequests v-bind:car="car"></PopupRequests>
+                            <PopupComments v-bind:car="car"></PopupComments>
+                           
                           </v-card-actions>
                         </v-col>
                         <v-col cols="4">
@@ -201,64 +198,6 @@
               </v-layout>
             </div>
           </v-expand-x-transition>
-
-          <!-- Zahtevi -->
-          <v-expand-x-transition>
-            <div v-show="expandRequests" elevation="20">
-              <v-layout row wrap>
-                <v-flex xs12 sm12 md12 lg12 v-for="car in cars" :key="car.id-100">
-                  <v-card hover elevation="2" class="ma-1">
-                    <div class="cardBorderColor">
-                      <v-row>
-                        <v-col cols="4">
-                          <v-responsive class="pt-1 ml-2">
-                            <carousel :perPage="1">
-                              <slide  v-for="(image, index) in car.images" :key="index">
-                                <img :src="image.url" height="100px" />
-                              </slide>
-                            </carousel>
-                        
-                          </v-responsive>
-                        </v-col>
-                        <v-col cols="4">
-                          <v-card-text>
-                            <div
-                              class="primary--text"
-                            >{{ car.brand_name }} {{ car.vehicle_model_name }}</div>
-                            <div>Price: {{ car.daily_price }}</div>
-                          </v-card-text>
-                          <v-card-actions class="mt-n4">
-                            <!-- komponenta detalji o autu-->
-                            <PopupDetails v-bind:car="car"></PopupDetails>
-                            <!-- komponenta ocene -->
-                            <PopupRatings />
-                            <!-- komponenta komentari -->
-                            <PopupComments />
-                            <!-- komponenta zahtevi -->
-                            <PopupRequests v-bind:car="car"></PopupRequests>
-                          </v-card-actions>
-                        </v-col>
-                        <v-col cols="4">
-                          <v-card-text>
-                            <div v-if="car.number_of_purchases != 1">
-                              <div
-                                class="primary--text font-weight-bold headline mt-4"
-                              >{{ car.number_of_purchases }} requests</div>
-                            </div>
-                            <div v-else>
-                              <div
-                                class="primary--text font-weight-bold headline mt-4"
-                              >{{ car.number_of_purchases }} request</div>
-                            </div>
-                          </v-card-text>
-                        </v-col>
-                      </v-row>
-                    </div>
-                  </v-card>
-                </v-flex>
-              </v-layout>
-            </div>
-          </v-expand-x-transition>
         </v-col>
       </v-row>
     </v-container>
@@ -270,10 +209,9 @@ import axios from "axios";
 import PopupDetails from "@/components/homePage/PopupDetails";
 import PopupComments from "@/components/homePage/PopupComments";
 import PopupRatings from "@/components/homePage/PopupRatings";
-import PopupRequests from "@/components/statistics/PopupRequests";
 import { Carousel, Slide } from 'vue-carousel';
 export default {
-  components: { PopupRatings, PopupComments, PopupDetails, PopupRequests, Carousel, Slide},
+  components: { PopupRatings, PopupComments, PopupDetails, Carousel, Slide},
   data() {
     return {
       snackbarSuccess: false,
@@ -292,7 +230,6 @@ export default {
         "Most kilometres crossed",
         "Most comments",
         "Best grades",
-        "Most requests"
       ],
       kilometresCrossedItems: {},
       commentsItems: {},
@@ -311,9 +248,6 @@ export default {
       } else if (menuItem == "Best grades") {
         this.cancelOtherMenus(menuItem);
         this.expandGrades = !this.expandGrades;
-      } else if (menuItem == "Most requests") {
-        this.cancelOtherMenus(menuItem);
-        this.expandRequests = !this.expandRequests;
       }
     },
     cancelOtherMenus(menuItem) {
@@ -326,9 +260,7 @@ export default {
       if (menuItem != "Best grades") {
         this.expandGrades = false;
       }
-      if (menuItem != "Most requests") {
-        this.expandRequests = false;
-      }
+    
     },
     sortCars(item) {
       if (item == "Most kilometres crossed") {
@@ -337,12 +269,7 @@ export default {
         );
         this.expandMenuItem(item);
       }
-      if (item == "Most requests") {
-        this.cars.sort((a, b) =>
-          a["number_of_purchases"] > b["number_of_purchases"] ? -1 : 1
-        );
-        this.expandMenuItem(item);
-      }
+
       if (item == "Most comments") {
         this.cars.sort((a, b) =>
           a["number_of_comments"] > b["number_of_comments"] ? -1 : 1
@@ -369,7 +296,6 @@ export default {
         });
     },
     getNumberOfPurchases() {
-      console.log("ana");
       var i = 0;
       for (i = 0; i < this.cars.length; i++) {
         var j = 0;
@@ -389,7 +315,7 @@ export default {
         )
         .then(cars => {
           this.cars = cars.data;
-          this.getPurchases();
+        //  this.getPurchases();
         })
         .catch(error => {
           console.log(error);
