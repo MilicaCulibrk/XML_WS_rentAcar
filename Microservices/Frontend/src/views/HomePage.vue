@@ -238,7 +238,6 @@ export default {
       }
 
       this.$store.commit("addCarInCart", this.createCarForChart(car));
-
       this.snackbarSuccess = true;
       this.snackbarSuccessText = "Car added to the cart.";
     },
@@ -286,9 +285,7 @@ export default {
       this.date_from = startDate;
       this.date_to = endDate;
       this.getDates(startDate, endDate);
-
       searchItem.dates = this.dateList.arrayEvents;
-
       if (
         ((searchItem.selectMinPrice == null &&
           searchItem.selectMaxPrice == null) ||
@@ -365,7 +362,6 @@ export default {
       var dt = new Date(startDate);
       var edt = new Date(endDate);
       //var date = new Date(dt).toISOString().substr(0, 10);
-
       if (dt <= edt) {
         this.startDateGreater = false;
         while (dt <= edt) {
@@ -377,7 +373,6 @@ export default {
         this.snackbarDangerText = "End date must be greater than start date!";
         this.startDateGreater = true;
       }
-
       for (const d in arr) {
         this.dateList.arrayEvents.push(arr[d]);
       }
@@ -425,7 +420,6 @@ export default {
   border-right: 1px solid #fbc02d;
   border-bottom: 1px solid #fbc02d;
 }
-
 .detailsBorderColor {
   border-left: 1.5px solid #fbc02d;
   border-top: 1.5px solid #fbc02d;

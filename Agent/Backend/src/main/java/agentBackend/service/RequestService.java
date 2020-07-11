@@ -33,7 +33,7 @@ public class RequestService {
         purchase.setId_add(p.getId_add());
         purchase.setOrdered(false);
         purchase.setClient(p.getClient());
-        purchase.setOwner(p.getOwner());
+        purchase.setOwner("ss");
         purchase.setBrand_model(p.getBrand_model());
         return purchase;
     }
@@ -59,15 +59,13 @@ public class RequestService {
         for (PurchaseDTO p : purchases){
             Request request = new Request();
             request.setStatus("PENDING");
-            request.setPurchaseList(new ArrayList<>());
-            requestRepository.save(request);
+            Request request1 = requestRepository.save(request);
             Purchase purchase = this.createPurchase(p);
-            purchase.setRequest(request);
+            purchase.setRequest(request1);
             purchase.setOwner(p.getOwner());
             purchasesForRequest.add(purchase);
             purchaseRepository.save(purchase);
-
-            requests.add(request);
+            requests.add(request1);
         }
         return requests;
     }
@@ -141,8 +139,8 @@ public class RequestService {
 
 
         ArrayList<Long> ids = new ArrayList<>();
-
-        for (Purchase purchaseAccepted : request.purchaseList) {
+        List<Purchase> purchaseList = purchaseRepository.findAllByRequest(request);
+        for (Purchase purchaseAccepted : purchaseList) {
             purchaseAccepted.setOrdered(true);
             purchaseRepository.save(purchaseAccepted);
 
@@ -178,7 +176,8 @@ public class RequestService {
             throw new NoSuchElementException();
         }
         request.setStatus("CANCELED");
-        for (Purchase purchase : request.purchaseList) {
+        List<Purchase> purchaseList = purchaseRepository.findAllByRequest(request);
+        for (Purchase purchase : purchaseList) {
             purchase.setOrdered(false);
             purchaseRepository.save(purchase);
         }

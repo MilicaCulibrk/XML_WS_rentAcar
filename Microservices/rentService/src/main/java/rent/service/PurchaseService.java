@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rent.dto.PurchaseDTO;
 import rent.model.Purchase;
+import rent.model.Request;
 import rent.repository.PurchaseRepository;
 
 import java.util.ArrayList;
@@ -36,6 +37,14 @@ public class PurchaseService {
             purchasesDTOlist.add(new PurchaseDTO(purchase));
         }
         return purchasesDTOlist;
+    }
+    public boolean isRequestForSS(Request request){
+
+        List<Purchase> purchases = purchaseRepository.findAllByRequest(request);
+        if (purchases.get(0).getOwner().equals("ss")) {
+            return true;
+        }
+        return  false;
     }
 
 

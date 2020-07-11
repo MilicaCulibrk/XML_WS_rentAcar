@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://localhost:8081/request-schema"
+           targetNamespace="http://localhost:8081/request-schema" elementFormDefault="qualified">
+
+    <xs:element name="orderRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="purchaseList" type="tns:Purchase" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="bundle" type="xs:boolean"/>
+                <xs:element name="ms_request_id" type="xs:long" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="orderResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="agent_request_id" type="xs:long" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="editStatusRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="agent_id" type="xs:long"/>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="Request">
+        <xs:sequence>
+            <xs:element name="purchaseList" type="tns:Purchase" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Purchase">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="client" type="xs:string"/>
+            <xs:element name="id_add" type="xs:long"/>
+            <xs:element name="owner" type="xs:string"/>
+            <xs:element name="ordered" type="xs:boolean"/>
+            <xs:element name="date_from" type="xs:string"/>
+            <xs:element name="date_to" type="xs:string"/>
+            <xs:element name="brand_model" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
