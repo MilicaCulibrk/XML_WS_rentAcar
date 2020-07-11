@@ -2,6 +2,7 @@ package addvertisment.controller;
 
 import addvertisment.model.Pricelist;
 import addvertisment.service.PricelistService;
+import addvertisment.soap.PriceListClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,9 @@ public class PricelistController {
     @Autowired
     private PricelistService pricelistService;
 
+    @Autowired
+    private PriceListClient priceListClient;
+
 
     @PreAuthorize("hasAuthority('USER')"  + "|| hasAuthority('COMPANY')")
     @GetMapping("")
@@ -30,6 +34,9 @@ public class PricelistController {
     @PostMapping("")
     public ResponseEntity<?> createPricelist (@RequestBody Pricelist pricelist) {
         List<Pricelist> p = pricelistService.createPricelist(pricelist);
+        if (pricelist.getUsername().equals("ss")){
+            priceListClient.createPriceList(pricelistService.getPricelistSoap());
+        }
 		return new ResponseEntity<List<Pricelist>>(p, HttpStatus.OK); 
 	}
     

@@ -10,6 +10,7 @@ import addvertisment.dto.FuelTypeDTO;
 
 import addvertisment.model.Addvertisment;
 import addvertisment.service.AddvertismentService;
+import addvertisment.soap.AddClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class AddvertismentController {
 
     @Autowired
     private AddvertismentService addvertismentService;
+
+    @Autowired
+    private AddClient client;
 
     @GetMapping()
     public ResponseEntity<List<AddvertismentDTO>> getAllAddvertisments()  {
@@ -54,6 +58,10 @@ public class AddvertismentController {
 
         try {
             Addvertisment addvertisment = addvertismentService.createAddvertisment(addvertismentDTO );
+            addvertismentDTO.setId(addvertisment.getId());
+            if (addvertismentDTO.getAddvertiser_id().equals("ss")){
+                client.createAdd(addvertismentDTO);
+            }
             return new ResponseEntity<>(addvertisment, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
