@@ -124,7 +124,7 @@ export default {
       nowDate: new Date().toISOString().slice(0, 10) + 2,
       reservedDates: [],
       reservedOneDate: [],
-
+      requests: {},
     };
   },
   firestore() {
@@ -208,6 +208,7 @@ export default {
         )
         .then(response => {
           console.log(response);
+          this.getRequests(dates[0], dates[1]);
         })
         .catch(error => {
           console.log(error);
@@ -221,6 +222,41 @@ export default {
         listDates.push(arrayEvent);
       }
       return listDates;
+    },
+    getRequests(start, end) {
+      var newStart = new Date(start);
+      var newEnd = new Date(end);
+      axios
+        .get("/rent-service/request/to/" + this.$store.state.user.username)
+        .then(requests => {
+          this.requests = requests.data;
+          this.requests.forEach(request => {
+            request.purchaseDTOS.forEach(purchase => {
+              var startDate = new Date(purchase.date_from);
+              var endDate = new Date(purchase.date_to);
+              if(!((startDate<newStart && endDate<newStart) || (startDate>newEnd && endDate>newEnd))){
+                this.declineRequest(request.id);
+              }
+            });
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    declineRequest(id) {
+      axios
+        .put("/rent-service/request/decline/" + id)
+        .then(response => {
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText = "Request is canceled!";
+          console.log(response);
+        })
+        .catch(error => {
+          this.snackbarDanger = true;
+          this.snackbarDangerText = "Error";
+          console.log(error);
+        });
     },
     loadAddvertisments(){
       axios
