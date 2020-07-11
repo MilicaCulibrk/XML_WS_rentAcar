@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://localhost:8087/add-schema"
-           targetNamespace="http://localhost:8087/add-schema" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://localhost:8081/add-schema"
+           targetNamespace="http://localhost:8081/add-schema" elementFormDefault="qualified">
 
-    <xs:element name="addRequest">
+    <xs:element name="addMSRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="add" type="tns:Add"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="editAddRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="add" type="tns:Add"/>
-                <xs:element name="priceList" type="tns:PricelistSoap"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="addResponse">
+    <xs:element name="addMSResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="ms_id" type="xs:long"/>
@@ -61,7 +52,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="pricelistRequest">
+    <xs:element name="pricelistMSRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="pricelist" type="tns:PricelistSoap"/>
@@ -69,26 +60,12 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="pricelistResponse">
+    <xs:element name="pricelistMSResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="ms_id" type="xs:long"/>
                 <xs:element name="agent_id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
-    </xs:element>
-    <xs:element name="editPricelistRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="ms_id" type="xs:long"/>
-            </xs:sequence>
-        </xs:complexType>
-
-    </xs:element><xs:element name="deletepricelistRequest">
-    <xs:complexType>
-        <xs:sequence>
-            <xs:element name="ms_id" type="xs:long"/>
-        </xs:sequence>
-    </xs:complexType>
     </xs:element>
 </xs:schema>
