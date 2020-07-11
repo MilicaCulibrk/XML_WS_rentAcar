@@ -246,7 +246,6 @@ public class AddvertismentService {
     }
 
 	public void deleteAddvertismentFromUser(String username) throws ValidationException {
-		// TODO Auto-generated method stub
 		List<Addvertisment> allAdds = addvertismentRepository.findAll();
 		for (Addvertisment addvertisment : allAdds) {
 			if(addvertisment.getAddvertiser_id().equals(username)) {

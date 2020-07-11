@@ -24,9 +24,11 @@
       <div class="detailsBorderColor">
         <v-card>
           <v-card-title>
-            <span class="primary--text font-italic headline" primary-title>Add new company</span>
+            <span class="primary--text font-italic headline" primary-title
+              >Add new company</span
+            >
             <v-spacer></v-spacer>
-            <v-btn icon color="primary" @click="dialog1 =  false">
+            <v-btn icon color="primary" @click="dialog1 = false">
               <v-icon>cancel</v-icon>
             </v-btn>
           </v-card-title>
@@ -105,38 +107,38 @@ export default {
       password: "",
       phone_number: "0",
       city: "Novi Sad",
-      email: "company@gmail.com"
+      email: "company@gmail.com",
     },
     confirmation: "",
-    requiredRules: [v => !!v || "This field is required"],
+    requiredRules: [(v) => !!v || "This field is required"],
     passwordRules: [
-      v => !!v || "This is required",
-      v => v == this.confirmation || "Passwords do not match"
+      (v) => !!v || "This is required",
+      (v) => v == this.confirmation || "Passwords do not match",
     ],
     emailRules: [
-      v => !!v || "This field is required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-    ]
+      (v) => !!v || "This field is required",
+      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+    ],
   }),
   computed: {
     passwordConfirmationRule() {
       return () =>
         this.company.password === this.confirmation || "Passwords must match";
-    }
+    },
   },
   methods: {
     register() {
       if (this.$refs.form.validate()) {
         axios
           .post("/user-service/register/company", this.company)
-          .then(response => {
+          .then((response) => {
             this.$emit("registered");
             this.$emit("getcompanies");
             this.dialog1 = false;
             this.$refs.form.reset();
             console.log(response.data);
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
             this.$emit("notRegistered");
           });
@@ -147,8 +149,8 @@ export default {
     close() {
       this.RegisterDialog = false;
       this.$refs.form.reset();
-    }
-  }
+    },
+  },
 };
 </script>
 

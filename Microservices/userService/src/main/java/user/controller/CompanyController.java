@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import user.model.Company;
 import user.service.CompanyService;
 
+import javax.xml.bind.ValidationException;
+
 @RestController
 @RequestMapping(value = "/company")
 public class CompanyController {
@@ -41,10 +43,21 @@ public class CompanyController {
         return null;
     }
 
-    //potencijalno brisanje profila firme
+    //brisanje pojedinacnog agenta
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAgent (@PathVariable Long id) {
-        return null;
-    }
+    public ResponseEntity deleteCompany (@PathVariable Long id) {
+
+        if (id == null) {
+            return new ResponseEntity<>("Invalid input data", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            companyService.deleteCompany(id);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        return new ResponseEntity<>(id, HttpStatus.OK);    }
 
 }

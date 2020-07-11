@@ -2,30 +2,49 @@
   <div>
     <!-- Snackbar -->
     <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
-      <span>{{snackbarSuccessText}}</span>
+      <span>{{ snackbarSuccessText }}</span>
       <v-btn text @click="snackbarSuccess = false">Close</v-btn>
     </v-snackbar>
     <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
-      <span>{{snackbarDangerText}}</span>
+      <span>{{ snackbarDangerText }}</span>
       <v-btn text @click="snackbarDanger = false">Close</v-btn>
     </v-snackbar>
 
     <!-- pretraga -->
-    <SearchPanel @search="search" @getCars="getCars()" @clearDates="clearDates()"></SearchPanel>
+    <SearchPanel
+      @search="search"
+      @getCars="getCars()"
+      @clearDates="clearDates()"
+    ></SearchPanel>
 
     <!-- cards -->
     <!-- sort -->
     <v-container class="my-5">
       <v-layout row wrap>
-        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('daily_price')">
+        <v-btn
+          medium
+          elevation="0"
+          color="white primary--text ml-4"
+          @click="sortBy('daily_price')"
+        >
           <v-icon left medium>attach_money</v-icon>
           <span class="caption text-lowercase">by price</span>
         </v-btn>
-        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('mileage')">
+        <v-btn
+          medium
+          elevation="0"
+          color="white primary--text ml-4"
+          @click="sortBy('mileage')"
+        >
           <v-icon left medium>av_timer</v-icon>
           <span class="caption text-lowercase">by mileage</span>
         </v-btn>
-        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('daily_price')">
+        <v-btn
+          medium
+          elevation="0"
+          color="white primary--text ml-4"
+          @click="sortBy('daily_price')"
+        >
           <v-icon left medium>star</v-icon>
           <span class="caption text-lowercase">by ratings</span>
         </v-btn>
@@ -35,18 +54,18 @@
         <v-flex xs12 sm6 md4 lg4 v-for="car in cars" :key="car.id">
           <v-card hover elevation="2" class="text-center ma-6">
             <div class="cardBorderColor">
-              <v-responsive class="pt-4" style="height:190px;"> 
+              <v-responsive class="pt-4" style="height:190px;">
                 <carousel :perPage="1">
-                  <slide  v-for="(image, index) in car.images" :key="index">
+                  <slide v-for="(image, index) in car.images" :key="index">
                     <img :src="image.url" height="100px" />
                   </slide>
                 </carousel>
               </v-responsive>
               <v-card-title></v-card-title>
               <v-card-text>
-                <div
-                  class="primary--text font-weight-bold headline"
-                >{{ car.brand_name }} {{ car.vehicle_model_name }}</div>
+                <div class="primary--text font-weight-bold headline">
+                  {{ car.brand_name }} {{ car.vehicle_model_name }}
+                </div>
                 <div>Price: {{ car.daily_price }}</div>
               </v-card-text>
               <v-card-actions>
@@ -58,33 +77,56 @@
                 <!-- komponenta komentari -->
                 <PopupComments v-bind:car="car"></PopupComments>
                 <v-tooltip bottom color="black">
-                   <template v-slot:activator="{ on }" v-if="($store.state.user.active)==true">                    <v-btn @click="addToBasket(car)" icon v-on="on" color="primary">
-                      <router-link :to="{ name: 'add', params: { name: car.id } }"></router-link>
+                  <template
+                    v-slot:activator="{ on }"
+                    v-if="$store.state.user.active == true"
+                  >
+                    <v-btn
+                      @click="addToBasket(car)"
+                      icon
+                      v-on="on"
+                      color="primary"
+                    >
+                      <router-link
+                        :to="{ name: 'add', params: { name: car.id } }"
+                      ></router-link>
                       <v-icon>shopping_cart</v-icon>
                     </v-btn>
                   </template>
                   <span class="primary--text">Add to basket</span>
                 </v-tooltip>
-                <v-row justify="center" v-if="($store.state.user.active)==null ">
-                  <v-dialog v-model="dialogForbbiden"  persistent max-width="600">
+                <v-row justify="center" v-if="$store.state.user.active == null">
+                  <v-dialog
+                    v-model="dialogForbbiden"
+                    persistent
+                    max-width="600"
+                  >
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        icon
-                        v-bind="attrs"
-                        v-on="on"
-                        color="primary"
-                      >
+                      <v-btn icon v-bind="attrs" v-on="on" color="primary">
                         <v-icon>shopping_cart</v-icon>
                       </v-btn>
                     </template>
 
                     <v-card>
-                      <v-card-title class="headline">You can't rent until you settle your debts.</v-card-title>
-                      <v-card-text>You have exceeded the mileage limit. Please pay your debts to continue.</v-card-text>
+                      <v-card-title class="headline"
+                        >You can't rent until you settle your
+                        debts.</v-card-title
+                      >
+                      <v-card-text
+                        >You have exceeded the mileage limit. Please pay your
+                        debts to continue.</v-card-text
+                      >
                       <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="green darken-1" text @click="dialogForbbiden=false">Cancel</v-btn>
-                        <v-btn color="green darken-1" text @click="payDebts()">Pay</v-btn>
+                        <v-btn
+                          color="green darken-1"
+                          text
+                          @click="dialogForbbiden = false"
+                          >Cancel</v-btn
+                        >
+                        <v-btn color="green darken-1" text @click="payDebts()"
+                          >Pay</v-btn
+                        >
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
@@ -110,8 +152,8 @@ export default {
   components: { PopupRatings, PopupComments, PopupDetails, SearchPanel },
   props: {
     header: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {
@@ -127,7 +169,7 @@ export default {
       grades: 0,
       average: 0,
       dateList: {
-        arrayEvents: []
+        arrayEvents: [],
       },
       dialogForbbiden: false,
       user: {},
@@ -158,7 +200,7 @@ export default {
         owner: "",
         date_from: "",
         date_to: "",
-        image: ""
+        image: "",
       };
       carForChart.id = car.id;
       carForChart.brand = car.brand_name;
@@ -170,12 +212,15 @@ export default {
       carForChart.image = car.images[0].url;
       return carForChart;
     },
-    clearDates(){
-      this.date_to="";
-      this.date_from="";
+    clearDates() {
+      this.date_to = "";
+      this.date_from = "";
     },
     addToBasket(car) {
-      if (this.$store.state.user.role == "COMPANY" || this.$store.state.user.role == "ADMINISTRATOR" ) {
+      if (
+        this.$store.state.user.role == "COMPANY" ||
+        this.$store.state.user.role == "ADMINISTRATOR"
+      ) {
         this.snackbarDangerText = "Only users can add the car to the cart";
         this.snackbarDanger = true;
         return;
@@ -185,59 +230,56 @@ export default {
         this.snackbarDanger = true;
         return;
       }
-      if(this.date_from=="" || this.date_to==""){
+      if (this.date_from == "" || this.date_to == "") {
         this.snackbarDanger = true;
-        this.snackbarDangerText = "You have to select location, start and end date!";
+        this.snackbarDangerText =
+          "You have to select location, start and end date!";
         return;
       }
-     
+
       this.$store.commit("addCarInCart", this.createCarForChart(car));
-     
 
       this.snackbarSuccess = true;
       this.snackbarSuccessText = "Car added to the cart.";
     },
-    payDebts(){
-        this.user.username = this.$store.state.user.username;
-        this.user.active = true;
-          axios
+    payDebts() {
+      this.user.username = this.$store.state.user.username;
+      this.user.active = true;
+      axios
         .put("/user-service/user", this.user)
-        .then(response=>{
+        .then((response) => {
           this.snackbarSuccess = true;
-          this.snackbarSuccessText = "Thank you for the payment. Now you can rent a car.";
+          this.snackbarSuccessText =
+            "Thank you for the payment. Now you can rent a car.";
           this.dialogForbbiden = false;
           this.$store.state.user.active = true;
           console.log(response);
         })
-        .catch(error => {
-            console.log(error);
-        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     getCars() {
       if (this.$store.state.user.role == "NONE") {
         axios
-        .get("/search-service/search")
-        .then(cars => {
-          console.log("iscitao je sveeeeeee");
-          this.cars = cars.data;
-          this.getLocations();
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      }else{
+          .get("/search-service/search")
+          .then((cars) => {
+            this.cars = cars.data;
+            this.getLocations();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
         axios
-        .get("/search-service/search/" + this.$store.state.user.username)
-        .then(cars => {
-          console.log("iscitao je samo tudje oglaseeeee");
-          console.log(cars.data);
-
-          this.cars = cars.data;
-          this.getLocations();
-        })
-        .catch(error => {
-          console.log(error);
-        });
+          .get("/search-service/search/" + this.$store.state.user.username)
+          .then((cars) => {
+            this.cars = cars.data;
+            this.getLocations();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     },
     search(searchItem, startDate, endDate) {
@@ -269,11 +311,10 @@ export default {
     doSearch(searchItem) {
       axios
         .post("/search-service/search", searchItem)
-        .then(cars => {
+        .then((cars) => {
           this.cars = cars.data;
-          console.log(searchItem);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -328,7 +369,6 @@ export default {
       if (dt <= edt) {
         this.startDateGreater = false;
         while (dt <= edt) {
-          console.log("uso");
           arr.push(new Date(dt).toISOString().substr(0, 10));
           dt.setDate(dt.getDate() + 1);
         }
@@ -341,44 +381,40 @@ export default {
       for (const d in arr) {
         this.dateList.arrayEvents.push(arr[d]);
       }
-    }
+    },
   },
   computed: {
     getCars1() {
-      return  this.getCars();
+      return this.getCars();
     },
   },
   created: function() {
-     this.getCars();
-    },
-   
+    this.getCars();
+  },
+
   mounted() {
-    
     if (this.$store.state.user.role == "NONE") {
-        axios
+      axios
         .get("/search-service/search")
-        .then(cars => {
-          console.log("iscitao je sveeeeeee");
+        .then((cars) => {
           this.cars = cars.data;
           this.getLocations();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
-      }else{
-        axios
+    } else {
+      axios
         .get("/search-service/search/" + this.$store.state.user.username)
-        .then(cars => {
-          console.log("iscitao je samo tudje oglaseeeee");
-          console.log(cars.data);
+        .then((cars) => {
           this.cars = cars.data;
           this.getLocations();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
-      }
-  }
+    }
+  },
 };
 </script>
 

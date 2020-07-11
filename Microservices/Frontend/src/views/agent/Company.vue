@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-snackbar v-model="snackbarSuccess" :timeout="3500" top color="success">
-      <span>{{snackbarSuccessText}}</span>
+      <span>{{ snackbarSuccessText }}</span>
       <v-btn text @click="snackbarSuccess = false">Close</v-btn>
     </v-snackbar>
     <v-snackbar v-model="snackbarDanger" :timeout="3500" top color="danger">
-      <span>{{snackbarDangerText}}</span>
+      <span>{{ snackbarDangerText }}</span>
       <v-btn text @click="snackbarDanger = false">Close</v-btn>
     </v-snackbar>
 
@@ -22,15 +22,40 @@
         <v-list-item v-for="company in companies" :key="company.id">
           <v-list-item-content class="mt-2">
             <v-list-item-title v-text="company.name"></v-list-item-title>
-            <v-list-item-subtitle v-text="company.username"></v-list-item-subtitle>
-            <v-list-item-subtitle v-text="company.address"></v-list-item-subtitle>
-            <v-list-item-subtitle v-text="company.company_number"></v-list-item-subtitle>
+            <v-list-item-subtitle
+              v-text="company.username"
+            ></v-list-item-subtitle>
+            <v-list-item-subtitle
+              v-text="company.address"
+            ></v-list-item-subtitle>
+            <v-list-item-subtitle
+              v-text="company.company_number"
+            ></v-list-item-subtitle>
           </v-list-item-content>
+          <v-tooltip bottom color="black">
+            <template v-slot:activator="{ on }">
+              <v-btn
+                icon
+                v-on="on"
+                color="primary"
+                @click="deleteCompany(company)"
+              >
+                <v-icon>delete</v-icon>
+              </v-btn>
+            </template>
+            <span class="primary--text">Delete</span>
+          </v-tooltip>
         </v-list-item>
       </v-list>
       <AddCompanyDialog
-        @registered="snackbarSuccess = true; snackbarSuccessText='You are registered! Please login.'"
-        @notRegistered="snackbarDanger = true; snackbarDangerText='Can not register.'"
+        @registered="
+          snackbarSuccess = true;
+          snackbarSuccessText = 'You are registered! Please login.';
+        "
+        @notRegistered="
+          snackbarDanger = true;
+          snackbarDangerText = 'Can not register.';
+        "
         @getcompanies="getcompanies()"
       ></AddCompanyDialog>
     </v-card>
@@ -48,23 +73,56 @@ export default {
       snackbarSuccess: false,
       snackbarSuccessText: "",
       snackbarDanger: false,
-      snackbarDangerText: ""
+      snackbarDangerText: "",
     };
   },
   methods: {
     getcompanies() {
       axios
         .get("/user-service/company")
-        .then(response => {
+        .then((response) => {
           this.companies = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
-    }
+    },
+    deleteCompany(company) {
+      axios
+        .delete("/user-service/company/" + company.id)
+        .then((response) => {
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText = "Company succesfully deleted!";
+          this.getcompanies();
+          console.log(response);
+          this.deleteAdds(company.username);
+        })
+        .catch((error) => {
+          this.snackbarDanger = true;
+          this.snackbarDangerText =
+            "Company not deleted, something went wrong!";
+          console.log(error);
+        });
+    },
+    deleteAdds(username) {
+      axios
+        .delete("/addvertisment-service/addvertisment/from/" + username)
+        .then((response) => {
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText =
+            "User and his adds are succesfully deleted!";
+          console.log(response.data);
+          this.getCompanies();
+        })
+        .catch((error) => {
+          this.snackbarDanger = true;
+          this.snackbarDangerText = "Couldn't delete company's adds!";
+          console.log(error);
+        });
+    },
   },
   mounted() {
     this.getcompanies();
-  }
+  },
 };
 </script>
