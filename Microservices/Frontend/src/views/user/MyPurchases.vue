@@ -218,7 +218,7 @@ export default {
         .post("/addvertisment-service/comment", this.comment)
         .then(response => {
           this.snackbarSuccess = true;
-          this.snackbarSuccessText = "Comment is added!";
+          this.snackbarSuccessText = "Comment sent for admin approval!";
           this.comment.title = "";
           this.comment.text = "";
           console.log(response);

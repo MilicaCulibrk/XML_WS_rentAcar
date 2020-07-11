@@ -88,7 +88,15 @@ public class AddvertismentController {
         }
     }
 
-
+    @DeleteMapping("/from/{username}")
+    public ResponseEntity<?> deleteAdd (@PathVariable String username) {
+        try {
+            addvertismentService.deleteAddvertismentFromUser(username);
+            return new ResponseEntity<>(username, HttpStatus.OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
 
     //izlistavanja svih oglasa jedne firme zbog statistike
     @GetMapping("/company/{company_id}")
