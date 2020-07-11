@@ -67,9 +67,18 @@
                   <span class="primary--text">Add to basket</span>
                 </v-tooltip>
                 <v-row justify="center" v-if="($store.state.user.active)==null ">
-                  <v-dialog v-model="dialogForbbiden" persistent max-width="600">
+                  <v-menu
+                    :nudge-right="40"
+                    lazy
+                    center
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="600px"
+                    v-model="dialogsForbidden[car.id]"
+                  >
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon v-bind="attrs" v-on="on" color="primary">
+                      <v-btn icon v-bind="attrs" v-on="on" color="primary" class="ml-12">
                         <v-icon>shopping_cart</v-icon>
                       </v-btn>
                     </template>
@@ -79,11 +88,15 @@
                       <v-card-text>You have exceeded the mileage limit. Please pay your debts to continue.</v-card-text>
                       <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="green darken-1" text @click="dialogForbbiden=false">Cancel</v-btn>
+                        <v-btn
+                          color="green darken-1"
+                          text
+                          @click="dialogsForbidden[car.id] = false"
+                        >Cancel</v-btn>
                         <v-btn color="green darken-1" text @click="payDebts()">Pay</v-btn>
                       </v-card-actions>
                     </v-card>
-                  </v-dialog>
+                  </v-menu>
                 </v-row>
               </v-card-actions>
             </div>
@@ -120,6 +133,7 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       startDateGreater: false,
+      dialogsForbidden: [],
       dateList: {
         arrayEvents: []
       },
@@ -170,7 +184,7 @@ export default {
       this.date_from = "";
     },
     addToBasket(car) {
-      if (this.$store.state.user.role == "COMPANY" ) {
+      if (this.$store.state.user.role == "COMPANY") {
         this.snackbarDangerText = "Only users can add the car to the cart";
         this.snackbarDanger = true;
         return;
@@ -200,6 +214,12 @@ export default {
           this.snackbarSuccess = true;
           this.snackbarSuccessText =
             "Thank you for the payment. Now you can rent a car.";
+
+          var i = 0;
+          for (i = 0; i < this.dialogsForbidden.length; i++) {
+            this.dialogsForbidden[i] = false;
+          }
+
           this.dialogForbbiden = false;
           this.$store.state.user.active = true;
           console.log(response);
@@ -213,6 +233,11 @@ export default {
         .get("/addvertisment")
         .then(cars => {
           this.cars = cars.data;
+          var i = 0;
+          for (i = 0; i < this.cars.length; i++) {
+            this.dialogsForbidden.push("modal" + i);
+            this.dialogsForbidden[i] = false;
+          }
         })
         .catch(error => {
           console.log(error);
@@ -328,6 +353,11 @@ export default {
       .then(cars => {
         this.cars = cars.data;
         console.log(cars);
+        var i = 0;
+        for (i = 0; i < this.cars.length; i++) {
+          this.dialogsForbidden.push("modal" + i);
+          this.dialogsForbidden[i] = false;
+        }
       })
       .catch(error => {
         console.log(error);

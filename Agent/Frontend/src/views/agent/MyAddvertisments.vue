@@ -5,35 +5,37 @@
         <v-flex xs12 sm6 md4 lg4 v-for="addvertisment in addvertisments" :key="addvertisment.id">
           <v-card hover elevation="2" class="text-center ma-6">
             <div class="cardBorderColor">
-              <v-responsive class="pt-4"  style="height:190px;">
+              <v-responsive class="pt-4" style="height:190px;">
                 <carousel :perPage="1">
-                  <slide  v-for="(image, index) in addvertisment.images" :key="index">
+                  <slide v-for="(image, index) in addvertisment.images" :key="index">
                     <img :src="image.url" height="100px" />
                   </slide>
-                </carousel> 
+                </carousel>
               </v-responsive>
               <v-card-title></v-card-title>
               <v-card-text>
-                <div
-                  class="primary--text font-weight-bold headline"
-                >{{ addvertisment.brand_name }} {{ addvertisment.vehicle_model_name}}</div>
+                <div class="primary--text font-weight-bold headline">
+                  {{ addvertisment.brand_name }}
+                  {{ addvertisment.vehicle_model_name }}
+                </div>
                 <div>Price: {{ addvertisment.price }}</div>
               </v-card-text>
               <v-card-actions>
                 <!-- komponenta detalji o autu-->
-                <v-dialog
-                  ref="dialog"
-                  v-model="modal"
+                <v-menu
+                  v-model="modals[addvertisment.id]"
+                  :close-on-content-click="false"
                   :return-value.sync="dates"
-                  persistent
+                  :nudge-right="40"
+                  lazy
+                  transition="scale-transition"
+                  offset-y
                   full-width
-                  max-width="370px"
-                  min-width="370px"
-                  color="primary"
+                  max-width="290px"
+                  min-width="290px"
                 >
                   <template v-slot:activator="{ on }">
                     <v-text-field
-                      v-model="dates"
                       label="Disable dates"
                       prepend-icon="event"
                       readonly
@@ -46,21 +48,17 @@
                     scrollable
                     color="primary"
                     range
-                    :min="nowDate "
+                    :min="nowDate"
                     :events="reservedOneDate"
                     event-color="red"
                   >
                     <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="modal = false">Close</v-btn>
-                    <v-btn
-                      text
-                      color="primary"
-                      @click="reserveDate(dates)"
-                    >Disable dates</v-btn>
+                    <v-btn text color="primary" @click="reserveDate(dates)">Disable dates</v-btn>
                   </v-date-picker>
-                </v-dialog>
+                </v-menu>
+
                 <EditAddvertisment v-bind:addvertisment="addvertisment"></EditAddvertisment>
-                <DeleteAddvertisment  v-bind:addvertisment="addvertisment"></DeleteAddvertisment>
+                <DeleteAddvertisment v-bind:addvertisment="addvertisment"></DeleteAddvertisment>
               </v-card-actions>
             </div>
           </v-card>
@@ -70,14 +68,14 @@
   </div>
 </template>
 
-  <script>
+<script>
 import axios from "axios";
 import { fb, db } from "@/firebase";
 import EditAddvertisment from "@/views/agent/EditAddvertisment";
 import DeleteAddvertisment from "@/views/agent/DeleteAddvertisment";
 
 export default {
-  components: { EditAddvertisment,DeleteAddvertisment },
+  components: { EditAddvertisment, DeleteAddvertisment },
   data() {
     return {
       selectBrand: "",
@@ -91,8 +89,9 @@ export default {
       selectLocation: "",
       selectCdw: false,
       selectMileageLimit: "",
+      modals: [],
       addvertisment: {
-       /* brand_id: "",
+        /* brand_id: "",
         fuel_type_id: "",
         vehicle_model_id: "",
         vehicle_class_id: "",
@@ -106,7 +105,6 @@ export default {
         images: [],
         arrayEvents: [],
         addvertiser_id: "",*/
-       
       },
       add_id: "",
       modelItems: [],
@@ -118,10 +116,9 @@ export default {
       dialogCalendar: false,
       addvertisments: {},
       dates: [],
-      modal: false,
       nowDate: new Date().toISOString().slice(0, 10) + 2,
       reservedDates: [],
-      reservedOneDate: [],
+      reservedOneDate: []
     };
   },
   firestore() {
@@ -130,17 +127,14 @@ export default {
     };
   },
   methods: {
-   
     findReservedDates(id) {
-      this.add_id=id;
+      this.add_id = id;
       axios
         .get("/reservedDate/" + this.add_id)
         .then(reservedDates => {
           this.reservedDates = reservedDates.data;
-         // this.reservedOneDate = [];
-          this.reservedOneDate.lenght=0;
+          this.reservedOneDate = [];
           for (const i in this.reservedDates) {
-            console.log(this.reservedDates[i]);
             this.reservedOneDate.push(this.reservedDates[i].oneDate);
           }
         })
@@ -203,10 +197,22 @@ export default {
         .post("/reservedDate/" + this.add_id, this.createListDates(arr))
         .then(response => {
           console.log(response);
+          var i = 0;
+          for (i = 0; i < this.addvertisments.length; i++) {
+            this.modals.push("modal" + i);
+            this.modals[i] = false;
+          }
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    modalsUpdate() {
+      var i = 0;
+      for (i = 0; i < this.addvertisments.length; i++) {
+        this.modals.push("modal" + i);
+        this.modals[i] = false;
+      }
     },
     createListDates(arrayEvents) {
       var listDates = [];
@@ -218,14 +224,22 @@ export default {
       return listDates;
     }
   },
+  computed() {
+    this.modalsUpdate();
+  },
   mounted() {
-     
-  
     //izlistavanje oglasa
+
     axios
       .get("/addvertisment/user/" + this.$store.state.user.username)
       .then(addvertisments => {
         this.addvertisments = addvertisments.data;
+
+        var i = 0;
+        for (i = 0; i < this.addvertisments.length; i++) {
+          this.modals.push("modal" + i);
+          this.modals[i] = false;
+        }
       })
       .catch(error => {
         console.log(error);
