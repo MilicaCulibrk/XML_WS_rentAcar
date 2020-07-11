@@ -233,7 +233,11 @@ INSERT INTO public.reserved_dates(one_date, search_id)
 VALUES ('2020-06-17', '17');
 
 INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.47811498950876197_images%20(5).jpg?alt=media&token=3f1af6f1-1127-4ef2-85c7-294496946291', '1');
+INSERT INTO public.images(url, search_id)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '1');
+INSERT INTO public.images(url, search_id)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.13996858699719716_images%20(2).jpg?alt=media&token=37eb1bb6-43cb-4701-ad33-43fc96830051', '1');
 INSERT INTO public.images(url, search_id)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6491975468328182_images%20(4).jpg?alt=media&token=d9c8efc5-06d5-44e5-bbbb-5b9f3e6f82e4', '2');
 INSERT INTO public.images(url, search_id)
