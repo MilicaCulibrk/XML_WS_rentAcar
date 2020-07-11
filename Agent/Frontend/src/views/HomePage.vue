@@ -21,13 +21,13 @@
           <v-icon left medium>attach_money</v-icon>
           <span class="caption text-lowercase">by price</span>
         </v-btn>
-        <v-btn medium elevation="0" color="white primary--text ml-4">
-          <v-icon left medium>star</v-icon>
-          <span class="caption text-lowercase">by ratings</span>
-        </v-btn>
-        <v-btn medium elevation="0" color="white primary--text ml-4">
+        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('mileage')">
           <v-icon left medium>av_timer</v-icon>
           <span class="caption text-lowercase">by mileage</span>
+        </v-btn>
+        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('daily_price')">
+          <v-icon left medium>star</v-icon>
+          <span class="caption text-lowercase">by ratings</span>
         </v-btn>
       </v-layout>
       <!-- kartice -->
@@ -137,6 +137,11 @@ export default {
           parseFloat(a[sortProp]) < parseFloat(b[sortProp]) ? -1 : 1
         );
       }
+      if (sortProp == "mileage") {
+        this.cars.sort((a, b) =>
+          parseFloat(a[sortProp]) < parseFloat(b[sortProp]) ? -1 : 1
+        );
+      }
     },
     createCarForChart(car) {
       var carForChart = {
@@ -161,11 +166,15 @@ export default {
       return carForChart;
     },
     clearDates() {
-      console.log("clear datesssssss");
       this.date_to = "";
       this.date_from = "";
     },
     addToBasket(car) {
+      if (this.$store.state.user.role == "COMPANY" ) {
+        this.snackbarDangerText = "Only users can add the car to the cart";
+        this.snackbarDanger = true;
+        return;
+      }
       if (this.$store.state.user.role == "NONE") {
         this.snackbarDangerText = "You must log in to add the car to the cart";
         this.snackbarDanger = true;
