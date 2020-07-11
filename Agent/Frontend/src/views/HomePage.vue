@@ -35,7 +35,7 @@
         <v-flex xs12 sm6 md4 lg4 v-for="car in cars" :key="car.id">
           <v-card hover elevation="2" class="text-center ma-6">
             <div class="cardBorderColor">
-              <v-responsive class="pt-4">
+              <v-responsive class="pt-4" style="height:190px;">
                 <carousel :perPage="1">
                   <slide v-for="(image, index) in car.images" :key="index">
                     <img :src="image.url" height="100px" />

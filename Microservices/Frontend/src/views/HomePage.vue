@@ -21,13 +21,13 @@
           <v-icon left medium>attach_money</v-icon>
           <span class="caption text-lowercase">by price</span>
         </v-btn>
-        <v-btn medium elevation="0" color="white primary--text ml-4">
-          <v-icon left medium>star</v-icon>
-          <span class="caption text-lowercase">by ratings</span>
-        </v-btn>
-        <v-btn medium elevation="0" color="white primary--text ml-4">
+        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('mileage')">
           <v-icon left medium>av_timer</v-icon>
           <span class="caption text-lowercase">by mileage</span>
+        </v-btn>
+        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('daily_price')">
+          <v-icon left medium>star</v-icon>
+          <span class="caption text-lowercase">by ratings</span>
         </v-btn>
       </v-layout>
       <!-- kartice -->
@@ -35,7 +35,7 @@
         <v-flex xs12 sm6 md4 lg4 v-for="car in cars" :key="car.id">
           <v-card hover elevation="2" class="text-center ma-6">
             <div class="cardBorderColor">
-              <v-responsive class="pt-4"> 
+              <v-responsive class="pt-4" style="height:190px;"> 
                 <carousel :perPage="1">
                   <slide  v-for="(image, index) in car.images" :key="index">
                     <img :src="image.url" height="100px" />
@@ -101,6 +101,8 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       startDateGreater: false,
+      grades: 0,
+      average: 0,
       dateList: {
         arrayEvents: []
       }
@@ -112,6 +114,11 @@ export default {
     },
     sortBy(sortProp) {
       if (sortProp == "daily_price") {
+        this.cars.sort((a, b) =>
+          parseFloat(a[sortProp]) < parseFloat(b[sortProp]) ? -1 : 1
+        );
+      }
+      if (sortProp == "mileage") {
         this.cars.sort((a, b) =>
           parseFloat(a[sortProp]) < parseFloat(b[sortProp]) ? -1 : 1
         );
@@ -143,8 +150,12 @@ export default {
       this.date_from="";
     },
     addToBasket(car) {
-      if (this.$store.state.user.role == "NONE" || this.$store.state.user.active==null ) {
-        console.log("usao");
+      if (this.$store.state.user.role == "COMPANY" || this.$store.state.user.role == "ADMINISTRATOR" ) {
+        this.snackbarDangerText = "Only users can add the car to the cart";
+        this.snackbarDanger = true;
+        return;
+      }
+      if (this.$store.state.user.role == "NONE") {
         this.snackbarDangerText = "You must log in to add the car to the cart";
         this.snackbarDanger = true;
         return;
