@@ -57,6 +57,31 @@ public class PricelistService {
 		}
         return pricelistRepository.findAll();
 	}
+	public Pricelist createPricelistSoap(Pricelist pricelist) {
+		// TODO Auto-generated method stub
+		Pricelist p;
+
+		try{
+			p = pricelistRepository.findById(pricelist.getId()).get();
+		} catch (Exception e) {
+			p = new Pricelist();
+		}
+		p.setCdwPrice(pricelist.getCdwPrice());
+		p.setDailyPrice(pricelist.getDailyPrice());
+		p.setDiscount(pricelist.getDiscount());
+		p.setNumberOfDays(pricelist.getNumberOfDays());
+		p.setOverlimitPrice(pricelist.getOverlimitPrice());
+		p.setUsername(pricelist.getUsername());
+		pricelistRepository.save(p);
+		for (Addvertisment add : addvertismentRepository.findAll()) {
+			if (add.getPricelist().getId().equals(p.getId())){
+				add.setPricelist(p);
+				add.setPrice(p.getDailyPrice());
+				addvertismentRepository.save(add);
+			}
+		}
+		return p;
+	}
 
 
 	public List<Pricelist> deletePricelist(Long id) {

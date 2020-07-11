@@ -1,10 +1,9 @@
-package addvertisment.model;
+package agentBackend.model;
 
 import javax.persistence.*;
 
 @Entity
-public class SoapAddSync {
-
+public class SoapPriceListSync {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,7 +12,7 @@ public class SoapAddSync {
     @Column
     private Long agentAppId;
 
-    public SoapAddSync() {
+    public SoapPriceListSync() {
     }
 
     public Long getId() {

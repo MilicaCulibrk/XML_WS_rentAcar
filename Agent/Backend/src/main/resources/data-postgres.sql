@@ -234,7 +234,7 @@ INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (1, 9);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (2, 10);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (3, 11);
 INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (4, 12);
-INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (5, 12);
+INSERT INTO public.soap_add_sync(agent_app_id, ms_app_id) VALUES (5, 13);
 
 INSERT INTO public.request(status) VALUES ('PENDING');
 INSERT INTO public.request(status) VALUES ('PAID');
@@ -266,5 +266,9 @@ INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (3, 3);
 INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (4, 4);
 INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (5, 6);
 INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (6, 7);
+
+
+INSERT INTO public.soap_price_list_sync(agent_app_id, ms_app_id) VALUES ( 1, 1);
+INSERT INTO public.soap_price_list_sync(agent_app_id, ms_app_id) VALUES ( 2, 2);
 
 

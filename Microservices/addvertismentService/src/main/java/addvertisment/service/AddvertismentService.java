@@ -8,7 +8,6 @@ import addvertisment.mq.enums.OperationEnum;
 import addvertisment.mq.producer.AddvertismentProducer;
 import addvertisment.mq.producer.FuelTypeProducer;
 import addvertisment.repository.*;
-import localhost._8087.add_schema.Add;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +42,7 @@ public class AddvertismentService {
 
     @Autowired
     private ImageRepository imageRepository;
-    
+
     @Autowired
     private CommentRepository commentRepository;
 
@@ -126,7 +125,7 @@ public class AddvertismentService {
         return real;
     }
 
-    public AddvertismentRentDTO getAddById(Long id){
+    public AddvertismentRentDTO getAddById(Long id, float kilometresCrossed){
 
         Addvertisment add =  addvertismentRepository.findById(id).orElse(null);
 
@@ -135,6 +134,20 @@ public class AddvertismentService {
         addDTO.setMileage_limit(add.getMileage_limit());
         addDTO.setPriceByKm(add.getPricelist().getOverlimitPrice());
 
+        float newMileage = add.getMileage() + kilometresCrossed;
+        add.setMileage(newMileage);
+        addvertismentRepository.save(add);
+
+        System.out.println(add.getMileage());
+
+        try {
+            AddDTO dto = new AddDTO(add);
+            dto.setOperation(OperationEnum.UPDATE);
+            dto.setEntity(EntityEnum.ADD);
+            this.addvertismentProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
 
         return addDTO;
 
@@ -195,39 +208,39 @@ public class AddvertismentService {
 
     }
 
-  public void deleteAddvertisment(Long id) throws ValidationException {
+    public void deleteAddvertisment(Long id) throws ValidationException {
         Optional<Addvertisment> add = addvertismentRepository.findById(id);
         if (!add.isPresent()){
             throw new ValidationException("Add with that id doesn't exist!");
         }
 
 
-      try {
-          AddDTO dto = new AddDTO(add.get());
-          dto.setOperation(OperationEnum.DELETE);
-          this.addvertismentProducer.send(dto);
-      } catch (Exception e) {
-          System.err.println("Did not sync with search service");
-      }
+        try {
+            AddDTO dto = new AddDTO(add.get());
+            dto.setOperation(OperationEnum.DELETE);
+            this.addvertismentProducer.send(dto);
+        } catch (Exception e) {
+            System.err.println("Did not sync with search service");
+        }
 
 
         for (ReservedDate date : add.get().getReservedDates()) {
-			reservedDateRepository.delete(date);
-		}
+            reservedDateRepository.delete(date);
+        }
 
         for (Image image : add.get().getImages()) {
-			imageRepository.delete(image);
-		}
-        
+            imageRepository.delete(image);
+        }
+
         for (Grade grade : add.get().getGrades()) {
-			gradeRepository.delete(grade);
-		}
-        
+            gradeRepository.delete(grade);
+        }
+
         for (Comment comment : add.get().getComments()) {
             System.out.println("----uso----");
-			commentRepository.delete(comment);
-		}
-        
+            commentRepository.delete(comment);
+        }
+
         addvertismentRepository.delete(add.get());
 
     }

@@ -13,8 +13,8 @@ public class SoapAddService {
 
     public void create(Long ms_id,  Long agent_id){
         SoapAddSync soapAddSync = new SoapAddSync();
-        soapAddSync.setAgentApp_id(agent_id);
-        soapAddSync.setMsApp_id(ms_id);
+        soapAddSync.setAgentAppId(agent_id);
+        soapAddSync.setMsAppId(ms_id);
         repository.save(soapAddSync);
     }
 

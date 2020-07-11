@@ -5,6 +5,7 @@ import agentBackend.dto.ImageDTO;
 import agentBackend.dto.ReservedDateDTO;
 import agentBackend.model.ReservedDate;
 import agentBackend.model.SoapAddSync;
+import agentBackend.model.SoapPriceListSync;
 import agentBackend.repository.SoapAddSyncRepository;
 import agentBackend.wsdl.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,14 +45,51 @@ public class AddClient extends WebServiceGatewaySupport {
         add.setMileage(addvertismentDTO.getMileage());
         add.setMileageLimit(addvertismentDTO.getMileage_limit());
         add.setPrice(addvertismentDTO.getDaily_price());
+        add.setPriceListId(addvertismentDTO.getPricelist().getId());
         request.setAdd(add);
        // request.setFuelTypeName(fuelTypeDTO.getFuel_type_name());
         AddResponse response = (AddResponse) getWebServiceTemplate()
-                .marshalSendAndReceive("http://localhost:8087/ws/add-schema", request,
-                        new SoapActionCallback("http://localhost:8087/ws/add-schema/addRequest"));
+                .marshalSendAndReceive("http://add-service:8087/ws/add-schema", request,
+                        new SoapActionCallback("http://add-service:8087/ws/add-schema/addRequest"));
 
         this.saveSync(response.getMsId(), response.getAgentId());
         return response;
+    }
+
+
+    public void editAdd(AddvertismentDTO addvertismentDTO)  {
+        EditAddRequest request = new EditAddRequest();
+        Add add = new Add();
+        add.setId(addvertismentDTO.getId());
+        add.setAddvertiserId(addvertismentDTO.getOwner());
+        add.setBrandId(addvertismentDTO.getBrand_id());
+        add.setCdw(addvertismentDTO.isCdw());
+        add.setChildSeats(addvertismentDTO.getChild_seats());
+        add.setFuelTypeId(addvertismentDTO.getFuel_type_id());
+        add.setTransmissionTypeId(addvertismentDTO.getTransmission_type_id());
+        add.setVehicleClassId(addvertismentDTO.getVehicle_class_id());
+        add.setVehicleModelId(addvertismentDTO.getVehicle_model_id());
+        add.setLocation(addvertismentDTO.getLocation());
+        add.setMileage(addvertismentDTO.getMileage());
+        add.setMileageLimit(addvertismentDTO.getMileage_limit());
+        add.setPrice(addvertismentDTO.getDaily_price());
+        add.setPriceListId(addvertismentDTO.getPricelist().getId());
+        request.setAdd(add);
+
+        PricelistSoap pricelistSoap = new PricelistSoap();
+        pricelistSoap.setId(addvertismentDTO.getPricelist().getId());
+        pricelistSoap.setDailyPrice(addvertismentDTO.getPricelist().getDailyPrice());
+        pricelistSoap.setCdwPrice(addvertismentDTO.getPricelist().getDailyPrice());
+        pricelistSoap.setDiscount(addvertismentDTO.getPricelist().getDiscount());
+        pricelistSoap.setOverlimitPrice(addvertismentDTO.getPricelist().getOverlimitPrice());
+        pricelistSoap.setNumberOfDays(addvertismentDTO.getPricelist().getNumberOfDays());
+        pricelistSoap.setUsername(addvertismentDTO.getPricelist().getUsername());
+        request.setPriceList(pricelistSoap);
+
+
+        getWebServiceTemplate().marshalSendAndReceive("http://add-service:8087/ws/add-schema", request,
+                new SoapActionCallback("http://add-service:8087/ws/add-schema/editAddRequest"));
+
     }
     public void saveSync (Long ms_id, Long agent_id){
         SoapAddSync soapAddSync = new SoapAddSync();
