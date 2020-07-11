@@ -68,11 +68,25 @@ export default {
   methods: {
     getUsers() {
       axios
-        .get("/user-service/user/nes")
-        .then(response => {
-          this.users = response.data;
-          console.log(response);
-          console.log(response.data);
+
+        .get("/user-service/user")
+        .then(response => {      
+            this.users.length = 0;
+            response.data.forEach(element => {
+              if(element.active==null){
+                element.active=true;
+              }
+              this.users.push(element);
+
+            });
+              
+              console.log(response);
+              console.log(response.data);
+
+            }) 
+        .catch(error => {
+            console.log(error)
+
         })
         .catch(error => {
           console.log(error);
@@ -104,6 +118,22 @@ export default {
         .then(response => {
           this.snackbarSuccess = true;
           this.snackbarSuccessText = "User succesfully deleted!";
+          console.log(response.data);
+          this.getUsers();
+          this.deleteAdds(user.username);
+        })
+        .catch(error => {
+          this.snackbarDanger = true;
+          this.snackbarDangerText ="Error";
+          console.log(error)
+        })
+    },
+    deleteAdds(username){
+      axios
+        .delete("/addvertisment-service/addvertisment/from/"  + username)
+        .then(response=>{
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText ="User's adds succesfully deleted!";
           console.log(response.data);
           this.getUsers();
         })

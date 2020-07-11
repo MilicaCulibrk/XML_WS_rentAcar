@@ -72,6 +72,7 @@ public class LoginController {
                 User user = (User) nekiKorisnik;
                 authenticationDTO.setId(user.getId());
                 authenticationDTO.setRole("USER");
+                authenticationDTO.setActive(user.isActive());
                 //role="USER";
                 return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
@@ -79,6 +80,7 @@ public class LoginController {
                 Administrator admin = (Administrator) nekiKorisnik;
                 authenticationDTO.setId(admin.getId());
                 authenticationDTO.setRole("ADMINISTRATOR");
+                authenticationDTO.setActive(true);
                 role="ADMINISTRATOR";
                 return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
@@ -86,6 +88,7 @@ public class LoginController {
                 Company company = (Company) nekiKorisnik;
                 authenticationDTO.setId(company.getId());
                 authenticationDTO.setRole("COMPANY");
+                authenticationDTO.setActive(true);
                 role="COMPANY";
                 return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 

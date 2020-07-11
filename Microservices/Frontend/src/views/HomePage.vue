@@ -21,13 +21,13 @@
           <v-icon left medium>attach_money</v-icon>
           <span class="caption text-lowercase">by price</span>
         </v-btn>
-        <v-btn medium elevation="0" color="white primary--text ml-4">
-          <v-icon left medium>star</v-icon>
-          <span class="caption text-lowercase">by ratings</span>
-        </v-btn>
-        <v-btn medium elevation="0" color="white primary--text ml-4">
+        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('mileage')">
           <v-icon left medium>av_timer</v-icon>
           <span class="caption text-lowercase">by mileage</span>
+        </v-btn>
+        <v-btn medium elevation="0" color="white primary--text ml-4" @click="sortBy('daily_price')">
+          <v-icon left medium>star</v-icon>
+          <span class="caption text-lowercase">by ratings</span>
         </v-btn>
       </v-layout>
       <!-- kartice -->
@@ -35,7 +35,7 @@
         <v-flex xs12 sm6 md4 lg4 v-for="car in cars" :key="car.id">
           <v-card hover elevation="2" class="text-center ma-6">
             <div class="cardBorderColor">
-              <v-responsive class="pt-4"> 
+              <v-responsive class="pt-4" style="height:190px;"> 
                 <carousel :perPage="1">
                   <slide  v-for="(image, index) in car.images" :key="index">
                     <img :src="image.url" height="100px" />
@@ -58,14 +58,37 @@
                 <!-- komponenta komentari -->
                 <PopupComments v-bind:car="car"></PopupComments>
                 <v-tooltip bottom color="black">
-                  <template v-slot:activator="{ on }">
-                    <v-btn @click="addToBasket(car)" icon v-on="on" color="primary">
+                   <template v-slot:activator="{ on }" v-if="($store.state.user.active)==true">                    <v-btn @click="addToBasket(car)" icon v-on="on" color="primary">
                       <router-link :to="{ name: 'add', params: { name: car.id } }"></router-link>
                       <v-icon>shopping_cart</v-icon>
                     </v-btn>
                   </template>
                   <span class="primary--text">Add to basket</span>
                 </v-tooltip>
+                <v-row justify="center" v-if="($store.state.user.active)==null ">
+                  <v-dialog v-model="dialogForbbiden"  persistent max-width="600">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                        color="primary"
+                      >
+                        <v-icon>shopping_cart</v-icon>
+                      </v-btn>
+                    </template>
+
+                    <v-card>
+                      <v-card-title class="headline">You can't rent until you settle your debts.</v-card-title>
+                      <v-card-text>You have exceeded the mileage limit. Please pay your debts to continue.</v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="green darken-1" text @click="dialogForbbiden=false">Cancel</v-btn>
+                        <v-btn color="green darken-1" text @click="payDebts()">Pay</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-row>
               </v-card-actions>
             </div>
           </v-card>
@@ -101,9 +124,13 @@ export default {
       snackbarDanger: false,
       snackbarDangerText: "",
       startDateGreater: false,
+      grades: 0,
+      average: 0,
       dateList: {
         arrayEvents: []
-      }
+      },
+      dialogForbbiden: false,
+      user: {},
     };
   },
   methods: {
@@ -112,6 +139,11 @@ export default {
     },
     sortBy(sortProp) {
       if (sortProp == "daily_price") {
+        this.cars.sort((a, b) =>
+          parseFloat(a[sortProp]) < parseFloat(b[sortProp]) ? -1 : 1
+        );
+      }
+      if (sortProp == "mileage") {
         this.cars.sort((a, b) =>
           parseFloat(a[sortProp]) < parseFloat(b[sortProp]) ? -1 : 1
         );
@@ -143,8 +175,12 @@ export default {
       this.date_from="";
     },
     addToBasket(car) {
-      if (this.$store.state.user.role == "NONE" || this.$store.state.user.active==null ) {
-        console.log("usao");
+      if (this.$store.state.user.role == "COMPANY" || this.$store.state.user.role == "ADMINISTRATOR" ) {
+        this.snackbarDangerText = "Only users can add the car to the cart";
+        this.snackbarDanger = true;
+        return;
+      }
+      if (this.$store.state.user.role == "NONE") {
         this.snackbarDangerText = "You must log in to add the car to the cart";
         this.snackbarDanger = true;
         return;
@@ -160,6 +196,22 @@ export default {
 
       this.snackbarSuccess = true;
       this.snackbarSuccessText = "Car added to the cart.";
+    },
+    payDebts(){
+        this.user.username = this.$store.state.user.username;
+        this.user.active = true;
+          axios
+        .put("/user-service/user", this.user)
+        .then(response=>{
+          this.snackbarSuccess = true;
+          this.snackbarSuccessText = "Thank you for the payment. Now you can rent a car.";
+          this.dialogForbbiden = false;
+          this.$store.state.user.active = true;
+          console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        })
     },
     getCars() {
       if (this.$store.state.user.role == "NONE") {
