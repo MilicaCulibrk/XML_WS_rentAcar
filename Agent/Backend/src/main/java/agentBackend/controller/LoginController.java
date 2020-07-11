@@ -80,6 +80,7 @@ public class LoginController {
                 Administrator admin = (Administrator) nekiKorisnik;
                 authenticationDTO.setId(admin.getId());
                 authenticationDTO.setRole("ADMINISTRATOR");
+                authenticationDTO.setActive(true);
                 role="ADMINISTRATOR";
                 return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
@@ -87,6 +88,7 @@ public class LoginController {
                 Company company = (Company) nekiKorisnik;
                 authenticationDTO.setId(company.getId());
                 authenticationDTO.setRole("COMPANY");
+                authenticationDTO.setActive(true);
                 role="COMPANY";
                 return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 

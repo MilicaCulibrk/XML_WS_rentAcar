@@ -71,7 +71,15 @@ export default {
       axios
         .get("/user-service/user/nes")
         .then(response => {      
-              this.users = response.data;
+            this.users.length = 0;
+            response.data.forEach(element => {
+              if(element.active==null){
+                element.active=true;
+              }
+              this.users.push(element);
+
+            });
+              
               console.log(response);
               console.log(response.data);
 
