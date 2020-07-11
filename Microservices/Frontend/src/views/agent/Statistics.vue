@@ -67,9 +67,9 @@
                             <!-- komponenta detalji o autu-->
                             <PopupDetails v-bind:car="car"></PopupDetails>
                             <!-- komponenta ocene -->
-                            <PopupRatings />
+                            <PopupRatings v-bind:car="car"></PopupRatings>
                             <!-- komponenta komentari -->
-                            <PopupComments />
+                            <PopupComments v-bind:car="car"></PopupComments>
                             <!-- komponenta zahtevi -->
                             <PopupRequests v-bind:car="car"></PopupRequests>
                           </v-card-actions>

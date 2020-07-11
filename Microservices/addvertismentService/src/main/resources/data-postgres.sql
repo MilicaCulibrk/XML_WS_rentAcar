@@ -161,7 +161,7 @@ VALUES ('true', '2', '2000', 'Beograd', '440000', '130', '3', '1', '1', '5', '3'
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
 VALUES ('true', '4', '2800', 'Beograd', '211000', '0', '2', '2', '3', '9', '4', 'ss', '2');
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
-VALUES ('false', '2', '2800', 'Sombor', '553000', '90', '2', '1', '2', '2', '3', 'ss', '2');
+VALUES ('false', '2', '2800', 'Sombor', '553000', '90', '2', '1', '2', '3', '3', 'ss', '2');
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
 VALUES ('false', '2', '2800', 'Sombor', '300000', '0', '3', '2', '2', '2', '10', 'ss', '2');
 INSERT INTO public.addvertisment(cdw, child_seats, price, location, mileage, mileage_limit, brand_id, fuel_type_id, transmission_type_id, vehicle_model_id, vehicle_class_id, addvertiser_id, pricelist)
@@ -211,7 +211,11 @@ INSERT INTO public.grade(number, user_id, addvertisment_id)
 VALUES ('5', '2', '9');
 
 INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.47811498950876197_images%20(5).jpg?alt=media&token=3f1af6f1-1127-4ef2-85c7-294496946291', '1');
+INSERT INTO public.image(url, addvertisment)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6084565811608329_images%20(8).jpg?alt=media&token=aec09cb8-d2ca-442f-b5fb-d1ea1cb5a03e', '1');
+INSERT INTO public.image(url, addvertisment)
+VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.13996858699719716_images%20(2).jpg?alt=media&token=37eb1bb6-43cb-4701-ad33-43fc96830051', '1');
 INSERT INTO public.image(url, addvertisment)
 VALUES ('https://firebasestorage.googleapis.com/v0/b/xml-ws-rentacar.appspot.com/o/addvertisments%2F0.6491975468328182_images%20(4).jpg?alt=media&token=d9c8efc5-06d5-44e5-bbbb-5b9f3e6f82e4', '2');
 INSERT INTO public.image(url, addvertisment)

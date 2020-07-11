@@ -21,6 +21,15 @@
       <v-btn
         text
         color="primary"
+        @click="openCompanies()"
+        v-if="(this.$store.state.user.role)=='ADMINISTRATOR'"
+      >
+        <span>Companies</span>
+        <v-icon right>business</v-icon>
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
         @click="openUsers()"
         v-if="(this.$store.state.user.role)=='ADMINISTRATOR'"
       >
@@ -145,6 +154,9 @@ export default {
     openUsers() {
       this.$router.push("/admin");
     },
+    openCompanies() {
+      this.$router.push("/company");
+    },
     openCart() {
       this.$router.push("/cart");
     },
@@ -176,6 +188,7 @@ export default {
       localStorage.removeItem("loggedUser");
       this.$store.state.user = {};
       this.$store.state.user.role = "NONE";
+      this.$store.state.user.active = true;
       this.$store.state.loggedUser = false;
       this.snackbarSuccess = true;
       this.snackbarSuccessText = "You are logged out";

@@ -1,49 +1,41 @@
-package agentBackend.dto;
+package user.dto;
 
-public class UserDTO {
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+public class CompanyDTO {
+
+    private Long id;
     private String name;
-
-    private String surname;
-    private String username;
-
     private String email;
-
+    private String username;
     private String password;
-
     private String address;
-
     private String city;
-
     private String phone_number;
-    private Boolean active;
-    public UserDTO(String name, String surname, String email, String password, String address, String city,
-                   String phone_number) {
-        super();
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
+    private String company_number;
 
+    public CompanyDTO(Long id, String name, String email, String username, String password, String address, String city, String phone_number, String company_number) {
+        this.id = id;
+        this.name = name;
         this.email = email;
+        this.username = username;
         this.password = password;
         this.address = address;
         this.city = city;
         this.phone_number = phone_number;
+        this.company_number = company_number;
     }
 
-    public UserDTO() {
-        super();
-        // TODO Auto-generated constructor stub
+    public Long getId() {
+        return id;
     }
 
-    public Boolean getActive() {
-		return active;
-	}
-
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
-
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -53,20 +45,20 @@ public class UserDTO {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -101,12 +93,11 @@ public class UserDTO {
         this.phone_number = phone_number;
     }
 
-    public String getUsername() {
-        return username;
+    public String getCompany_number() {
+        return company_number;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCompany_number(String company_number) {
+        this.company_number = company_number;
     }
-
 }

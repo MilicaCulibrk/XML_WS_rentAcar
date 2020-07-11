@@ -20,16 +20,16 @@
               <v-icon>cancel</v-icon>
             </v-btn>
           </v-card-title>
-          <v-responsive class="pt-4 mx-4">
+          <v-responsive class="pt-4 mx-4" >
             <carousel :perPage="1">
               <slide  v-for="(image, index) in car.images" :key="index">
-                <img :src="image.url" height="100px" />
+                <img :src="image.url" height="100px" style="margin-left: 100px;"/>
               </slide>
             </carousel>
         </v-responsive>
           <v-card-text class="text-center-left">
             <div>{{ car.brand }} {{ car.model }}</div>
-            <div class="secondary">Price: {{ car.price }}</div>
+            <div class="secondary">Daily price: {{ car.daily_price }} {{ car.price }}</div>
             <div>CDW option: {{ carCDW }}</div>
             <div class="secondary">Class: {{ car.vehicle_class_name }}</div>
             <div>Mileage: {{ car.mileage }}</div>
@@ -38,6 +38,7 @@
             <div class="secondary">Transmission type: {{ car.transmission_type_name }}</div>
             <div>Number of child seats: {{ car.child_seats }}</div>
             <div class="secondary" >Grade: {{ average }}</div>
+            <div>Owner: {{ car.owner }} {{ car.addvertiser_id }}</div>
           </v-card-text>
         </div>
       </v-card>

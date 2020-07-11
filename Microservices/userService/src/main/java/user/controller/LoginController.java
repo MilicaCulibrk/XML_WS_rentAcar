@@ -82,8 +82,12 @@ public class LoginController {
 				authenticationDTO.setId(user.getId());
 				authenticationDTO.setRole("USER");
 				authenticationDTO.setActive(user.isActive());
-				if(user.isActive()==false) {
-		            return new ResponseEntity<>("We are sorry but your account is blocked. You can't login.", HttpStatus.FORBIDDEN);
+				try {
+					if(user.isActive()==false) {
+			            return new ResponseEntity<>("We are sorry but your account is blocked. You can't login.", HttpStatus.FORBIDDEN);
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
 				}
 		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
@@ -91,12 +95,14 @@ public class LoginController {
 				Administrator admin = (Administrator) nekiKorisnik;
 				authenticationDTO.setId(admin.getId());
 				authenticationDTO.setRole("ADMINISTRATOR");
+				authenticationDTO.setActive(true);
 		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
 			} else if(this.companyService.verify(username)) {
 				Company company = (Company) nekiKorisnik;
 				authenticationDTO.setId(company.getId());
 				authenticationDTO.setRole("COMPANY");
+				authenticationDTO.setActive(true);
 		      	return new ResponseEntity<>(authenticationDTO, HttpStatus.OK);
 
 			}

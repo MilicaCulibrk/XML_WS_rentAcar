@@ -114,7 +114,7 @@ export default {
       default: ""
     },
     greenReport: {},
-    user: {},
+    user: {}
   },
   data() {
     return {
@@ -126,7 +126,11 @@ export default {
       },
       reportsList: [],
       greenReportTemp: false,
-      rules: [v => v.length <= 100 || "Max 100 characters"]
+      rules: [v => v.length <= 100 || "Max 100 characters"],
+      purchaseUser: {
+        username: "",
+        active: true,
+      },
     };
   },
   methods: {
@@ -137,12 +141,16 @@ export default {
       } else {
         axios
           .post(
-            "rent-service/purchase/" + this.purchase.id + "/report",
+            "/rent-service/purchase/" + this.purchase.id + "/report",
             this.report
           )
           .then(report => {
             this.report = report.data;
-            this.$emit("addedReport");
+            this.$emit(
+              "addedReport",
+              this.report.additionalPrice,
+              this.purchase.client
+            );
             this.greenReportTemp = true;
             this.dialogDetails = false;
             this.getReports();
@@ -150,23 +158,22 @@ export default {
           })
           .catch(error => {
             console.log(error);
-            this.$emit("notAddedReport");
           });
       }
     },
+
     checkAddPrice(){
       if(this.report.additionalPrice>0){
-        this.user.username = this.purchase.client;
-        this.user.active = null;
+        this.purchaseUser.username = this.purchase.client;
+        this.purchaseUser.active = null;
           axios
-        .put("/user-service/user", this.user)
+        .put("/user-service/user", this.purchaseUser)
         .then(response=>{
-          alert("Korpa korisnika je blokirana!");
           console.log(response);
         })
         .catch(error => {
             console.log(error);
-        })
+          });
       }
     },
     changeReport(report) {
@@ -177,10 +184,14 @@ export default {
         this.$emit("emptyKilometres");
       } else {
         axios
-          .put("rent-service/purchase/" + this.purchase.id + "/report", report)
+          .put("/rent-service/purchase/" + this.purchase.id + "/report", report)
           .then(report => {
             this.report = report.data;
-            this.$emit("changedReport");
+            this.$emit(
+              "changedReport",
+              this.report.additionalPrice,
+              this.purchase.client
+            );
             this.greenReportTemp = true;
             this.dialogDetails = false;
             this.getReports();
@@ -188,13 +199,12 @@ export default {
           })
           .catch(error => {
             console.log(error);
-            this.$emit("notChangedReport");
           });
       }
     },
     getReports() {
       axios
-        .get("rent-service/purchase/report")
+        .get("/rent-service/purchase/report")
         .then(reportsList => {
           this.reportsList = reportsList.data;
           this.getPurchases();

@@ -77,4 +77,17 @@ public class UserService {
         userRepository.save(user.get());
         return user.get();
     }
+
+    public User updateUser(User user) throws ValidationException {
+		// TODO Auto-generated method stub
+        User u = userRepository.findByUsername(user.getUsername());
+
+        if (u==null){
+            throw new ValidationException("User with that id doesn't exist!");
+        }
+        u.setActive(user.isActive());
+        u.setNumber_of_addvertisment(user.getNumber_of_addvertisment());
+        userRepository.save(u);
+        return u;	
+    }
 }
