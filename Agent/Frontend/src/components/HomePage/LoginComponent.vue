@@ -72,12 +72,16 @@ export default {
           .post("/login", this.user)
           .then(response => {
             localStorage.setItem("loggedUser", JSON.stringify(response.data));
-            this.$store.state.user = JSON.parse(
+           /* this.$store.state.user = JSON.parse(
               localStorage.getItem("loggedUser")
-            );
-            console.log("active:" + this.$store.state.user.active);
+            );*/
+            this.$store.commit( 'login', JSON.parse(
+              localStorage.getItem("loggedUser")
+            ));
+
             console.log("ROLE: " + this.$store.state.user.role);
             this.$emit("loggedIn");
+            location.reload();
           })
           .catch(error => {
             console.log(error);

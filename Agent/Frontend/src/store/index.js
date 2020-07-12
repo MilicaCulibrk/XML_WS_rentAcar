@@ -1,9 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     user: {
       role: "NONE",
@@ -31,6 +33,23 @@ export const store = new Vuex.Store({
         state.subtotal = parseInt(state.subtotal) + parseInt(car.price);
       });
     },
+    login(state, item) {
+      state.user = item;
+    },
+    logout(state) {
+      /* this.$store.state.user = {};
+      this.$store.state.user.role = "NONE";
+      this.$store.state.user.active = true;
+      this.$store.state.loggedUser = false;*/
+
+      state.user = {};
+      state.user.role = "NONE";
+      state.user.active = true;
+      state.loggedUser = false;
+    },
+    setActive(state){
+      state.user.active = true;
+    }
   },
   actions: {},
   modules: {},

@@ -11,7 +11,7 @@
             <v-list dense class="chat_list">
               <v-list-item-group color="primary"   >
                 <v-list-item
-                v-for="user in users"  :key="user.username"   @click="showConversation(user.username)" 
+                v-for="(user,index) in users"  :key="index-100"   @click="showConversation(user.username)" 
                 >
                 <div class="chat_people"  >
                   <p></p>
@@ -163,6 +163,7 @@ export default {
                   }
                 }
              }
+             this.getUsers();
             }) 
         .catch(error => {
             console.log(error)

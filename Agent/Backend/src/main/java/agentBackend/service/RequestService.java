@@ -62,7 +62,7 @@ public class RequestService {
             Request request1 = requestRepository.save(request);
             Purchase purchase = this.createPurchase(p);
             purchase.setRequest(request1);
-            purchase.setOwner(p.getOwner());
+            purchase.setOwner("ss");
             purchasesForRequest.add(purchase);
             purchaseRepository.save(purchase);
             requests.add(request1);

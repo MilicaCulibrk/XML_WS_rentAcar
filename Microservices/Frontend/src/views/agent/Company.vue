@@ -115,8 +115,7 @@ export default {
           this.getCompanies();
         })
         .catch((error) => {
-          this.snackbarDanger = true;
-          this.snackbarDangerText = "Couldn't delete company's adds!";
+         
           console.log(error);
         });
     },

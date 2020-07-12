@@ -206,7 +206,7 @@ export default {
           
         })
         .catch(error => {
-          this.snackbarDanger = true;
+          this.getRequests();
           console.log(error);
         });
       request.purchaseDTOS.forEach(element => {
