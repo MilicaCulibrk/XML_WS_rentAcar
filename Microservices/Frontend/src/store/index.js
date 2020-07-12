@@ -44,8 +44,12 @@ export const store = new Vuex.Store({
 
       state.user = {};
       state.user.role = "NONE";
-      (state.user.active = true), (state.loggedUser = false);
+      state.user.active = true;
+      state.loggedUser = false;
     },
+    setActive(state){
+      state.user.active = true;
+    }
   },
   actions: {},
   modules: {},

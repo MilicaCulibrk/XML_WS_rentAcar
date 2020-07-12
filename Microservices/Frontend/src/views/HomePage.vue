@@ -233,7 +233,8 @@ export default {
 
           this.dialogForbbiden = false;
           console.log(response);
-          this.$store.state.user.active = true;
+          this.$store.commit("setActive");
+          location.reload();
         })
         .catch(error => {
           console.log(error);
