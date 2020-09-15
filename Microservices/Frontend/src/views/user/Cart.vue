@@ -18,12 +18,12 @@
       <v-btn text @click="snackbarSuccess = false">Close</v-btn>
     </v-snackbar>
     <div v-if="!emptyBasket" class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-      <v-flex v-for="agent in agents" :key="agent">
+      <v-flex v-for="(agent,index) in agents" :key="index">
         <v-card hover elevation="2" class="text-center ma-6">
           <div class="cardBorderColor">
             <v-card-title class="headline">Agent {{ agent }}</v-card-title>
             <!-- cards in card-->
-            <v-flex xs12 sm10 md10 lg10 v-for="car in cars" :key="car.id">
+            <v-flex xs12 sm10 md10 lg10 v-for="(car,index) in cars" :key="index">
               <v-card hover elevation="2" class="text-center ma-6" v-if="car.owner == agent">
                 <div class="cardBorderColor">
                   <v-list-item three-line>
@@ -147,6 +147,8 @@ export default {
         .then(response => {
           console.log(response.data);
           this.snackbarSuccess = true;
+          this.bundleOrder= [];
+          this.singleOrders = [];
           this.$store.commit("deleteAll");
           this.emptyBasket = true;
         })
@@ -160,6 +162,8 @@ export default {
         .then(response => {
           console.log(response.data);
           this.snackbarSuccess = true;
+          this.bundleOrder= [];
+          this.singleOrders = [];
           this.$store.commit("deleteAll");
           this.emptyBasket = true;
         })

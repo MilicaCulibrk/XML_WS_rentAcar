@@ -245,19 +245,19 @@ INSERT INTO public.request(status) VALUES ('PAID');
 
 
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
-	VALUES ( '2020-07-21', '2020-07-29', 3, 'ss', 'mm', false, 1, 'Suzuki Vitara SE');
+	VALUES ( '2020-08-21', '2020-08-29', 3, 'ss', 'mm', false, 1, 'Suzuki Vitara SE');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
-	VALUES ( '2020-07-21', '2020-07-25', 4, 'ss', 'mm', false, 1, 'Suzuki Vitara SE');
+	VALUES ( '2020-08-21', '2020-08-25', 4, 'ss', 'mm', false, 1, 'Suzuki Vitara SE');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 	VALUES ( '2020-05-21', '2020-05-23', 1, 'ss', 'ss', true, 2, 'Suzuki Cross');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
-	VALUES ( '2020-06-23', '2020-06-26', 3, 'ss', 'mm', false, 3, 'Suzuki Vitara SE');
+	VALUES ( '2020-08-23', '2020-08-26', 3, 'ss', 'mm', false, 3, 'Suzuki Vitara SE');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 	VALUES ( '2020-05-18', '2020-06-06', 2, 'ss', 'mm', true, 4, 'BMW X3');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
 	VALUES ( '2020-05-23', '2020-05-26', 3, 'ss', 'mm', true, 5, 'Suzuki Vitara SE');
 INSERT INTO public.purchase(date_from, date_to, id_add, owner, client, ordered, request, brand_model)
-	VALUES ( '2020-04-18', '2020-04-06', 1, 'ss', 'mm', true, 6, 'Suzuki Cross');
+	VALUES ( '2020-04-18', '2020-04-28', 1, 'ss', 'mm', true, 6, 'Suzuki Cross');
 
 INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (1, 1);
 INSERT INTO public.soap_rent_sync( agent_app_id, ms_app_id) VALUES (2, 2);

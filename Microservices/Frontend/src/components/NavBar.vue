@@ -191,6 +191,7 @@ export default {
       this.$store.state.user.active = true;
       this.$store.state.loggedUser = false;*/
       this.$store.commit("logout");
+      this.$store.commit("deleteAll");
       this.snackbarSuccess = true;
       this.snackbarSuccessText = "You are logged out";
       this.LoginDialog = false;
