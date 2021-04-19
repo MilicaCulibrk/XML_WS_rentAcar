@@ -1,8 +1,13 @@
 # XML_WS_rentAcar
-XML_WS faculty web project
+XML and Web Services faculty web project
 
+Authors
+ - @MilicaCulibrk
+ - @masamatovic
+ - @AnaNikolasevic
+ - @stanislavaskoric
 
-<h>Za uspesno pokretanje potrebno je instalirati:</h><br>
+<h>Prerequisites:</h><br>
 - Java SDK v1.8<br>
 - Maven 3.6.2<br>
 - NodeJS v12.16.3<br>
@@ -11,10 +16,10 @@ XML_WS faculty web project
 - docker desktop<br>
 - docker compose<br>
 
-Pokretanje projekta
-- Prvo je potrebno napraviti kopiju ovog repozitorijuma sa git clone
-- Svaki servis posebno importovati kao Maven project 
-- U terminalu se treba pozicionirati u korenski direktorijum svakog mikorservisa i uraditi mvnw package komandu
-- U power shell-u potrebno je pozicionirati se u direktorijum Microservices i uraditi komandu docker-compose up --build
-- Za pokretanje frontend-a agentske aplikacije u terminalu ukucati komandu npm update, pa potom npm run serve 
+Running the microservice application
+- clone this repository (git clone)
+- import each service as a Maven project 
+- from each microservice's root directory run the command mvnw package
+- from the Microservices directory execute the command docker-compose up --build
+- to run the frontend application, execute the command npm update and then npm run serve from Frontend directory
 
